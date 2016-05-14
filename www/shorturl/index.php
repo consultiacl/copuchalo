@@ -10,7 +10,7 @@
 $globals['no_auth'] = true;
 include('../config.php');
 
-$url_args = preg_split('/\/+/', $_SERVER['PATH_INFO']);
+$url_args = preg_split('/\/+/', $_SERVER['REQUEST_URI']);
 
 // If the first argument are only numbers, redirect to the story with that id
 if (preg_match('/^[\da-z]+$/', $url_args[1])) {
