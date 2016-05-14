@@ -1,4 +1,4 @@
-Menéame
-=======
+Copúchalo
+=========
 
-Source code for the social aggregator https://www.meneame.net (central repository) 
+Source code for the social aggregator https://www.copuchalo.cl (central repository) 

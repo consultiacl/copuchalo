@@ -117,13 +117,13 @@ function sphinx_do_search($by_date = false, $start = 0, $count = 10, $proximity 
 		}
 	}
 
-	if ($_REQUEST['u']) {
+/*	if ($_REQUEST['u']) {
 		$u = new User();
 		$u->username = $_REQUEST['u'];
 		$u->read();
 		$cl->SetFilterRange('user', $u->id, $u->id);
 	}
-
+*/
 	if ($_REQUEST['w'] == 'links' && $_REQUEST['p']) {
 		$f = '@'.$_REQUEST['p'];
 	} else {
@@ -224,6 +224,15 @@ function sphinx_do_search($by_date = false, $start = 0, $count = 10, $proximity 
 		}
 	}
 	$response['time'] = microtime(true) - $start_time;
+
+/*
+error_log("Búsqueda sphinx:\n", 3, "/tmp/a.log");
+foreach($response as $key => $value)
+{
+error_log($key." has the value ".$value."\n", 3, "/tmp/a.log");
+}
+*/
+
 	return $response;
 }
 

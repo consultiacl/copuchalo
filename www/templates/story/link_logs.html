@@ -4,7 +4,7 @@
 
 {% if logs %}
 	{% for log in logs %}
-		<div style="width:100%; display: block; clear: both; border-bottom: 1px solid #FFE2C5;">
+		<div style="width:100%; display: block; clear: both; border-bottom: 1px solid #a7cbff;">
 		<div style="width:20%; float: left;padding: 4px 0 4px 0;"><span data-ts="{{log.ts }}" class="ts"></span></div>
 		<div style="width:15%; float: left;padding: 4px 0 4px 0;font-variant:small-caps;">{{ log.log_sub|subname }}</div>
 		<div style="width:20%; float: left;padding: 4px 0 4px 0;"><strong>{{ log.log_type }}</strong></div>
@@ -83,7 +83,7 @@
 				position: 'absolute',
 				display: 'none',
 				top: y,
-				left: x + 5,
+				left: x + 10,
 				border: '1px solid #e2d3b0',
 				padding: '3px',
 				'background-color': '#FFEEC7',

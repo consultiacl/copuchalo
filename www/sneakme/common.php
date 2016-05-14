@@ -55,39 +55,66 @@ function do_post_subheader($content, $selected = false, $rss = false, $rss_title
 	global $globals, $current_user;
 
 	// arguments: hash array with "button text" => "button URI"; Nº of the selected button
-	echo '<ul class="subheader">'."\n";
 
-	if ($current_user->user_id > 0 ) {
-		if (Post::can_add()) {
-			echo '<li><span><a class="toggler" href="javascript:post_new()" title="'._('nueva').'">&nbsp;'._('nota').'<img src="'.$globals['base_static'].'img/common/icon_add_post_003.png" alt="" width="13" height="12"/></a></span></li>';
-		} else {
-			echo '<li><span><a href="javascript:return;">'._('nota').'</a></span></li>';
+	if($globals['mobile']) {
+		echo '<div class="subheader">';
+
+		if ($current_user->user_id > 0 && Post::can_add()) {
+			echo '<a class="note" href="javascript:post_new()">'._('nueva nota').'</a>';
 		}
-	}
 
-	if (is_array($content)) {
-		$n = 0;
-		foreach ($content as $text => $url) {
-	   		if ($selected === $n) $class_b = ' class = "selected"';
-			else {
-				if ($n > 3) $class_b=' class="wideonly"';
-				else $class_b='';
+		if (is_array($content) && !empty($content)) {
+			echo '<form class="tabs-combo right" action=""><select name="tabs" onchange="location = this.value;">';
+			$n = 0;
+			foreach ($content as $text => $url) {
+				if ($selected === $n) $active = ' selected';
+				else $active = '';
+				echo '<option value="'.$url.'"'.$active.'>'.$text.'</option>';
+				$n++;
 			}
-	   		echo '<li'.$class_b.'>'."\n";
-	   		echo '<a href="'.$url.'">'.$text."</a>\n";
-	   		echo '</li>'."\n";
-	   		$n++;
+
+			if ($rss) {
+				if (!$rss_title) $rss_title = 'rss2';
+				echo '<option value="'.$globals['base_url'].$rss.'">'.$rss_title.'</option>';
+			}
+			echo '</select></form>';
 		}
-	} elseif (! empty($content)) {
-	    echo '<li>'.$content.'</li>';
-	}
 
-	if ($rss && ! empty ($content)) {
-		if (!$rss_title) $rss_title = 'rss2';
-		echo '<li class="icon wideonly"><a href="'.$globals['base_url'].$rss.'" title="'.$rss_title.'"><img src="'.$globals['base_static'].'img/common/h9_rss.png" width="15" height="15" alt="rss2"/></a></li>';
-	}
+		echo '</div>';
 
-	echo '</ul>'."\n";
+	} else {
+		echo '<ul class="subheader">'."\n";
+
+		if ($current_user->user_id > 0) {
+			if (Post::can_add()) {
+				echo '<li><span><a class="toggler" href="javascript:post_new()" title="'._('nueva').'">&nbsp;'._('nota').'<span class="fa fa-pencil note-pencil"></span></a></span></li>';
+			} else {
+				echo '<li><span><a href="javascript:return;">'._('nota').'</a></span></li>';
+			}
+		}
+
+		if (is_array($content)) {
+			$n = 0;
+			foreach ($content as $text => $url) {
+				if ($selected === $n) $class_b = ' class = "selected"';
+				else {
+					if ($n > 3) $class_b=' class="wideonly"';
+					else $class_b='';
+				}
+				echo '<li'.$class_b.'><a href="'.$url.'">'.$text.'</a></li>';
+				$n++;
+			}
+		} elseif (! empty($content)) {
+		    echo '<li>'.$content.'</li>';
+		}
+
+		if ($rss && ! empty ($content)) {
+			if (!$rss_title) $rss_title = 'rss2';
+			echo '<li class="icon wideonly"><a href="'.$globals['base_url'].$rss.'" title="'.$rss_title.'"><span class="fa fa-rss-square"></span></a></li>';
+		}
+
+		echo '</ul>';
+	}
 }
 
 
@@ -95,23 +122,41 @@ function do_priv_subheader($content, $selected = false) {
 	global $globals, $current_user;
 
 	// arguments: hash array with "button text" => "button URI"; Nº of the selected button
-	echo '<ul class="subheader">'."\n";
 
-	echo '<li><span><a class="toggler" href="javascript:priv_new(0)" title="'._('nuevo').'">'._('nuevo').'&nbsp;<img src="'.$globals['base_static'].'img/common/icon_add_post_003.png" alt="" width="13" height="12"/></a></span></li>';
+	if($globals['mobile']) {
+		echo '<div class="subheader">';
+		echo '<a class="note priv" href="javascript:priv_new(0)">'._('nuevo').'</a>';
+		echo '<form class="tabs-combo left" action=""><select name="tabs" onchange="location = this.value;">';
 
-	if (is_array($content)) {
-		$n = 0;
-		foreach ($content as $text => $url) {
-	   		if ($selected === $n) $class_b = ' class = "selected"';
-			else $class_b='';
-	   		echo '<li'.$class_b.'>'."\n";
-	   		echo '<a href="'.$url.'">'.$text."</a>\n";
-	   		echo '</li>'."\n";
-	   		$n++;
+		if (is_array($content)) {
+			$n = 0;
+			foreach ($content as $text => $url) {
+				if ($selected === $n) $active = ' selected';
+				else $active = '';
+				echo '<option value="'.$url.'"'.$active.'>'.$text.'</option>';
+				$n++;
+			}
+		} elseif (! empty($content)) {
+			echo '<option>'.$content.'</option>';
 		}
-	} elseif (! empty($content)) {
-	    echo '<li>'.$content.'</li>';
+		echo '</select></form></div>';
+
+	} else {
+		echo '<ul class="subheader">'."\n";
+		echo '<li><span><a class="toggler" href="javascript:priv_new(0)" title="'._('nuevo').'">'._('nuevo').'<span class="fa fa-pencil note-pencil"></span></a></span></li>';
+
+		if (is_array($content)) {
+			$n = 0;
+			foreach ($content as $text => $url) {
+				if ($selected === $n) $class_b = ' class = "selected"';
+				else $class_b='';
+				echo '<li'.$class_b.'><a href="'.$url.'">'.$text.'</a></li>';
+				$n++;
+			}
+		} elseif (! empty($content)) {
+			echo '<li>'.$content.'</li>';
+		}
+		echo '</ul>';
 	}
-	echo '</ul>'."\n";
 }
-?>
+

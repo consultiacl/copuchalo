@@ -12,14 +12,14 @@
 		<div class="comment-votes-info">
 		{% if self.can_vote %}
 			{% if self.user_can_vote %}
-				<span id="vc-p-{{ self.id }}" class="vote up" onClick="menealo_post({{ current_user.user_id}},{{ self.id }},1)" title="{% trans _('informativo, opinión razonada...') %}"></span>
+				<span id="vc-p-{{ self.id }}" class="vote fa fa-arrow-circle-up" onClick="copuchalo_post({{ current_user.user_id}},{{ self.id }},1)" title="{% trans _('informativo, opinión razonada...') %}"></span>
 				{% include 'post_summary_votes.html' %}
-				<span id="vc-n-{{ self.id }}" class="vote right down" onClick="menealo_post({{ current_user.user_id}},{{ self.id }},-1)" title="{% trans _('sólo para racismo, insultos, spam...') %}"></span>
+				<span id="vc-n-{{ self.id }}" class="vote right fa fa-arrow-circle-down" onClick="copuchalo_post({{ current_user.user_id}},{{ self.id }},-1)" title="{% trans _('sólo para racismo, insultos, spam...') %}"></span>
 			{% else %}
 				{% if self.voted > 0 %}
-					<span id="vc-p-{{ self.id }}" class="vote up voted" title="{% trans _('votado positivo') %}"></span>
+					<span id="vc-p-{{ self.id }}" class="vote fa fa-arrow-circle-up voted" title="{% trans _('votado positivo') %}"></span>
 				{% else %}{% if self.voted < 0 %}
-					<span id="vc-n-{{ self.id }}" class="vote down voted" title="{% trans _('votado negativo') %}"></span>
+					<span id="vc-n-{{ self.id }}" class="vote fa fa-arrow-circle-down voted" title="{% trans _('votado negativo') %}"></span>
 				{% endif %}{% endif %}
 				{% include 'post_summary_votes.html' %}
 			{% endif %}
@@ -27,12 +27,12 @@
 				{% include 'post_summary_votes.html' %}
 		{% endif %}
 
-		<a href="{% exec post_get_base_url self.id %}" title="permalink" class="permalink"></a>
+		<a href="{% exec post_get_base_url self.id %}" title="permalink" class="fa fa-link comment-link-margin"></a>
 
 
 		{% if current_user.user_id > 0 %}
-			<span id="favp-{{ self.prefix_id }}{{ self.id }}" onclick="add_remove_fav('favp-{{ self.prefix_id }}{{ self.id }}', 'post', {{ self.id }})" {% if self.favorite %} class="favorite on" {% else %} class="favorite" {% endif %} ></span>
-			<span onclick="post_reply({{self.id}},'{{ self.username}}')" title="{% trans _('responder') %}" class="reply"></span>
+			<span id="favp-{{ self.prefix_id }}{{ self.id }}" onclick="add_remove_fav('favp-{{ self.prefix_id }}{{ self.id }}', 'post', {{ self.id }})" {% if self.favorite %} class="fa fa-star" {% else %} class="fa fa-star-o" {% endif %} ></span>
+			<span onclick="post_reply({{self.id}},'{{ self.username}}')" title="{% trans _('responder') %}" class="fa fa-reply"></span>
 		{% endif %}
 	</div>
 

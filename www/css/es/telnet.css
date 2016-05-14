@@ -9,12 +9,21 @@
 }
 
 body {
-	color: #167805;
+	/*color: #167805;*/
+	color: #eeeeee;
 	margin: 0;
 	padding: 0;
 	background: #000;
 	font-family: bitstream mono, courier, courier new, mono;
 	font-size: small;
+}
+
+#header-top {
+	opacity: 0.5;
+}
+
+#header-menu {
+	display: none;
 }
 
 /* elements */
@@ -27,23 +36,27 @@ img {
 }
 
 a, label {
-	color: #167805 !important;
+	/*color: #167805 !important;*/
+	color: #eeeeee !important;
 	text-decoration: none;
 	outline: none;
 }
 
 a:hover, a:focus {
-	color: #1c9c06 !important;
+	/*color: #1c9c06 !important;*/
+	color: #ffffff !important;
 	text-decoration: underline;
 }
 
 a:active {
-	color: #1c9c06 !important;
+	/*color: #1c9c06 !important;*/
+	color: #ffffff !important;
 }
 
 form, input {
 	font-family: bitstream mono, courier, courier new, mono;
-	color: #1c9c06;
+	/*color: #1c9c06;*/
+	color: #ffffff;
 	background: #000;
 }
 
@@ -56,16 +69,19 @@ form, input {
 
 .sneaker strong {
 	font-size: 95%;
-	color: #167805;
+	/*color: #167805;*/
+	color: #eeeeee;
 }
 
 .sneaker-legend {
-	color: #167805;
+	/*color: #167805;*/
+	color: #eeeeee;
 	text-align: center;
 	padding: 0 0 5px 0;
 	margin: 0px;
 	background: #000;
-	border-bottom: 1px solid #167805;
+	/*border-bottom: 1px solid #167805;*/
+	border-bottom: 1px solid #eeeeee;
 	font-size: 10pt;
 }
 
@@ -81,7 +97,8 @@ form, input {
 .sneaker-item {
 	width: 100%;
 	clear: both;
-	border-bottom: 1px solid #167805;
+	/*border-bottom: 1px solid #167805;*/
+	border-bottom: 1px solid #eeeeee;
 	padding: 5px 0 5px 0;
 	text-align: center;
 	overflow: hidden;
@@ -101,24 +118,28 @@ form, input {
 
 
 .sneaker-chat {
-	color: #1c9c06;
+	/*color: #1c9c06;*/
+	color: #ffffff;
 	text-align: left;
 	overflow: hidden;
-	color: #1c9c06;
 }
 
 .sneaker-chat a {
-	color: #20B007;
+	/*color: #20B007;*/
+	color: #dddddd;
 }
 
 .sneaker input {
 	background: #000;
 	margin: 7px 0 2px 0;
-	border: 1px solid #167805;
-	color: #20B007;
+	/*border: 1px solid #167805;
+	color: #20B007;*/
+	border: 1px solid #eeeeee;
+	color: #dddddd;
 }
 
 .sneaker input.sendmessage {
-	border: 1px dotted #167805;
+	/*border: 1px dotted #167805;*/
+	border: 1px dotted #eeeeee;
 	font-size: 90%;
 }

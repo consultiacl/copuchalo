@@ -4,8 +4,6 @@
 {% endif %}
 >
 
-
-
 <div class="genericform"
 {% if not globals.mobile %}
 	style="margin: 0 50px;"
@@ -14,7 +12,7 @@
 
 {% if messages %}
 	{% for e in messages %}
-		<div class="form-error-submit">&nbsp;&nbsp;{{ e }}</div>
+		<div class="form-error-submit"><i class="fa fa-warning"></i>&nbsp;&nbsp;{{ e }}</div>
 	{% endfor %}
 {% endif %}
 
@@ -23,6 +21,7 @@
 <fieldset><legend>
 <span class="sign">{% trans _('opciones de usuario') %} <a href="{%exec  get_user_uri user.username %}">{{ user.username }}</a>: {{ user.level }}</span></legend>
 
+<fieldset><legend>personal</legend>
 <img class="thumbnail" src="{% exec get_avatar_url user.id, user.avatar, 80 %}" width="80" height="80" alt="{{ user.username }}" />
 <input type="hidden" name="process" value="1" />
 <input type="hidden" name="user_id" value="{{ user.id }}" />
@@ -77,11 +76,12 @@ addPostCode(function(){$('textarea').autosize();});
 
 
 
-
+{#
 <p><label>{% trans _('mensajero instantáneo público, invisible para los demás') %}:</label><br/>
 <span class="note">{% trans _('necesario si te conectarás vía Jabber/Google Talk') %}</span><br/>
 <input type="text" autocomplete="off" name="public_info" id="public_info" value="{{ user.public_info }}" />
 </p>
+#}
 
 {#
 {% if user.id  == current_user.user_id %}
@@ -106,15 +106,24 @@ addPostCode(function(){$('textarea').autosize();});
 
 
 {% if form.avatars_enabled %}
+	<script>
+		function updateInput(textinput) { document.getElementById('upload-text').value = document.getElementById(textinput).files[0].name; }
+	</script>
 	<input type="hidden" name="MAX_FILE_SIZE" value="400000" />
 	<p><label>{% trans _('avatar') %}:</label><br/>
-	<span class="note">{% trans _('imagen cuadrada de no más de 400 KB, sin transparencias') %}</span><br/>
-	<input type="file" class="button" autocomplete="off" name="image" />
+	<span class="note">{% trans _('imagen cuadrada de menos de 400 KB, sin transparencias') %}:</span>
+
+	<label for="upload-btn"><span class="button file-upload">imagen</span></label>
+	<input type="file" class="hide-file" id="upload-btn" autocomplete="off" name="image" onchange="updateInput('upload-btn');" />
+	<input id="upload-text" placeholder="archivo" disabled="disabled" />
+
 	{% if user.avatar > 0 %}
 		&nbsp;&nbsp;&nbsp;{% trans _('Eliminar avatar') %}: <input type="checkbox" name="avatar_delete" value="1"/>
 	{% endif %}
+	<br/>
 	</p>
 {% endif %}
+</fieldset>
 
 <fieldset><legend>{% trans _('opciones de visualización') %}</legend>
 <p><label>{% trans _('mostrar todos los comentarios') %}:&nbsp;
@@ -124,9 +133,9 @@ addPostCode(function(){$('textarea').autosize();});
 </fieldset>
 
 
-
-<p>{% trans _('introduce la nueva clave para cambiarla -no se cambiará si la dejas en blanco-:') %}</p>
-
+<fieldset><legend>{% trans _('contraseña') %}</legend>
+<p>{% trans _('introduce la nueva clave para cambiarla -no se cambiará si la dejas en blanco:') %}</p>
+<br/>
 <p><label for="password">{% trans _('clave') %}:</label><br />
 <input type="password" autocomplete="off" id="password" name="password" size="25" onkeyup="return securePasswordCheck(this.form.password);"/></p>
 
@@ -146,6 +155,7 @@ addPostCode(function(){$('textarea').autosize();});
 	</p>
 
 {% endif %}
+</fieldset>
 
 <p><input type="submit" name="save_profile" value="{% trans _('actualizar') %}" class="button" /></p>
 </fieldset>
@@ -153,11 +163,13 @@ addPostCode(function(){$('textarea').autosize();});
 {# Disable the account #}
 {% if user.id  == current_user.user_id %}
 	<br/><fieldset><legend>{% trans _('deshabilitar cuenta') %}</legend>
-	<p>{% trans _('¡atención! la cuenta será deshabilitada.') %}</p>
+	<p><i class="fa fa-warning"></i>{% trans _('¡atención! la cuenta será deshabilitada.') %}</p>
+	<br/>
 	<p class="note">{% trans _('se eliminarán automáticamente los datos personales.') %}<br/>
-	{% trans _('las notas serán eliminadas, los envíos y comentarios NO se borrarán.') %}</p>
+	{% trans _('las notas serán eliminadas, los envíos y comentarios NO se borrarán.') %}</p></br>
 	<p><label>{% trans _('sí, quiero deshabilitarla') %}: <input  name="disable" type="checkbox" value="1"/>
 	</label></p>
+	<br/>
 	<p><input type="submit" name="disabledme" value="{% trans _('deshabilitar cuenta') %}" class="button" /></p>
 	</fieldset>
 {% endif %}

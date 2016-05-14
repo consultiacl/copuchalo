@@ -12,7 +12,7 @@ var base_url="{{ globals.base_url_general }}",
 	{% endif %}
 
 if (typeof window.history == "object"
-		&& (do_partial || navigator.userAgent.match(/meneame/i)) ) {
+		&& (do_partial || navigator.userAgent.match(/copuchalo/i)) ) {
 	do_partial = true;
 }
 
@@ -65,7 +65,7 @@ function redirect(url) {
 	return false;
 }
 
-function menealo(user, id) {
+function copuchalo(user, id) {
 	var url = base_url + "backend/menealo";
 	var content = "id=" + id + "&user=" + user + "&key=" + base_key + "&l=" + link_id + "&u=" + encodeURIComponent(document.referrer);
 	url = url + "?" + content;
@@ -78,7 +78,7 @@ function menealo(user, id) {
 	reportAjaxStats('vote', 'link');
 }
 
-function menealo_comment(user, id, value) {
+function copuchalo_comment(user, id, value) {
 	var url = base_url + "backend/menealo_comment";
 	var content = "id=" + id + "&user=" + user + "&value=" + value + "&key=" + base_key + "&l=" + link_id ;
 	url = url + "?" + content;
@@ -91,7 +91,7 @@ function menealo_comment(user, id, value) {
 	reportAjaxStats('vote', 'comment');
 }
 
-function menealo_post(user, id, value) {
+function copuchalo_post(user, id, value) {
 	var url = base_url + "backend/menealo_post";
 	var content = "id=" + id + "&user=" + user + "&value=" + value + "&key=" + base_key + "&l=" + link_id ;
 	url = url + "?" + content;
@@ -119,7 +119,7 @@ function update_comment_vote(id, value, data) {
 		$('#vk-'+id).html(data.karma+"");
 		$('#vc-n-'+id).hide();
 		if (value < 0) {
-			$('#vc-p-'+id).removeClass('up').addClass('down');
+			$('#vc-p-'+id).removeClass('fa-arrow-circle-up').addClass('fa-arrow-circle-down');
 		}
 	}
 }
@@ -279,9 +279,9 @@ function add_remove_sub(id, change) {
 			}
 			$button = $('#follow_b_'+id);
 			if (data.value) {
-				$button.addClass("on").removeClass("off");
+				$button.addClass("fa-star").removeClass("fa-star-o");
 			} else {
-				$button.addClass("off").removeClass("on");
+				$button.addClass("fa-star-o").removeClass("fa-star");
 			}
 		}
 	, "json");
@@ -298,9 +298,9 @@ function add_remove_fav(element, type, id) {
 					return;
 				}
 				if (data.value) {
-					$('#'+element).addClass("on");
+					$('#'+element).removeClass("fa-star-o").addClass("fa-star");
 				} else {
-					$('#'+element).removeClass("on");
+					$('#'+element).removeClass("fa-star").addClass("fa-star-o");
 				}
 		}
 	, "json");
@@ -1013,7 +1013,7 @@ function show_total_answers(type, id, answers) {
 	if (type == 'comment') dom_id = '#cid-'+ id;
 	else dom_id = '#pid-'+ id;
 	element = $(dom_id).siblings(".comment-meta").children(".comment-votes-info");
-	element.append('&nbsp;<span onClick="javascript:show_answers(\''+type+'\','+id+')" title="'+answers+' {% trans _('respuestas') %}" class="answers"><span class="counter">'+answers+'</span></span>');
+	element.append('&nbsp;<div class="reply-all" onClick="javascript:show_answers(\''+type+'\','+id+')" title="'+answers+' {% trans _('respuestas') %}"><span class="fa fa-reply-all"></span><span class="counter">'+answers+'</span></div>');
 }
 
 function show_answers(type, id) {
@@ -1091,7 +1091,6 @@ function share_tw(e) {
 (function () {
 	var panel = false;
 
-
 	$("#nav-menu").on('click', function() {
 		prepare();
 		if (panel.is(":visible")) {
@@ -1118,9 +1117,11 @@ function share_tw(e) {
 		if (is_mobile) {
 			panel.append($('#searchform'));
 			panel.append($('#header-menu .header-menu01'));
+			panel.append($('#header-center .header-menu02'));
 		} else {
 			panel.append($('#searchform').clone());
 			panel.append($('#header-menu .header-menu01').clone());
+			panel.append($('#header-center .header-menu02').clone());
 		}
 	};
 
@@ -1132,6 +1133,32 @@ function share_tw(e) {
 		}
 	};
 })();
+
+
+/* User Menu */
+(function () {
+	var panel = $('#user-panel');
+
+	$("#usermenu").on('click', function() {
+		if (panel.is(":visible")) {
+			$('html').off('click', click_handler);
+			panel.hide();
+		} else {
+			$('html').on('click', click_handler);
+			panel.show();
+		}
+	});
+
+	function click_handler(e) {
+		if (! panel.is(":visible")) return;
+		if ($(e.target).closest('#user-panel, #usermenu').length == 0) {
+			panel.hide();
+			$('html').off('click', click_handler);
+			e.preventDefault();
+		}
+	};
+})();
+
 
 /* Back to top plugin
  * From http://www.jqueryscript.net/demo/Customizable-Back-To-Top-Button-with-jQuery-backTop/
@@ -1607,11 +1634,12 @@ var fancyBox = new function () {
 
 	function click_handler(e) {
 		if (! panel_visible) return;
-		if ($(e.target).closest('#notifier_panel').length == 0) {
+		if ($(e.target).closest('#notifier, #notifier_panel').length == 0) {
 			/* click happened outside */
 			hide();
 			e.preventDefault();
 		}
+
 	};
 
 	function click() {
@@ -1619,15 +1647,16 @@ var fancyBox = new function () {
 			panel_visible = true;
 			$e = $('<div id="notifier_panel"> </div>');
 			$e.appendTo("body");
-			$('html').one('click', click_handler);
+			$('html').on('click', click_handler);
 
 			data = decode_data(readStorage("n_"+user_id));
 
 			var a = ['privates', 'posts', 'comments', 'friends'];
+			var b = ['fa-envelope', 'fa-pencil-square-o', 'fa-commenting', 'fa-users'];
 			for (var i=0; i < a.length; i++) {
 				field = a[i];
 				var counter = (data && data[field]) ? data[field] : 0;
-				$e.append("<div class='"+field+"'><a href='"+base_url_sub+"go?id="+user_id+"&what="+field+"'>" + counter + " " + field_text(field) + "</a></div>");
+				$e.append("<div><a href='"+base_url_sub+"go?id="+user_id+"&what="+field+"'><i class='fa "+b[i]+"'></i>" + counter + " " + field_text(field) + "</a></div>");
 			}
 			$e.show();
 			check_counter = 0;
@@ -1640,6 +1669,7 @@ var fancyBox = new function () {
 
 
 	function hide() {
+		$('html').off('click', click_handler);
 		$("#notifier_panel").remove();
 		panel_visible = false;
 	};
@@ -1689,7 +1719,7 @@ var fancyBox = new function () {
 
 		document.title = document.title.replace(/^\(\d+\) /, '');
 		area.html(data.total);
-		 $('#p_c_counter').html(data.posts);
+		$('#p_c_counter').html(data.posts);
 		if (data.total > 0) {
 			area.addClass('nonzero');
 			document.title = '('+data.total+') ' + document.title;

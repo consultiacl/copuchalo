@@ -1,7 +1,7 @@
 {% if errors %}
 	<div>
 	{% for title, messages in errors %}
-		<p class="error">{{ title }}</p>
+		<p class="error"><i class="fa fa-warning"></i>{{ title }}</p>
 		{% for m in messages %}
 			<p class="error-text">{{ m }}</p>
 		{% endfor %}

@@ -1,16 +1,17 @@
-#! /usr/bin/env php
-<?
+#!/usr/bin/php
+
+<?php
 // Post to Twitter/Jaiku the "top story"
 // Check which hostname server we run for, for example: mnm, emnm
 
-include(dirname(__FILE__).'/../www/config.php');
+include('../config.php');
 include(mnminclude.'external_post.php');
 
 $site_name = $argv[1];
 $my_id = SitesMgr::get_id($site_name);
 
 if (! $my_id > 0) {
-	syslog(LOG_INFO, "Meneame, ".basename(__FILE__)." site not found $site_name");
+	syslog(LOG_INFO, basename(__FILE__)." site not found $site_name");
 	echo "No site id found\n";
 	die;
 }

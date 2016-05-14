@@ -10,59 +10,49 @@ function twitter_post($auth, $text, $short_url, $image = false) {
 	global $globals;
 
 	if (empty($auth['twitter_token']) || empty($auth['twitter_token_secret']) || empty($auth['twitter_consumer_key']) ||  empty($auth['twitter_consumer_secret'])) {
+		syslog(LOG_NOTICE, "consumer_key, consumer_secret, token, or token_secret not defined");
 		return false;
-	}	
-
-	if (!class_exists("OAuth")) {
-			syslog(LOG_NOTICE, "Meneame: pecl/oauth is not installed");
-			return;
 	}
 
-	if (! $auth['twitter_consumer_key'] || ! $auth['twitter_consumer_secret']
-		|| ! $auth['twitter_token'] || ! $auth['twitter_token_secret']) {
-			syslog(LOG_NOTICE, "Meneame: consumer_key, consumer_secret, token, or token_secret not defined");
-			return;
-	}
+	// add the codebird library
+	require_once('codebird/codebird.php');
 
-	$req_url = 'https://api.twitter.com/oauth/request_token';
-	$acc_url = 'https://api.twitter.com/oauth/access_token';
-	$authurl = 'https://api.twitter.com/oauth/authorize';
-	$api_url = 'https://api.twitter.com/1.1/statuses/update.json';
-	$api_media_url = 'https://api.twitter.com/1.1/statuses/update_with_media.json';
+	try{
+		Codebird::setConsumerKey($auth['twitter_consumer_key'], $auth['twitter_consumer_secret']);
+		$cb = Codebird::getInstance();
+		$cb->setToken($auth['twitter_token'], $auth['twitter_token_secret']);
 
-	$api_args = array("empty_param" => NULL);
+ 		$maxlen = 140 - 24; // minus the url length
+		$msg = mb_substr(text_to_summary(html_entity_decode($text), $maxlen), 0, $maxlen);
+		$message = $msg . ' ' . $short_url;
 
-	$maxlen = 140 - 24; // minus the url length
-	if ($image) {
-		$maxlen -= 24;
-		echo "Adding image: $image\n";
-		$api_args['@media[]'] = '@'.$image;
-		$url = $api_media_url;
-	} else {
-		$url = $api_url;
-	}
+		if($image) {
+			//build an array of images to send to twitter
+			$reply = $cb->media_upload(array(
+				'media' => $image
+			));
+			//upload the file to your twitter account
+			$mediaID = $reply->media_id_string;
 
-	$msg = mb_substr(text_to_summary(html_entity_decode($text), $maxlen), 0, $maxlen);
-	$msg_full = $msg . ' ' . $short_url;
-	$api_args["status"] = $msg_full;
-
-	$oauth = new OAuth($auth['twitter_consumer_key'],$auth['twitter_consumer_secret'],OAUTH_SIG_METHOD_HMACSHA1,OAUTH_AUTH_TYPE_URI);
-	$oauth->debug = 1;
-	$oauth->setRequestEngine( OAUTH_REQENGINE_CURL ); // For posting images
-	$oauth->setToken($auth['twitter_token'], $auth['twitter_token_secret']);
-
-
-	try {
-		$oauth->fetch($url, $api_args, OAUTH_HTTP_METHOD_POST, array("User-Agent" => "pecl/oauth"));
+			//build the data needed to send to twitter, including the tweet and the image id
+			$params = array(
+				'status' => $message,
+				'media_ids' => $mediaID
+			);
+		} else {
+			$params = array(
+				'status' => $message
+			);
+		}
+		//post the tweet with codebird
+		$reply = $cb->statuses_update($params);
 	} catch (Exception $e) {
-		syslog(LOG_INFO, 'Menéame, Twitter caught exception: '.  $e->getMessage(). " in ".basename(__FILE__)."\n");
-		echo "Twitter post failed: $msg " . mb_strlen($msg) . "\n";
-		return false;
-	}
+                syslog(LOG_INFO, "Twitter caught exception: " . $e->getMessage() . " in " . basename(__FILE__) . "\n");
+                echo "Twitter post failed: $msg " . mb_strlen($msg) . "\n";
+                return false;
+        }
 
-	// $response_info = $oauth->getLastResponseInfo();
-	// echo $oauth->getLastResponse() . "\n";
-
+	syslog(LOG_INFO, "Published to Twitter: $message");
 	return true;
 }
 
@@ -85,54 +75,57 @@ function pubsub_post() {
 	$rss = 'http://'.get_server_name().$globals['base_url'].'rss';
 	$p = new Publisher($globals['pubsub']);
 	if ($p->publish_update($rss)) {
-		syslog(LOG_NOTICE, "Meneame: posted to pubsub ($rss)");
+		syslog(LOG_NOTICE, "posted to pubsub ($rss)");
 	} else {
-		syslog(LOG_NOTICE, "Meneame: failed to post to pubsub ($rss)");
+		syslog(LOG_NOTICE, "failed to post to pubsub ($rss)");
 	}
 }
-
 
 function facebook_post($auth, $link, $text = '') {
 	global $globals;
 
-	if (empty($auth['facebook_token']) || empty($auth['facebook_key']) || empty($auth['facebook_secret'])) {
+	if (empty($auth['facebook_token']) || empty($auth['facebook_key']) || empty($auth['facebook_secret']) || empty($auth['facebook_page_id'])) {
 		return false;
 	}
 
-	require_once(mnminclude.'facebook/facebook.php');
+	require_once __DIR__ . '/Facebook/autoload.php';
 
+	// copuchalo APP
+	$fb = new Facebook\Facebook([
+		'app_id' => $auth['facebook_key'],
+		'app_secret' => $auth['facebook_secret'],
+		'default_graph_version' => 'v2.5',
+		'default_access_token' => $auth['facebook_token']
+	]);
 
-	$facebook = new Facebook(array(
-		 'appId'  => $auth['facebook_key'],
-		 'secret' => $auth['facebook_secret'],
-		 'cookie' => true,
-		 'perms' => 'read_stream, publish_stream',
-	));
-
-	$thumb = $link->has_thumb();
-	if ($thumb) {
-		if ($link->media_url) {
-			$thumb = $link->media_url;
-		}
+	if ($link->has_thumb() && !empty($link->media_url)) {
+		$thumb = $link->media_url;
 	} else {
 		$thumb = get_avatar_url($link->author, $link->avatar, 80);
 	}
 
 	$permalink = $link->get_permalink();
-	syslog(LOG_INFO, "Meneame, $permalink picture sent to FB: $thumb");
 
-	$data = array(
-				'link' => $permalink,
-				'message' => $text,
-				'access_token' => $auth['facebook_token'],
-				'picture' => $thumb
-			);
+	$data = [
+		'link' => $permalink,
+		'picture' => $thumb,
+	];
+
+	if($text != '') {
+		$data['message'] = $text;
+	}
 
 	try {
-		$r = $facebook->api('/me/links', 'POST', $data);
-	} catch (Exception $e) {
-		syslog(LOG_INFO, 'Menéame, Facebook caught exception: '.  $e->getMessage(). " in ".basename(__FILE__)."\n");
+		$response = $fb->post('/'.$auth['facebook_page_id'].'/feed', $data);
+	} catch(Facebook\Exceptions\FacebookResponseException $e) {
+		syslog(LOG_INFO, "Graph returned an error: " . $e->getMessage() . " in " . basename(__FILE__) . "\n");
+		return false;
+	} catch(Facebook\Exceptions\FacebookSDKException $e) {
+		syslog(LOG_INFO, "Facebook SDK returned an error: " . $e->getMessage() . " in " . basename(__FILE__) . "\n");
 		return false;
 	}
+
+	syslog(LOG_INFO, "Published to FB: $permalink with picture: $thumb");
 	return true;
 }
+

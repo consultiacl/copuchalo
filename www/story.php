@@ -292,9 +292,7 @@ if ($link->latlng) {
 }
 if (! $current_user->user_id) {
 	do_most_clicked_stories();
-}
-do_banner_promotions();
-if (! $current_user->user_id) {
+	do_banner_promotions();
 	do_best_stories();
 }
 do_rss_box();
@@ -308,6 +306,7 @@ switch ($tab_option) {
 case 1:
 case 2:
 	echo '<div class="comments">';
+	if($link->comments > 0) echo '<div class="comments-page-header">comentarios</div>';
 
 	if($tab_option == 1) {
 		print_external_analysis($link);
@@ -466,6 +465,8 @@ case 9:
 /////////////// TODO: in progress
 case 10:
 	echo '<div class="comments">';
+	if($link->comments > 0) echo '<div class="comments-page-header">comentarios</div>';
+
 	include_once(mnminclude.'commenttree.php');
 	$tree = new CommentTree();
 
@@ -535,32 +536,61 @@ function print_story_tabs($option) {
 	global $globals, $db, $link, $current_user;
 
 	$active = array();
-	$active[$option] = 'selected ';
+	$active[$option] = 'selected';
 
-	echo '<ul class="subheader">';
-	echo '<li class="'.$active[1].'"><a href="'.$globals['permalink'].'/standard">'._('ordenados'). '</a></li>';
-	echo '<li class="'.$active[10].'"><a href="'.$globals['permalink'].'/threads">'._('hilos'). '</a></li>';
-	echo '<li class="'.$active[2].'"><a href="'.$globals['permalink'].'/best-comments">'._('+ valorados'). '</a></li>';
-	//echo '<li class="'.$active[9].'wideonly"><a href="'.$globals['permalink'].'/answered">'._('+ respondidos'). '</a></li>';
-	if (!$globals['bot']) { // Don't show "empty" pages to bots, Google can penalize too
-		if ($globals['link']->sent_date > $globals['now'] - 86400*60) { // newer than 60 days
-			echo '<li class="'.$active[3].'"><a href="'.$globals['permalink'].'/voters">'._('votos'). '</a></li>';
-		}
-		if ($globals['link']->sent_date > $globals['now'] - 86400*30) { // newer than 30 days
-			echo '<li class="'.$active[4].'"><a href="'.$globals['permalink'].'/log">'._('registros'). '</a></li>';
-		}
-		if ($globals['link']->date > $globals['now'] - $globals['time_enabled_comments']) {
-			echo '<li class="'.$active[5].'wideonly"><a href="'.$globals['permalink'].'/sneak">&micro;&nbsp;'._('fisgona'). '</a></li>';
-		}
-
+	if( $globals['mobile'] ) {
+		echo '<div class="subheader">';
+		echo '<form class="tabs-combo" action="">';
+		echo '<select name="tabs" onchange="location = this.value;">';
+			echo '<option value="'.$globals['permalink'].'/standard" '.$active[1].'>'._('ordenados').'</option>';
+			echo '<option value="'.$globals['permalink'].'/threads" '.$active[10].'>'._('hilos').'</option>';
+			echo '<option value="'.$globals['permalink'].'/best-comments" '.$active[2].'>'._('+ valorados').'</option>';
+			if (!$globals['bot']) { // Don't show "empty" pages to bots, Google can penalize too
+				if ($globals['link']->sent_date > $globals['now'] - 86400*60) { // newer than 60 days
+					echo '<option value="'.$globals['permalink'].'/voters" '.$active[3].'>'._('votos').'</option>';
+				}
+				if ($globals['link']->sent_date > $globals['now'] - 86400*30) { // newer than 30 days
+					echo '<option value="'.$globals['permalink'].'/log" '.$active[4].'>'._('registros').'</option>';
+				}
+				if ($globals['link']->date > $globals['now'] - $globals['time_enabled_comments']) {
+					echo '<option value="'.$globals['permalink'].'/sneak" '.$active[5].'>&micro;&nbsp;'._('sapeo').'</option>';
+				}
+			}
+			if ($current_user->user_id > 0) {
+				if (($c = $db->get_var("SELECT count(*) FROM favorites WHERE favorite_type = 'link' and favorite_link_id=$link->id")) > 0) {
+					echo '<option value="'.$globals['permalink'].'/favorites" '.$active[6].'>'._('favoritos')."&nbsp;($c)</option>";
+				}
+			}
+			echo '<option value="'.$globals['permalink'].'/related" '.$active[8].'>'._('relacionadas').'</option>';
+		echo '</select>';
+		echo '</form>';
+		echo '</div>';
 	}
-	if ($current_user->user_id > 0) {
-		if (($c = $db->get_var("SELECT count(*) FROM favorites WHERE favorite_type = 'link' and favorite_link_id=$link->id")) > 0) {
-			echo '<li class="'.$active[6].'wideonly"><a href="'.$globals['permalink'].'/favorites">'._('favoritos')."&nbsp;($c)</a></li>";
+	else {
+		echo '<ul class="subheader">';
+		echo '<li class="'.$active[1].'"><a href="'.$globals['permalink'].'/standard">'._('ordenados'). '</a></li>';
+		echo '<li class="'.$active[10].'"><a href="'.$globals['permalink'].'/threads">'._('hilos'). '</a></li>';
+		echo '<li class="'.$active[2].'"><a href="'.$globals['permalink'].'/best-comments">'._('+ valorados'). '</a></li>';
+		//echo '<li class="'.$active[9].'wideonly"><a href="'.$globals['permalink'].'/answered">'._('+ respondidos'). '</a></li>';
+		if (!$globals['bot']) { // Don't show "empty" pages to bots, Google can penalize too
+			if ($globals['link']->sent_date > $globals['now'] - 86400*60) { // newer than 60 days
+				echo '<li class="'.$active[3].'"><a href="'.$globals['permalink'].'/voters">'._('votos'). '</a></li>';
+			}
+			if ($globals['link']->sent_date > $globals['now'] - 86400*30) { // newer than 30 days
+				echo '<li class="'.$active[4].'"><a href="'.$globals['permalink'].'/log">'._('registros'). '</a></li>';
+			}
+			if ($globals['link']->date > $globals['now'] - $globals['time_enabled_comments']) {
+				echo '<li class="'.$active[5].'wideonly"><a href="'.$globals['permalink'].'/sneak">&micro;&nbsp;'._('fisgona'). '</a></li>';
+			}
 		}
+		if ($current_user->user_id > 0) {
+			if (($c = $db->get_var("SELECT count(*) FROM favorites WHERE favorite_type = 'link' and favorite_link_id=$link->id")) > 0) {
+				echo '<li class="'.$active[6].'wideonly"><a href="'.$globals['permalink'].'/favorites">'._('favoritos')."&nbsp;($c)</a></li>";
+			}
+		}
+		echo '<li class="'.$active[8].'wideonly"><a href="'.$globals['permalink'].'/related">'._('relacionadas'). '</a></li>';
+		echo '</ul>';
 	}
-	echo '<li class="'.$active[8].'wideonly"><a href="'.$globals['permalink'].'/related">'._('relacionadas'). '</a></li>';
-	echo '</ul>';
 }
 
 function do_comment_pages($total, $current, $reverse = true) {

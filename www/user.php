@@ -209,11 +209,6 @@ switch ($view) {
 		do_shaken_comments();
 		if (! $globals['bot']) do_pages($rows, $page_size);
 		break;
-/*
-	case 'categories':
-		do_categories();
-		break;
-*/
 	case 'conversation':
 		do_conversation();
 		if (! $globals['bot']) do_pages($rows, $page_size, false);
@@ -236,7 +231,6 @@ function do_profile() {
 
 	$options = array();
 	$options[$user->username] = get_user_uri($user->username);
-	//$options[_('categorías personalizadas')] = get_user_uri($user->username, 'categories');
 	if ($current_user->user_id == $user->id || $current_user->user_level == 'god') {
 		$options[_('modificar perfil').' &rarr;'] = $globals['base_url'].'profile?login='.urlencode($login);
 		$globals['extra_js'][] = 'jquery.flot.min.js';
@@ -317,7 +311,7 @@ function do_profile() {
 	$vars = compact(
 		'post', 'options', 'selected', 'rss', 'rss_title', 'geodiv',
 		'user', 'my_latlng', 'url', 'nofollow', 'nclones', 'show_email',
-		'entropy', 'percent', 'geo_form', 'addresses', 'friend_icon'
+		'entropy', 'percent', 'geo_form', 'addresses', 'friend_icon', 'globals'
 	);
 
 	return Haanga::Load('/user/profile.html', $vars);
@@ -372,14 +366,16 @@ function do_shaken () {
 			if ($link->author == $user->id) continue;
 			echo '<div style="max-width: 60em">';
 			$link->print_summary('short', 0, false);
+			/*
 			if ($linkdb->vote_value < 0) {
 				echo '<div class="box" style="z-index:1;margin:0 0 -5x 0;background:#FF3333;position:relative;top:-5px;left:85px;width:8em;padding: 1px 1px 1px 1px;border-color:#f00;opacity:0.9;text-align:center;font-size:0.9em;color:#fff;text-shadow: 0 1px 0 #000">';
 				echo get_negative_vote($linkdb->vote_value);
 				echo "</div>\n";
 			}
 			echo "</div>\n";
+			*/
 		}
-		echo '<br/><span style="color: #FF6400;"><strong>'._('Nota').'</strong>: ' . _('sólo se visualizan los votos de los últimos meses') . '</span><br />';
+		echo '<br/><span style="color:#e2005b;"><strong>'._('Nota').'</strong>: ' . _('sólo se visualizan los votos de los últimos meses') . '</span><br />';
 	}
 }
 
@@ -469,14 +465,14 @@ function do_shaken_comments () {
 		echo '<ol class="comments-list">';
 		foreach($comments as $c) {
 			$comment = Comment::from_db($c->id);
-			if ($c->value > 0) $color = '#00d';
-			else $color = '#f00';
+			//if ($c->value > 0) $color = '#00d';
+			//else $color = '#f00';
 			if ($comment->author != $user->id && ! $comment->admin) {
 				echo '<li>';
 				// link_object
-				$comment->print_summary(1000, false);
-				echo '<div class="box" style="margin:0 0 -16px 0;background:'.$color.';position:relative;top:-34px;left:30px;width:30px;height:16px;border-color:'.$color.';opacity: 0.5"></div>';
-				echo '</li>';
+				$comment->print_summary(1000, false, false, $c->value);
+				//echo '<div class="box" style="margin:0 0 -16px 0;background:'.$color.';position:relative;top:-34px;left:30px;width:30px;height:16px;border-color:'.$color.';opacity: 0.5"></div>';
+				//echo '</li>';
 			}
 		}
 		echo "</ol>\n";
@@ -497,8 +493,9 @@ function print_comment_list($comments, $user) {
 		if ($comment->type == 'admin' && ! $current_user->admin && $user->id == $comment->author) continue;
 		if ($last_link != $dbcomment->link_id) {
 			$link = Link::from_db($dbcomment->link_id, null, false); // Read basic
+			if($last_link != 0) echo '<div style="border-top: solid 1px;margin-bottom:20px;margin-top:-15px"></div>';
 			echo '<h4>';
-			echo '<a href="'.$link->get_permalink().'">'. $link->title. '</a>';
+			echo '<a class="link-comment-header" href="'.$link->get_permalink().'">'. $link->title. '</a>';
 			echo ' ['.$link->comments.']';
 			echo '</h4>';
 			$last_link = $link->id;

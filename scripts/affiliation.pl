@@ -12,7 +12,9 @@ my %shared_links;
 my %voted_links;
 my %count_links;
 
-my $dbh = DBI->connect ('DBI:mysql:meneame', 'meneame', '');
+my %config = do 'config.pl';
+
+my $dbh = DBI->connect ($config{dblink}, $config{username}, $config{password});
 
 my $from = time() - 3600*24*60; # Last 2 months
 

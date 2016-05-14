@@ -75,14 +75,16 @@ function print_period_tabs() {
 	global $globals, $current_user, $range_values, $range_names;
 
 	if(!($current_range = check_integer('range')) || $current_range < 1 || $current_range >= count($range_values)) $current_range = 0;
-	echo '<ul class="subheader">'."\n";
+
+	echo ($globals['mobile'] ? '<div class="subheader"><form class="tabs-combo" action=""><select name="tabs" onchange="location = this.value;">' : '<ul class="subheader">');
+
 	for($i=0; $i<count($range_values)-1; $i++) {
 		if($i == $current_range)  {
-			$active = ' class="selected"';
+			$active = ($globals['mobile'] ? ' selected' : ' class="selected"');
 		} else {
 			$active = "";
 		}
-		echo '<li'.$active.'><a href="sitescloud.php?range='.$i.'">' .$range_names[$i]. '</a></li>'."\n";
+		echo ($globals['mobile'] ? '<option value="sitescloud?range='.$i.'"'.$active.'>'.$range_names[$i].'</option>' : '<li'.$active.'><a href="sitescloud?range='.$i.'">' .$range_names[$i]. '</a></li>');
 	}
-	echo '</ul>'."\n";
+	echo ($globals['mobile'] ? '</select></form></div>' : '</ul>');
 }

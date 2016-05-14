@@ -1,8 +1,8 @@
 <?php
+
 if (! defined('mnmpath')) {
 	include_once('../config.php');
 }
-
 include_once(mnmpath.'/libs/avatars.php');
 
 if (! isset($_GET['id']) && !empty($_GET['user'])) {
@@ -10,6 +10,7 @@ if (! isset($_GET['id']) && !empty($_GET['user'])) {
 } else {
 	$id = intval($_GET['id']);
 }
+
 if (! $id > 0) {
 	header("HTTP/1.0 404 Not Found");
 	header("Status: 404 Not Found");
@@ -33,9 +34,8 @@ if (isset($_GET['time']) && $_GET['time'] != $time) {
 	die;
 }
 
-
 if (!($img=avatar_get_from_file($id, $size, $time))) {
-	//syslog(LOG_INFO, "Meneame, creating avatar for user $id size $size time $time");
+	syslog(LOG_INFO, "creating avatar for user $id size $size time $time");
 	$img=avatar_get_from_db($id, $size);
 }
 

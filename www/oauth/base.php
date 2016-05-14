@@ -137,4 +137,3 @@ class OAuthBase {
 		exit;
 	}
 }
-?>

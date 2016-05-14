@@ -1,4 +1,5 @@
-<?
+<?php
+
 // This file checks the rss of a blog against its url.
 // If they don't agrre, store a new url
 include('../config.php');

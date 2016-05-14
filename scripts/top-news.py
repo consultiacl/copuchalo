@@ -23,7 +23,7 @@ def do_site(site_id, site):
 		from links, sub_statuses
 		where sub_statuses.id = %s
 			and status = 'published'
-			and date > date_sub(now(), interval 24 hour)
+			and date > date_sub(now(), interval 30 day)
 			and link = link_id
 			and link_votes/20 > link_negatives
 		order by link_date desc
@@ -57,9 +57,9 @@ def do_site(site_id, site):
 		from votes
 		where vote_link_id in (%s)
 			and vote_type='links'
-			and vote_date > date_sub(now(), interval 12 hour)
+			and vote_date > date_sub(now(), interval 30 day)
 			and vote_user_id > 0
-			and vote_value > 6.1
+			and vote_value > 6
 		group by vote_link_id
 		order by x desc
 	"""  % links_format
@@ -91,7 +91,7 @@ def do_site(site_id, site):
 			count(*)
 		from comments
 		where comment_link_id in (%s)
-			and comment_date > date_sub(now(), interval 12 hour)
+			and comment_date > date_sub(now(), interval 30 day)
 		group by comment_link_id
 	""" % links_format
 	cursor.execute(query, tuple(links))
@@ -144,7 +144,7 @@ def do_site(site_id, site):
 		query = """
 			replace into annotations
 				(annotation_key, annotation_expire, annotation_text)
-				values (%s, date_add(now(), interval 15 minute), %s)
+				values (%s, date_add(now(), interval 10 day), %s)
 		"""
 		cursor_update.execute(query, ('top-actives-'+site, annotations))
 		cursor_update.close()
@@ -172,7 +172,7 @@ def do_site(site_id, site):
 		query = """
 			replace into annotations
 				(annotation_key, annotation_expire, annotation_text)
-				values (%s, date_add(now(), interval 10 minute), %s)
+				values (%s, date_add(now(), interval 10 day), %s)
 		"""
 		cursor_update.execute(query, ('top-link-'+site, annotations))
 		cursor_update.close()

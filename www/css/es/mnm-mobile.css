@@ -30,12 +30,14 @@ a {
 text-decoration: none;
 outline: none;
 vertical-align: baseline;
-color: #03a;
+/*color: #03a;*/
+color: #666;
 }
 
 a:hover, a:focus {
 text-decoration: underline;
-color: #ff6400;
+/*color: #ff6400;*/
+color: #777777;
 }
 
 a:active {
@@ -43,14 +45,16 @@ color: #000;
 }
 
 a:visited {
-color: #551a8b;
+/*color: #551a8b;*/
+color: #778877;
 }
 
 #header {
 min-width: 315px;
 height: 30px;
 overflow: hidden;
-background: #ff6400;
+/*background: #ff6400;*/
+background: #777777;
 }
 
 #logo {
@@ -59,7 +63,8 @@ float: left;
 width: 141px;
 height: 30px;
 text-indent: -9999px;
-background: #ff6400 url('../../img/mnm/logobg01.png') no-repeat left top;
+/*background: #ff6400 url('../../img/mnm/logobg01.png') no-repeat left top;*/
+background: #777777 url('../../img/mnm/logobg01.png') no-repeat left top;
 }
 
 #headtools {

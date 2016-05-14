@@ -365,7 +365,7 @@ function do_submit1() {
 			if ($ratio <  $threshold ) {
 				if ($db->get_var("select count(*) from links where link_author=$current_user->user_id and link_date > date_sub(now(), interval 60 day) and link_blog = $blog->id") > 2) {
 					syslog(LOG_NOTICE, "Meneame, forbidden due to low entropy: $ratio <  $threshold  ($current_user->user_login): $link->url");
-					add_submit_error( _('ya has enviado demasiados enlaces a los mismos sitios'), _('varía las fuentes, podría ser considerado spam'));
+					add_submit_error( _('ya ha enviado demasiados enlaces a los mismos sitios'), _('varía las fuentes, podría ser considerado spam'));
 					return false;
 				}
 			}
@@ -377,7 +377,7 @@ function do_submit1() {
 			$image_links = intval($db->get_var("select count(*) from links, subs, sub_statuses where link_author=$current_user->user_id and link_date > date_sub(now(), interval 60  day) and link_content_type in ('image', 'video') and sub_statuses.link=link_id and subs.id = sub_statuses.id and sub_statuses.origen = sub_statuses.id and subs.parent=0 and subs.owner = 0"));
 			if ($image_links > $sents * 0.8) {
 				syslog(LOG_NOTICE, "Meneame, forbidden due to too many images or video sent by user ($current_user->user_login): $link->url");
-				add_submit_error( _('ya has enviado demasiadas imágenes o vídeos'));
+				add_submit_error( _('ya ha enviado demasiadas imágenes o vídeos'));
 				return false;
 			}
 		}
@@ -396,8 +396,8 @@ function do_submit1() {
 		$same_blog = $db->get_var("select count(*) from links where link_date > date_sub(now(), interval $minutes minute) and link_author=$current_user->user_id and link_blog=$link->blog and link_votes > 0");
 		if ($same_blog > 0 && $current_user->user_karma < 12) {
 			syslog(LOG_NOTICE, "Meneame, forbidden due to short period between links to same site ($current_user->user_login): $link->url");
-			add_submit_error( _('ya has enviado un enlace al mismo sitio hace poco tiempo'),
-				_('debes esperar'). " $minutes " . _('minutos entre cada envío al mismo sitio.') . ', ' . '<a href="'.$globals['base_url_general'].'faq-'.$dblang.'.php">'._('lee el FAQ').'</a>');
+			add_submit_error( _('ya ha enviado un enlace al mismo sitio hace poco tiempo'),
+				_('debe esperar'). " $minutes " . _('minutos entre cada envío al mismo sitio.') . ', ' . '<a href="'.$globals['base_url_general'].'faq-'.$dblang.'.php">'._('lee el FAQ').'</a>');
 			return false;
 		}
 
@@ -406,7 +406,7 @@ function do_submit1() {
 
 		$check_history =  $sents > 3 && $same_blog > 0 && ($ratio = $same_blog/$sents) > 0.5;
 		if ($check_history) {
-			$e = _('has enviado demasiados enlaces a')." $blog->url";
+			$e = _('ha enviado demasiados enlaces a')." $blog->url";
 			if ($sents > 5 && $ratio > 0.75) {
 				add_submit_error( $e, _('has superado los límites de envíos de este sitio'));
 				// don't allow to continue
@@ -414,7 +414,7 @@ function do_submit1() {
 				return false;
 			} else {
 				add_submit_error( $e,
-					_('continúa, pero ten en cuenta podría recibir votos negativos').', '. '<a href="'.$globals['base_url'].$globals['legal'].'">'._('condiciones de uso').'</a>');
+					_('continúe, pero tenga en cuenta que podría recibir votos negativos').' '. '<a href="'.$globals['base_url_general'].$globals['legal'].'">'._('(condiciones de uso)').'</a>');
 				syslog(LOG_NOTICE, "Meneame, warn, high ratio, continue ($current_user->user_login): $link->url");
 			}
 		}
@@ -427,7 +427,7 @@ function do_submit1() {
 
 			if ($site_links > 10 && $site_links > $links_12hs * 0.05) { // Only 5% from the same site
 				syslog(LOG_NOTICE, "Meneame, forbidden due to overflow to the same site ($current_user->user_login): $link->url");
-				add_submit_error( _('hay en cola demasiados envíos del mismo sitio, espera unos minutos por favor'),
+				add_submit_error( _('hay en cola demasiados envíos del mismo sitio, espere unos minutos por favor'),
 					_('total en 12 horas').": $site_links , ". _('el máximo actual es'). ': ' . intval($links_12hs * 0.05));
 				return false;
 			}
@@ -438,7 +438,7 @@ function do_submit1() {
 				$image_links = intval($db->get_var("select count(*) from links, subs, sub_statuses where link_date > date_sub(now(), interval 12 hour) and link_content_type in ('image', 'video') and sub_statuses.link=link_id and subs.id = sub_statuses.id and sub_statuses.origen = sub_statuses.id and subs.parent=0 and subs.owner = 0"));
 				if ($image_links > 5 && $image_links > $links_12hs * 0.15) { // Only 15% images and videos
 					syslog(LOG_NOTICE, "Meneame, forbidden due to overflow images ($current_user->user_login): $link->url");
-					add_submit_error( _('ya se han enviado demasiadas imágenes o vídeos, espera unos minutos por favor'),
+					add_submit_error( _('ya se han enviado demasiadas imágenes o vídeos, espere unos minutos por favor'),
 						_('total en 12 horas').": $image_links , ". _('el máximo actual es'). ': ' . intval($links_12hs * 0.05));
 					return false;
 				}
@@ -513,11 +513,20 @@ function do_submit2() {
 	}
 
 	$link->store();
+
 	// Check image upload or delete
 	if ($_POST['image_delete']) {
 		$link->delete_image();
 	} else {
 		$link->store_image_from_form('image');
+	}
+
+	// Get image if selected or have an image url
+	if ($_POST['thumb_get']) {
+		$link->get_thumb();
+	} elseif (!empty($_POST['thumb_url'])) {
+		$url = clean_input_url($_POST['thumb_url']);
+		$link->get_thumb(false, $url);
 	}
 
 	$link->read();

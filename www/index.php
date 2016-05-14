@@ -92,7 +92,6 @@ do_most_clicked_sites();
 if ($page < 2) {
 	do_best_comments();
 }
-// do_categories_cloud('published');
 do_last_subs('published');
 do_vertical_tags('published');
 // do_last_blogs();
@@ -116,13 +115,19 @@ if (!$rows) $rows = $db->get_var("SELECT SQL_CACHE count(*) FROM sub_statuses $f
 // We use a "INNER JOIN" in order to avoid "order by" whith filesorting. It was very bad for high pages
 $sql = "SELECT".Link::SQL."INNER JOIN (SELECT link FROM sub_statuses $from WHERE $where $order_by LIMIT $offset,$page_size) as ids ON (ids.link = link_id)";
 
+//syslog(LOG_INFO, "meta: ".$globals['meta']);
+//syslog(LOG_INFO, "sql1: SELECT SQL_CACHE count(*) FROM sub_statuses $from WHERE $where");
+//syslog(LOG_INFO, "SELECT".Link::SQL."INNER JOIN (SELECT link FROM sub_statuses $from WHERE $where $order_by LIMIT $offset,$page_size) as ids ON (ids.link = link_id)");
+//error_log("SELECT".Link::SQL."INNER JOIN (SELECT link FROM sub_statuses $from WHERE $where $order_by LIMIT $offset,$page_size) as ids ON (ids.link = link_id)\n", 3, "/tmp/a.log");
+
 $links = $db->object_iterator($sql, "Link");
 if ($links) {
 	$counter = 0;
 	foreach($links as $link) {
 		$link->max_len = 600;
-		$link->print_summary();
-		$counter++; Haanga::Safe_Load('private/ad-interlinks.html', compact('counter', 'page_size'));
+		$link->print_summary('frontpage');
+		$counter++;
+		Haanga::Safe_Load('private/ad-interlinks.html', compact('counter', 'page_size'));
 	}
 }
 
@@ -137,7 +142,7 @@ exit(0);
 function print_index_tabs($option=-1) {
 	global $globals, $db, $current_user;
 
-	if (($globals['mobile'] && ! $current_user->has_subs) || (!empty($globals['submnm']) && ! $current_user->user_id)) return;
+	//if (($globals['mobile'] && ! $current_user->has_subs) || (!empty($globals['submnm']) && ! $current_user->user_id)) return;
 
 	$items = array();
 	$items[] = array('id' => 0, 'url' => $globals['meta_skip'], 'title' => _('todas'));
@@ -145,18 +150,20 @@ function print_index_tabs($option=-1) {
 		$items[] = array('id' => 7, 'url' => $globals['meta_subs'], 'title' => _('suscripciones'));
 	}
 
+	/*
 	if (! $globals['mobile'] && empty($globals['submnm']) && ($subs = SitesMgr::get_sub_subs())) {
 		foreach ($subs as $sub) {
 			$items[] = array(
-				'id'  => 9999, /* fake number */
-				'url' => 'm/'.$sub->name,
+				'id'  => 9999,   // fake number
+				'url' => 's/'.$sub->name,
 				'selected' => false,
 				'title' => $sub->name,
 			);
 		}
 	}
+	*/
 
-	$items[] = array('id' => 8, 'url' => '?meta=_*', 'title' => _('m/*'));
+	$items[] = array('id' => 8, 'url' => '?meta=_*', 'title' => _('s/*'));
 
 	// RSS teasers
 	switch ($option) {

@@ -48,7 +48,6 @@ if ($_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || $_SERVER['SERVER_PORT'] == 
 	}
 }
 
-
 // Use proxy and load balancer detection
 if ($globals['check_behind_proxy']) {
 	$globals['proxy_ip'] = $_SERVER["REMOTE_ADDR"];
@@ -90,12 +89,6 @@ if($_SERVER['HTTP_HOST']) {
 		&& (isset($_GET['mobile']) || preg_match('/SymbianOS|BlackBerry|iPhone|Nintendo|Mobile|Opera (Mini|Mobi)|\/MIDP|Portable|webOS|Kindle|Fennec/i', $_SERVER['HTTP_USER_AGENT']))
 			&& ! preg_match('/ipad|tablet/i', $_SERVER['HTTP_USER_AGENT']) ) { // Don't treat iPad as mobiles
 		$globals['mobile'] = 1;
-		/* Removed, with threads it doesn't make sense
-		// TODO: remove these lines if not used again.
-		// Reduce page size for mobiles
-		$globals['comments_page_size'] = intval($globals['comments_page_size']/2);
-		$globals['page_size'] = intval($globals['page_size']/2);
-		*/
 	} else {
 		$globals['mobile'] = 0;
 	}
@@ -110,7 +103,7 @@ if($_SERVER['HTTP_HOST']) {
 		}
 	}
 } else {
-	if (!$globals['server_name']) $globals['server_name'] = 'meneame.net'; // Warn: did you put the right server name?
+	if (!$globals['server_name']) $globals['server_name'] = 'copuchalo.cl'; // Warn: did you put the right server name?
 }
 
 $globals['base_url_general'] = $globals['base_url']; // Keep the original if it's modified in submnms

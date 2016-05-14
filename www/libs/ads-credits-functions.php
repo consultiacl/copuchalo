@@ -88,7 +88,7 @@ function do_legal($legal_name, $target = '', $show_abuse = true) {
 	if ($globals['is_meneame']) {
 		echo '<a href="'.$globals['legal'].'" '.$target.'>'.$legal_name.'</a>';
 	} else {
-		echo 'legal conditions link here';
+		echo '<a href="'.$globals['legal'].'" '.$target.'>'.$legal_name.'</a>';
 	}
 	// IMPORTANT: read above
 }

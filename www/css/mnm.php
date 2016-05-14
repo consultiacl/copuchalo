@@ -7,6 +7,7 @@ header('Last-Modified: ' .  gmdate('D, d M Y H:i:s', max(filemtime('mnm.css'), f
 
 Haanga::Load('css/colorbox.css');
 Haanga::Load('css/mnm.css');
+Haanga::Load('css/copuchalo.css');
 
 /* Include handheld classes for mobile/tablets */
 

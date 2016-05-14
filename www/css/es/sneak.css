@@ -15,11 +15,12 @@ stated otherwise in individual files.
 .sneaker {
 font-size: small;
 margin-top: -1px;
-background: url(../../img/mnm/elmnm-sneak-reverse02.png) 97% 95% no-repeat;
+/*background: url(../../img/mnm/elmnm-sneak-reverse02.png) 97% 95% no-repeat;*/
 }
 
 .sneaker-title strong {
-color: #FF9400;
+/*color: #FF9400;*/
+color: #777777;
 }
 
 .sneaker-story .thumb {
@@ -28,13 +29,17 @@ margin: 0 4px 0 0;
 }
 
 .sneaker-legend {
-color: #FF6400;
+/*color: #FF6400;
 background: #FFEDC6;
-border-bottom-color: #FFEDC6;
+border-bottom-color: #FFEDC6;*/
+color: #555555;
+background: #d7d7d7;
+border-bottom-color: #aaaaaa;
 }
 
 .sneaker-item {
-border-bottom-color: #FFE2C5;
+/*border-bottom-color: #FFE2C5;*/
+border-bottom-color: #aaaaaa;
 }
 
 .sneaker-chat, .sneaker-chat a {
@@ -50,7 +55,8 @@ color: #f00000;
 }
 
 .sneaker-who img {
-border-color: #FFE2C5;
+/*border-color: #FFE2C5;*/
+border-color: #aaaaaa;
 }
 
 .sneaker-problem {
@@ -58,7 +64,8 @@ color: #F00;
 }
 
 .sneaker-published {
-color: #FF6400;
+/*color: #FF6400;*/
+color: #777777;
 }
 
 .sneaker-discarded {

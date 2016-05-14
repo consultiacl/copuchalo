@@ -80,18 +80,18 @@
 {% endif %}
 
 <br/>
-<input type="text" id="title" name="title" value="{{ link.title }}" style="width:100%" maxlength="120" />
+<input type="text" id="title" name="title" value="{% if link.is_new %}{{ link.url_title }}{% else %}{{ link.title }}{% endif %}" style="width:100%" maxlength="120" />
 </p>
 
 <label for="tags" accesskey="3">{% trans _('etiquetas') %}:</label>
-<p><span class="note"><strong>{% trans _('pocas palabras, separadas por «,»') %}</strong></span>
+<p><span class="note">{% trans _('pocas palabras, separadas por «,»') %}</span>
 <br/><input type="text" id="tags" name="tags" value="{{ link.tags | escape }}" style="width:100%" maxlength="70" /></p>
 
 {% if link.site_properties.intro_max_len > 0 %}
 
 	{% include 'simpleformat_buttons.html' %}
 	<p><label for="bodytext" accesskey="4">{% trans _('descripción de la noticia') %}:</label>
-	<br /><span class="note"><strong>{% trans _('describe con fidelidad el contenido del enlace') %}</strong> ({{ link.site_properties.intro_min_len }} - {{ link.site_properties.intro_max_len }})</span>
+	<br /><span class="note">{% trans _('describe con fidelidad el contenido del enlace') %} ({{ link.site_properties.intro_min_len }} - {{ link.site_properties.intro_max_len }})</span>
 
 	<br/>
 	<textarea name="bodytext" rows="10" style="width:100%" id="bodytext" maxlength="{{ link.site_properties.intro_max_len }}"
@@ -122,18 +122,21 @@
 {% endif %}
 
 
-{% if not link.is_new && (current_user.admin > 0 || current_user.user_level == "blogger") %}
-	{% if link.thumb_url || link.media_size > 0 %}
-		<label>{% trans _('eliminar imagen') %}: <input type="checkbox" name="thumb_delete" value="1"/></label><br/>
-	{% else %}
-		{% if link.url %}
-			<label>{% trans _('obtener imagen (puede tardar varios segundos)') %}: <input type="checkbox" name="thumb_get" value="1"/></label><br/>
-		{% endif %}
-		<label>{% trans _('o especificar url de la imagen') %}: <input type="url" name="thumb_url" style="width:60%" /></label><br/>
+{% if link.thumb_url || link.media_size > 0 %}
+	<label>{% trans _('eliminar imagen') %}: <input type="checkbox" name="thumb_delete" value="1"/></label><br/>
+{% else %}
+	{% if link.url %}
+		<label>{% trans _('obtener imagen (puede tardar varios segundos)') %}: <input type="checkbox" name="thumb_get" value="1" checked /></label><br/>
 	{% endif %}
+	<label>{% trans _('o especificar url de la imagen') %}: <input type="url" name="thumb_url" style="width:60%" /></label><br/>
+{% endif %}
+
+{% if not link.is_new && (current_user.admin > 0 || current_user.user_level == "blogger") %}
 	<label>{% trans _('actualizar url') %}: <input type="checkbox" name="uri_update" value="1"/></label><br/>
 {% endif %}
 
+
+<br/>
 
 
 {% if link.is_new %}

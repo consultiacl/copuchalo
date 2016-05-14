@@ -42,7 +42,7 @@ if ($_POST["processlogin"] == 1) {
 }
 
 do_header("login");
-echo '<div id="singlewrap">' . "\n";
+echo '<div id="singlewrap" class="singlewrap-login">' . "\n";
 
 if($_GET["op"] === 'recover' || !empty($_POST['recover'])) {
 	do_recover();
@@ -60,43 +60,13 @@ function do_login() {
 
 	$previous_login_failed =  Log::get_date('login_failed', $globals['user_ip_int'], 0, 300);
 
-	// Show menéame intro only if first try and the there were not previous logins
-	if (! $globals['mobile'] && $previous_login_failed < 3 && empty($_POST["processlogin"]) && empty($_COOKIE['u'])) {
-		echo '<div class="faq wideonly" style="float:right; width:55%; margin-top: 10px;">'."\n";
-		// Only prints if the user was redirected from submit.php
-		if (!empty($_REQUEST['return']) && preg_match('/submit\.php/', $_REQUEST['return'])) {
-			echo '<p style="border:1px solid #FF9400; font-size:1.3em; background:#FEFBEA; font-weight:bold; padding:0.5em 1em;">Para enviar una historia debes ser un usuario registrado</p>'."\n";
-		}
-		echo '<h3>'._('¿Qué es menéame?').'</h3>'."\n";
-		echo '<p>'._('Es un sitio que te permite enviar una historia que será revisada por todos y será promovida, o no, a la página principal. Cuando un usuario envía una historia ésta queda en la <a href="queue">cola de pendientes</a> hasta que reúne los votos suficientes para ser promovida a la página principal').'.</p>'."\n";
-
-		echo '<h3>'._('¿Todavía no eres usuario de menéame?').'</h3>'."\n";
-		echo '<p>'._('Como usuario registrado podrás, entre otras cosas').':</p>'."\n";
-		echo '<ul style="margin-left: 1.5em">'."\n";
-		echo '<li>'."\n";
-		echo '<strong>'._('Enviar historias').'</strong><br />'."\n";
-		echo '<p>'._('Una vez registrado puedes enviar las historias que consideres interesantes para la comunidad. Si tienes algún tipo de duda sobre que tipo de historias puedes enviar revisa nuestras <a href="faq-es.php">preguntas frecuentes sobre menéame</a>').'.</p>'."\n";
-		echo '</li>'."\n";
-		echo '<li>'."\n";
-		echo '<strong>'._('Escribir comentarios').'</strong><br />'."\n";
-		echo '<p>'._('Puedes escribir tu opinión sobre las historias enviadas a menéame mediante comentarios de texto. También puedes votar positivamente aquellos comentarios ingeniosos, divertidos o interesantes y negativamente aquellos que consideres inoportunos').'.</p>'."\n";
-		echo '</li>'."\n";
-		echo '<li>'."\n";
-		echo '<strong>'._('Perfil de usuario').'</strong><br />'."\n";
-		echo '<p>'._('Toda tu información como usuario está disponible desde la página de tu perfil. También puedes subir una imagen que representará a tu usuario en menéame. Incluso es posible compartir los ingresos publicitarios de Menéame, solo tienes que introducir el código de tu cuenta Google Adsense desde tu perfil').'.</p>'."\n";
-		echo '</li>'."\n";
-		echo '<li>'."\n";
-		echo '<strong>'._('Chatear en tiempo real desde la fisgona').'</strong><br />'."\n";
-		echo '<p>'._('Gracias a la <a href="sneak.php">fisgona</a> puedes ver en tiempo real toda la actividad de menéame. Además como usuario registrado podrás chatear con mucha más gente de la comunidad menéame').'</p>'."\n";
-		echo '</li>'."\n";
-		echo '</ul>'."\n";
-		echo '<h3><a href="register.php" style="color:#FF6400; text-decoration:underline; display:block; width:8em; text-align:center; margin:0 auto; padding:0.5em 1em; border:3px double #FFE2C5; background:#FFF3E8;">Regístrate ahora</a></h3>'."\n";
-		echo '</div>'."\n";
-
-		echo '<div class="genericform" style="float:left; width:40%; margin: 0">'."\n";
-	} else {
-		echo '<div class="genericform" style="float:auto;">'."\n";
+	echo '<div class="genericform login">'."\n";
+	// Only prints if the user was redirected from submit.php
+	if (!empty($_REQUEST['return']) && preg_match('/submit\.php/', $_REQUEST['return'])) {
+		//echo '<p class="aviso">Para enviar una historia debes ser un usuario registrado</p>'."\n";
+		echo '<div class="warning avisologin"><i class="fa fa-warning"></i>Para enviar una historia debes ser un usuario registrado</div>'."\n";
 	}
+
 	echo '<form action="'.get_auth_link().'login" id="thisform" method="post">'."\n";
 
 	if($_POST["processlogin"] == 1) {
@@ -126,7 +96,7 @@ function do_login() {
 		}
 	}
 	echo '<fieldset>'."\n";
-	echo '<legend><span class="sign">'._('usuario y contraseña').'</span></legend>'."\n";
+	echo '<legend><span class="sign">'._('usuario y clave').'</span></legend>'."\n";
 	echo '<p><label for="name">'._('usuario o email').':</label><br />'."\n";
 	echo '<input type="text" name="username" size="25" tabindex="1" id="name" value="'.__($username).'" /></p>'."\n";
 	echo '<p><label for="password">'._('clave').':</label><br />'."\n";
@@ -135,10 +105,11 @@ function do_login() {
 
 	// Print captcha
 	if ($previous_login_failed > 2 || ($globals['captcha_first_login'] == true && ! UserAuth::user_cookie_data()) ) {
+		echo '<br/>';
 		ts_print_form();
 	}
 
-	echo '<p><input type="submit" value="login" class="button" tabindex="4" /></p>'."\n";
+	echo '<br/><p style="text-align:center"><input type="submit" value="login" class="button" tabindex="4" /></p>'."\n";
 
 	print_oauth_icons($_REQUEST['return']);
 
@@ -146,17 +117,47 @@ function do_login() {
 	echo '<input type="hidden" name="return" value="'.htmlspecialchars($_REQUEST['return']).'"/>'."\n";
 	echo '</fieldset>'. "\n";
 	echo '</form>'."\n";
-	echo '<div class="recoverpass" style="text-align:center"><h4><a href="login?op=recover">'._('¿has olvidado la contraseña?').'</a></h4></div>'."\n";
+	echo '<div class="recoverpass" style="text-align:center"><h4><a href="login?op=recover">'._('¿has olvidado la clave?').'</a></h4></div>'."\n";
 	echo '</div>'."\n";
-	echo '<br/>&nbsp;';
+	//echo '<br/>&nbsp;';
+
+	if (! $globals['mobile'] && $previous_login_failed < 3 && empty($_POST["processlogin"]) && empty($_COOKIE['u'])) {
+		echo '<div class="loginform wideonly">'."\n";
+		echo '<h4>'._('¿Qué es copúchalo?').'</h4>'."\n";
+		echo '<p>'._('Es un sitio que te permite enviar una historia que será revisada por todos y será promovida, o no, a la página principal. Cuando un usuario envía una historia ésta queda en la <a href="queue">cola de pendientes</a> hasta que reúne los votos suficientes para ser promovida a la página principal').'.</p>'."\n";
+
+		echo '<h4>'._('¿Todavía no eres usuario de copúchalo?').'</h4>'."\n";
+		echo '<p>'._('Como usuario registrado podrás, entre otras cosas').':</p>'."\n";
+		echo '<ul>'."\n";
+		echo '<li>'."\n";
+		echo '<strong>'._('Enviar historias').'</strong><br />'."\n";
+		echo '<p>'._('Una vez registrado puedes enviar las historias que consideres interesantes para la comunidad. Si tienes algún tipo de duda sobre que tipo de historias puedes enviar revisa nuestras <a href="faq-es.php">preguntas frecuentes sobre copúchalo</a>').'.</p>'."\n";
+		echo '</li>'."\n";
+		echo '<li>'."\n";
+		echo '<strong>'._('Escribir comentarios').'</strong><br />'."\n";
+		echo '<p>'._('Puedes escribir tu opinión sobre las historias enviadas a copúchalo mediante comentarios de texto. También puedes votar positivamente aquellos comentarios ingeniosos, divertidos o interesantes y negativamente aquellos que consideres inoportunos').'.</p>'."\n";
+		echo '</li>'."\n";
+		echo '<li>'."\n";
+		echo '<strong>'._('Perfil de usuario').'</strong><br />'."\n";
+		echo '<p>'._('Toda tu información como usuario está disponible desde la página de tu perfil. También puedes subir una imagen que representará a tu usuario en copúchalo. Incluso es posible compartir los ingresos publicitarios de Copúchalo, solo tienes que introducir el código de tu cuenta Google Adsense desde tu perfil').'.</p>'."\n";
+		echo '</li>'."\n";
+		echo '<li>'."\n";
+		echo '<strong>'._('Chatear en tiempo real desde copuchentos').'</strong><br />'."\n";
+		echo '<p>'._('Gracias a <a href="sneak.php">sapear</a> puedes ver en tiempo real toda la actividad de copúchalo. Además como usuario registrado podrás chatear con mucha más gente de la comunidad copúchalo').'</p>'."\n";
+		echo '</li>'."\n";
+		echo '</ul>'."\n";
+		echo '<br><h3><a href="register.php" class="registerbox">¡Regístrate ahora!</a></h3>'."\n";
+		echo '</div>'."\n";
+	}
 }
+
 
 function do_recover() {
 	global $site_key, $globals;
 
 	echo '<div class="genericform">'."\n";
 	echo '<fieldset>'."\n";
-	echo '<legend><span class="sign">'._("recuperación de contraseñas").'</span></legend>'."\n";
+	echo '<legend><span class="sign">'._("recuperación de claves").'</span></legend>'."\n";
 
 	if(!empty($_POST['recover'])) {
 		if (!ts_is_human()) {
@@ -203,7 +204,7 @@ function do_recover() {
 
 function recover_error($message) {
 	echo '<div class="form-error">';
-	echo "$message";
+	echo '<i class="fa fa-warning"></i>'.$message;
 	echo "</div>\n";
 }
 

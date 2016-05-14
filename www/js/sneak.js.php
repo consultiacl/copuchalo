@@ -190,7 +190,7 @@ function received_data(data) {
 		requests = 0;
 		total_requests = 0;
 		next_update = 100;
-		mDialog.confirm('<?php echo _('Fisgón: ¿desea continuar conectado?');?>', do_play, do_pause);
+		mDialog.confirm('<?php echo _('¿desea continuar conectado?');?>', do_play, do_pause);
 		return;
 	}
 	data_timer = setTimeout(get_data, next_update);

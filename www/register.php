@@ -54,9 +54,9 @@ do_footer();
 exit;
 
 function do_register0() {
-	echo '<div class="recoverpass" style="text-align:center"><h4><a href="login?op=recover">'._('¿has olvidado la contraseña?').'</a></h4></div>';
+	echo '<div class="recoverpass" style="text-align:center;"><h4><a href="login?op=recover">'._('¿has olvidado la clave?').'</a></h4></div>';
 
-	echo '<form action="'.get_auth_link().'register" method="post" id="thisform" onSubmit="return check_checkfield(\'acceptlegal\', \''._('no has aceptado las condiciones de uso').'\')">' . "\n";
+	echo '<div style="margin:0 auto;max-width:500px"><form action="'.get_auth_link().'register" method="post" id="thisform" onSubmit="return check_checkfield(\'acceptlegal\', \''._('no has aceptado las condiciones de uso').'\')">' . "\n";
 	echo '<fieldset>' . "\n";
 	echo '<legend><span class="sign">' . _("datos del usuario") . '</span></legend>' . "\n";
 	echo '<p><label for="name">' . _("nombre de usuario") . ':</label><br />' . "\n";
@@ -66,7 +66,7 @@ function do_register0() {
 	echo '&nbsp;<span id="usernamecheckitvalue"></span></p>' . "\n";
 
 	echo '<p><label for="email">email:</label><br />' . "\n";
-	echo '<span class="note">'._('es importante que sea correcta, recibirás un correo para validar la cuenta').'</span> <br />';
+	echo '<span class="note">'._('es importante que sea correcto, recibirás un correo para validar la cuenta').'</span> <br />';
 	echo '<input type="text" id="email" name="email" value=""  onkeyup="enablebutton(this.form.checkbutton2, this.form.submit, this)" size="25" tabindex="2"/>' . "\n";
 		echo '<input type="button" class="button" id="checkbutton2" disabled="disabled" value="'._('verificar').'" onclick="checkfield(\'email\', this.form, this.form.email)"/>' . "\n";
 	echo '&nbsp;<span id="emailcheckitvalue"></span></p>' . "\n";
@@ -90,7 +90,7 @@ function do_register0() {
 	echo '</div>'."\n";
 
 	echo '</fieldset>' . "\n";
-	echo '</form>' . "\n";
+	echo '</form></div>' . "\n";
 
 
 }
@@ -202,7 +202,7 @@ function check_user_fields() {
 		$error=true;
 	}
 	if(! check_password($_POST["password"])) {
-		register_error(_("clave demasiado corta, debe ser de 6 o más caracteres e incluir mayúsculas, minúsculas y números"));
+		register_error(_("clave demasiado corta, debe ser de 8 o más caracteres e incluir mayúsculas, minúsculas y números"));
 		$error=true;
 	}
 	if($_POST["password"] !== $_POST["password2"] ) {
@@ -255,7 +255,7 @@ function check_user_fields() {
 
 function register_error($message) {
 	echo '<div class="form-error">';
-	echo "<p>$message</p>";
+	echo '<p><i class="fa fa-warning"></i>'.$message.'</p>';
 	echo "</div>\n";
 }
 

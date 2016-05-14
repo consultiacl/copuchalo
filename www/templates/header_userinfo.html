@@ -1,18 +1,35 @@
-  <ul id="userinfo">
-	{% if current_user.user_id > 0 %}
-		<li class="usertext wideonly"><a href="{{ current_user.user_login|useruri }}" class="tooltip u:{{ current_user.user_id }}">{{current_user.user_login}}</a></li>
-			{% if current_user.admin %}
-				<li class="usertext"><a href="{{ globals.base_url_general }}admin/bans.php">adm</a></li>
-			{% endif %}
-		<li id="notifier"></li>
-		<li><a href="{{ current_user.user_login|useruri }}"><img id="avatar" src="{{ globals.base_static }}img/g.gif" data-2x="s:-40.:-80." data-src="{% exec get_avatar_url current_user.user_id, current_user.user_avatar, 40 %}" class="lazy" alt="{{current_user.user_login}}"/></a></li>
+<ul id="userinfo">
+	{% if ! globals.mobile %}
+		<li class="nav-search">
+			<form id="headersearch" action="{{ globals.base_url }}search" method="get" name="top_search">
+				{% if globals.search_options %}
+					{% for name, value in globals.search_options %}
+						<input type="hidden" name="{{name}}" value="{{value}}"/>
+					{% endfor %}
+				{% endif %}
+				<div class="nav-search-group">
+					{# <label for="search" class="sr-only">Buscar...</label> #}
+					<input class="inputsearchbox" name="q" type="search" placeholder="buscar..." {% if globals.q %}value="{{globals.q|escape}}"{% endif %}/>
+					<span class="fa fa-search search-icon"></span>
+				</div>
+			</form>
+		</li>
+	{% endif %}
 
-		<li class="userlogin" onclick="location.href='{{ globals.base_url_general }}login?op=logout&amp;return={{globals.uri|urlencode}}'" title="{%trans _('cerrar sesión')%}"> </li>
-	{# Following link could be deleted 
-	<a href="{{ globals.base_url_general }}login?op=logout&amp;return={{globals.uri|urlencode}}" title="{%trans _('cerrar sesión')%}">&nbsp;</a>
-	#}
+	{% if current_user.user_id > 0 %}
+		{% if ! globals.mobile %}
+			<li class="usertext wideonly"><a href="{{ current_user.user_login|useruri }}" class="tooltip u:{{ current_user.user_id }}">{{current_user.user_login}}</a></li>
+		{% endif %}
+		{% if current_user.admin %}
+			<li class="usertext"><a href="{{ globals.base_url_general }}admin/bans.php"><i class="fa fa-dashboard"></i></a></li>
+		{% endif %}
+		<li id="notifier"></li>
+		<li id="usermenu"><img id="avatar" src="{{ globals.base_static }}img/g.gif" data-2x="s:-40.:-80." data-src="{% exec get_avatar_url current_user.user_id, current_user.user_avatar, 40 %}" class="lazy" alt="{{current_user.user_login}}"/></li>
+
 	{% else %}
-		<li class="usertext"><a href="{{ globals.base_url_general }}login?return={{globals.uri|urlencode}}">{% trans _('login') %}</a></li>
-		<li class="usertext"><a href="{{ globals.base_url_general }}register">{% trans _('registrarse') %}</a></li>
-    {% endif %}
-  </ul>
+		<li class="login-icon"><a href="{{ globals.base_url_general }}login?return={{globals.uri|urlencode}}" title="{% trans _('login') %}"><i class="fa fa-sign-in"></i></a></li>
+		<li class="login-icon"><a href="{{ globals.base_url_general }}register" title="{% trans _('registro') %}"><i class="fa fa-user-plus"></i></a></li>
+	{% endif %}
+</ul>
+
+

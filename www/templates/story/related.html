@@ -7,19 +7,16 @@
 
 {% for l in related %}
 	{% exec l.get_box_class %}
-	<div class="news-summary" style="margin-bottom: 15px">
-		<div class="news-body">
-
-        <div class="news-shakeit {{ l.box_class }}" style="height: auto">
-            <div class="votes">
-                <a id="a-votes-{{ self.id}}" href="{{ self.relative_permalink }}">{{ l.total_votes }}</a>
-                {% trans _('meneos') %}
-            </div>
-			<div class="clics">{{ l.clicks }} {% trans _('clics') %}</div>
+	<div class="news-summary2" style="margin-bottom:15px">
+	<div class="news-body">
+		<div style="display:inline-block;border:2px solid #005be2;text-align:center;padding:2px;background:#005be2;">
+			<div class="numcop {{ l.box_class }}" title="{{ self.total_votes }} {% trans _('copuchas') %}">{{ l.total_votes }} {% trans _('copuchas') %}</div>
+			<div class="numcop {{ l.box_class }}" style="text-align:center;font-size:0.7em">{{ l.clicks }} {% trans _('visitas') %}</div>
 		</div>
-
-			<h3 style="font-size: 120%"><a href="{{ l.permalink }}"{% if l.status != 'published' %} rel="nofollow"{% endif %}>{{ l.title }}</a></h3>
+		<div style="display:inline-block;padding-left:20px;vertical-align:top">
+			<h2 style="font-size: 120%"><a href="{{ l.permalink }}"{% if l.status != 'published' %} rel="nofollow"{% endif %}>{{ l.title }}</a></h2>
 		</div>
+	</div>
 	</div><br/>
 {% endfor %}
 </div>

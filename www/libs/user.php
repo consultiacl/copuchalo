@@ -471,7 +471,7 @@ class User {
 			$obj->total_comments = (int) $db->get_var("SELECT count(*) FROM comments WHERE comment_user_id = $this->id");
 			$obj->total_posts = (int) $db->get_var("SELECT count(*) FROM posts WHERE post_user_id = $this->id");
 			$obj->total_friends = (int) $db->get_var("select count(*) from friends where friend_to = $this->id");
-			$obj->total_images = Upload::user_uploads($this->id) - Upload::user_uploads($this->id, false, 'private');
+			$obj->total_images = Upload::user_uploads($this->id) - Upload::user_uploads($this->id, false, 'private') -  Upload::user_uploads($this->id, false, 'link');
 			if ($do_cache) {
 				$stats->text = serialize($obj);
 				$stats->store($globals['now']+86400*90); // Expires in 90 days

@@ -42,20 +42,19 @@ class BasicThumb {
 		return	urldecode(preg_replace('/[<>\r\n\t]/', '', $str));
 	}
 
-	function scale($size=100) {
+	function scale($size_x=100, $size_y=100) {
 		if (!$this->image && ! $this->checked) {
 			$this->get();
 		}
 		if (!$this->image) return false;
 
-// New code to get rectangular images
 		require_once(mnminclude."simpleimage.php");
 		$thumb = new SimpleImage();
 		$thumb->image = $this->image;
-		if ($thumb->resize($size, $size, true)) {
-			//$this->image = $thumb->image;
-			//$this->x=imagesx($this->image);
-			//$this->y=imagesy($this->image);
+		if ($thumb->resize($size_x, $size_y, true)) {
+			$this->image = $thumb->image;
+			$this->x=imagesx($this->image);
+			$this->y=imagesy($this->image);
 			return $thumb;
 		}
 
@@ -281,10 +280,11 @@ class HtmlImages {
 		$this->base = $url;
 		$this->site = $site;
 		// Create table for previous if it does not exist
-		$db->query('CREATE TABLE IF NOT EXISTS `html_images_seen` (`hash` CHAR( 40 ) NOT NULL PRIMARY KEY)');
+		//$db->query('CREATE TABLE IF NOT EXISTS `html_images_seen` (`hash` CHAR( 40 ) NOT NULL PRIMARY KEY)');
 
 	}
 
+	/*
 	function seen_add($url) {
 		global $db;
 
@@ -292,6 +292,15 @@ class HtmlImages {
 
 		$hash = md5($url);
 		return $db->query("INSERT IGNORE INTO html_images_seen VALUE ('$hash')");
+	}
+
+	function seen_del($url) {
+		global $db;
+
+		if (empty($url)) return false;
+
+		$hash = md5($url);
+		return $db->query("DELETE FROM html_images_seen WHERE hash = '$hash'");
 	}
 
 	function seen($url) {
@@ -302,9 +311,9 @@ class HtmlImages {
 		$hash = md5($url);
 		return $db->get_var("SELECT count(*) FROM html_images_seen WHERE hash ='$hash'");
 	}
+	*/
 
 	function get() {
-
 		// Check first in these server using *only* the URL
 		$video_servers = array(
 						// 'video.google.com' => 'check_google_video',
@@ -351,17 +360,36 @@ class HtmlImages {
 			if ($this->debug) echo "<!-- HTML $this->title -->\n";
 
 			// First check for thumbnail head metas
-			if ((
-				preg_match('/<meta\s+?(?:name|property)=[\'"](?:thumbnail_url|og:image|twitter:image:src|product-image)[\'"]\s+?[^>]*?content=[\'"](.+?)[\'"].*?>/is', $this->html, $match) ||
-				preg_match('/<link\s+?rel=[\'"]image_src[\'"]\s+?href=[\'"](.+?)[\'"].*?>/is', $this->html, $match))
-				&& ! preg_match('/favicon/i', $match[1])) {
-				$url = $match[1];
-				$url = build_full_url($url, $this->url);
+			$metatags = getMetaTags($this->html);
+
+			if( ! empty($metatags['og:image']) ){
+				$image_url = $metatags['og:image'];
+			} elseif( ! empty($metatags['og:image:secure_url']) ) {
+				$image_url = $metatags['og:image:secure_url'];
+			} elseif( ! empty($metatags['twitter:image']) ) {
+				$image_url = $metatags['twitter:image'];
+			} elseif( ! empty($metatags['twitter:image0']) ) {
+				$image_url = $metatags['twitter:image0'];
+			} elseif( ! empty($metatags['twitter:image:src']) ) {
+				$image_url = $metatags['twitter:image:src'];
+			} elseif( ! empty($metatags['twitter:image0:src']) ) {
+				$image_url = $metatags['twitter:image0:src'];
+			} elseif( ! empty($metatags['product-image']) ) {
+				$image_url = $metatags['product-image'];
+			} elseif( ! empty($metatags['thumbnail_url']) ) {
+				$image_url = $metatags['thumbnail_url'];
+			} else {
+				$image_url = '';
+			}
+
+			if( !empty($image_url) && ! preg_match('/favicon/i', $image_url) ) {
+				$image_url = build_full_url($image_url, $this->url);
 				if ($this->debug) {
-					echo "<!-- Try to select from $url -->\n";
+					echo "<!-- Try to select from $image_url -->\n";
 				}
-				$img = new BasicThumb($url);
-				if (!$this->seen($img->url) && $img->get() && $img->is_not_black()) {
+				$img = new BasicThumb($image_url);
+				/*if (!$this->seen($img->url) && $img->get() && $img->is_not_black()) {*/
+				if ($img->get() && $img->is_not_black()) {
 						$img->type = 'local';
 						$img->candidate = true;
 					if ($img->x > 150 && $img->y > 150) {
@@ -374,7 +402,6 @@ class HtmlImages {
 					}
 				}
 			}
-
 
 			// Analyze HTML <img's
 			if (preg_match('/<base *href=["\'](.+?)["\']/i', $this->html, $match)) {
@@ -449,7 +476,8 @@ class HtmlImages {
 		$goods = $n = 0;
 		foreach ($tags as $match) {
 			$img = new WebThumb($match, $this->base);
-			if ($this->seen($img->url) || ($img->surface() < 120000 && $this->check_in_other($match))) continue;
+			/*if ($this->seen($img->url) || ($img->surface() < 120000 && $this->check_in_other($match))) continue;*/
+			if ($img->surface() < 120000 && $this->check_in_other($match)) continue;
 			if ($this->debug)
 				echo "<!-- PRE CANDIDATE: ". __($match) ." -->\n";
 			if ($img->candidate && $img->good($other_html == false)) {
@@ -719,7 +747,7 @@ class HtmlImages {
 	// Youtube detection
 	function check_youtube() {
 		if ((preg_match('/youtube\.com/', $this->parsed_url['host']) && preg_match('/v=([\w_\-]+)/i', $this->url, $match)) ||
-			(preg_match('/\/\/(?:m|www)\.youtube\.com\/(?:v|embed)\/([\w_\-]+?)[\?\"\'&]/i', $this->html, $match) && ! $this->check_in_other($match[1], 2))) {
+			(preg_match('/\/\/www\.youtube\.com\/(?:v|embed)\/([\w_\-]+?)[\?\"\'&]/i', $this->html, $match) && ! $this->check_in_other($match[1], 2))) {
 			$video_id = $match[1];
 			if ($this->debug)
 				echo "<!-- Detect Youtube, id: $video_id -->\n";
@@ -742,10 +770,21 @@ class HtmlImages {
 	}
 
 	function get_youtube_thumb($videoid) {
-		// TODO: implement API 3
-		// https://developers.google.com/youtube/v3/getting-started
-		// For example: https://www.googleapis.com/youtube/v3/videos?id=Vasl-Tps23k&key=AIzaSyA-R4wuYP0pjQ_P6laiNlwt4lUaoSvwQrg&part=snippet
-		return "https://i.ytimg.com/vi/$videoid/hqdefault.jpg";
+		$thumbnail = false;
+		if(($res = get_url("https://gdata.youtube.com/feeds/api/videos/$videoid"))) {
+			$vrss = $res['content'];
+			$previous = 0;
+			if($vrss &&
+				preg_match_all('/<media:thumbnail url=["\'](.+?)["\'].*?width=["\'](\d+)["\']/',$vrss,$matches, PREG_SET_ORDER)) {
+				foreach ($matches as $match) {
+					if ($match[2] > $previous) {
+						$thumbnail = $match[1];
+						$previous = $match[2];
+					}
+				}
+			}
+		}
+		return $thumbnail;
 	}
 
 	// Check yfrog video thumbnail, from http://code.google.com/p/imageshackapi/wiki/YFROGurls

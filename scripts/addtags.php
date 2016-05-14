@@ -1,4 +1,4 @@
-<?
+<?php
 include('../config.php');
 include(mnminclude.'link.php');
 include(mnminclude.'tags.php');

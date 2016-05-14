@@ -68,7 +68,7 @@ if (isset($globals['canonical_server_name']) && !empty($globals['canonical_serve
 	$canonical_server = $link->server_name;
 }
 $canonical_base = $link->base_url;
-if ($link->is_sub) $canonical_base .= 'm/'.$link->sub_name.'/';
+if ($link->is_sub) $canonical_base .= 's/'.$link->sub_name.'/';
 $canonical_base .= 'c/';
 $globals['extra_head'] = '<link rel="canonical" href="'.$globals['scheme'].'//'.$canonical_server.$canonical_base.$comment->id.'"/>';
 

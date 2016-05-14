@@ -24,6 +24,8 @@ include('config.php');
 include(mnminclude.'html1.php');
 include(mnminclude.'search.php');
 
+//syslog(LOG_INFO, "Usuario: ".$_REQUEST['u']."\n");
+
 $globals['extra_js'][] = 'autocomplete/jquery.autocomplete.min.js';
 $globals['extra_css'][] = 'jquery.autocomplete.css';
 $globals['extra_js'][] = 'jquery.user_autocomplete.js';

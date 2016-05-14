@@ -9,6 +9,7 @@ include('config.php');
 include(mnminclude.'html1.php');
 include(mnminclude.'tags.php');
 
+
 force_authentication();
 
 array_push($globals['cache-control'], 'no-cache');
@@ -80,19 +81,22 @@ function do_save($link) {
 		if (!empty($_POST['url'])) {
 			$link->url = clean_input_url($_POST['url']);
 		}
-		if ($_POST['thumb_delete']) {
-			$link->delete_thumb();
-		}
 		if ($_POST['uri_update']) {
 			$link->get_uri();
 		}
-		if ($_POST['thumb_get']) {
-			$link->get_thumb();
-		} elseif (!empty($_POST['thumb_url'])) {
-			$url = clean_input_url($_POST['thumb_url']);
-			$link->get_thumb(false, $url);
-		}
 	}
+
+	if ($_POST['thumb_delete']) {
+		$link->delete_thumb();
+	}
+
+	if ($_POST['thumb_get']) {
+		$link->get_thumb();
+	} elseif (!empty($_POST['thumb_url'])) {
+		$url = clean_input_url($_POST['thumb_url']);
+		$link->get_thumb(false, $url);
+	}
+
 	$link->title = $_POST['title'];
 	$link->content = $_POST['bodytext'];
 	$link->tags = tags_normalize_string($_POST['tags']);

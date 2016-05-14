@@ -1,4 +1,6 @@
-<?
+#!/usr/bin/php
+
+<?php
 include('../config.php');
 
 header("Content-Type: text/plain");
@@ -430,10 +432,12 @@ foreach ($res as $dbuser) {
 	$old_karma = $user->karma;
 	if ($user->karma > $karma) {
 		if ($karma < $karma_base || $penalized > 1) {
-			$user->karma = 0.7*$user->karma + 0.3*$karma; // In case of very low karma, penalized more
+			//$user->karma = 0.7*$user->karma + 0.3*$karma; // In case of very low karma, penalized more
+			$user->karma = 0.8*$user->karma + 0.2*$karma; // In case of very low karma, penalized more
 		} else {
 			// Decrease very slowly
-			$user->karma = 0.95*$user->karma + 0.05*$karma;
+			//$user->karma = 0.95*$user->karma + 0.05*$karma;
+			$user->karma = 0.99*$user->karma + 0.01*$karma;
 		}
 	} else {
 		// Increase/decrease faster
@@ -462,6 +466,7 @@ foreach ($res as $dbuser) {
 		$annotation->text = $output;
 		$annotation->store(time() + 86400*60);
 	}
+
 	$db->barrier();
 	echo $output;
 }

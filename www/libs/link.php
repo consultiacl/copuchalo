@@ -169,14 +169,14 @@ class Link extends LCPBase {
 	function add_click($no_go=false) {
 		global $globals, $db;
 
-		if (! $globals['bot']
-			&& ! Link::visited($this->id)
-			&& $globals['click_counter']
-			&& ($no_go || (isset($_COOKIE['k']) && check_security_key($_COOKIE['k'])))
-			&& $this->ip != $globals['user_ip']) {
-			// Delay storing
-			self::$clicked = $this->id;
-		}
+		//if (! $globals['bot']
+		//	&& ! Link::visited($this->id)
+		//	&& $globals['click_counter']
+		//	&& ($no_go || (isset($_COOKIE['k']) && check_security_key($_COOKIE['k'])))
+		//	&& $this->ip != $globals['user_ip']) {
+		//	// Delay storing
+		//	self::$clicked = $this->id;
+		//}
 	}
 
 	static function store_clicks() {
@@ -267,7 +267,7 @@ class Link extends LCPBase {
 			if ($value < 0) {
 				$dict['vote_description'] = get_negative_vote($value);
 			} else {
-				$dict['vote_description'] = _('¡chachi!');
+				$dict['vote_description'] = _('¡bacán!');
 			}
 		}
 		$dict['votes'] = $this->votes;
@@ -416,7 +416,7 @@ class Link extends LCPBase {
 
 		// The URL has been checked
 		$this->valid = true;
-
+		/*
 		if(preg_match('/<title[^<>]*>([^<>]*)<\/title>/si', $this->html, $matches)) {
 			$url_title=clean_text($matches[1]);
 			if (mb_strlen($url_title) > 3) {
@@ -427,10 +427,39 @@ class Link extends LCPBase {
 		if(preg_match('/< *meta +name=[\'"]description[\'"] +content=[\'"]([^<>]+)[\'"] *\/*>/si', $this->html, $matches)) {
 			$this->url_description=clean_text_with_tags($matches[1], 0, false, 400);
 		}
+		*/
+
+		$metatags = getMetaTags($this->html);
+
+		// Get title
+		$url_title = '';
+		if( ! empty($metatags['og:title']) ) {
+			$url_title = $metatags['og:title'];
+		} elseif( ! empty($metatags['twitter:title']) ) {
+			$url_title = $metatags['twitter:title'];
+		} elseif( ! empty($metatags['title']) ) {
+			$url_title = $metatags['title'];
+		}
+		$url_title = clean_string($url_title);
+		if(mb_strlen($url_title) > 3) {
+			$this->url_title=$url_title;
+		}
+
+		// Get content description
+		$r_desc = '';
+		if( ! empty($metatags['og:description']) ){
+			$r_desc = $metatags['og:description'];
+		} elseif( ! empty($metatags['description']) ) {
+			$r_desc = $metatags['description'];
+		} elseif( ! empty($metatags['dc_description']) ) {
+			$r_desc = $metatags['dc_description'];
+		} elseif( ! empty($metatags['twitter:description']) ) {
+			$r_desc = $metatags['twitter:description'];
+		}
+		$this->url_description=clean_text_with_tags(clean_string($r_desc), 0, false, 400);
 
 		return true;
 	}
-
 
 	function trackback() {
 		// Now detect trackbacks
@@ -684,6 +713,19 @@ class Link extends LCPBase {
 
 		if(!$this->read) return;
 
+		if($type == 'frontpage') {
+			$type = 'full';
+			$content_full = false;
+			$pagetoserve = "link_summary_card.html";
+		} else {
+			$content_full = true;
+			if($globals['mobile']) {
+				$pagetoserve = "link_summary_card.html";
+			} else {
+				$pagetoserve = "link_summary.html";
+			}
+		}
+
 		$this->is_votable();
 
 		$this->get_current_sub_status_and_date();
@@ -715,8 +757,7 @@ class Link extends LCPBase {
 				$this->negative_text = get_negative_vote($negatives->vote_value);
 			}
 		}
-
-		if ($karma_best_comment > 0 && $this->comments > 0 && $this->comments < 50 && $globals['now'] - $this->date < 86400) {
+		if ($karma_best_comment > 0) { /*&& $this->comments > 0 && $this->comments < 50 && $globals['now'] - $this->date < 86400) {*/
 			$this->best_comment = $db->get_row("select SQL_CACHE comment_id, comment_order, substr(comment_content, 1, 225) as content from comments where comment_link_id = $this->id and comment_karma > $karma_best_comment and comment_votes > 0 order by comment_karma desc limit 1");
 		} else {
 			$this->best_comment  = FALSE;
@@ -735,7 +776,9 @@ class Link extends LCPBase {
 
 		$vars = compact('type');
 		$vars['self'] = $this;
-		return Haanga::Load("link_summary.html", $vars);
+		$vars['content_full'] = $content_full;
+		//echo "<!-- NOTICIA: ".print_r($this,true)."-->\n";
+		return Haanga::Load($pagetoserve, $vars);
 
 	}
 
@@ -818,7 +861,7 @@ class Link extends LCPBase {
 		global $db, $current_user, $globals;
 
 		$vote = new Vote('links', $this->id, $current_user->user_id);
-		if ($vote->exists(true)) return false;
+		if ($vote->exists(false)) return false;
 		// For karma calculation
 		$status = ( ! empty($this->sub_status) ? $this->sub_status : $this->status);
 		$vote_value = ($value > 0 ? $value : -$current_user->user_karma);
@@ -1009,7 +1052,7 @@ class Link extends LCPBase {
 			$server_name = get_server_name().$globals['base_url'].'story/';
 			$id = $this->id;
 		}
-		return 'http://'.$server_name.$id;
+		return 'https://'.$server_name.$id;
 	}
 
 	function get_relative_permalink($strict = false) {
@@ -1021,9 +1064,9 @@ class Link extends LCPBase {
 
 		if ( $this->is_sub && ($globals['submnm'] || $strict || self::$original_status || ! $this->allow_main_link) ) {
 			if (! empty($globals['submnm']) && $this->sub_status_id == SitesMgr::my_id() && ! $strict && ! self::$original_status) {
-				$base = $this->base_url . 'm/'.$globals['submnm'].'/';
+				$base = $this->base_url . 's/'.$globals['submnm'].'/';
 			} else {
-				$base = $this->base_url . 'm/'.$this->sub_name.'/';
+				$base = $this->base_url . 's/'.$this->sub_name.'/';
 			}
 		} else {
 			$base = $this->base_url.'story/';
@@ -1386,14 +1429,15 @@ class Link extends LCPBase {
 		$this->thumb = '';
 		if ($img) {
 			$filepath = Upload::get_cache_dir() . "/tmp/thumb-$this->id.jpg";
-			$thumbnail = $img->scale($globals['medium_thumb_size']);
-			$thumbnail->save($filepath, IMAGETYPE_JPEG);
+			// Don't scale original image link, save original.
+			//thumbnail = $img->scale($globals['media_big_wide'], $globals['media_big_height']);
+			$img->save($filepath, IMAGETYPE_JPEG);
 			if (! $this->move_tmp_image(basename($filepath), 'image/jpeg') ) {
 				$this->thumb_status = 'error';
 				if ($debug)
 					echo "<!-- Meneame, error saving thumbnail ".$this->get_permalink()." -->\n";
 			} else {
-				$this->image_parser->seen_add($img->url);
+				//$this->image_parser->seen_add($img->url);
 				$this->thumb_status = 'remote';
 				if ($debug) {
 					echo "<!-- Meneame, new thumbnail $img->url -->\n";
@@ -1423,7 +1467,7 @@ class Link extends LCPBase {
 	function has_thumb() {
 		global $globals;
 
-		if (! empty($this->thumb_url)) return $this->thumb_url;
+		//if (! empty($this->thumb_url)) return $this->thumb_url;
 
 
 		if ($this->media_size > 0) { // New format
@@ -1431,7 +1475,8 @@ class Link extends LCPBase {
 			$this->thumb_uri = Upload::get_cache_relative_dir($this->id)."/media_thumb-link-$this->id.$this->media_extension?$this->media_date";
 			$this->thumb_url = $base.$this->thumb_uri;
 			$this->media_url = Upload::get_url('link', $this->id, 0, $this->media_date, $this->media_mime);
-			$this->thumb_x = $this->thumb_y = $globals['thumb_size'];
+			$this->thumb_x = $globals['media_front_wide'];
+			$this->thumb_y = $globals['media_front_height'];
 			return $this->thumb_url;
 	 	}
 

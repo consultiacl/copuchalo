@@ -1,4 +1,4 @@
-#! /usr/bin/env php
+#!/usr/bin/php
 <?php
 include(dirname(__FILE__).'/../www/config.php');
 global $_SERVER;

@@ -1,4 +1,6 @@
-<?
+#!/usr/bin/php
+
+<?php
 include('../config.php');
 include('utils.php');
 include(mnminclude.'external_post.php');

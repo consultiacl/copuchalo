@@ -88,7 +88,7 @@ function do_header($title) {
 	echo '	<atom:link href="http://'.get_server_name().$globals['base_url'].'blogs_rss2.php" rel="self" type="application/rss+xml" />'."\n";
 	echo'	<title>'.$title.'</title>'."\n";
 	echo'	<link>http://'.get_server_name().$globals['base_url'].'rsss.php</link>'."\n";
-	echo"	<image><title>".$title."</title><link>http://".get_server_name().$globals['base_url']."rsss.php</link><url>http://".get_static_server_name().$globals['base_url']."img/mnm/eli-rss.png</url></image>\n";
+	//echo"	<image><title>".$title."</title><link>http://".get_server_name().$globals['base_url']."rsss.php</link><url>http://".get_static_server_name().$globals['base_url']."img/mnm/eli-rss.png</url></image>\n";
 	echo'	<description>'._('blogs de usuarios de Menéame').'</description>'."\n";
 	echo'	<pubDate>'.date("r", $last_modified).'</pubDate>'."\n";
 	echo'	<generator>http://blog.meneame.net/</generator>'."\n";

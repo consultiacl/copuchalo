@@ -84,7 +84,7 @@ function do_header($title, $id='home', $options = false) {
 	$this_site_properties = SitesMgr::get_extended_properties();
 
 	if ($this_site->sub) {
-		$this_site->url = $this_site->base_url.'m/'.$this_site->name;
+		$this_site->url = $this_site->base_url.'s/'.$this_site->name;
 	} else {
 		$this_site->url = $this_site->base_url;
 	}
@@ -113,33 +113,38 @@ function do_header($title, $id='home', $options = false) {
 
 	if (! is_array($options)) {
 		$left_options = array();
+		$show_story = false;
 		if ($this_site->enabled && empty($this_site_properties['new_disabled'])) {
-			$left_options[] = new MenuOption(_('enviar historia'), $globals['base_url'].'submit', $id, _('enviar nueva historia'));
+			if( $globals['mobile'] ) $left_options[] = new MenuOption(_('enviar historia'), $globals['base_url'].'submit', $id, _('enviar nueva historia'));
+			$show_story = true;
 		}
+		if( $globals['mobile'] ) $left_options[] = new MenuOption(_('nuevas'), $globals['base_url'].'queue', $id, _('copuchar noticias pendientes'));
 		$left_options[] = new MenuOption(_('portada'), $globals['base_url'], $id, _('página principal'));
-		$left_options[] = new MenuOption(_('nuevas'), $globals['base_url'].'queue', $id, _('menear noticias pendientes'));
 		$left_options[] = new MenuOption(_('populares'), $globals['base_url'].'popular', $id, _('historias más votadas'));
 		$left_options[] = new MenuOption(_('más visitadas'), $globals['base_url'].'top_visited', $id, _('historias más visitadas/leídas'));
 		$left_options[] = new MenuOption(_('destacadas'), $globals['base_url'].'top_active', $id, _('historias más activas'));
 
 		$right_options = array();
-		$right_options[] = new MenuOption(_('m/'), $globals['base_url_general'].'subs', $id, _('sub menéames'));
-		$right_options[] = new MenuOption(_('fisgona'), $globals['base_url'].'sneak', $id, _('visualizador en tiempo real'));
-		$right_options[] = new MenuOption(_('nótame'), post_get_base_url(), $id, _('leer o escribir notas y mensajes privados'));
-		$right_options[] = new MenuOption(_('galería'), 'javascript:fancybox_gallery(\'all\');', false, _('las imágenes subidas por los usuarios'));
+		$right_options[] = new MenuOption(_('s/'), $globals['base_url_general'].'subs', $id, _('sub copuchas'));
+		$right_options[] = new MenuOption(_('sapear'), $globals['base_url'].'sneak', $id, _('visualizador en tiempo real'));
+		$right_options[] = new MenuOption(_('copuchentos'), post_get_base_url(), $id, _('leer o escribir notas y mensajes privados'));
+		if( $globals['mobile'] ) $right_options[] = new MenuOption(_('galería'), 'javascript:fancybox_gallery(\'all\');', false, _('las imágenes subidas por los usuarios'));
 	} else {
 		$left_options = $options;
 		$right_options = array();
-		//$right_options[] = new MenuOption(_('portada'), $globals['base_url'], '', _('página principal'));
-		$right_options[] = new MenuOption(_('nuevas'), $globals['base_url'].'queue', '', _('menear noticias pendientes'));
+		if( $globals['mobile'] ) {
+			$right_options[] = new MenuOption(_('portada'), $globals['base_url'], '', _('página principal'));
+			$right_options[] = new MenuOption(_('nuevas'), $globals['base_url'].'queue', '', _('copuchar noticias pendientes'));
+		}
 
-		$right_options[] = new MenuOption(_('m/'), $globals['base_url_general'].'subs', $id, _('sub menéames'));
-		$right_options[] = new MenuOption(_('fisgona'), $globals['base_url'].'sneak', $id, _('visualizador en tiempo real'));
-		$right_options[] = new MenuOption(_('nótame'), post_get_base_url(), $id, _('leer o escribir notas y mensajes privados'));
-		$right_options[] = new MenuOption(_('galería'), 'javascript:fancybox_gallery(\'all\');', false, _('las imágenes subidas por los usuarios'));
+		$right_options[] = new MenuOption(_('s/'), $globals['base_url_general'].'subs', $id, _('sub copuchas'));
+		$right_options[] = new MenuOption(_('sapear'), $globals['base_url'].'sneak', $id, _('visualizador en tiempo real'));
+		$right_options[] = new MenuOption(_('copuchentos'), post_get_base_url(), $id, _('leer o escribir notas y mensajes privados'));
+		//$right_options[] = new MenuOption(_('galería'), 'javascript:fancybox_gallery(\'all\');', false, _('las imágenes subidas por los usuarios'));
 	}
 
-	$vars = compact('title', 'greeting', 'id', 'left_options', 'right_options', 'sites', 'this_site', 'this_site_properties');
+	$vars = compact('title', 'greeting', 'id', 'left_options', 'right_options', 'sites', 'this_site', 'this_site_properties', 'show_story');
+	$vars['base_url'] = $globals['base_url'];
 	return Haanga::Load('header.html', $vars);
 }
 
@@ -163,7 +168,7 @@ function do_footer($credits = true) {
 }
 
 function do_footer_menu() {
-	return Haanga::Load('footer_menu.html');
+	//return Haanga::Load('footer_menu.html');
 }
 
 function do_rss_box($search_rss = 'rss') {
@@ -431,7 +436,7 @@ function do_vertical_tags($what=false) {
 	$max_pts = 22;
 
 	$min_date = date("Y-m-d H:i:00", $globals['now'] - 172800); // 48 hours (edit! 2zero)
-	$from_where = "FROM links, sub_statuses WHERE id = ".SitesMgr::my_id()." AND link_id = link and link_date > '$min_date' and link_status $status";
+	$from_where = "FROM links, sub_statuses WHERE id = ".SitesMgr::my_id()." AND link_id = link and link_date > '$min_date' and link_status='$status'";
 	$max = 3;
 
 	$res = $db->get_col("select link_tags $from_where");
@@ -488,7 +493,7 @@ function do_best_sites() {
 	if(memcache_mprint($key)) return;
 	echo '<!-- Calculating '.__FUNCTION__.' -->';
 
-	$min_date = date("Y-m-d H:i:00", $globals['now'] - 172800); // about  48 hours
+	$min_date = date("Y-m-d H:i:00", $globals['now'] - 86400*30); //172800); // about  48 hours (2)
 	// The order is not exactly the votes counts
 	// but a time-decreasing function applied to the number of votes
 	$res = $db->get_results("select sum(link_votes + link_anonymous) as total_count, sum(link_votes-link_negatives*2)*(1-(unix_timestamp(now())-unix_timestamp(link_date))*0.8/172800) as coef, sum(link_votes-link_negatives*2) as total, blog_url from links, blogs, sub_statuses where id = ".SitesMgr::my_id()." AND link_id = link AND date > '$min_date' and status='published' and link_blog = blog_id group by link_blog order by coef desc limit 10");
@@ -511,7 +516,7 @@ function do_most_clicked_sites() {
 	if(memcache_mprint($key)) return;
 	echo '<!-- Calculating '.__FUNCTION__.' -->';
 
-	$min_date = date("Y-m-d H:i:00", $globals['now'] - 172800); // about  48 hours
+	$min_date = date("Y-m-d H:i:00", $globals['now'] - 86400*30); // about  48 hours (2)
 	// The order is not exactly the votes counts
 	// but a time-decreasing function applied to the number of votes
 	$res = $db->get_results("select sum(counter) as total_count, sum(counter*(1-(unix_timestamp(now())-unix_timestamp(link_date))*0.5/172800)) as value, blog_url from links, link_clicks, blogs, sub_statuses where sub_statuses.id = ".SitesMgr::my_id()." AND link_id = link AND date > '$min_date' and status='published' and link_blog = blog_id AND link_clicks.id = link group by link_blog order by value desc limit 10");
@@ -534,8 +539,8 @@ function do_best_comments() {
 	if(memcache_mprint($key)) return;
 	echo '<!-- Calculating '.__FUNCTION__.' -->';
 
-	$min_date = date("Y-m-d H:i:00", $globals['now'] - 50000); // about 12 hours
-	$link_min_date = date("Y-m-d H:i:00", $globals['now'] - 86400*2); // 48 hours
+	$min_date = date("Y-m-d H:i:00", $globals['now'] - 86400*30); //50000); // about 12 hours
+	$link_min_date = date("Y-m-d H:i:00", $globals['now'] - 86400*30); // 48 hours
 	$now = intval($globals['now']/60) * 60;
 	// The order is not exactly the comment_karma
 	// but a time-decreasing function applied to the number of votes
@@ -570,7 +575,7 @@ function do_best_story_comments($link) {
 	$do_cache = false;
 	$output = ' '; // Use a space to be sure it's memcached
 
-	if ($link->comments > 30 && $globals['now'] - $link->date < 86400*4) {
+	if ($link->comments > 1 && $globals['now'] - $link->date < 86400*30) {   // was 30 comments and 4 days
 		$do_cache = true;
 		$sql_cache = 'SQL_NO_CACHE';
 	} else {
@@ -659,7 +664,7 @@ function do_best_stories() {
 
 	$title = _('más votadas');
 
-	$min_date = date("Y-m-d H:i:00", $globals['now'] - 129600); // 36 hours
+	$min_date = date("Y-m-d H:i:00", $globals['now'] - 86400*30); //129600); // 36 hours
 	// The order is not exactly the votes
 	// but a time-decreasing function applied to the number of votes
 	$res = $db->get_results("select link_id, (link_votes-link_negatives*2)*(1-(unix_timestamp(now())-unix_timestamp(link_date))*0.8/129600) as value from links, sub_statuses where id = ".SitesMgr::my_id()." AND link_id = link AND status='published' and date > '$min_date' order by value desc limit 5");
@@ -697,13 +702,13 @@ function do_best_queued() {
 
 	$output = ' '; // Use a space to be sure it's memcached
 
-	$avg_karma = intval($db->get_var("SELECT avg(karma) from sub_statuses WHERE id = ".SitesMgr::my_id()." AND date >= date_sub(now(), interval 1 day) and status='published'"));
+	$avg_karma = intval($db->get_var("SELECT avg(karma) from sub_statuses WHERE id = ".SitesMgr::my_id()." AND date >= date_sub(now(), interval 30 day) and status='published'"));  // interval 1 day
 	$min_karma = intval($avg_karma/4);
 	$title = _('candidatas');
 	$warned_threshold = intval($min_karma * 1.5);
 
 
-	$min_date = date("Y-m-d H:i:00", $globals['now'] - 86400*3); // 3 days
+	$min_date = date("Y-m-d H:i:00", $globals['now'] - 86400*30); // 3 days
 	// The order is not exactly the votes
 	// but a time-decreasing function applied to the number of votes
 	$res = $db->get_results("select link_id from links, sub_statuses where id = ".SitesMgr::my_id()." AND status='queued' and link_id = link AND link_karma > $min_karma AND date > '$min_date' order by link_karma desc limit 20");
@@ -746,7 +751,7 @@ function do_most_clicked_stories() {
 
 	$title = _('más visitadas');
 
-	$min_date = date("Y-m-d H:i:00", $globals['now'] - 172800); // 48 hours
+	$min_date = date("Y-m-d H:i:00", $globals['now'] - 86400*30); // 48 hours
 	// The order is not exactly the votes
 	// but a time-decreasing function applied to the number of votes
 	$res = $db->get_results("select link_id, counter*(1-(unix_timestamp(now())-unix_timestamp(link_date))*0.5/172800) as value from links, link_clicks, sub_statuses where sub_statuses.id = ".SitesMgr::my_id()." AND link_id = link AND status='published' and date > '$min_date' and link_clicks.id = link order by value desc limit 5");
@@ -785,7 +790,7 @@ function do_best_posts() {
 	if(memcache_mprint($key)) return;
 	echo '<!-- Calculating '.__FUNCTION__.' -->';
 
-	$min_date = date("Y-m-d H:i:00", $globals['now'] - 86400); // about 24 hours
+	$min_date = date("Y-m-d H:i:00", $globals['now'] - 86400*30); // about 24 hours
 	$res = $db->get_results("select post_id from posts, users where post_date > '$min_date' and  post_user_id = user_id and post_karma > 0 order by post_karma desc limit 10");
 	if ($res && count($res) > 4) {
 		$objects = array();
@@ -853,7 +858,7 @@ function do_last_subs($status = 'published', $count = 10, $order = 'date') {
 
 	$output = ' ';
 
-	$ids = $db->get_col("select link from sub_statuses, subs, links where date > date_sub(now(), interval 48 hour) and status = '$status' and sub_statuses.id = origen and subs.id = sub_statuses.id and owner > 0 and not nsfw and link_id = link order by $order desc limit $count");
+	$ids = $db->get_col("select link from sub_statuses, subs, links where date > date_sub(now(), interval 30 day) and status = '$status' and sub_statuses.id = origen and subs.id = sub_statuses.id and owner > 0 and not nsfw and link_id = link order by $order desc limit $count");  //interval 48 hour
 	if ($ids) {
 		$links = array();
 		$title = _('en subs de usuarios');

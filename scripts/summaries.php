@@ -1,4 +1,4 @@
-<?
+<?php
 include('../config.php');
 
 header("Content-Type: text/plain");

@@ -1,5 +1,5 @@
 #! /usr/bin/php
-<?
+<?php
 include('../config.php');
 
 $hours = intval($argv[1]);

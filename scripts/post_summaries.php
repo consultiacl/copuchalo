@@ -1,4 +1,5 @@
-#! /usr/bin/env php
+#!/usr/bin/php
+
 <?php
 
 global $_SERVER;
@@ -7,20 +8,20 @@ $site_name = $argv[2];
 
 
 // Post to Twitter/Jaiku the most voted and commented during last 24 hr
-include(dirname(__FILE__).'/../www/config.php');
+include('../config.php');
 include(mnminclude.'external_post.php');
 
 $my_id = SitesMgr::get_id($site_name);
 
 if (! $my_id > 0) {
-    syslog(LOG_INFO, "Meneame, ".basename(__FILE__)." site not found $site_name");
+    syslog(LOG_INFO, basename(__FILE__)." site not found $site_name");
     echo "No site id found\n";
     die;
 }
 
 SitesMgr::__init($my_id);
 
-syslog(LOG_INFO, "Meneame, running ".basename(__FILE__)." for $site_name");
+syslog(LOG_INFO, "running ".basename(__FILE__)." for $site_name");
 
 $info = SitesMgr::get_info();
 $properties = SitesMgr::get_extended_properties();
@@ -63,7 +64,7 @@ foreach ($link_sqls as $key => $sql) {
 		}
 		$text = "$intro: $link->title";
 
-		twitter_post($properties, $text, $url); 
+		twitter_post($properties, $text, $short_url); 
 		facebook_post($properties, $link, $intro);
 
 		echo "$text $short_url\n"; continue;

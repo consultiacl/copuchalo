@@ -37,14 +37,14 @@ $user=new User();
 $min_date = date("Y-m-d H:00:00", time() - 192800); //  about 48 hours
 $page_size = 50;
 $offset=(get_current_page()-1)*$page_size;
-$page_title = _('nótame') . ' | '. $globals['site_name'];
+$page_title = _('copuchentos') . ' | '. $globals['site_name'];
 $view = false;
 $short_content = false;
 
 switch ($argv[0]) {
 	case '_best':
 		$tab_option = 2;
-		$page_title = _('mejores notas') . ' | ' . _('menéame');
+		$page_title = _('mejores notas') . ' | ' . _('copúchalo');
 		$min_date = date("Y-m-d H:00:00", time() - 86400); //  about 24 hours
 		$where = "post_date > '$min_date'";
 		$order_by = "ORDER BY post_karma desc";
@@ -154,7 +154,7 @@ if (isset($globals['canonical_server_name']) && $globals['canonical_server_name'
 	$globals['noindex'] = true;
 }
 
-do_header($page_title, _('nótame'), get_posts_menu($tab_option, $user->username));
+do_header($page_title, _('copuchentos'), get_posts_menu($tab_option, $user->username));
 
 $conversation_extra = '';
 if ($tab_option == 4) {
@@ -205,6 +205,7 @@ if (! $short_content) {
 		do_last_blogs();
 	}
 }
+
 echo '</div>' . "\n";
 /*** END SIDEBAR ***/
 
@@ -212,7 +213,6 @@ echo '<div id="newswrap">'."\n";
 do_pages($rows, $page_size);
 
 echo '<div class="notes">';
-
 
 if ($current_user->user_id > 0) {
 	echo '<div id="addpost"></div>';
@@ -242,7 +242,7 @@ if ($posts) {
 		// Print share button
 		echo '<div style="text-align:right">';
 		$vars = array('link' => $globals['permalink'],
-           			'title' => $page_title);
+				'title' => $page_title);
 		Haanga::Load('share.html', $vars);
 		echo '</div>';
 

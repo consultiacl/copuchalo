@@ -43,7 +43,7 @@ class FBConnect extends OAuthBase {
 					'secret' => $globals['facebook_secret'],
 					));
 		$this->user = $this->facebook->getUser();
-		
+
 		parent::__construct();
 	}
 
@@ -93,8 +93,8 @@ class FBConnect extends OAuthBase {
 		if (!$this->user_exists()) {
 			$this->url = $user_profile['link'];
 			$this->names = $user_profile['name'];
-			if ($user_profile['username']) {
-				$this->avatar = "http://graph.facebook.com/".$user_profile['username']."/picture";
+			if ($user_profile['id']) {
+				$this->avatar = "http://graph.facebook.com/".$user_profile['id']."/picture";
 			}
 			$this->store_user();
 		}

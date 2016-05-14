@@ -1,6 +1,6 @@
 <?php
 $routes = array(
-	''			=> 'index.php',
+	''		=> 'index.php',
 	'story'		=> 'story.php',
 	'submit'	=> 'submit.php',
 	'subedit'	=> 'subedit.php',
@@ -11,15 +11,16 @@ $routes = array(
 	'register'	=> 'register.php',
 	'cloud'		=> 'cloud.php',
 	'sites_cloud'	=> 'sitescloud.php',
+	'sitescloud'	=> 'sitescloud.php',
 	'rsss'		=> 'rsss.php',
 	'promote'	=> 'promote.php',
 	'values'	=> 'values.php',
 	'queue'		=> 'shakeit.php',
 	'legal'		=> 'legal.php',
 	'go'		=> 'go.php',
-	'b'			=> 'bar.php',
-	'c'			=> 'comment.php',
-	'm'			=> 'submnm.php',
+	'b'		=> 'bar.php',
+	'c'		=> 'comment.php',
+	's'		=> 'submnm.php',
 	'user'		=> 'user.php',
 	'search'	=> 'search.php',
 	'between'	=> 'between.php',
@@ -27,21 +28,20 @@ $routes = array(
 	'comments_rss'	=> 'comments_rss2.php',
 	'sneakme_rss'	=> 'sneakme_rss2.php',
 	'sneak'		=> 'sneak.php',
-	'telnet'		=> 'telnet.php',
+	'telnet'	=> 'telnet.php',
 	'popular'	=> 'topstories.php',
 	'top_visited'	=> 'topclicked.php',
 	'top_active'	=> 'topactive.php',
 	'top_comments'	=> 'topcomments.php',
-	'top_users'		=> 'topusers.php',
+	'top_users'	=> 'topusers.php',
 	'top_commented'	=> 'topcommented.php',
 	'profile'	=> 'profile.php',
 	'sitemap'	=> 'sitemap.php',
 	'trends'	=> 'trends.php',
 	'faq-es'	=> 'faq-es.php',
-	'opensearch' => 'opensearch_plugin.php',
+	'opensearch'	=> 'opensearch_plugin.php',
 	'backend'	=> 'backend/dispatcher.php',
-	'api'		=> 'api/dispatcher.php',
-	'notame'	=> 'sneakme/dispatcher.php',
+	'copuchentos'	=> 'sneakme/dispatcher.php',
 	'mobile'	=> 'mobile/dispatcher.php',
 	'captcha'	=> 'captcha.php',
 );
@@ -49,14 +49,21 @@ $routes = array(
 $globals['path'] = $path = preg_split('/\/+/', $_SERVER['PATH_INFO'], 10, PREG_SPLIT_NO_EMPTY);
 $script = $routes[$path[0]];
 
-if (empty($script) || !file_exists($script)) {
-	include_once 'config.php';
-	do_error("not found", 404, true);
-}
+//syslog(LOG_INFO, "path_info: ".$_SERVER['PATH_INFO']." ||| path: ".print_r($path,true));
 
-$globals['script'] = $script;
-if ((include './'.$script) === FALSE) {
+if (!empty($script) && file_exists($script)) {
+	//syslog(LOG_INFO, "Include $script");
+	$globals['script'] = $script;
+	if ((include './'.$script) === FALSE) {
+		include_once 'config.php';
+		do_error("bad request $script", 400, true);
+	}
+} else {
+	// Try to reconstruct images from cache if were erased
 	include_once 'config.php';
-	do_error("bad request $script", 400, true);
+	//syslog(LOG_INFO, "Reconstruct: ".$_SERVER['PATH_INFO']);
+	reconstruct_cache_images($_SERVER['PATH_INFO']);
+	// else, error
+	do_error("not found", 404, true);
 }
 

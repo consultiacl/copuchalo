@@ -161,7 +161,7 @@ function check_username($name) {
 }
 
 function check_password($password) {
-	 return preg_match("/^(?=.{6,})(?=(.*[a-z].*))(?=(.*[A-Z0-9].*)).*$/", $password);
+	 return preg_match("/^(?=.{8,})(?=(.*[a-z].*))(?=(.*[A-Z0-9].*)).*$/", $password);
 }
 
 
@@ -458,7 +458,7 @@ function post_get_base_url($option='', $give_base=true) {
 	global $globals;
 	if ($give_base) $base = $globals['base_url_general'];
 	else $base = '';
-	return $base.'notame/'.$option;
+	return $base.'copuchentos/'.$option;
 }
 
 function get_avatar_url($user, $avatar, $size, $fullurl = true) {
@@ -496,7 +496,7 @@ function get_avatar_url($user, $avatar, $size, $fullurl = true) {
 function get_no_avatar_url($size, $fullurl = true) {
 	global $globals;
 
-	$url = $globals['base_static'].'img/mnm/no-gravatar-2-'.$size.'.jpg';
+	$url = $globals['base_static'].'img/cpchl/no-gravatar-'.$size.'.png';
 	if (!  $fullurl) {
 		$url = url_no_scheme($url);
 	}
@@ -677,7 +677,6 @@ function put_emojis_callback($matches) {
 			'peineta' => 'peineta.png" alt=":peineta:" title=":peineta:" width="23" height="18"',
 			'ferrari' => 'ferrari.png" alt=":ferrari:" title=":ferrari:" width="36" height="18"',
 			'calzador' => 'calzador.png" alt=":calzador:" title=":calzador:" width="18" height="18"',
-
 			'tinfoil' => 'tinfoil.gif" alt=":tinfoil:" title=":tinfoil:" width="18" height="26"',
 			'clap' => 'clap.gif" alt=":clap:" title=":clap:" width="32" height="18"',
 		);
@@ -743,7 +742,6 @@ function normalize_smileys($str) {
 	$str=preg_replace('/(\s|^):calzador:/i', '$1{calzador}', $str);
 	$str=preg_replace('/(\s|^):tinfoil:/i', '$1{tinfoil}', $str);
 	$str=preg_replace('/(\s|^):clap:/i', '$1{clap}', $str);
-
 
 	return $str;
 }
@@ -838,12 +836,13 @@ function memcache_menabled () {
 function memcache_minit () {
 	global $memcache, $globals;
 
+
 	if ($memcache) return true;
 	if ($globals['memcache_host']) {
-		$memcache = new Memcache;
+		$memcache = new Memcached;
 		if (!isset($globals['memcache_port'])) $globals['memcache_port'] = 11211;
-		if ( ! @$memcache->connect($globals['memcache_host'], $globals['memcache_port']) ) {
-			syslog(LOG_INFO, "Meneame: memcache init failed " . $globals['memcache_host']);
+		if ( ! $memcache->addServer($globals['memcache_host'], $globals['memcache_port']) ) {
+			syslog(LOG_INFO, "memcache init failed " . $globals['memcache_host']);
 			$memcache = false;
 			return false;
 		}
@@ -861,11 +860,11 @@ function memcache_mget ($key) {
 }
 
 
-function memcache_madd ($key, $value, $expire=3600) {
+function memcache_madd ($key, $value, $expire=86400) {   //3600) {
 	global $memcache, $globals;
 
 	// Check for memcache
-	if (memcache_minit()) return $memcache->set($key, $value, 0, $expire);
+	if (memcache_minit()) return $memcache->set($key, $value, $expire);
 	return false;
 }
 
@@ -883,9 +882,7 @@ function memcache_mprint ($key) {
 function memcache_mdelete ($key) {
 	global $memcache, $globals;
 
-	if (memcache_minit()) {
-		return $memcache->delete($key);
-	}
+	if (memcache_minit()) return $memcache->delete($key);
 	return false;
 }
 
@@ -929,7 +926,7 @@ function get_url($url, $referer = false, $max=500000, $log =true) {
 	//curl_setopt($session,CURLOPT_RANGE,"0-$max"); // It gives error with some servers
 	$response = @curl_exec($session);
 	if (!$response && $log) {
-			syslog(LOG_INFO, "Meneame: CURL error " . curl_getinfo($session,CURLINFO_EFFECTIVE_URL) . ": " .curl_error($session));
+			syslog(LOG_INFO, "CURL error " . curl_getinfo($session,CURLINFO_EFFECTIVE_URL) . ": " .curl_error($session));
 			return false;
 	}
 	$header_size = curl_getinfo($session,CURLINFO_HEADER_SIZE);
@@ -1389,5 +1386,112 @@ function add_javascript($code) {
 	echo '<script type="text/javascript">';
 	echo 'addPostCode(\''.$code.'\');';
 	echo '</script>';
+}
+
+function getMetaTags($str) {
+	$pattern = '
+	~<\s*meta\s
+
+	# using lookahead to capture type to $1
+	(?=[^>]*?
+	  \b(?:name|property|http-equiv)\s*=\s*
+	  (?|"\s*([^"]*?)\s*"|\'\s*([^\']*?)\s*\'|
+	  ([^"\'>]*?)(?=\s*/?\s*>|\s\w+\s*=))
+        )
+
+	# capture content to $2
+	  [^>]*?\bcontent\s*=\s*
+	  (?|"\s*([^"]*?)\s*"|\'\s*([^\']*?)\s*\'|
+	  ([^"\'>]*?)(?=\s*/?\s*>|\s\w+\s*=))
+	  [^>]*>
+
+	~ix';
+
+	if(preg_match_all($pattern, $str, $out))
+		return array_combine($out[1], $out[2]);
+	return array();
+}
+
+// Clean string (tags, etc)
+function clean_string($str) {
+	return preg_replace("/&#?[a-z0-9]+;/i","", strip_tags(html_entity_decode(htmlspecialchars_decode($str))));
+}
+
+
+
+// Check we must reconstruct an image in cache directory
+function reconstruct_cache_images($request_uri, $errn = 404) {
+	global $globals, $db;
+
+	$cache_dir = preg_quote($globals['base_url'] . $globals['cache_dir'], '/');
+	if (preg_match("/$cache_dir/", $request_uri)) {
+		$filename = basename(clean_input_string($request_uri));
+		$base_filename = preg_replace('/\..+$/', '', $filename);
+		$parts = explode('-', $base_filename);
+		//syslog(LOG_INFO, "PARTS: ".print_r($parts, true));
+		switch ($parts[0]) {
+			case "media_thumb":
+			case "media_thumb_2x":
+				// Comments' and posts' thumnails
+				if (! Upload::is_thumb_public($parts[1])) break;
+				$media = new Upload($parts[1], $parts[2], 0);
+				if (! $media->read()) break;
+				if ($media->create_thumbs($parts[0])) {
+					header("HTTP/1.0 200 OK");
+					if ($media->mime) {
+						header('Content-Type: '.$media->mime);
+					} else {
+						header('Content-Type: image/jpeg');
+					}
+					if ($media->thumb->last_saved) {
+						readfile($media->thumb->last_saved);
+					} else { // last resort
+						$media->thumb->output();
+					}
+					$globals['access_log'] = false;
+					die;
+				}
+				$errn = 404;
+				break;
+
+			case "tmp_thumb":
+				// Temporal filenames
+				$name = preg_replace('/^tmp_thumb\-/', '', $filename);
+				$path = Upload::get_cache_dir().'/tmp/';
+				$pathname = $path.$name;
+				$thumbname = "$path/$filename";
+
+				if (! file_exists($pathname)) {
+					syslog(LOG_INFO, "ooops, couldn't find $pathname");
+					$errn = 404;
+					break;
+				}
+				require_once(mnminclude."simpleimage.php");
+				$thumb = new SimpleImage();
+				$thumb->load($pathname);
+				$thumb->resize($globals['media_thumb_size'], $globals['media_thumb_size'], true);
+				if (! $thumb->save($thumbname, -1)) {
+					$errn = 503;
+					break;
+				}
+				header("HTTP/1.0 200 OK");
+				header("Content-Type: " . $thumb->mime());
+				readfile($thumbname);
+				$globals['access_log'] = false;
+				die;
+
+			default:
+				// it's an avatar
+				if (count($parts) == 3 && $parts[0] > 0 && $parts[2] > 0) {
+					$_GET['id'] = $parts[0];
+					$_GET['time'] = $parts[1];
+					$_GET['size'] = $parts[2];
+					require_once(mnminclude.'../backend/get_avatar.php');
+					die;
+				}
+				$errn = 404;
+		}
+	}
+	return $errn;
 }
 

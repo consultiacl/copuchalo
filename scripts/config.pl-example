@@ -1,0 +1,6 @@
+# This is config.pl
+
+dblink   => 'DBI:mysql:meneame',
+username => 'meneame',
+password => '',
+

@@ -10,7 +10,8 @@
 class Upload {
 	static function get_url($type, $id, $version = 0, $ts = 0, $mime='image/jpg') {
 		global $globals;
-		return $globals['scheme'].'//'.get_server_name().$globals['base_url_general']."backend/media?type=$type&amp;id=$id&amp;version=$version&amp;ts=$ts&amp;".str_replace('/', '.', $mime);
+		return $globals['scheme'].'//'.get_server_name().$globals['base_url_general']."backend/media?type=$type&id=$id&version=$version&ts=$ts&".str_replace('/', '.', $mime);
+		//return $globals['scheme'].'//'.get_server_name().$globals['base_url_general']."backend/media?type=$type&amp;id=$id&amp;version=$version&amp;ts=$ts&amp;".str_replace('/', '.', $mime);
 	}
 
 	static function is_thumb_public($type) {
@@ -21,18 +22,19 @@ class Upload {
 	static function thumb_sizes($type, $key = false) {
 		global $globals;
 
-		$size = $globals['media_thumb_size'];
+		//$size = $globals['media_thumb_size'];
 		switch ($type) {
 			case 'sub_logo':
 				$all = array('media_thumb' => array(false, $globals['media_sublogo_height'] * 2, false));
 				break;
-			case 'link':
-				if (! empty($globals['thumb_size'])) {
-					$size = $globals['thumb_size'];
-				}
+			//case 'link':
+			//	if (! empty($globals['thumb_size'])) {
+			//		$size = $globals['thumb_size'];
+			//	}
 			default:
-				$all = array('media_thumb' => array($size, $size, true),
-					'media_thumb_2x' => array($size * 2, $size * 2, true));
+				$all = array('media_thumb' => array($globals['media_front_wide'], $globals['media_front_height'], true),
+					     'media_thumb_2x' => array($globals['media_front_wide'] * 2, $globals['media_front_height'] * 2, true));
+					   //'media_front' => array($globals['media_front_wide'], $globals['media_front_height'], true));
 		}
 
 		if ($key) {
@@ -80,7 +82,7 @@ class Upload {
 		if ($size > $globals['media_max_size']) return _('tamaño excedido');
 		if ($current_user->user_karma < $globals['media_min_karma']) return _('karma bajo');
 		if (Upload::user_uploads($current_user->user_id, 24) > $globals['media_max_upload_per_day']) return _('máximas subidas diarias excedidas');
-		if (Upload::user_bytes_uploaded($current_user->user_id, 24) > $globals['media_max_bytes_per_day'] * 1.2) return _('máximos bytes por día excedidos');
+		if (Upload::user_bytes_uploaded($current_user->user_id, 24) > $globals['media_max_bytes_per_day']) return _('máximos bytes por día excedidos');
 		return false;
 	}
 
@@ -92,7 +94,8 @@ class Upload {
 		if ($hours) $date_limit = "and date > date_sub(now(), interval $hours hour)";
 		else $date_limit = '';
 
-		return intval($db->get_var("select sum(size) from media where user = $user $date_limit"));
+		// not sum images from links
+		return intval($db->get_var("select sum(size) from media where type != 'link' and user = $user $date_limit"));
 	}
 
 	static function user_uploads($user, $hours = false, $type = false) {
@@ -106,7 +109,8 @@ class Upload {
 		if ($type) $media_type = "and type = '$type'";
 		else $media_type = '';
 
-		return intval($db->get_var("select count(*) from media where user = $user $date_limit $media_type"));
+		// not count images from links
+		return intval($db->get_var("select count(*) from media where type != 'link' and user = $user $date_limit $media_type"));
 	}
 
 	function __construct($type, $id, $version = 0, $time = false) {
@@ -209,8 +213,8 @@ class Upload {
 		$thumb = new SimpleImage();
 		$thumb->load($pathname);
 		if ( ! $thumb->load($pathname)) {
-			$alternate_image = mnmpath . "/img/common/picture02.png";
-			syslog(LOG_INFO, "Meneame, trying alternate thumb ($alternate_image) for $pathname");
+			$alternate_image = mnmpath . "/img/mnm/no-image.png";
+			syslog(LOG_INFO, "trying alternate thumb ($alternate_image) for $pathname");
 			if (!$thumb->load($alternate_image)) return false;
 		}
 
@@ -222,6 +226,7 @@ class Upload {
 				$res++;
 				@chmod($name, 0777);
 				$this->thumb = $thumb;
+				//syslog(LOG_INFO, "Thumb created: $name");
 			}
 		}
 		return $res;
@@ -245,7 +250,7 @@ class Upload {
 			$this->create_thumbs();
 			return $this->store();
 		} else {
-			syslog(LOG_INFO, "Meneame, error moving to " . $this->pathname());
+			syslog(LOG_INFO, "error moving to " . $this->pathname());
 		}
 		return false;
 	}
@@ -277,7 +282,7 @@ class Upload {
 			$this->create_thumbs();
 			return $this->store();
 		} else {
-			syslog(LOG_INFO, "Meneame, error moving to " . $this->pathname());
+			syslog(LOG_INFO, "error moving to " . $this->pathname());
 		}
 		return false;
 	}

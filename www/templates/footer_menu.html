@@ -1,7 +1,7 @@
 {% if not globals.mobile %}
 <div id="footwrap">
 
-	<div id="footcol1">
+	<div id="footcol1" class="wideonly">
 	<h5>{% trans _('suscripciones por RSS') %}</h5>
 	<ul>
 	<li><a href="{{ globals.base_url }}rss" >{% trans _('publicadas') %}</a></li>
@@ -19,69 +19,79 @@
 
 
 	<div id="footcol2">
-	{% if globals.is_meneame %}
 		<h5>ayuda</h5>
 		<ul id="helplist">
+		<li><a href="http://meneame.wikispaces.com/Comenzando">{% trans _('comenzando') %}</a></li>
 		<li><a href="{{ globals.base_url_general }}faq-es">{% trans _('faq') %}</a></li>
 		<li><a href="http://meneame.wikispaces.com/Ayuda">{% trans _('ayuda') %}</a></li>
-		<li><a href="http://meneame.wikispaces.com/">{% trans _('wiki') %}</a></li>
-		<li><a href="http://meneame.wikispaces.com/Bugs">{% trans _('avisar errores') %}</a></li>
+		<li><a href="{{globals.legal}}#contact">{% trans _('avisar errores') %}</a></li>
 		<li><a href="{{globals.legal}}#contact">{% trans _('avisar abusos') %}</a></li>
 		</ul>
-	{% endif %}
 	</div>
 
 
 	<div id="footcol3">
-	{% if globals.is_meneame %}
-		<h5>+menéame</h5>
+		<h5>+copuchas</h5>
 		<ul id="moremenelist">
 		<li><a href="{{ globals.base_url_general }}trends">{% trans _('tendencias') %}</a></li>
-		<li><a href="{{ globals.base_url_general }}mobile/">{% trans _('versión reducida') %}</a></li>
-		<li><a href="http://twitter.com/meneame_net">{% trans _('síguenos en twitter') %}</a></li>
-		<li><a href="/notame/">{% trans _('nótame') %}</a></li>
-		<li><a href="http://blog.meneame.net/">{% trans _('blog') %}</a></li>
+		<li><a href="/copuchentos/">{% trans _('copuchentos') %}</a></li>
+		<li><a href="http://blog.copuchalo.cl/">{% trans _('blog') %}</a></li>
+		{% if globals.fancybox_enabled %}
+			<li><a href="javascript:fancybox_gallery('all');">{% trans _('imágenes') %}</a></li>
+		{% endif %}
+		{% if globals.facebook_page OR globals.twitter_page %}
+			<li>{% trans _('síguenos en:') %} &nbsp;
+				{% if globals.facebook_page %}
+					<a class="share-icons-foot" href="{{ globals.facebook_page }}" title="{% trans _('síguenos en Facebook') %}" ><span class="fa icons-foot fa-facebook-square"></span></a>
+				{% endif %}
+				{% if globals.twitter_page %}
+					<a class="share-icons-foot" href="{{ globals.twitter_page }}" title="{% trans _('síguenos en Twitter') %}" ><span class="fa icons-foot fa-twitter"></span></a>
+				{% endif %}
+			</li>
+		{% endif %}
 		</ul>
-	{% endif %}
 	</div>
 
 	<div id="footcol4">
-	<h5>{% trans _('estadísticas') %}</h5>
-	<ul id="statisticslist">
-	{% if current_user.user_id %}
-		<li><a href="{{ globals.base_url_general }}top_users">{% trans _('usuarios') %}</a></li>
-	{% endif %}
-	<li><a href="{{ globals.base_url }}popular">{% trans _('populares') %}</a></li>
-	<li><a href="{{ globals.base_url }}top_commented">{% trans _('más comentadas') %}</a></li>
-	<li><a href="{{ globals.base_url }}top_comments">{% trans _('mejores comentarios') %}</a></li>
-	<li><a href="{{ globals.base_url }}cloud">{% trans _('nube de etiquetas') %}</a></li>
-	<li><a href="{{ globals.base_url }}sites_cloud">{% trans _('nube de webs') %}</a></li>
-	<li><a href="{{ globals.base_url }}promote">{% trans _('candidatas') %}</a></li>
-	<li><a href="{{ globals.base_url_general }}values">{% trans _('parámetros básicos') %}</a></li>
-	</ul>
+		<h5>{% trans _('estadísticas') %}</h5>
+		<ul id="statisticslist">
+		{% if current_user.user_id %}
+			<li><a href="{{ globals.base_url_general }}top_users">{% trans _('usuarios') %}</a></li>
+		{% endif %}
+		<li><a href="{{ globals.base_url }}popular">{% trans _('populares') %}</a></li>
+		<li><a href="{{ globals.base_url }}top_commented">{% trans _('más comentadas') %}</a></li>
+		<li><a href="{{ globals.base_url }}top_comments">{% trans _('mejores comentarios') %}</a></li>
+		<li><a href="{{ globals.base_url }}cloud">{% trans _('nube de etiquetas') %}</a></li>
+		<li><a href="{{ globals.base_url }}sites_cloud">{% trans _('nube de webs') %}</a></li>
+		<li><a href="{{ globals.base_url }}promote">{% trans _('candidatas') %}</a></li>
+		<li><a href="{{ globals.base_url_general }}values">{% trans _('parámetros básicos') %}</a></li>
+		</ul>
 	</div>
 
-{#
-	<div id="footcol5" class="wideonly">
-	<h5>{% trans _('relax') %}</h5>
-	<ul id="mapslist">
-	{% if globals.fancybox_enabled %}
-		<li><a href="javascript:fancybox_gallery('all');">{% trans _('imágenes') %}</a></li>
-	{% endif %}
-	<li><a href="{{ globals.base_url }}geovision.php">{% trans _('geovisión') %}</a></li>
-	{% if globals.google_maps_in_links %}
-		<li><a href="{{ globals.base_url }}map.php">{% trans _('noticias') %}</a></li>
-	{% endif %}
-	</ul>
-	{% if globals.is_meneame %}
-		<h5>tienda</h5>
-		<ul id="shoplift">
-		<li><a href="http://meneame.wikispaces.com/menechandising">{% trans _('camisetas') %}</a></li>
-		<li><a href="http://www.socialmediasl.com/">{% trans _('publicidad') %}</a></li>
+	{#
+	<div id="footcol5">
+		<h5>{% trans _('social') %}</h5>
+		<ul id="mapslist">
+		{% if globals.fancybox_enabled %}
+			<li><a href="javascript:fancybox_gallery('all');">{% trans _('imágenes') %}</a></li>
+		{% endif %}
+		{% if this_site_properties.facebook_page %}
+		<a href="{{ this_site_properties.facebook_page }}" title="{% trans _('síguenos en Facebook') %}" ><img class="semiopaque" src="{{globals.base_static}}img/external/fb-24.png" width="24" height="24" alt="Facebook"/></a>
+		{% else %}
+			{% if globals.facebook_page && this_site.owner == 0 %}
+				<a href="{{ globals.facebook_page }}" title="{% trans _('síguenos en Facebook') %}" ><img class="semiopaque" src="{{globals.base_static}}img/external/fb-24.png" width="24" height="24" alt="Facebook"/></a>
+			{% endif %}
+		{% endif %}
+		{% if this_site_properties.twitter_page %}
+			<a href="{{ this_site_properties.twitter_page }}" title="{% trans _('síguenos en Twitter') %}" ><img class="semiopaque" src="{{globals.base_static}}img/external/tw-24.png" width="24" height="24" alt="Twitter"/></a>
+		{% else %}
+			{% if globals.twitter_page && this_site.owner == 0 %}
+				<a href="{{ globals.twitter_page }}" title="{% trans _('síguenos en Twitter') %}" ><img class="semiopaque" src="{{globals.base_static}}img/external/tw-24.png" width="24" height="24" alt="Twitter"/></a>
+			{% endif %}
+		{% endif %}
 		</ul>
-	{% endif %}
 	</div>
-#}
+	#}
 
 </div>
 {% endif %}

@@ -34,35 +34,39 @@ function promote_style() {
 <style type="text/css">
 p {
 	font-family: Bitstream Vera Sans, Arial, Helvetica, sans-serif;
-	font-size: 90%;
+	font-size: 0.9em;
+	
 }
 table {
 	margin: 0px;
-	padding: 4px;
+	padding-top: 20px;
+}
+th {
+	padding: 3px 8px;
+	text-align: center;
 }
 td {
 	margin: 0px;
-	padding: 4px;
+	padding: 20px;
 }
 .thead {
-	font-size: 115%;
 	text-transform: uppercase;
 	color: #FFFFFF;
-	background-color: #FF6600;
+	background-color: #a7cbff;
 	padding: 6px;
 }
 .tdata0 {
-	background-color: #FFF;
+	background-color: #fff;
 }
 .tdata1 {
-	background-color: #FFF3E8;
+	background-color: #ffebce;
 }
 .tnumber0 {
 	text-align: center;
 }
 .tnumber1 {
 	text-align: center;
-	background-color: #FFF3E8;
+	background-color: #ffebce;
 }
 </style>
 ';

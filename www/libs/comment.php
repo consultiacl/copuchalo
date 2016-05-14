@@ -241,10 +241,11 @@ class Comment extends LCPBase {
 		if ($this->media_size > 0) {
 			$this->media_thumb_dir = Upload::get_cache_relative_dir($this->id);
 			$this->media_url = Upload::get_url('comment', $this->id, 0, $this->media_date, $this->media_mime);
+			//syslog(LOG_INFO, "media_url: ".$this->media_url." media_thumb_dir: ".$this->media_thumb_dir);
 	 	}
 	}
 
-	function print_summary($length = 0, $single_link=true, $return_string = false) {
+	function print_summary($length = 0, $single_link=true, $return_string = false, $c_value = false) {
 		global $current_user, $globals;
 
 		if(!$this->read) return;
@@ -304,6 +305,7 @@ class Comment extends LCPBase {
 		$this->can_reply = $current_user->user_id > 0 && $this->date > $globals['now'] - $globals['time_enabled_comments'];
 
 		$vars = array('self' => $this);
+		$vars['c_value'] = $c_value;
 		return Haanga::Load('comment_summary.html', $vars, $return_string);
 	}
 
@@ -331,7 +333,7 @@ class Comment extends LCPBase {
 			}
 		}
 
-		if ($vote->exists(true)) {
+		if ($vote->exists(false)) {
 			return false;
 		}
 
@@ -478,7 +480,7 @@ class Comment extends LCPBase {
 				echo '</div>'."\n";
 			} elseif (!$globals['bot']){
 				echo '<div class="commentform warn">'."\n";
-				echo '<a href="'.get_auth_link().'login.php?return='.urlencode($globals['uri']).'">'._('Autentifícate si deseas escribir').'</a> '._('comentarios').'. '._('O crea tu cuenta'). ' <a href="'.$globals['base_url'].'register.php">aquí.</a>'."\n";
+				echo '<a href="'.get_auth_link().'login.php?return='.urlencode($globals['uri']).'">'._('Identifíquese si desea escribir').'</a> '._('comentarios').'. '._('O cree su cuenta'). ' <a href="'.$globals['base_url'].'register">aquí.</a>'."\n";
 				echo '</div>'."\n";
 
 				print_oauth_icons();

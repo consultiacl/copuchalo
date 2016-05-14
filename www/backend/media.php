@@ -43,7 +43,7 @@ if (!empty($media->mime)) {
 	$ext = explode("/", $media->mime);
 	$ext = $ext[count($ext)-1];
 }
-header("Content-Disposition: filename=meneame-media-$type-$id." . $ext);
+header("Content-Disposition: filename=copuchalo-media-$type-$id." . $ext);
 
 if ($media->file_exists() && ! empty($globals['xsendfile'])) {
 	/* Be careful with privacy and rules in the server

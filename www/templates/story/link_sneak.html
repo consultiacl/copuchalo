@@ -1,5 +1,5 @@
 <div class="mini-sneaker">
-<fieldset>
+<fieldset class="sneaker">
 
 {% spacefull %}
 <script type="text/javascript">
@@ -21,7 +21,7 @@ var base_url = '{{ globals.base_url }}';
 var sneak_base_url = '//{{ globals.server_name }}{{ globals.base_url }}backend/link_sneaker';
 
 
-var default_gravatar = '//'+server_name+'/img/mnm/no-gravatar-2-20.jpg';
+var default_gravatar = '//'+server_name+'/img/cpchl/no-gravatar-20.png';
 var do_animation = true;
 var animating = false;
 var animation_colors = Array("#ffc387", "#ffc891", "#ffcd9c", "#ffd2a6", "#ffd7b0", "#ffddba", "#ffe7cf", "#ffecd9", "#fff1e3", "#fff6ed", "#fffbf7", "transparent");
@@ -91,7 +91,7 @@ function received_data(data) {
 	if (next_update < 10000) next_update = 10000;
 	if (next_update > min_update) next_update = min_update;
 	if (requests > max_requests) {
-		if ( !confirm('{% trans _('Fisgón: ¿desea continuar conectado?') %}') ) {
+		if ( !confirm('{% trans _('¿desea continuar conectado?') %}') ) {
 			return;
 		}
 		requests = 0;
@@ -201,7 +201,7 @@ addPostCode(start_link_sneak);
 <div class="mini-sneaker-title">
 <div class="mini-sneaker-ts"><strong>{% trans _('hora') %}</strong></div>
 <div class="mini-sneaker-type"><strong>{% trans _('acción') %}</strong></div>
-<div class="mini-sneaker-votes"><strong><abbr title="{% trans _('meneos') %}">{% trans _('me') %}</abbr>/<abbr title="{% trans _('comentarios') %}">{% trans _('co') %}</abbr></strong></div>
+<div class="mini-sneaker-votes"><strong><abbr title="{% trans _('copuchas') %}">{% trans _('cop') %}</abbr>/<abbr title="{% trans _('comentarios') %}">{% trans _('com') %}</abbr></strong></div>
 <div class="mini-sneaker-who">&nbsp;<strong>{% trans _('quién/qué') %}</strong></div>
 <div class="mini-sneaker-status"><strong>{% trans _('estado') %}</strong></div>
 </div>

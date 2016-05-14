@@ -1,4 +1,4 @@
-<?
+<?php
 // This files checks and fixes the vote, negative and karma values
 
 include('../config.php');

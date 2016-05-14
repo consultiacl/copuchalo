@@ -1,13 +1,3 @@
-body {
-background: #fff;
-font-size: 15px;
-}
-
-.news-body h1, .news-body h2 {
-font-size: 18px;
-}
-
-
 /* Avoid auto zoom */
 textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="email"], input[type="url"], input[type="search"] {
 font-size: 16px;
@@ -23,77 +13,88 @@ min-width: 0;
 }
 
 #header-top {
-position: fixed;
-top: 0px;
-left: 0px;
-width: 100%;
-height:40px;
-z-index: 10;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height:40px;
+	z-index: 10;
 }
 
-#header-sub{
-position: relative;
-height: 20px;
-overflow:hidden;
-white-space:nowrap;
-font-size:16px;
-padding: 5px 5px;
-background-color:#ccc;
+#header-sub {
+	position: relative;
+	height: 22px;
+	overflow: hidden;
+	white-space: nowrap;
+	font-size: 1em;
+	padding: 5px 5px;
+	background-color: #a0c5e8;
+	border-bottom: #888 solid 1px;
+	vertical-align: middle;
 }
 
-#header-sub, #header-sub a, #header-sub img {
-color:#fff;
-vertical-align: bottom;
-font-variant:small-caps;
-font-weight:bold;
+#header-sub,
+#header-sub a {
+	color: #222;
+	font-variant:small-caps;
+	font-weight:bold;
+}
+
+#header-sub .edname a img {
+	vertical-align: bottom;
 }
 
 #header-sub .favorite {
-vertical-align: middle;
+	vertical-align: middle;
 }
 
 #nav-menu {
-margin-top: 5px;
-width: 30px;
-background-position: 5px -225px;
+	margin-top: 10px;
 }
 
-#header-top .logo-mnm {
-margin-top: 10px;
+#header-top .logo-cop {
+	margin-top: 8px;
 }
 
 #header-top #notifier {
-padding-top: 7px;
-height:33px;
-width:40px;
-font-size:18px;
+	padding-top: 7px;
+	height:33px;
+	width:40px;
+	font-size:18px;
 }
 
 #notifier_panel {
-top:41px;
+	top:41px;
 }
 
 #notifier_panel div {
-font-size: 16px;
+	font-size: 16px;
 }
 
-#header-top .usertext{
-margin-top: 9px;
+#header-top ul#userinfo {
+	height: 40px;
+	margin: auto 0;
 }
 
+#header-top ul#userinfo li {
+	font-size: 18px;
+}
+
+#header-top ul#userinfo li.login-icon,
+#header-top ul#userinfo li.login-icon a {
+	font-size: 30px;
+}
+
+#usermenu,
 #userinfo #avatar {
-width:40px;
-height:40px;
-}
-
-#header-top .userlogin {
-margin-top:5px;
+	width:40px;
+	height:40px;
 }
 
 
 #header-center, #header-menu, #sidebar, #edlist, .logo-ed, .wideonly, .wide {
-display: none;
-background: none !important;
+	display: none;
+	background: none !important;
 }
 
 @media (min-width:500px) and (orientation:landscape) {
@@ -111,21 +112,19 @@ font-size: small;
 }
 
 #singlewrap, #newswrap {
-margin: 5px 5px 0px 5px;
-}
-
-.comment-body.high {
-background-image: none;
+	margin: 15px 0 0 0;
 }
 
 .comment-meta .comment-info {
 max-width: 25%;
 }
 
+/*
 .comment-meta .username {
 margin-left: 2px;
 font-weight: normal;
 }
+*/
 
 #footwrap {
 margin: 5em 5px 0 5px;
@@ -141,22 +140,18 @@ min-width: 0;
 max-width: auto;
 }
 
-.subheader{
-height:auto;
-padding-left:5px;
-line-height: 180%;
-}
-
 #toplink .thumbnail.medium {
 width: 60px;
 height: 60px;
 }
 
+/*
 .news-body {
 padding-left: 5px;
 padding-right: 5px;
 overflow: hidden;
 }
+*/
 
 .news-details, .news-submitted {
 white-space: normal;
@@ -207,7 +202,7 @@ margin: 0 10px 10px 10px;
 margin-left: 5px;
 }
 
-.share_icons img, .semiopaque {
+.semiopaque {
 opacity:0.8;
 }
 
@@ -230,3 +225,79 @@ overflow: hidden;
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     .ts.nomobile { background-image:url('{{ globals.base_static }}img/common/icons-common-2x.png'); }
 }
+
+/* ********************* */
+.news-summary {
+	display: block;
+	padding: 0px;
+	max-height: none;
+	margin: 0 auto 2em auto;
+}
+
+.subheader {
+	display: block;
+	width: 312px;
+	font-size: 1em;
+	padding-left: 0;
+	margin: 10px auto 0 auto;
+}
+
+#footthingy {
+	margin: 2em auto;
+	font-size: 0.625em;
+}
+
+#footthingy .row-title {
+        font-size: 2.5em;
+        margin-top: none;
+}
+
+table.keyvalue {
+        padding-top: 30px;
+}
+
+.sbox .cop span, .sbox .btn {
+	padding: 2px 20px 4px 20px;
+}
+
+/*
+.icons-header {
+	height: 18px;
+	vertical-align: text-top;
+}
+*/
+/*
+.share-icons {
+        display: flex;
+        justify-content: space-between;
+}
+*/
+/*
+.share-icons-header {
+	height: 18px;
+}
+*/
+.share-icons span {
+        font-size: 25px;
+        width: 25px;
+        height: 25px;
+	margin: 0 25px 0 0;
+}
+
+a.comment-bubble {
+	min-width: 30px;
+	height: 18px;
+	padding: 2px;
+}
+
+#user-panel {
+	top: 41px;
+}
+
+.fa-sign-in,
+.fa-user-plus {
+	font-size: 30px;
+	width: 30px;
+	height: 30px;
+}
+
