@@ -11,6 +11,7 @@ set_include_path("." . PATH_SEPARATOR . "/usr/share/pear" . PATH_SEPARATOR . get
 //set_include_path("." . PATH_SEPARATOR . ($UserDir = dirname($_SERVER['DOCUMENT_ROOT'])) . "/pear/share/pear" . PATH_SEPARATOR . get_include_path());
 //set_include_path(get_include_path());
 require_once "Mail.php";
+require_once "Mail/mime.php";
 //$pear_user_config = $UserDir . "/.pearrc";
 
 // Send a mail
@@ -41,13 +42,18 @@ function send_recover_mail ($user) {
 	$key = md5($user->id.$user->pass.$now.$site_key.get_server_name());
 	$url = 'http://'.get_server_name().$globals['base_url'].'profile?login='.$user->username.'&t='.$now.'&k='.$key;
 	$to      = $user->email;
-	$subject = _('Recuperación o verificación de contraseña de '). get_server_name();
-	$message = $to . ': '._('para poder acceder sin la clave, conéctate a la siguiente dirección en menos de 15 minutos:') . "</br>\n" . '<a href="'.$url.'" target="_blank">'.$url."</a></br></br>\n";
-	$url_recover = "http://".get_server_name().$globals['base_url']."login?op=recover";
-	$message .= _('Pasado este tiempo puedes volver a solicitar acceso en: ') . "</br>\n" . '<a href="'.$url_recover.'" target="_blank">'.$url_recover."</a></br></br>\n\n";
-	$message .= _('Una vez en tu perfil, puedes cambiar la clave de acceso.') . "</br></br>\n";
-	$message .= _('Este mensaje ha sido enviado bajo solicitud desde la dirección: ') . $globals['user_ip'] . "</br>\n\n";
-	$message .= "-- </br>\n  " . _('el equipo de copúchalo');
+	$subject = _('Recuperación o verificación de clave de '). get_server_name();
+
+	$url_recover = 'http://'.get_server_name().$globals['base_url'].'login?op=recover';
+
+	$message  = '<html lang="es"><head><meta charset="utf-8"/></head><body><p>Hola '.$to.":</p>\n\n";
+	$message .= "<p>Para poder acceder sin la clave, conéctate a la siguiente dirección en menos de 15 minutos:<br>\n";
+	$message .= '<a href="'.$url.'">'.$url."</a></p>\n\n";
+	$message .= "<p>Pasado este tiempo puedes volver a solicitar acceso en:<br>\n";
+	$message .= '<a href="'.$url_recover.'">'.$url_recover."</a></p>\n\n";
+	$message .= "<p>Una vez en tu perfil, puedes cambiar la clave de acceso.</p>\n";
+	$message .= '<p>Este mensaje ha sido enviado bajo solicitud desde la dirección IP: '.$globals['user_ip']."<p>\n\n";
+	$message .= "<p>--\n <br>el equipo de copúchalo<p><br></body></html>";
 	
 	if(send_pear_mail($to, $domain, $subject, $message)) {
 		echo '<p><strong>' ._('Correo enviado, mira tu buzón, allí están las instrucciones. Mira también en la carpeta de spam.') . '</strong></p>';
@@ -77,23 +83,44 @@ function send_pear_mail($to, $domain, $subject, $message) {
 	$reply_to = $from_email;
 	$mailer = $domain;
 
-	$message = wordwrap($message, 70);
-	$from_user = "=?UTF-8?B?".base64_encode($from_user)."?=";
-	$subject = "=?UTF-8?B?".base64_encode($subject)."?=";
+	//$message = wordwrap($message, 70);
+	//$from_user = "=?UTF-8?B?".base64_encode($from_user)."?=";
+	//$subject = "=?UTF-8?B?".base64_encode($subject)."?=";
+
+	$text = clean_string($message);
 
 	$headers = array ('From' => "$from_user <$from_email>",
         	          'To' => $to,
                 	  'Subject' => $subject,
 	                  'Reply-To' => $reply_to,
+                          'Return-Path' => $from_mail,
         	          'MIME-Version' => "1.0",
                 	  'X-Mailer' => $mailer,
-	                  'Content-type' => "text/html; charset=UTF-8");
+	                  'Content-type' => "text/html; charset=UTF-8",
+	);
 
-	$smtp = Mail::factory('smtp', array ('host' => $host, 'port' => $port, 'auth' => true, 'username' => $username, 'password' => $password));  //, 'debug' => true));
-	$mail = $smtp->send($to, $headers, $message);
+	$mimeoptions = array ('eol' => "\n",
+			      'head_charset' => "UTF-8",
+			      'text_charset' => "UTF-8",
+			      'html_charset' => "UTF-8",
+	);
+
+        // Creating the Mime message
+        $mime = new Mail_mime($mimeoptions);
+
+        // Setting the body of the email
+        $mime->setTXTBody($text);
+        $mime->setHTMLBody($message);
+
+        $body = $mime->get();
+        $headers = $mime->headers($headers);
+
+        // Sending the email
+	$smtp =& Mail::factory('smtp', array ('host' => $host, 'port' => $port, 'auth' => true, 'username' => $username, 'password' => $password));  //, 'debug' => true));
+	$mail = $smtp->send($to, $headers, $body);
 
 	if (PEAR::isError($mail)) {
-		syslog(LOG_ERR, "Error enviando correo: ".$mail->getMessage());
+		syslog(LOG_ERR, "Error sending mail: ".$mail->getMessage());
 		return false;
 	} else {
 	        return true;
