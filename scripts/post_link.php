@@ -47,7 +47,7 @@ function do_posts($link) {
 	global $globals;
 
 	$info = SitesMgr::get_info();
-	$properties = SitesMgr::get_extended_properties();
+	//$properties = SitesMgr::get_extended_properties();
 
 	syslog(LOG_INFO, "posting $link->uri");
 

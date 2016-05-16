@@ -19,8 +19,8 @@ SitesMgr::__init($my_id);
 
 syslog(LOG_INFO, "running ".basename(__FILE__)." for $site_name");
 
-$info = SitesMgr::get_info();
-$properties = SitesMgr::get_extended_properties();
+//$info = SitesMgr::get_info();
+//$properties = SitesMgr::get_extended_properties();
 
 if (intval($argv[1]) > 0) {
 	$hours = intval($argv[1]);
@@ -82,6 +82,7 @@ $ids[] = $comment->id;
 $previous = implode(',', $ids);
 Annotation::store_text($key, $previous, time() + 86400);
 
-twitter_post($properties, '&#x1f4ac; '.$comment->content, $url, $image);
+//twitter_post($properties, '&#x1f4ac; '.$comment->content, $url, $image);
+twitter_post($globals, '&#x1f4ac; '.$comment->content, $url, $image);
 
 

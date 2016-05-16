@@ -18,7 +18,7 @@ if (! $my_id > 0) {
 
 SitesMgr::__init($my_id);
 $info = SitesMgr::get_info();
-$properties = SitesMgr::get_extended_properties();
+//$properties = SitesMgr::get_extended_properties();
 
 
 $a_tops = new Annotation('top-link-'.$site_name);
@@ -56,8 +56,9 @@ if (! in_array($tops[0], $history) ) {
 	$a_history->store();
 
 
-	twitter_post($properties, $text, $url); 
-	facebook_post($properties, $link, $intro);
+	//twitter_post($properties, $text, $url); 
+	//facebook_post($properties, $link, $intro);
+	twitter_post($globals, $text, $url); 
+	facebook_post($globals, $link, $intro);
 }
 
-?>

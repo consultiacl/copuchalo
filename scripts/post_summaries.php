@@ -24,7 +24,7 @@ SitesMgr::__init($my_id);
 syslog(LOG_INFO, "running ".basename(__FILE__)." for $site_name");
 
 $info = SitesMgr::get_info();
-$properties = SitesMgr::get_extended_properties();
+//$properties = SitesMgr::get_extended_properties();
 
 if (intval($argv[1]) > 0) {
 	$hours = intval($argv[1]);
@@ -64,8 +64,10 @@ foreach ($link_sqls as $key => $sql) {
 		}
 		$text = "$intro: $link->title";
 
-		twitter_post($properties, $text, $short_url); 
-		facebook_post($properties, $link, $intro);
+		//twitter_post($properties, $text, $short_url); 
+		//facebook_post($properties, $link, $intro);
+		twitter_post($globals, $text, $short_url); 
+		facebook_post($globals, $link, $intro);
 
 		echo "$text $short_url\n"; continue;
 	}
