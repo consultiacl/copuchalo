@@ -2,7 +2,7 @@
 
 <?php
 
-include(dirname(__FILE__).'/../www/config.php');
+include(dirname(__FILE__).'/../../config.php');
 include(mnminclude.'external_post.php');
 
 global $globals;

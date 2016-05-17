@@ -6,7 +6,7 @@
 //		http://www.affero.org/oagpl.html
 // AFFERO GENERAL PUBLIC LICENSE is also included in the file called "COPYING".
 
-function twitter_post($auth, $text, $short_url, $image = false) {
+function twitter_post($auth, $text, $link_url, $image = false) {
 	global $globals;
 
 	if (empty($auth['twitter_token']) || empty($auth['twitter_token_secret']) || empty($auth['twitter_consumer_key']) ||  empty($auth['twitter_consumer_secret'])) {
@@ -23,10 +23,13 @@ function twitter_post($auth, $text, $short_url, $image = false) {
 		$cb->setToken($auth['twitter_token'], $auth['twitter_token_secret']);
 
  		$maxlen = 140 - 24; // minus the url length
-		$msg = mb_substr(text_to_summary(html_entity_decode($text), $maxlen), 0, $maxlen);
-		$message = $msg . ' ' . $short_url;
 
 		if($image) {
+			// if an image is attached, you loose 23 chars
+			$maxlen -= 23;
+			$msg = mb_substr(text_to_summary(html_entity_decode($text), $maxlen), 0, $maxlen);
+			$message = $msg . ' ' . $link_url;
+
 			//build an array of images to send to twitter
 			$reply = $cb->media_upload(array(
 				'media' => $image
@@ -40,10 +43,14 @@ function twitter_post($auth, $text, $short_url, $image = false) {
 				'media_ids' => $mediaID
 			);
 		} else {
+			$msg = mb_substr(text_to_summary(html_entity_decode($text), $maxlen), 0, $maxlen);
+			$message = $msg . ' ' . $link_url;
+
 			$params = array(
 				'status' => $message
 			);
 		}
+
 		//post the tweet with codebird
 		$reply = $cb->statuses_update($params);
 	} catch (Exception $e) {
@@ -52,8 +59,14 @@ function twitter_post($auth, $text, $short_url, $image = false) {
                 return false;
         }
 
-	syslog(LOG_INFO, "Published to Twitter: $message");
-	return true;
+	if ($reply->httpstatus != '200')
+	{
+		syslog(LOG_INFO, "Error publishing to Twitter: ".$reply->errors[0]->message." (code: ".$reply->errors[0]->code.")");
+		return false;
+	} else {
+		syslog(LOG_INFO, "Published to Twitter: $message");
+		return true;
+	}
 }
 
 function fon_gs($url) {
