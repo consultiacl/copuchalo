@@ -114,6 +114,7 @@ body {
 .news-info h2 a { 
 	color: #191919;
         word-wrap: break-word;
+	text-decoration: none;
 	-webkit-transition: color 0.15s cubic-bezier(0, 0, 0.58, 1), border-color 0.15s cubic-bezier(0, 0, 0.58, 1);
 	-moz-transition: color 0.15s cubic-bezier(0, 0, 0.58, 1), border-color 0.15s cubic-bezier(0, 0, 0.58, 1);
 	-o-transition: color 0.15s cubic-bezier(0, 0, 0.58, 1), border-color 0.15s cubic-bezier(0, 0, 0.58, 1);

@@ -343,7 +343,7 @@ cursor: pointer;
 }
 
 #header-top ul#userinfo li.usertext a:hover {
-	font-weight: bold;
+	opacity: 0.7;
 }
 
 #userinfo #avatar {
