@@ -175,7 +175,7 @@ class Link extends LCPBase {
 		//	&& ($no_go || (isset($_COOKIE['k']) && check_security_key($_COOKIE['k'])))
 		//	&& $this->ip != $globals['user_ip']) {
 		//	// Delay storing
-		//	self::$clicked = $this->id;
+			self::$clicked = $this->id;
 		//}
 	}
 
