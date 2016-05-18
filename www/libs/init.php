@@ -36,7 +36,9 @@ if (!empty($globals['force_ssl']) && $_SERVER["SERVER_NAME"] != $_SERVER["HTTP_H
 	$globals['force_ssl'] = false;
 }
 
-if ($_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || $_SERVER['SERVER_PORT'] == 443 || $_SERVER['HTTPS'] == 'on') {
+if ((isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') ||
+    (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443) || 
+    (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on')) {
 	$globals['https'] = true;
 	$globals['scheme'] = 'https:';
 } else {
