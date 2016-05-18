@@ -579,9 +579,9 @@ function print_story_tabs($option) {
 			if ($globals['link']->sent_date > $globals['now'] - 86400*30) { // newer than 30 days
 				echo '<li class="'.$active[4].'"><a href="'.$globals['permalink'].'/log">'._('registros'). '</a></li>';
 			}
-			if ($globals['link']->date > $globals['now'] - $globals['time_enabled_comments']) {
-				echo '<li class="'.$active[5].'wideonly"><a href="'.$globals['permalink'].'/sneak">&micro;&nbsp;'._('fisgona'). '</a></li>';
-			}
+			//if ($globals['link']->date > $globals['now'] - $globals['time_enabled_comments']) {
+			//	echo '<li class="'.$active[5].'wideonly"><a href="'.$globals['permalink'].'/sneak">&micro;&nbsp;'._('fisgona'). '</a></li>';
+			//}
 		}
 		if ($current_user->user_id > 0) {
 			if (($c = $db->get_var("SELECT count(*) FROM favorites WHERE favorite_type = 'link' and favorite_link_id=$link->id")) > 0) {
