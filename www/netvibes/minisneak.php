@@ -71,7 +71,7 @@ function received_data(xmlhttp) {
 		new_items= new_data.length;
 		if(new_items > 0) {
 			shift_items(new_items);
-			htm = '<div class="sneaker"><div class="sneakeritem"><div class="sneakertype"><strong>qué</strong></div><div class="sneakervotes"><strong><abbr title="meneos">me</abbr></strong></div><div class="sneakerstory">&nbsp;<strong>noticia</strong></div><div class="sneakerwho">&nbsp;<strong>quién</strong></div></div>';
+			htm = '<div class="sneaker"><div class="sneakeritem"><div class="sneakertype"><strong>qué</strong></div><div class="sneakervotes"><strong><abbr title="copuchas">me</abbr></strong></div><div class="sneakerstory">&nbsp;<strong>noticia</strong></div><div class="sneakerwho">&nbsp;<strong>quién</strong></div></div>';
 
 			for (i=0; i<new_items &&  i<max_items; i++) {
 				items[i] = '<div class="sneakeritem">';
