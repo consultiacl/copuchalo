@@ -121,7 +121,7 @@ echo '
 				<br/>
 				'._("Tiempo abiertos los negativos si se ha extendido el tiempo de voto negativo") . ': ' . print_time($globals['time_enabled_votes']) . '<br/>
 				<br/>
-				'._("Tiempo abiertos los negativos si no se ha extendido el tiempo de voto negativo: ") . ': ' . print_time($globals['time_enabled_negative_votes']) . '<br/>
+				'._("Tiempo abiertos los negativos si no se ha extendido el tiempo de voto negativo") . ': ' . print_time($globals['time_enabled_negative_votes']) . '<br/>
 		</fieldset>';
 
 
