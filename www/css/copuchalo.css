@@ -787,13 +787,12 @@ a.comment-bubble:after {  /* triangle */
 
 .numcop.mnm-queued {
 	color: #005be2;
-	background-color: transparent;
-	border: solid #005be2 1px;
+	background-color: #fff;
 }
 
 .numcop.mnm-queued a {
 	color: #005be2;
-	background-color: transparent;
+	background-color: #fff;
 }
 
 .numcop.mnm-discarded {
