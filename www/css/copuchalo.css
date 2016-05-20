@@ -788,6 +788,7 @@ a.comment-bubble:after {  /* triangle */
 .numcop.mnm-queued {
 	color: #005be2;
 	background-color: #fff;
+	border: #005be2 solid 1px;
 }
 
 .numcop.mnm-queued a {
