@@ -35,7 +35,6 @@ function promote_style() {
 p {
 	font-family: Bitstream Vera Sans, Arial, Helvetica, sans-serif;
 	font-size: 0.9em;
-	
 }
 table {
 	margin: 0px;
@@ -59,14 +58,14 @@ td {
 	background-color: #fff;
 }
 .tdata1 {
-	background-color: #ffebce;
+	background-color: #e2eeff;
 }
 .tnumber0 {
 	text-align: center;
 }
 .tnumber1 {
 	text-align: center;
-	background-color: #ffebce;
+	background-color: #e2eeff;
 }
 </style>
 ';
