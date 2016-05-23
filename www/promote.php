@@ -46,7 +46,7 @@ th {
 }
 td {
 	margin: 0px;
-	padding: 20px;
+	padding: 5px;
 }
 .thead {
 	text-transform: uppercase;
