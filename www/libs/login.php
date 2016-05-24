@@ -104,6 +104,7 @@ class UserAuth {
 			", @enabled_votes = date_sub(now(), interval ". intval($globals['time_enabled_votes']/3600). " hour)"
 			// ", @site = " . SitesMgr::my_id() 
 			);
+			//syslog(LOG_INFO, "set @user_id = $this->user_id, @ip_int = ".$globals['user_ip_int'].", @enabled_votes = date_sub(now(), interval ". intval($globals['time_enabled_votes']/3600). " hour)");
 	}
 
 

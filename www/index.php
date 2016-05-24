@@ -112,18 +112,19 @@ $order_by = "ORDER BY date DESC ";
 
 if (!$rows) $rows = $db->get_var("SELECT SQL_CACHE count(*) FROM sub_statuses $from WHERE $where");
 
-// We use a "INNER JOIN" in order to avoid "order by" whith filesorting. It was very bad for high pages
+// We use a "INNER JOIN" in order to avoid "order by" with filesorting. It was very bad for high pages
 $sql = "SELECT".Link::SQL."INNER JOIN (SELECT link FROM sub_statuses $from WHERE $where $order_by LIMIT $offset,$page_size) as ids ON (ids.link = link_id)";
+//$sql = "SELECT".Link::SQL."INNER JOIN (SELECT link FROM sub_statuses $from WHERE $where $order_by LIMIT $offset,$page_size) as ids ON (ids.link = link_id) ORDER BY date DESC";
 
 //syslog(LOG_INFO, "meta: ".$globals['meta']);
 //syslog(LOG_INFO, "sql1: SELECT SQL_CACHE count(*) FROM sub_statuses $from WHERE $where");
-//syslog(LOG_INFO, "SELECT".Link::SQL."INNER JOIN (SELECT link FROM sub_statuses $from WHERE $where $order_by LIMIT $offset,$page_size) as ids ON (ids.link = link_id)");
-//error_log("SELECT".Link::SQL."INNER JOIN (SELECT link FROM sub_statuses $from WHERE $where $order_by LIMIT $offset,$page_size) as ids ON (ids.link = link_id)\n", 3, "/tmp/a.log");
+//syslog(LOG_INFO, $sql);
 
 $links = $db->object_iterator($sql, "Link");
 if ($links) {
 	$counter = 0;
 	foreach($links as $link) {
+		//syslog(LOG_INFO, "LINK: $link->date, $link->id, $link->title");
 		$link->max_len = 600;
 		$link->print_summary('frontpage');
 		$counter++;
