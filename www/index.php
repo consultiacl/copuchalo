@@ -113,8 +113,8 @@ $order_by = "ORDER BY date DESC ";
 if (!$rows) $rows = $db->get_var("SELECT SQL_CACHE count(*) FROM sub_statuses $from WHERE $where");
 
 // We use a "INNER JOIN" in order to avoid "order by" with filesorting. It was very bad for high pages
-$sql = "SELECT".Link::SQL."INNER JOIN (SELECT link FROM sub_statuses $from WHERE $where $order_by LIMIT $offset,$page_size) as ids ON (ids.link = link_id)";
-//$sql = "SELECT".Link::SQL."INNER JOIN (SELECT link FROM sub_statuses $from WHERE $where $order_by LIMIT $offset,$page_size) as ids ON (ids.link = link_id) ORDER BY date DESC";
+//$sql = "SELECT".Link::SQL."INNER JOIN (SELECT link FROM sub_statuses $from WHERE $where $order_by LIMIT $offset,$page_size) as ids ON (ids.link = link_id)";
+$sql = "SELECT".Link::SQL."INNER JOIN (SELECT link FROM sub_statuses $from WHERE $where LIMIT $offset,$page_size) as ids ON (ids.link = link_id) $order_by";
 
 //syslog(LOG_INFO, "meta: ".$globals['meta']);
 //syslog(LOG_INFO, "sql1: SELECT SQL_CACHE count(*) FROM sub_statuses $from WHERE $where");
