@@ -38,7 +38,8 @@ switch ($globals['meta']) {
 			$globals['tag_status'] = 'queued';
 			$from_time = '"'.date("Y-m-d H:00:00", $globals['now'] - $globals['time_enabled_votes']).'"';
 			$where = "id in ($current_user->subs) AND status='queued' and id = origen and date > $from_time";
-			$order_by = "ORDER BY date DESC";
+			//$order_by = "ORDER BY date DESC";
+			$order_by = "ORDER BY sub_date DESC";
 			$rows = -1;
 			$tab = 7;
 			Link::$original_status = true; // Show status in original sub
@@ -61,7 +62,8 @@ switch ($globals['meta']) {
 		$from = ", friends, links";
 		$where = "sub_statuses.id = ". SitesMgr::my_id() ." AND date > $from_time and status='queued' and friend_type='manual' and friend_from = $current_user->user_id and friend_to=link_author and friend_value > 0 and link_id = link";
 		$rows = -1;
-		$order_by = "ORDER BY date DESC";
+		//$order_by = "ORDER BY date DESC";
+		$order_by = "ORDER BY sub_date DESC";
 		$tab = 2;
 		$globals['tag_status'] = 'queued';
 		break;
@@ -82,7 +84,8 @@ switch ($globals['meta']) {
 		$globals['ads'] = false;
 		$from_time = '"'.date("Y-m-d H:00:00", $globals['now'] - 86400*4).'"';
 		$where = "sub_statuses.id = ". SitesMgr::my_id() ." AND status in ('discard', 'abuse', 'autodiscard') " ;
-		$order_by = "ORDER BY date DESC ";
+		//$order_by = "ORDER BY date DESC ";
+		$order_by = "ORDER BY sub_date DESC ";
 		$tab = 5;
 		$globals['tag_status'] = 'discard';
 		$rows = Link::count('discard') + Link::count('autodiscard') + Link::count('abuse');
@@ -90,7 +93,8 @@ switch ($globals['meta']) {
 	case '_all':
 	default:
 		$globals['tag_status'] = 'queued';
-		$order_by = "ORDER BY date DESC";
+		//$order_by = "ORDER BY date DESC";
+		$order_by = "ORDER BY sub_date DESC";
 		$rows = Link::count('queued');
 		$where = "sub_statuses.id = ". SitesMgr::my_id() ." AND status='queued' ";
 		$tab = 1;
@@ -121,7 +125,13 @@ echo '</div>' . "\n";
 
 echo '<div id="newswrap">'."\n";
 
-$sql = "SELECT".Link::SQL."INNER JOIN (SELECT link FROM sub_statuses $from WHERE $where $order_by LIMIT $offset,$page_size) as ids on (ids.link = link_id)";
+// *** Sorting in a subselect only works with myslq:
+//     http://stackoverflow.com/questions/26372511/mysql-order-by-inside-subquery
+//     https://mariadb.atlassian.net/browse/MDEV-3926
+// Old optimizacions from Galli are not correct for other databases like MariaDB: https://gallir.wordpress.com/2011/02/02/optimizando-obsesivamente-las-consultas-al-mysql/ 
+
+//$sql = "SELECT".Link::SQL."INNER JOIN (SELECT link FROM sub_statuses $from WHERE $where $order_by LIMIT $offset,$page_size) as ids on (ids.link = link_id)";
+$sql = "SELECT".Link::SQL."INNER JOIN (SELECT link FROM sub_statuses $from WHERE $where) as ids on (ids.link = link_id) $order_by LIMIT $offset,$page_size";
 
 $links = $db->object_iterator($sql, "Link");
 if ($links) {

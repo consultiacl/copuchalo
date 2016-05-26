@@ -108,13 +108,19 @@ if ($page == 1 && empty($globals['meta']) && ($top = Link::top())) {
 }
 
 
-$order_by = "ORDER BY date DESC ";
+// *** Sorting in a subselect only works with myslq:
+//     http://stackoverflow.com/questions/26372511/mysql-order-by-inside-subquery
+//     https://mariadb.atlassian.net/browse/MDEV-3926
+// Old optimizacions from Galli are not correct for other databases like MariaDB: https://gallir.wordpress.com/2011/02/02/optimizando-obsesivamente-las-consultas-al-mysql/ 
+
+//$order_by = "ORDER BY date DESC ";
+$order_by = "ORDER BY sub_date DESC ";
 
 if (!$rows) $rows = $db->get_var("SELECT SQL_CACHE count(*) FROM sub_statuses $from WHERE $where");
 
 // We use a "INNER JOIN" in order to avoid "order by" with filesorting. It was very bad for high pages
 //$sql = "SELECT".Link::SQL."INNER JOIN (SELECT link FROM sub_statuses $from WHERE $where $order_by LIMIT $offset,$page_size) as ids ON (ids.link = link_id)";
-$sql = "SELECT".Link::SQL."INNER JOIN (SELECT link FROM sub_statuses $from WHERE $where LIMIT $offset,$page_size) as ids ON (ids.link = link_id) $order_by";
+$sql = "SELECT".Link::SQL."INNER JOIN (SELECT link FROM sub_statuses $from WHERE $where) as ids ON (ids.link = link_id) $order_by LIMIT $offset,$page_size";
 
 //syslog(LOG_INFO, "site_id: ".$db->get_var("SELECT @site_id"));
 //syslog(LOG_INFO, "user_id: ".$db->get_var("SELECT @user_id"));
