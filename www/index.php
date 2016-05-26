@@ -116,6 +116,11 @@ if (!$rows) $rows = $db->get_var("SELECT SQL_CACHE count(*) FROM sub_statuses $f
 //$sql = "SELECT".Link::SQL."INNER JOIN (SELECT link FROM sub_statuses $from WHERE $where $order_by LIMIT $offset,$page_size) as ids ON (ids.link = link_id)";
 $sql = "SELECT".Link::SQL."INNER JOIN (SELECT link FROM sub_statuses $from WHERE $where LIMIT $offset,$page_size) as ids ON (ids.link = link_id) $order_by";
 
+//syslog(LOG_INFO, "site_id: ".$db->get_var("SELECT @site_id"));
+//syslog(LOG_INFO, "user_id: ".$db->get_var("SELECT @user_id"));
+//syslog(LOG_INFO, "enabled_votes: ".$db->get_var("SELECT @enabled_votes"));
+//syslog(LOG_INFO, "ip_int: ".$db->get_var("SELECT @ip_int"));
+
 //syslog(LOG_INFO, "meta: ".$globals['meta']);
 //syslog(LOG_INFO, "sql1: SELECT SQL_CACHE count(*) FROM sub_statuses $from WHERE $where");
 //syslog(LOG_INFO, $sql);
