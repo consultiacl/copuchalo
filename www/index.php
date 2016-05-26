@@ -152,7 +152,7 @@ function print_index_tabs($option=-1) {
 
 	$items = array();
 	$items[] = array('id' => 0, 'url' => $globals['meta_skip'], 'title' => _('todas'));
-	if (isset($current_user->has_subs)) {
+	if (isset($current_user->has_subs) && ! empty($globals['meta_subs'])) {
 		$items[] = array('id' => 7, 'url' => $globals['meta_subs'], 'title' => _('suscripciones'));
 	}
 
