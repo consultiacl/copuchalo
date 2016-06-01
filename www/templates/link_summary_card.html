@@ -115,9 +115,9 @@
 			{% if self.status != 'published' %} rel="nofollow"{% endif %}>{{ self.title }}
 			</a>
 			{% if self.content_type == 'image' %}
-				<span class="fa fa-file-photo-o" alt="{% trans _('imagen') %}" title="{% trans _('imagen') %}"></span>
+				<span class="fa fa-image" alt="{% trans _('imagen') %}" title="{% trans _('imagen') %}"></span>
 			{% else %} {% if self.content_type == 'video' %}
-				<span class="fa fa-file-video-o" alt="{% trans _('vídeo') %}" title="{% trans _('vídeo') %}"></span>
+				<span class="fa fa-video-camera" alt="{% trans _('vídeo') %}" title="{% trans _('vídeo') %}"></span>
 			{% endif %}
 			{% endif %}
 		{% if globals.link %}</h1>{% else %}</h2>{% endif %}

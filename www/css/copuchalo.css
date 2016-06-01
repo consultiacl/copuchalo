@@ -481,8 +481,9 @@ max-width: 6em;
 	opacity: 1.0;
 }
 
-.fa-file-photo-o,
-.fa-file-video-o {
+
+.fa-image,
+.fa-video-camera  {
 	color: #111;
 	font-size: 20px;
 	width: 20px;
@@ -491,8 +492,8 @@ max-width: 6em;
 	vertical-align: baseline !important;
 }
 
-.fa-file-photo-o.edit,
-.fa-file-video-o.edit {
+.fa-image.edit,
+.fa-video-camera.edit {
 	color: #005be2;
 	font-size: 16px;
 	width: 16px;
