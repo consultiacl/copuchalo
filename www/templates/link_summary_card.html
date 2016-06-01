@@ -9,7 +9,7 @@
 		{#
 		{% if self.url %}
 			{% exec htmlspecialchars self.url as url %}
-			<a href="{{ url }}" class="l:{{ self.id }}" {% if self.status != 'published' %} rel="nofollow"{% endif %} target="_blank">
+			<a href="{{ url }}" class="l:{{ self.id }}" {% if self.status != 'published' %} rel="nofollow"{% endif %}>
 			</a>
 		{% else %}
 			<img src='//{{globals.server_name}}/{{ self.thumb_uri }}'/>
@@ -96,7 +96,7 @@
 
 	<div style="display:block;">
 		<span class="title-header">
-			<a href="{{ globals.base_url_general }}s/{{ self.sub_name }}{% if self.status != 'published' %}/queue{% endif %}" target="_blank"
+			<a href="{{ globals.base_url_general }}s/{{ self.sub_name }}{% if self.status != 'published' %}/queue{% endif %}"
 				{% if self.sub_owner > 0 %}
 					class="subname"
 					style="

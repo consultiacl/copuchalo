@@ -10,7 +10,7 @@
 		{#	
 		{% if self.url %}
 			{% exec htmlspecialchars self.url as url %}
-			<a href="{{ url }}" class="l:{{ self.id }}" {% if self.status != 'published' %} rel="nofollow"{% endif %} target="_blank">
+			<a href="{{ url }}" class="l:{{ self.id }}" {% if self.status != 'published' %} rel="nofollow"{% endif %}>
 			</a>
 		{% else %}
 			<img class="img-story2" src="{{ globals.base_static }}img/cpchl/no-image.png"/>
@@ -98,7 +98,7 @@
 
 	<div style="display:block;">
 		<span class="title-header">
-			<a href="{{ globals.base_url_general }}s/{{ self.sub_name }}{% if self.status != 'published' %}/queue{% endif %}" target="_blank"
+			<a href="{{ globals.base_url_general }}s/{{ self.sub_name }}{% if self.status != 'published' %}/queue{% endif %}"
 				{% if self.sub_owner > 0 %}
 					class="subname"
 					style="
@@ -114,7 +114,7 @@
 		{% exec htmlspecialchars self.url as url %}
 		{% if globals.link %}<h1>{% else %}<h2>{% endif %}
 			<a href="{{ url }}" class="l:{{ self.id }}"
-			{% if self.status != 'published' %} rel="nofollow"{% endif %} target="_blank">{{ self.title }}
+			{% if self.status != 'published' %} rel="nofollow"{% endif %}>{{ self.title }}
 			</a>
 			{% if self.content_type == 'image' %}
 				<span class="fa fa-file-photo-o" alt="{% trans _('imagen') %}" title="{% trans _('imagen') %}"></span>
@@ -124,7 +124,7 @@
 			{% endif %}
 		{% if globals.link %}</h1>{% else %}</h2>{% endif %}
 	{% else %}
-		<h1><a href="{{ self.permalink }}" class="l:{{ self.id }}" target="_blank">{{ self.title }}</a></h1>
+		<h1><a href="{{ self.permalink }}" class="l:{{ self.id }}">{{ self.title }}</a></h1>
 	{% endif %}
 
 
