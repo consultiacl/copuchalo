@@ -111,15 +111,14 @@
 	{% if self.url %}
 		{% exec htmlspecialchars self.url as url %}
 		{% if globals.link %}<h1>{% else %}<h2>{% endif %}
-			<a href="{{ url }}" class="l:{{ self.id }}"
-			{% if self.status != 'published' %} rel="nofollow"{% endif %}>{{ self.title }}
-			</a>
+			<a href="{{ url }}" class="l:{{ self.id }}" target="_blank"
+			{% if self.status != 'published' %} rel="nofollow"{% endif %}>{{ self.title }}&nbsp;
 			{% if self.content_type == 'image' %}
 				<span class="fa fa-image" alt="{% trans _('imagen') %}" title="{% trans _('imagen') %}"></span>
 			{% else %} {% if self.content_type == 'video' %}
 				<span class="fa fa-video-camera" alt="{% trans _('vídeo') %}" title="{% trans _('vídeo') %}"></span>
-			{% endif %}
-			{% endif %}
+			{% endif %}{% endif %}
+			</a>
 		{% if globals.link %}</h1>{% else %}</h2>{% endif %}
 	{% else %}
 		<h1><a href="{{ self.permalink }}" class="l:{{ self.id }}">{{ self.title }}</a></h1>
@@ -265,7 +264,7 @@
 				<span title="{% trans _('favorito') %}" id="favl-{{ self.id }}" onclick="add_remove_fav('favl-{{ self.id }}', 'link', {{ self.id }})" {% if self.favorite %}
 					 class="fa fa-star" {% else %} class="fa fa-star-o" {% endif %} ></span>
 			{% endif %}
-	
+
 			{# <span style="margin-left:20px;">comentarios</span> #}
 
 			<a class="comment-bubble" href="{{ self.relative_permalink }}" title="{% trans _('comentarios de') %}: «{{ self.title }}»">{{ self.comments }}</a>

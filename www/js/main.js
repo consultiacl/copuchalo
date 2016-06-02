@@ -11,8 +11,7 @@ var base_url="{{ globals.base_url_general }}",
 		do_partial=false;
 	{% endif %}
 
-if (typeof window.history == "object"
-		&& (do_partial || navigator.userAgent.match(/copuchalo/i)) ) {
+if (typeof window.history == "object" && (do_partial || navigator.userAgent.match(/copuchalo/i)) ) {
 	do_partial = true;
 }
 
@@ -1986,8 +1985,8 @@ function analyze_hash(force) {
 		var real_href = $a.data('real_href') || $a.attr('href');
 		if ( (aClass.match(/fancybox/)
 				|| real_href.match(/\.(gif|jpeg|jpg|pjpeg|pjpg|png|tif|tiff)$|vimeo.com\/\d+|vine\.co\/v\/\w+|youtube.com\/(.*v=|embed)|youtu\.be\/.+|twitter\.com\/.+?\/(?:status|statuses)\/\d+/i))
-			&& ! aClass.match(/cbox/)
-			&& ! $a.attr("target")) {
+			&& ! aClass.match(/cbox/) ) {
+			/* && ! $a.attr("target")) { */
 			if (fancyBox.parse($a)) return false;
 		}
 
