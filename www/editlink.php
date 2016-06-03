@@ -152,6 +152,7 @@ function do_save($link) {
 			$link->store_thumb_status();
 		}
 	}
+
 	$link->read();
 	$link->permalink = $link->get_permalink();
 
@@ -168,10 +169,9 @@ function link_edit_errors($link) {
 		$error = true;
 	}
 
-
 	// only checks if the user is not special or god
 	if(! empty($link->url) && ! $link->check_url($link->url, false) && ! $current_user->admin) {
-		$errors[] = _('url incorrecto');
+		$errors[] = _('url incorrecta');
 	}
 
 	if($_POST['key'] !== md5($_POST['timestamp'].$link->randkey)) {

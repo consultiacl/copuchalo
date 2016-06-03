@@ -300,12 +300,12 @@ class Link extends LCPBase {
 		if(preg_match("/^$quoted_domain$/", $url_components['host'])) {
 			$this->ban = array();
 			$this->ban['comment'] = _('el servidor es local');
-			syslog(LOG_NOTICE, "Meneame, server name is local name ($current_user->user_login): $url");
+			syslog(LOG_NOTICE, "server name is local name ($current_user->user_login): $url");
 			return false;
 		}
 		require_once(mnminclude.'ban.php');
 		if(($this->ban = check_ban($url, 'hostname', false, $first_level))) {
-			syslog(LOG_NOTICE, "Meneame, server name is banned ($current_user->user_login): $url");
+			syslog(LOG_NOTICE, "server name is banned ($current_user->user_login): $url");
 			$this->banned = true;
 			return false;
 		}
@@ -333,7 +333,7 @@ class Link extends LCPBase {
 				$new_url = clean_input_url($response['location']);
 			}
 			if (!empty($new_url) && $new_url != $url) {
-				syslog(LOG_NOTICE, "Meneame, redirected ($current_user->user_login): $url -> $new_url");
+				syslog(LOG_NOTICE, "redirected ($current_user->user_login): $url -> $new_url");
 				/* Check again the url */
 				if (!$this->check_url($new_url, $check_ban, true)) {
 					$this->url = $new_url;
@@ -342,7 +342,7 @@ class Link extends LCPBase {
 				// Change the url if we were directed to another host
 				if (strlen($new_url) < 300	&& ($new_url_components = @parse_url($new_url))) {
 					if ($url_components['host'] != $new_url_components['host']) {
-						syslog(LOG_NOTICE, "Meneame, changed source URL ($current_user->user_login): $url -> $new_url");
+						syslog(LOG_NOTICE, "changed source URL ($current_user->user_login): $url -> $new_url");
 						$url = $new_url;
 						$url_components = $new_url_components;
 					}
@@ -351,19 +351,22 @@ class Link extends LCPBase {
 			$this->html = $response['content'];
 			$url_ok = true;
 		} else {
-			syslog(LOG_NOTICE, "Meneame, error getting ($current_user->user_login): $url");
+			syslog(LOG_NOTICE, "error getting ($current_user->user_login): $url");
 			$url_ok = false;
 		}
 
 
 		$this->url=$url;
-		// Fill content type if empty
-		// Right now only check for typical image extensions
-		if (empty($this->content_type)) {
-			if (preg_match('/(jpg|jpeg|gif|png)(\?|#|$)/i', $this->url)) {
-				$this->content_type='image';
+		// Fill content type if empty or if is text. Check if is an image or video for now.
+		if (empty($this->content_type) || $this->content_type == 'text') {
+			// Check if URL could be an image or a video and mark it accordingly
+			if( preg_match('/\.(gif|jpeg|jpg|pjpeg|pjpg|png|tif|tiff)(\?|#|$)/i', strtolower($this->url)) ) {
+				$this->content_type = 'image';
+			} elseif( preg_match('/vimeo\.com\/(\d+)|vine\.co\/v\/\w+|youtube.com\/(.*v=|embed)|youtu\.be\/.+/i', strtolower($this->url)) ) {
+				$this->content_type = 'video';
 			}
 		}
+
 		// NO more to do
 		if (!$url_ok || ! preg_match('/html/', $response['content_type'])) return true;
 
@@ -385,7 +388,7 @@ class Link extends LCPBase {
 		if (preg_match('/<!-- *noshare *-->/', $this->html)) {
 			$this->ban = array();
 			$this->ban['comment'] = _('el autor no desea que se envíe el artículo, respeta sus deseos');
-			syslog(LOG_NOTICE, "Meneame, noshare ($current_user->user_login): $url");
+			syslog(LOG_NOTICE, "noshare ($current_user->user_login): $url");
 			return false;
 		}
 
@@ -416,18 +419,6 @@ class Link extends LCPBase {
 
 		// The URL has been checked
 		$this->valid = true;
-		/*
-		if(preg_match('/<title[^<>]*>([^<>]*)<\/title>/si', $this->html, $matches)) {
-			$url_title=clean_text($matches[1]);
-			if (mb_strlen($url_title) > 3) {
-				$this->url_title=$url_title;
-			}
-		}
-
-		if(preg_match('/< *meta +name=[\'"]description[\'"] +content=[\'"]([^<>]+)[\'"] *\/*>/si', $this->html, $matches)) {
-			$this->url_description=clean_text_with_tags($matches[1], 0, false, 400);
-		}
-		*/
 
 		$metatags = getMetaTags($this->html);
 
@@ -439,10 +430,12 @@ class Link extends LCPBase {
 			$url_title = $metatags['twitter:title'];
 		} elseif( ! empty($metatags['title']) ) {
 			$url_title = $metatags['title'];
+		} elseif( preg_match('/<title[^<>]*>([^<>]*)<\/title>/si', $this->html, $matches) ) {
+			$url_title = $matches[1];
 		}
 		$url_title = clean_string($url_title);
 		if(mb_strlen($url_title) > 3) {
-			$this->url_title=$url_title;
+			$this->url_title = $this->title = $url_title;
 		}
 
 		// Get content description
@@ -455,6 +448,8 @@ class Link extends LCPBase {
 			$r_desc = $metatags['dc_description'];
 		} elseif( ! empty($metatags['twitter:description']) ) {
 			$r_desc = $metatags['twitter:description'];
+		} elseif( preg_match('/< *meta +name=[\'"]description[\'"] +content=[\'"]([^<>]+)[\'"] *\/*>/si', $this->html, $matches) ) {
+			$r_desc = $matches[1];
 		}
 		$this->url_description=clean_text_with_tags(clean_string($r_desc), 0, false, 400);
 
@@ -550,7 +545,7 @@ class Link extends LCPBase {
 
 			if ($blog->type != 'noiframe' && $this->noiframe) {
 				$blog->type = 'noiframe';
-				syslog(LOG_INFO, "Meneame, changed to noiframe ($blog->id, $blog->url)");
+				syslog(LOG_INFO, "changed to noiframe ($blog->id, $blog->url)");
 			}
 			$blog->store();
 		}
@@ -1422,9 +1417,9 @@ class Link extends LCPBase {
 			$this->image_parser->debug = $debug;
 			$this->image_parser->referer = $this->get_permalink();
 		}
-		if ($debug) echo "<!-- Meneame, before image_parser -->\n";
+		if ($debug) echo "<!-- Copuchalo, before image_parser -->\n";
 		$img = $this->image_parser->get();
-		if ($debug) echo "<!-- Meneame, after image_parser: $img->url -->\n";
+		if ($debug) echo "<!-- Copuchalo, after image_parser: $img->url -->\n";
 		$this->thumb_status = 'checked';
 		$this->thumb = '';
 		if ($img) {
@@ -1435,12 +1430,12 @@ class Link extends LCPBase {
 			if (! $this->move_tmp_image(basename($filepath), 'image/jpeg') ) {
 				$this->thumb_status = 'error';
 				if ($debug)
-					echo "<!-- Meneame, error saving thumbnail ".$this->get_permalink()." -->\n";
+					echo "<!-- Copuchalo, error saving thumbnail ".$this->get_permalink()." -->\n";
 			} else {
 				//$this->image_parser->seen_add($img->url);
 				$this->thumb_status = 'remote';
 				if ($debug) {
-					echo "<!-- Meneame, new thumbnail $img->url -->\n";
+					echo "<!-- Copuchalo, new thumbnail $img->url -->\n";
 				}
 			}
 		}
@@ -1782,7 +1777,7 @@ class Link extends LCPBase {
 		}
 
 		if(get_uppercase_ratio($this->content) > 0.3 ) {
-			$errors[] = ("demasiadas mayúsculas en el texto");
+			$errors[] = ("demasiadas mayúsculas en el texto de la noticia");
 		}
 
 /* Already constrained in clean_text_with_tags()

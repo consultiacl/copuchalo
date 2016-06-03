@@ -80,7 +80,7 @@
 {% endif %}
 
 <br/>
-<input type="text" id="title" name="title" value="{% if link.is_new %}{{ link.url_title }}{% else %}{{ link.title }}{% endif %}" style="width:100%" maxlength="120" />
+<input type="text" id="title" name="title" value="{{ link.title }}" style="width:100%" maxlength="120" />
 </p>
 
 <label for="tags" accesskey="3">{% trans _('etiquetas') %}:</label>
@@ -126,9 +126,9 @@
 	<label>{% trans _('eliminar imagen') %}: <input type="checkbox" name="thumb_delete" value="1"/></label><br/>
 {% else %}
 	{% if link.url %}
-		<label>{% trans _('obtener imagen (puede tardar varios segundos)') %}: <input type="checkbox" name="thumb_get" value="1" checked /></label><br/>
+		<label>{% trans _('obtener imagen (puede tardar varios segundos)') %}: <input type="checkbox" name="thumb_get" value="1" {{thumb_state}} /></label><br/>
 	{% endif %}
-	<label>{% trans _('o especificar url de la imagen') %}: <input type="url" name="thumb_url" style="width:60%" /></label><br/>
+	<label>{% trans _('o especificar url de la imagen') %}: <input type="url" name="thumb_url" value="{{thumb_url}}" style="width:60%" /></label><br/>
 {% endif %}
 
 {% if not link.is_new && (current_user.admin > 0 || current_user.user_level == "blogger") %}

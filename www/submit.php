@@ -22,6 +22,8 @@ $site_properties = SitesMgr::get_extended_properties();
 
 global $errors;
 $errors = array();
+$thumb_state = isset($_POST["thumb_get"]) ? 'checked' : '';
+$thumb_url = isset($_POST["thumb_url"]) ? $_POST["thumb_url"] : '';
 
 if(isset($_POST["phase"])) {
 	switch ($_POST["phase"]) {
@@ -104,7 +106,7 @@ function do_submit0() {
 }
 
 function do_submit1() {
-	global $db, $dblang, $current_user, $globals, $errors, $site_properties, $site_key;
+	global $db, $dblang, $current_user, $globals, $errors, $site_properties, $site_key, $thumb_state, $thumb_url;
 
 	$site_info = SitesMgr::get_info();
 	$new_user = false;
@@ -133,7 +135,7 @@ function do_submit1() {
 		if (!$url_components || ! $url_components['host'] || gethostbyname($url_components['host']) == $url_components['host']) {
 			add_submit_error( _('URL o nombre de servidor erróneo'),
 				_('el nombre del servidor es incorrecto o éste tiene problemas para resolver el nombre'));
-			syslog(LOG_NOTICE, "Meneame, hostname error ($current_user->user_login): $url");
+			syslog(LOG_NOTICE, "hostname error ($current_user->user_login): $url");
 			return false;
 		}
 
@@ -151,7 +153,7 @@ function do_submit1() {
 	if ($drafts > $globals['draft_limit']) {
 		add_submit_error( _('demasiados borradores'),
 			_('has hecho demasiados intentos, debes esperar o continuar con ellos desde la'). ' <a href="queue?meta=_discarded">'. _('cola de descartadas').'</a></p>');
-		syslog(LOG_NOTICE, "Meneame, too many drafts ($current_user->user_login): " . $_REQUEST['url']);
+		syslog(LOG_NOTICE, "too many drafts ($current_user->user_login): " . $_REQUEST['url']);
 		return false;
 	}
 
@@ -187,7 +189,7 @@ function do_submit1() {
 				$expires = _('caduca').': '.get_date_time($ban['expire']);
 			} else $expires = '';
 			add_submit_error( _('dirección IP no permitida para enviar'), $expires);
-			syslog(LOG_NOTICE, "Meneame, banned IP ".$globals['user_ip']." ($current_user->user_login): $url");
+			syslog(LOG_NOTICE, "banned IP ".$globals['user_ip']." ($current_user->user_login): $url");
 			return false;
 		}
 	} // END anti_spam
@@ -230,7 +232,7 @@ function do_submit1() {
 			$c = (int) $db->get_var("select count(*) from links where link_status!='published' and link_date > date_sub(now(), interval $hours hour) and link_author in ($l)");
 			if ($c > 0) {
 				add_submit_error( _('ya se envió con otro usuario «clon» en las últimas horas'). ", "._('disculpa las molestias'));
-				syslog(LOG_NOTICE, "Meneame, clon submit ($current_user->user_login): " . $_REQUEST['url']);
+				syslog(LOG_NOTICE, "clon submit ($current_user->user_login): " . $_REQUEST['url']);
 				return false;
 			}
 		}
@@ -240,7 +242,7 @@ function do_submit1() {
 
 		if ($globals['limit_user_24_hours'] && $queued_24_hours > $globals['limit_user_24_hours']) {
 			add_submit_error( _('debes esperar, tienes demasiados envíos en cola de las últimas 24 horas'). " ($queued_24_hours), "._('disculpa las molestias') );
-			syslog(LOG_NOTICE, "Meneame, too many queued in 24 hours ($current_user->user_login): " . $_REQUEST['url']);
+			syslog(LOG_NOTICE, "too many queued in 24 hours ($current_user->user_login): " . $_REQUEST['url']);
 			return false;
 		}
 
@@ -252,7 +254,7 @@ function do_submit1() {
 		if ($enqueued_last_minutes > $enqueued_limit) {
 			add_submit_error( _('exceso de envíos'),
 				_('se han enviado demasiadas historias en los últimos 3 minutos'). " ($enqueued_last_minutes > $enqueued_limit), "._('disculpa las molestias'));
-			syslog(LOG_NOTICE, "Meneame, too many queued ($current_user->user_login): " . $_REQUEST['url']);
+			syslog(LOG_NOTICE, "too many queued ($current_user->user_login): " . $_REQUEST['url']);
 			return false;
 		}
 
@@ -294,8 +296,6 @@ function do_submit1() {
 		$link->rules = LCPBase::html($site_properties['rules']);
 	}
 
-
-
 	$edit = false;
 
 	if (! empty($link->url) ) {
@@ -321,10 +321,10 @@ function do_submit1() {
 
 		$link->randkey = intval($_POST['randkey']);
 		if(!$link->valid) {
-			$e = _('error leyendo el url').': '. htmlspecialchars($url);
+			$e = _('error leyendo la url').': '. htmlspecialchars($url);
 			// Dont allow new users with low karma to post wrong URLs
 			if ($current_user->user_karma < 7 && $current_user->user_level == 'normal' && ! $site_info->owner) {
-				add_submit_error( $e, _('URL inválido, incompleto o no permitido. Está fuera de línea, o tiene mecanismos antibots.'));
+				add_submit_error( $e, _('URL inválida, incompleta o no permitida. Está fuera de línea, o tiene mecanismos antibots.'));
 				return false;
 			}
 			add_submit_error( $e, _('no es válido, está fuera de línea, o tiene mecanismos antibots. <strong>Continúa</strong>, pero asegúrate que sea correcto'));
@@ -353,7 +353,7 @@ function do_submit1() {
 			if ($ban['expire'] > 0) {
 				add_submit_error( $e, _('caduca').': '.get_date_time($ban['expire']));
 			}
-			syslog(LOG_NOTICE, "Meneame, banned site ($current_user->user_login): $blog->url <- " . $_REQUEST['url']);
+			syslog(LOG_NOTICE, "banned site ($current_user->user_login): $blog->url <- " . $_REQUEST['url']);
 			return false;
 		}
 
@@ -364,7 +364,7 @@ function do_submit1() {
 			$threshold = 1/log($sents, 2);
 			if ($ratio <  $threshold ) {
 				if ($db->get_var("select count(*) from links where link_author=$current_user->user_id and link_date > date_sub(now(), interval 60 day) and link_blog = $blog->id") > 2) {
-					syslog(LOG_NOTICE, "Meneame, forbidden due to low entropy: $ratio <  $threshold  ($current_user->user_login): $link->url");
+					syslog(LOG_NOTICE, "forbidden due to low entropy: $ratio <  $threshold  ($current_user->user_login): $link->url");
 					add_submit_error( _('ya ha enviado demasiados enlaces a los mismos sitios'), _('varía las fuentes, podría ser considerado spam'));
 					return false;
 				}
@@ -376,7 +376,7 @@ function do_submit1() {
 		if ($sents > 5 && ($link->content_type == 'image' || $link->content_type == 'video')) {
 			$image_links = intval($db->get_var("select count(*) from links, subs, sub_statuses where link_author=$current_user->user_id and link_date > date_sub(now(), interval 60  day) and link_content_type in ('image', 'video') and sub_statuses.link=link_id and subs.id = sub_statuses.id and sub_statuses.origen = sub_statuses.id and subs.parent=0 and subs.owner = 0"));
 			if ($image_links > $sents * 0.8) {
-				syslog(LOG_NOTICE, "Meneame, forbidden due to too many images or video sent by user ($current_user->user_login): $link->url");
+				syslog(LOG_NOTICE, "forbidden due to too many images or video sent by user ($current_user->user_login): $link->url");
 				add_submit_error( _('ya ha enviado demasiadas imágenes o vídeos'));
 				return false;
 			}
@@ -386,7 +386,7 @@ function do_submit1() {
 		$hours = 24;
 		$same_blog = $db->get_var("select count(*) from links where link_date > date_sub(now(), interval $hours hour) and link_author=$current_user->user_id and link_blog=$link->blog and link_votes > 0");
 		if ($same_blog >= $globals['limit_same_site_24_hours']) {
-			syslog(LOG_NOTICE, "Meneame, forbidden due to too many links to the same site in last $hours hours ($current_user->user_login): $link->url");
+			syslog(LOG_NOTICE, "forbidden due to too many links to the same site in last $hours hours ($current_user->user_login): $link->url");
 			add_submit_error( _('demasiados enlaces al mismo sitio en las últimas horas'));
 			return false;
 		}
@@ -395,7 +395,7 @@ function do_submit1() {
 		$minutes = 30;
 		$same_blog = $db->get_var("select count(*) from links where link_date > date_sub(now(), interval $minutes minute) and link_author=$current_user->user_id and link_blog=$link->blog and link_votes > 0");
 		if ($same_blog > 0 && $current_user->user_karma < 12) {
-			syslog(LOG_NOTICE, "Meneame, forbidden due to short period between links to same site ($current_user->user_login): $link->url");
+			syslog(LOG_NOTICE, "forbidden due to short period between links to same site ($current_user->user_login): $link->url");
 			add_submit_error( _('ya ha enviado un enlace al mismo sitio hace poco tiempo'),
 				_('debe esperar'). " $minutes " . _('minutos entre cada envío al mismo sitio.') . ', ' . '<a href="'.$globals['base_url_general'].'faq-'.$dblang.'.php">'._('lee el FAQ').'</a>');
 			return false;
@@ -410,12 +410,12 @@ function do_submit1() {
 			if ($sents > 5 && $ratio > 0.75) {
 				add_submit_error( $e, _('has superado los límites de envíos de este sitio'));
 				// don't allow to continue
-				syslog(LOG_NOTICE, "Meneame, warn, high ratio, process interrumped ($current_user->user_login): $link->url");
+				syslog(LOG_NOTICE, "warn, high ratio, process interrumped ($current_user->user_login): $link->url");
 				return false;
 			} else {
 				add_submit_error( $e,
 					_('continúe, pero tenga en cuenta que podría recibir votos negativos').' '. '<a href="'.$globals['base_url_general'].$globals['legal'].'">'._('(condiciones de uso)').'</a>');
-				syslog(LOG_NOTICE, "Meneame, warn, high ratio, continue ($current_user->user_login): $link->url");
+				syslog(LOG_NOTICE, "warn, high ratio, continue ($current_user->user_login): $link->url");
 			}
 		}
 
@@ -426,7 +426,7 @@ function do_submit1() {
 			$site_links = intval($db->get_var("select count(*) from links, subs, sub_statuses where link_date > date_sub(now(), interval 12 hour) and link_blog=$link->blog and link_status in ('queued') and sub_statuses.link=link_id and subs.id = sub_statuses.id and sub_statuses.origen = sub_statuses.id and subs.parent=0 and subs.owner = 0"));
 
 			if ($site_links > 10 && $site_links > $links_12hs * 0.05) { // Only 5% from the same site
-				syslog(LOG_NOTICE, "Meneame, forbidden due to overflow to the same site ($current_user->user_login): $link->url");
+				syslog(LOG_NOTICE, "forbidden due to overflow to the same site ($current_user->user_login): $link->url");
 				add_submit_error( _('hay en cola demasiados envíos del mismo sitio, espere unos minutos por favor'),
 					_('total en 12 horas').": $site_links , ". _('el máximo actual es'). ': ' . intval($links_12hs * 0.05));
 				return false;
@@ -437,7 +437,7 @@ function do_submit1() {
 			if ($link->content_type == 'image' || $link->content_type == 'video') {
 				$image_links = intval($db->get_var("select count(*) from links, subs, sub_statuses where link_date > date_sub(now(), interval 12 hour) and link_content_type in ('image', 'video') and sub_statuses.link=link_id and subs.id = sub_statuses.id and sub_statuses.origen = sub_statuses.id and subs.parent=0 and subs.owner = 0"));
 				if ($image_links > 5 && $image_links > $links_12hs * 0.15) { // Only 15% images and videos
-					syslog(LOG_NOTICE, "Meneame, forbidden due to overflow images ($current_user->user_login): $link->url");
+					syslog(LOG_NOTICE, "forbidden due to overflow images ($current_user->user_login): $link->url");
 					add_submit_error( _('ya se han enviado demasiadas imágenes o vídeos, espere unos minutos por favor'),
 						_('total en 12 horas').": $image_links , ". _('el máximo actual es'). ': ' . intval($links_12hs * 0.05));
 					return false;
@@ -471,13 +471,13 @@ function do_submit1() {
 	$link->site_properties = $site_properties;
 	$link->chars_left = $site_properties['intro_max_len'] - mb_strlen(html_entity_decode($link->content, ENT_COMPAT, 'UTF-8'), 'UTF-8');
 
-	Haanga::Load('link/submit1.html', compact('link', 'errors'));
+	Haanga::Load('link/submit1.html', compact('link', 'errors', 'thumb_state', 'thumb_url'));
 	return true;
 }
 
 
 function do_submit2() {
-	global $db, $dblang, $globals, $errors, $site_properties;
+	global $db, $dblang, $globals, $errors, $site_properties, $thumb_state, $thumb_url;
 
 	$link=new Link;
 	$link->id=$link_id = intval($_POST['id']);
@@ -489,10 +489,10 @@ function do_submit2() {
 		$link->read_content_type_buttons($_POST['type']);
 
 		// Check if the title contains [IMG], [IMGs], (IMG)... and mark it as image
-		if (preg_match('/[\(\[](IMG|PICT*)s*[\)\]]/i', $_POST['title'])) {
+		if( preg_match('/[\(\[](IMG|PICT*)s*[\)\]]/i', $_POST['title']) ) {
 			$_POST['title'] = preg_replace('/[\(\[](IMG|PICT*)s*[\)\]]/i', ' ', $_POST['title']);
 			$link->content_type = 'image';
-		} elseif (preg_match('/[\(\[](VID|VIDEO|Vídeo*)s*[\)\]]/i', $_POST['title'])) {
+		} elseif( preg_match('/[\(\[](VID|VIDEO|Vídeo*)s*[\)\]]/i', $_POST['title']) ) {
 			$_POST['title'] = preg_replace('/[\(\[](VID|VIDEO|Vídeo*)s*[\)\]]/i', ' ', $_POST['title']);
 			$link->content_type = 'video';
 		}
@@ -508,7 +508,7 @@ function do_submit2() {
 		// Show the edit form again
 		$link->is_new = true; // Disable several options in the editing form
 		$link->chars_left = $site_properties['intro_max_len'] - mb_strlen(html_entity_decode($link->content, ENT_COMPAT, 'UTF-8'), 'UTF-8');
-		Haanga::Load('link/submit1.html', compact('link', 'errors'));
+		Haanga::Load('link/submit1.html', compact('link', 'errors', 'thumb_state', 'thumb_url'));
 		return true;
 	}
 
