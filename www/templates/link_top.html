@@ -1,22 +1,24 @@
 <div id="toplink">
 
 {% if self.thumb_url %}
-	<a href="{{ self.media_url }}" class="fancybox" title="{% trans _('miniatura') %}"><img src='{{ self.thumb_url }}' width='{{ self.thumb_x }}' height='{{ self.thumb_y }}' alt="{{ self.title }}" class='thumbnail'/></a>
+	<div class="imgbox">
+		<img src='{{ self.thumb_url }}' width='{{ self.thumb_x }}' height='{{ self.thumb_y }}' alt="{{ self.title }}"/>
+	</div>
 {% endif %}
 
-<h1><a href="{% exec self.get_permalink %}">{{ self.title }}</a></h1>
+	<div class="textbox">
+		<span class="title-header"><a href="{{ globals.base_url }}top_active">{% trans _('Destacada') %}</a></span>
 
-{% if not globals.mobile %}
-	{% if self.thumb_url %}
-		<p>{% exec text_to_summary self.content 600 %}</p>
-	{% else %}
-		<p>{% exec text_to_summary self.content 200 %}</p>
-	{% endif %}
-{% endif %}
+		<h1><a href="{% exec self.get_permalink %}">{{ self.title }}</a></h1>
 
-<a class="footer"
-{% if self.thumb_x > 0 &&  self.thumb_y > 0 %}
-		style="position:absolute;bottom:0;right:4px;"
-{% endif %}
-	href="{{ globals.base_url }}top_active">{% trans _('Destacada') %}</a>
-</div>
+		{% if not globals.mobile %}
+			{% if self.thumb_url %}
+				<p class="news-content">{% exec text_to_summary self.content 600 %}</p>
+			{% else %}
+				<p class="news-content">{% exec text_to_summary self.content 200 %}</p>
+			{% endif %}
+		{% endif %}
+
+	</div>
+
+</div>   <!-- toplink -->

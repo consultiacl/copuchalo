@@ -108,6 +108,44 @@ body {
 	text-decoration: underline;
 }
 
+
+#toplink {
+        position:relative;
+	height: 170px;
+        padding: 10px 0px 10px 320px;
+        margin: 25px 10px;
+        vertical-align:middle;
+        overflow: hidden;
+	border-top:    5px solid black;
+	border-bottom: 5px solid black;
+}
+
+#toplink h1 {
+        line-height:100%;
+        font-size: 140%;
+        font-weight: normal;
+        margin: 0;
+}
+
+#toplink .thumbnail.medium {
+        width: 120px;
+        height: 120px;
+}
+
+#toplink .imgbox {
+	position: absolute;
+	width: 312px;
+	left: 0px;
+}
+
+#toplink .textbox {
+	top: 10px;
+	height: 170px;
+	padding-left: 10px;
+}
+
+
+#toplink h1 a,
 .news-body h1 a,
 .news-body h2 a,
 .news-info h1 a,
@@ -128,6 +166,7 @@ body {
 	*/
 }
 
+#toplink h1 a:hover,
 .news-body h1 a:hover,
 .news-body h2 a:hover,
 .news-info h1 a:hover,
@@ -137,6 +176,7 @@ body {
 	text-decoration: none;
 }
 
+#toplink h1 a,
 .news-body h1,
 .news-body h2,
 .news-info h1,
@@ -150,6 +190,10 @@ body {
 	border: none;
 }
 
+#toplink h1 a {
+	font-size: 35px;
+	line-height: 36px;
+}
 
 /* "ellipsis effect" without ellipsis :D */
 .news-content {
@@ -173,6 +217,10 @@ body {
 
 .news-content:hover {
 	color: #111;
+}
+
+#toplink p.news-content {
+	-webkit-line-clamp: 2;
 }
 
 .news-content-full {

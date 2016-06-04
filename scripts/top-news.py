@@ -59,7 +59,7 @@ def do_site(site_id, site):
 			and vote_type='links'
 			and vote_date > date_sub(now(), interval 30 day)
 			and vote_user_id > 0
-			and vote_value > 6
+			and vote_value >= 2
 		group by vote_link_id
 		order by x desc
 	"""  % links_format

@@ -582,45 +582,15 @@ overflow: hidden;
 }
 
 
-#toplink {
-position:relative;
-background:#f9f9f9;
-border:#ddd 1px solid;
-padding: 5px 5px;
-margin: 10px 0;
-vertical-align:middle;
-overflow: hidden;
-}
 
-#toplink h1 {
-line-height:100%;
-font-size: 140%;
-font-weight: normal;
-margin: 0;
-}
-
-#toplink .thumbnail {
-float: left;
-margin-right: 8px;
-}
-
-#toplink .thumbnail.medium {
-width: 120px;
-height: 120px;
-}
-
-#toplink p {
-color: #666;
-}
-
-#toplink .footer, .topbox .footer {
-display:block;
-margin-top:5px;
-text-transform:capitalize;
-font-variant:small-caps;
-text-align:right;
-color:#666;
-text-decoration:underline;
+.topbox .footer {
+	display:block;
+	margin-top:5px;
+	text-transform:capitalize;
+	font-variant:small-caps;
+	text-align:right;
+	color:#666;
+	text-decoration:underline;
 }
 
 .topbox {
