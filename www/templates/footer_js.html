@@ -22,7 +22,10 @@
 {% endif %}
 
 {# Include Google Adsense Async javascript #}
+{% try_include 'private/ad-google-async.html' %}
+
+{#
 {% if globals.mobile AND globals.ads %}
 {% try_include 'private/ad-google-async.html' %}
 {% endif %}
-
+#}
