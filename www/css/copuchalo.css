@@ -214,10 +214,6 @@ body {
 	color: #111;
 }
 
-#toplink p.news-content {
-	-webkit-line-clamp: 2;
-}
-
 .news-content-full {
         color: #444;
 	display: block;
