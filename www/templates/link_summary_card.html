@@ -34,7 +34,7 @@
 		{% if self.status == 'abuse' %}
 			<div class="warning"><i class="fa fa-warning"></i><strong>{% trans _('Aviso') %}:</strong>
 				{% trans _('noticia descartada por violar las') %}
-				<a href="{{ globals.legal }}#tos">{% trans _('normas de uso') %}</a>
+				<a href="{{ globals.legal }}#tos">{% trans _('normas de uso') %}</a>.
 			</div>
 		{% else %}
 			{% if self.has_warning %}
@@ -46,11 +46,11 @@
 					{% trans _('Este envío tiene varios votos negativos.') %} {% trans _('Su karma no será afectado si la descarta manualmente.') %}
 				{% else %}
 					{% if self.negative_text %}
-						{% trans  _('Este envío podría ser') %} <strong>{{ self.negative_text }}</strong>
+						{% trans  _('Este envío podría ser') %} <strong>{{ self.negative_text }}</strong>.
 					{% else %}
 						{% trans _('Este envío tiene varios votos negativos.') %}
 					{% endif %}
-					<a href="{{ self.relative_permalink }}">{% trans _('Asegúrate') %}</a> {% trans _('antes de copuchar') %}
+					<a href="{{ self.relative_permalink }}">{% trans _('Asegúrese') %}</a> {% trans _('antes de copuchar.') %}
 				{% endif %}
 				{% endif %}
 				</div>
