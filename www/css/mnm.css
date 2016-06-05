@@ -1066,13 +1066,13 @@ height: 1px;
 border: none;
 }
 
+h1,
 h2 {
-margin-top: 0;
-margin-bottom: 8px;
-font-size: 160%;
-font-weight: bold;
-/*color: #FF6400;*/
-color: #191919;
+	margin-top: 0;
+	margin-bottom: 7px;
+	font-size: 160%;
+	font-weight: bold;
+	color: #191919;
 }
 
 .topheading h2 {
@@ -1287,6 +1287,7 @@ background-color: #fff;
 color: #cccccc;
 }
 
+/*
 .news-body h1, .news-body h2 {
 margin: 0;
 padding: 0 5px 0 0;
@@ -1300,6 +1301,7 @@ border: none;
 width: 60px;
 height: 60px;
 }
+*/
 
 .news-submitted {
 font-size: 85%;

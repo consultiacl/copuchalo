@@ -2,12 +2,12 @@
 
 {% if self.thumb_url %}
 	<div class="imgbox">
-		<img src='{{ self.thumb_url }}' width='{{ self.thumb_x }}' height='{{ self.thumb_y }}' alt="{{ self.title }}"/>
+		<img src='{{ self.thumb_url }}' width='{{ globals.media_front_wide_highlight }}' height='{{ globals.media_front_height_highlight }}' alt="{{ self.title }}"/>
 	</div>
 {% endif %}
 
 	<div class="textbox">
-		<span class="title-header"><a href="{{ globals.base_url }}top_active">{% trans _('Destacada') %}</a></span>
+		<div class="title-header"><a href="{{ globals.base_url }}top_active">{% trans _('Destacada') %}</a></div>
 
 		<h1><a href="{% exec self.get_permalink %}">{{ self.title }}</a></h1>
 

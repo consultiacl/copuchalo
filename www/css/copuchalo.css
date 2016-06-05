@@ -89,18 +89,18 @@ body {
 }
 
 .title-header {
-	display: inline;
+	display: block;
 	font-family: "Graphik Web","Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size: 0.9em;
 	font-weight: 700;
 	line-height: 1.1em;
 	letter-spacing: 1px;
-	margin: 0 0 0.364em;
+	margin-bottom: 0.364em;
 }
 
 .title-header a:link,
 .title-header a:visited {
-	color: #555;
+	color: #666;
 	text-decoration: none;
 }
 
@@ -110,21 +110,14 @@ body {
 
 
 #toplink {
-        position:relative;
-	height: 170px;
-        padding: 10px 0px 10px 320px;
-        margin: 25px 10px;
-        vertical-align:middle;
-        overflow: hidden;
-	border-top:    5px solid black;
-	border-bottom: 5px solid black;
-}
-
-#toplink h1 {
-        line-height:100%;
-        font-size: 140%;
-        font-weight: normal;
-        margin: 0;
+	position:relative;
+	height: 255px;
+	padding: 10px 0px 10px 476px;
+	margin: 35px 10px 45px 10px;
+	vertical-align:middle;
+	overflow: hidden;
+	//border-top:    5px solid black;
+	//border-bottom: 5px solid black;
 }
 
 #toplink .thumbnail.medium {
@@ -134,13 +127,13 @@ body {
 
 #toplink .imgbox {
 	position: absolute;
-	width: 312px;
+	width: 468px;
 	left: 0px;
 }
 
 #toplink .textbox {
 	top: 10px;
-	height: 170px;
+	height: 255px;
 	padding-left: 10px;
 }
 
@@ -185,14 +178,16 @@ body {
 	font-size: 21px; /*1.313em;*/
 	font-weight: bold;
 	line-height: 25px; /*1.15em;*/
-	padding: 5px 0;
 	background: none;
 	border: none;
 }
 
+#toplink h1,
 #toplink h1 a {
+	font-family: "Graphik Web","Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size: 35px;
 	line-height: 36px;
+	padding: 0;
 }
 
 /* "ellipsis effect" without ellipsis :D */
@@ -1053,7 +1048,6 @@ a.header-btn:hover {
 
 .news-body2 {
 	padding-left: 240px;
-	//padding-right: 5px;
 	overflow: hidden;
 }
 

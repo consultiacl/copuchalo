@@ -94,18 +94,16 @@
 
 	{# #############################  URL TITLE  #################################### #}
 
-	<div style="display:block;">
-		<span class="title-header">
-			<a href="{{ globals.base_url_general }}s/{{ self.sub_name }}{% if self.status != 'published' %}/queue{% endif %}"
-				{% if self.sub_owner > 0 %}
-					class="subname"
-					style="
-						{% if self.sub_color1 %}color:{{ self.sub_color1 }} !important;{% endif %}
-						{% if self.sub_color2 %}background-color:{{ self.sub_color2 }} !important;{% endif %}
-					"
-				{% endif %}
-				>{{ self.sub_name }}</a>
-		</span>
+	<div class="title-header">
+		<a href="{{ globals.base_url_general }}s/{{ self.sub_name }}{% if self.status != 'published' %}/queue{% endif %}"
+			{% if self.sub_owner > 0 %}
+				class="subname"
+				style="
+					{% if self.sub_color1 %}color:{{ self.sub_color1 }} !important;{% endif %}
+					{% if self.sub_color2 %}background-color:{{ self.sub_color2 }} !important;{% endif %}
+				"
+			{% endif %}
+			>{{ self.sub_name }}</a>
 	</div>
 
 	{% if self.url %}
