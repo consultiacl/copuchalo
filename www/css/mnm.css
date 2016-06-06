@@ -704,7 +704,9 @@ text-align: center;
 }
 
 .sidebox h4 a:hover {
-	color: #aaa;
+	color: #fff;
+	text-shadow: 0 0 0.5em #000, 0 0 0.5em #000, 0 0 0.5em #000;
+	transition: all 0.1s ease-in-out;
 }
 
 
