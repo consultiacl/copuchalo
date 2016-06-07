@@ -135,6 +135,7 @@ body {
 	top: 10px;
 	height: 255px;
 	padding-left: 10px;
+	overflow: hidden;
 }
 
 
