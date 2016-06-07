@@ -102,7 +102,7 @@ echo '<div id="newswrap">';
 
 do_banner_top_news();
 
-if ($page == 1 && empty($globals['meta']) && ($top = Link::top())) {
+if (! $globals['mobile'] && $page == 1 && empty($globals['meta']) && ($top = Link::top())) {
 	$vars = array('self' => $top, 'globals' => $globals);
 	Haanga::Load("link_top.html", $vars);
 }
