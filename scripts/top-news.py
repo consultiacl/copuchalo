@@ -123,6 +123,7 @@ def do_site(site_id, site):
 
 	cursor.close()
 
+	print "*********************************************************************"
 	print "Site:", site, "Votes average:", votes_average, v_average, \
 			"Comments average:", comments_average, c_average
 
@@ -172,7 +173,7 @@ def do_site(site_id, site):
 		query = """
 			replace into annotations
 				(annotation_key, annotation_expire, annotation_text)
-				values (%s, date_add(now(), interval 10 day), %s)
+				values (%s, date_add(now(), interval 1 day), %s)
 		"""
 		cursor_update.execute(query, ('top-link-'+site, annotations))
 		cursor_update.close()
@@ -180,6 +181,7 @@ def do_site(site_id, site):
 		print "Stored:", annotations
 	else:
 		print "No one selected"
+	print "---------------------"
 
 def c_avrg(the_dict, exclude):
 	""" Calculate the average excluding the given element"""
