@@ -412,7 +412,7 @@ cursor: pointer;
 	vertical-align: middle;
 	float:left;
 	position:relative;
-	color: #222;
+	//color: #222;
 	background-color: transparent;
 	font-variant:small-caps;
 	font-weight:bold;
