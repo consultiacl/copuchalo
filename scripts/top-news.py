@@ -145,7 +145,7 @@ def do_site(site_id, site):
 		query = """
 			replace into annotations
 				(annotation_key, annotation_expire, annotation_text)
-				values (%s, date_add(now(), interval 10 day), %s)
+				values (%s, date_add(now(), interval 2 day), %s)
 		"""
 		cursor_update.execute(query, ('top-actives-'+site, annotations))
 		cursor_update.close()
@@ -173,7 +173,7 @@ def do_site(site_id, site):
 		query = """
 			replace into annotations
 				(annotation_key, annotation_expire, annotation_text)
-				values (%s, date_add(now(), interval 1 day), %s)
+				values (%s, date_add(now(), interval 8 hour), %s)
 		"""
 		cursor_update.execute(query, ('top-link-'+site, annotations))
 		cursor_update.close()
