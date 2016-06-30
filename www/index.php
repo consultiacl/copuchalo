@@ -135,7 +135,13 @@ $links = $db->object_iterator($sql, "Link");
 if ($links) {
 	$counter = 0;
 	foreach($links as $link) {
-		//syslog(LOG_INFO, "LINK: $link->date, $link->id, $link->title");
+    //syslog(LOG_INFO, "LINK: $link->date, $link->id, $link->title");
+
+    // Skip print link if is already printed as top highlight
+    if( isset($top) && ($top->id == $link->id) ) {
+        continue;
+    }
+
 		$link->max_len = 600;
 		$link->print_summary('frontpage');
 		$counter++;
