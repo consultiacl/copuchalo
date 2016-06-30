@@ -634,9 +634,9 @@ vertical-align: middle;
 }
 
 .sidebox {
-margin-bottom:25px;
-padding: 4px;
-border: 1px solid #dadada;
+	margin-bottom:25px;
+	padding: 4px;
+	//border: 1px solid #dadada;
 }
 
 .sidebox.message {
