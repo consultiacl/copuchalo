@@ -90,13 +90,11 @@ function send_pear_mail($to, $domain, $subject, $message) {
 	$text = clean_string($message);
 
 	$headers = array ('From' => "$from_user <$from_email>",
-        	          'To' => $to,
-                	  'Subject' => $subject,
-	                  'Reply-To' => $reply_to,
+                          'To' => $to,
+                          'Subject' => $subject,
+                          'Reply-To' => $reply_to,
                           'Return-Path' => $from_mail,
-        	          'MIME-Version' => "1.0",
-                	  'X-Mailer' => $mailer,
-	                  'Content-type' => "text/html; charset=UTF-8",
+                          'X-Mailer' => $mailer,
 	);
 
 	$mimeoptions = array ('eol' => "\n",
