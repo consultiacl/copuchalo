@@ -40,11 +40,11 @@ function send_recover_mail ($user) {
 	else $domain = get_server_name();
 
 	$key = md5($user->id.$user->pass.$now.$site_key.get_server_name());
-	$url = 'http://'.get_server_name().$globals['base_url'].'profile?login='.$user->username.'&t='.$now.'&k='.$key;
+	$url = 'https://'.get_server_name().$globals['base_url'].'profile?login='.$user->username.'&t='.$now.'&k='.$key;
 	$to      = $user->email;
 	$subject = _('Recuperación o verificación de clave de '). get_server_name();
 
-	$url_recover = 'http://'.get_server_name().$globals['base_url'].'login?op=recover';
+	$url_recover = 'https://'.get_server_name().$globals['base_url'].'login?op=recover';
 
 	$message  = '<html lang="es"><head><meta charset="utf-8"/></head><body><p>Hola '.$to.":</p>\n\n";
 	$message .= "<p>Para poder acceder sin la clave, conéctate a la siguiente dirección en menos de 15 minutos:<br>\n";
