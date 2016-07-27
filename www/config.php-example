@@ -69,11 +69,12 @@ $globals['ads'] = true;
 $globals['external_ads'] = $external_ads = true;
 $globals['external_user_ads'] = false;
 $globals['behind_load_balancer'] = false; // LB as those in Amazon EC2 don't send the real remote address
+$globals['email_external'] = false;  // Uses an smtps external server -true- or use a local MTA (by default, mail() php function -false-)
 //$globals['email_domain'] = 'my_email_domain.com'; // Used for sending emails bots and scripts
-$globals['email_server'] = 'ssl://example.com'; // mail server
-$globals['email_port'] = '465'; // port number to send mail
-$globals['email_user'] = ''; // username account to send mail
-$globals['email_passwd'] = ''; // password account to send mail
+//$globals['email_server'] = 'ssl://example.com'; // mail server if email_external is set
+//$globals['email_port'] = '465'; // port number if email_external is set
+//$globals['email_user'] = ''; // username account if email_external is set
+//$globals['email_passwd'] = ''; // password account if email_external is set
 //$globals['notify_email'] = 'my_email_domain.com'; // used for sending notifications, now only used for Amazon SNS/SES notifications
 
 

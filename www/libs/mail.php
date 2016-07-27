@@ -68,24 +68,15 @@ function send_recover_mail ($user) {
 function send_pear_mail($to, $domain, $subject, $message) {
 	global $globals;
 
-	if (empty($globals['email_server']) || empty($globals['email_port']) || empty($globals['email_user']) || empty($globals['email_passwd'])) {
-		syslog(LOG_ERR, "Error enviando correo: algunas variables vacías, funcion send_pear_mail");
+	if( isset($globals['email_external']) && $globals['email_external'] === true && (empty($globals['email_server']) || empty($globals['email_port']) || empty($globals['email_user']) || empty($globals['email_passwd'])) ) {
+		syslog(LOG_ERR, "Error enviando correo: algunas variables vacías para el envío de correo con servidor externo, funcion send_pear_mail");
 		return false;
 	}
-
-	$host = $globals['email_server'];
-	$port = $globals['email_port'];
-	$username = $globals['email_user'];
-	$password = $globals['email_passwd'];
 
 	$from_user = "Avisos: $domain";
 	$from_email = "no-responder@$domain";
 	$reply_to = $from_email;
 	$mailer = $domain;
-
-	//$message = wordwrap($message, 70);
-	//$from_user = "=?UTF-8?B?".base64_encode($from_user)."?=";
-	//$subject = "=?UTF-8?B?".base64_encode($subject)."?=";
 
 	$text = clean_string($message);
 
@@ -103,25 +94,29 @@ function send_pear_mail($to, $domain, $subject, $message) {
 			      'html_charset' => "UTF-8",
 	);
 
-        // Creating the Mime message
-        $mime = new Mail_mime($mimeoptions);
+	// Creating the Mime message
+	$mime = new Mail_mime($mimeoptions);
 
-        // Setting the body of the email
-        $mime->setTXTBody($text);
-        $mime->setHTMLBody($message);
+	// Setting the body of the email
+	$mime->setTXTBody($text);
+	$mime->setHTMLBody($message);
 
-        $body = $mime->get();
-        $headers = $mime->headers($headers);
+	$body = $mime->get();
+	$headers = $mime->headers($headers);
 
-        // Sending the email
-	$smtp =& Mail::factory('smtp', array ('host' => $host, 'port' => $port, 'auth' => true, 'username' => $username, 'password' => $password));  //, 'debug' => true));
+	// Sending the email
+	if( isset($globals['email_external']) && $globals['email_external'] === true ) {
+		$smtp =& Mail::factory('smtp', array('host' => $globals['email_server'], 'port' => $globals['email_port'], 'auth' => true, 'username' => $globals['email_user'], 'password' => $globals['email_passwd']));
+	} else {
+		$smtp =& Mail::factory('mail', array());
+	}
 	$mail = $smtp->send($to, $headers, $body);
 
 	if (PEAR::isError($mail)) {
-		syslog(LOG_ERR, "Error sending mail: ".$mail->getMessage());
+		syslog(LOG_ERR, "Error enviando correo: " . $mail->getMessage());
 		return false;
 	} else {
-	        return true;
+		return true;
 	}
 }
 
