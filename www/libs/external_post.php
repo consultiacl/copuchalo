@@ -154,6 +154,11 @@ function telegram_post($auth, $message) {
 	$url = $bot_url . "sendMessage?chat_id=" . $chat_id . "&text=" . urlencode($message);
 	$result = file_get_contents($url);
 
-	return ($result !== FALSE);
+	if($result === false) {
+		return false;
+	} else {
+		syslog(LOG_INFO, "Published to Telegram: $message");
+		return true;
+	}
 }
 
