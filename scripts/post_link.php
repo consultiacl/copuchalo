@@ -91,6 +91,16 @@ function do_posts($link) {
 		}
 	}
 
+	if (! empty($globals['telegram_token']) && ! empty($globals['telegram_channel']) ) {
+		$r = false;
+		$tries = 0;
+		while (! $r && $tries < 4) {
+			$r = telegram_post($globals, $url);
+			$tries++;
+			if (! $r) sleep(4);
+		}
+	}
+
 	/*
 	if ($globals['pubsub']) {
 		pubsub_post();

@@ -341,6 +341,9 @@ $globals['captcha_first_login'] = false;
 // posthubsubbub
 //$globals['pubsub'] = 'http://pubsubhubbub.appspot.com/';
 
+// Telegram settings to post to a channel
+$globals['telegram_token'] = 'xxxxxxxx';
+$globals['telegram_channel'] = '@xxxxxxxx';
 
 // Websnapr.com previews
 $globals['do_websnapr'] = false;

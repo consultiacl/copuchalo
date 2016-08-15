@@ -7,10 +7,9 @@
 // AFFERO GENERAL PUBLIC LICENSE is also included in the file called "COPYING".
 
 function twitter_post($auth, $text, $link_url, $image = false) {
-	global $globals;
 
 	if (empty($auth['twitter_token']) || empty($auth['twitter_token_secret']) || empty($auth['twitter_consumer_key']) ||  empty($auth['twitter_consumer_secret'])) {
-		syslog(LOG_NOTICE, "consumer_key, consumer_secret, token, or token_secret not defined");
+		syslog(LOG_NOTICE, "twitter_token, twitter_token_secret, twitter_consumer_key or twitter_consumer_secret not defined");
 		return false;
 	}
 
@@ -95,9 +94,9 @@ function pubsub_post() {
 }
 
 function facebook_post($auth, $link, $text = '') {
-	global $globals;
 
 	if (empty($auth['facebook_token']) || empty($auth['facebook_key']) || empty($auth['facebook_secret']) || empty($auth['facebook_page_id'])) {
+		syslog(LOG_NOTICE, "facebook_token, facebook_key, facebook_secret or facebook_page_id not defined");
 		return false;
 	}
 
@@ -140,5 +139,21 @@ function facebook_post($auth, $link, $text = '') {
 
 	syslog(LOG_INFO, "Published to FB: $permalink with picture: $thumb");
 	return true;
+}
+
+function telegram_post($auth, $message) {
+
+	if ( empty($auth['telegram_token']) || empty($auth['telegram_channel']) ) {
+		syslog(LOG_NOTICE, "telegram_token or telegram_channel not defined");
+		return false;
+	}
+
+	$botToken = $auth['telegram_token'];
+	$chat_id = $auth['telegram_channel'];
+	$bot_url = "https://api.telegram.org/bot$botToken/";
+	$url = $bot_url . "sendMessage?chat_id=" . $chat_id . "&text=" . urlencode($message);
+	$result = file_get_contents($url);
+
+	return ($result !== FALSE);
 }
 
