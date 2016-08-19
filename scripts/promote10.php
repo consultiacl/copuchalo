@@ -586,7 +586,7 @@ function update_link_karma($site, $link, $past_karma) {
 			$subject = _('AVISO: enlace con muchos votos de karma menor que la media');
 			$body = "Perc: $link->low_karma_perc% User votes: $link->votes Negatives: $link->negatives\n\n";
 			$body .= $link->get_permalink();
-			mail($globals['adm_email'], $subject, $body);
+			send_mail($globals['adm_email'], $subject, $body);
 		}
 
 		$link->message = sprintf ("updated karma: %6d (%d, %d, %d) -> %-6d<br/>\n", $link->old_karma, $link->votes, $link->anonymous, $link->negatives, $link->karma ) . $link->message;
