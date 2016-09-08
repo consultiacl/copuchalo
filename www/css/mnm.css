@@ -377,7 +377,8 @@ cursor: pointer;
 
 #header-center{
 	height: 35px;
-	background-color: #a0c5e8;
+	/*background-color: #a0c5e8;*/
+	background-color: #e6f0ff;
 	border-bottom: #888 solid 1px;
 	overflow: hidden;
 	white-space: nowrap;

@@ -961,10 +961,10 @@ background-color: transparent;
 }
 
 a.header-btn {
-	background-color: #eee;
+	background-color: #e6f0ff;
 	color: #444;
 	padding: 2px 10px;
-	border: solid #eee 1px;
+	border: solid #aaa 1px;
 	text-decoration: none;
 	text-align: center;
 	-webkit-border-radius: 4;
@@ -973,9 +973,9 @@ a.header-btn {
 }
 
 a.header-btn:hover {
-	color: #eee;
-	background: transparent;
-	border: solid #eee 1px;
+	color: #fff;
+	background: #000;
+	border: solid #000 1px;
 	text-decoration: none;
 	transition: all 0.1s ease;
 	-webkit-border-radius: 4;
@@ -1401,6 +1401,7 @@ fieldset.sneaker {
 	font-size: 0.8em;
 	margin-left: 11px;
         white-space: nowrap;
+	background: #e6f0ff;
 }
 
 .subheader li {
