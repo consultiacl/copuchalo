@@ -654,12 +654,12 @@ text-decoration: underline;
 
 .sidebox .header {
 	font-size: 0.9em;
-	background: #000;   /* fallback */
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#bbb), to(#000));
-	background: -webkit-linear-gradient(#bbb, #000);
-	background: -moz-linear-gradient(#bbb, #000);
-	background: -o-linear-gradient(#bbb, #000);
-	background: linear-gradient(#bbb, #000);
+	background: #bbb;   /* fallback */
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#000), to(#bbb));
+	background: -webkit-linear-gradient(#000, #bbb);
+	background: -moz-linear-gradient(#000, #bbb);
+	background: -o-linear-gradient(#000, #bbb);
+	background: linear-gradient(#000, #bbb);
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
@@ -753,12 +753,12 @@ margin:0px 0px 10px 10px;
 	border: 1px solid #e6f0ff;
 	border-radius: 3px;
 	color: #fff;
-	background-color: #005be2; /* fallback */
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#f6f9ff), to(#005be2));
-	background: -webkit-linear-gradient(#f6f9ff, #005be2);
-	background: -moz-linear-gradient(#f6f9ff, #005be2);
-	background: -o-linear-gradient(#f6f9ff, #005be2);
-	background: linear-gradient(#a7cbff, #4590ff);
+	background-color: #f6f9ff; /* fallback */
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#005be2), to(#f6f9ff));
+	background: -webkit-linear-gradient(#005be2, #f6f9ff);
+	background: -moz-linear-gradient(#005be2, #f6f9ff);
+	background: -o-linear-gradient(#005be2, #f6f9ff);
+	background: linear-gradient(#005be2, #a7cbff);
 }
 
 .sidebox .clics {
@@ -776,12 +776,12 @@ margin:0px 0px 10px 10px;
 .sidebox .votes.queued {
 	color: #444;
 	border: 1px solid #eee;
-	background-color: #999; /* fallback */
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#ddd), to(#999));
-	background: -webkit-linear-gradient(#ddd, #999);
-	background: -moz-linear-gradient(#ddd, #999);
-	background: -o-linear-gradient(#ddd, #999);
-	background: linear-gradient(#ddd, #999);
+	background-color: #ddd; /* fallback */
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#999), to(#ddd));
+	background: -webkit-linear-gradient(#999, #ddd);
+	background: -moz-linear-gradient(#999, #ddd);
+	background: -o-linear-gradient(#999, #ddd);
+	background: linear-gradient(#999, #ddd);
 }
 
 .sidebox .mainsites ul {
@@ -1448,36 +1448,36 @@ margin-bottom: 10px;
 	color: #111;
 	border-color: #005be2;
 	border-radius: 2px;
-	background: #e2eeff; /* fallback */
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#e2eeff), to(#f6f9ff));
-	background: -webkit-linear-gradient(#e2eeff, #f6f9ff);
-	background: -moz-linear-gradient(#e2eeff, #f6f9ff);
-	background: -o-linear-gradient(#e2eeff, #f6f9ff);
-	background: linear-gradient(#e2eeff, #f6f9ff);
+	background: #f6f9ff; /* fallback */
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#f6f9ff), to(#e2eeff));
+	background: -webkit-linear-gradient(#f6f9ff, #e2eeff);
+	background: -moz-linear-gradient(#f6f9ff, #e2eeff);
+	background: -o-linear-gradient(#f6f9ff, #e2eeff);
+	background: linear-gradient(#f6f9ff, #e2eeff);
 }
 
 .comment-body.high {	/* blue */
-	background: #bbd6ff;
+	background: #e2eeff;
 	background-image: url({{ globals.base_static }}img/common/comment-high-01.png);
-	background-image: url({{ globals.base_static }}img/common/comment-high-01.png), linear-gradient(#bbd6ff, #e2eeff);
+	background-image: url({{ globals.base_static }}img/common/comment-high-01.png), linear-gradient(#e2eeff, #bbd6ff);
 	background-position: 99% 1px;
 	background-repeat: no-repeat;
 }
 
 .comment-body.author {    /* brown */
 	border-color: #927116;
-	background: #f6e9c4; /* fallback */
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#f6e9c4), to(#fbf6e6));
-	background: -webkit-linear-gradient(#f6e9c4, #fbf6e6);
-	background: -moz-linear-gradient(#f6e9c4, #fbf6e6);
-	background: -o-linear-gradient(#f6e9c4, #fbf6e6);
-	background: linear-gradient(#f6e9c4, #fbf6e6);
+	background: #fbf6e6; /* fallback */
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fbf6e6), to(#f6e9c4));
+	background: -webkit-linear-gradient(#fbf6e6, #f6e9c4);
+	background: -moz-linear-gradient(#fbf6e6, #f6e9c4);
+	background: -o-linear-gradient(#fbf6e6, #f6e9c4);
+	background: linear-gradient(#fbf6e6, #f6e9c4);
 }
 
 .comment-body.high.author {    /* brown */
-	background: #eccf80;
+	background: #f9efd5;
 	background-image: url({{ globals.base_static }}img/common/comment-high-01.png);
-	background-image: url({{ globals.base_static }}img/common/comment-high-01.png), linear-gradient(#eccf80, #f9efd5);
+	background-image: url({{ globals.base_static }}img/common/comment-high-01.png), linear-gradient(#f9efd5, #eccf80);
 	background-position: 99% 1px;
 	background-repeat: no-repeat;
 }
