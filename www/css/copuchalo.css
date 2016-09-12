@@ -914,12 +914,12 @@ background-color: transparent;
 	text-align: center;
 	-webkit-appearance: none;
 	color: #fff;
-	background-color: #005be2; /* fallback */
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#3a97ff), to(#005be2));
-	background: -webkit-linear-gradient(#3a97ff, #005be2);
-	background: -moz-linear-gradient(#3a97ff, #005be2);
-	background: -o-linear-gradient(#3a97ff, #005be2);
-	background: linear-gradient(#3a97ff, #005be2);
+	background-color: #3a97ff; /* fallback */
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#005be2), to(#3a97ff));
+	background: -webkit-linear-gradient(#005be2, #3a97ff);
+	background: -moz-linear-gradient(#005be2, #3a97ff);
+	background: -o-linear-gradient(#005be2, #3a97ff);
+	background: linear-gradient(#005be2, #3a97ff);
 }
 
 .sbox .btn:hover {
