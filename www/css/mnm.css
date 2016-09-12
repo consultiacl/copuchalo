@@ -1445,7 +1445,7 @@ margin-bottom: 10px;
 	text-align: left;
 	overflow: hidden;
 	min-height: 25px;
-	color: #111;
+	color: #333;
 	border-color: #005be2;
 	border-radius: 2px;
 	background: #f6f9ff; /* fallback */
@@ -1498,8 +1498,7 @@ margin-bottom: 10px;
 }
 
 .comment-body.admin {
-	background: #999;
-	color: #000;
+	background: #9cf;
 }
 
 .comment-body.new {
