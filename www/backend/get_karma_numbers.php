@@ -12,7 +12,7 @@ if (!empty($_GET['id']) && $current_user->user_level == 'god') {
 	$user = new User($current_user->user_id);
 }
 
-echo '<div style="text-align: left">';
+echo '<html><head><meta charset="utf-8"></head><body><div style="text-align: left">';
 if ($user->karma_log) {
 	echo '<strong>' . _('última modificación') . ':</strong> ' . get_date_time($user->karma_calculated);
 	echo '<ul>';
@@ -24,4 +24,4 @@ if ($user->karma_log) {
 } else {
 	print _('no hay registros para este usuario');
 }
-echo '</div>';
+echo '</div></body></html>';
