@@ -53,7 +53,7 @@ function send_recover_mail ($user) {
 	$message .= '<a href="'.$url_recover.'">'.$url_recover."</a></p>\n\n";
 	$message .= "<p>Una vez en tu perfil, puedes cambiar la clave de acceso.</p>\n";
 	$message .= '<p>Este mensaje ha sido enviado bajo solicitud desde la dirección IP: '.$globals['user_ip']."<p>\n\n";
-	$message .= "<p>--\n <br>el equipo de copúchalo<p><br></body></html>";
+	$message .= "<p>--\n <br>el equipo de mediatize<p><br></body></html>";
 	
 	if(send_pear_mail($to, $domain, $subject, $message)) {
 		echo '<p><strong>' ._('Correo enviado, mira tu buzón, allí están las instrucciones. Mira también en la carpeta de spam.') . '</strong></p>';

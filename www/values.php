@@ -63,7 +63,7 @@ if($globals['min_karma_for_comment_votes']) {
 }
 
 if($globals['min_karma_for_posts']) {
-				echo _("Karma mínimo para enviar nótames") . ': ' . $globals['min_karma_for_posts'] . '<br/>
+				echo _("Karma mínimo para enviar postits") . ': ' . $globals['min_karma_for_posts'] . '<br/>
 				<br/>
 				';
 }
@@ -94,17 +94,17 @@ echo '
 				<br/>
 				'._("Karma a partir del cual se ocultan los comentarios") . ': ' . $globals['comment_hidden_karma'] . '<br/>
 				<br/>
-				'._("Límite de comentarios por copucha") . ': ' . $globals['max_comments'] . '<br/>
+				'._("Límite de comentarios por historia") . ': ' . $globals['max_comments'] . '<br/>
 				<br/>
-				'._("Tiempo que permanecen abiertos los comentarios en copuchas en portada") . ': ' . print_time($globals['time_enabled_comments']) . '<br/>
+				'._("Tiempo que permanecen abiertos los comentarios en historias en portada") . ': ' . print_time($globals['time_enabled_comments']) . '<br/>
 				<br/>
-				'._("Tiempo que permanecen abiertos los comentarios en copuchas pendientes") . ': ' . print_time($globals['time_enabled_comments_status']['queued']) . '<br/>
+				'._("Tiempo que permanecen abiertos los comentarios en historias pendientes") . ': ' . print_time($globals['time_enabled_comments_status']['queued']) . '<br/>
 				<br/>
-				'._("Tiempo que permanecen abiertos los comentarios en copuchas descartados") . ': ' . print_time($globals['time_enabled_comments_status']['discard']) . '<br/>
+				'._("Tiempo que permanecen abiertos los comentarios en historias descartados") . ': ' . print_time($globals['time_enabled_comments_status']['discard']) . '<br/>
 				<br/>
-				'._("Tiempo que permanecen abiertos los comentarios en copuchas autodescartados") . ': ' . print_time($globals['time_enabled_comments_status']['autodiscard']) . '<br/>
+				'._("Tiempo que permanecen abiertos los comentarios en historias autodescartados") . ': ' . print_time($globals['time_enabled_comments_status']['autodiscard']) . '<br/>
 				<br/>
-				'._("Tiempo que permanecen abiertos los comentarios en copuchas descartados por abuso") . ': ' . print_time($globals['time_enabled_comments_status']['abuse']) . '<br/>
+				'._("Tiempo que permanecen abiertos los comentarios en historias descartados por abuso") . ': ' . print_time($globals['time_enabled_comments_status']['abuse']) . '<br/>
 				<br/>
 				'._("Tiempo que debe pasar desde el registro para que un nuevo usuario pueda comentar") . ': ' . print_time($globals['min_time_for_comments']) . '<br/>
 		</fieldset>';
@@ -132,9 +132,9 @@ echo '
 echo '
 		<fieldset id="links">
 			<legend>'._('envíos').'</legend>
-				'._("Límite de envíos global para usuarios con karma") . ' &lt;= ' . $globals['limit_3_minutes_karma'] . ' ('. _('se han enviado demasiadas historias en los últimos 3 minutos') ."): " . $globals['limit_3_minutes'] . ' ' . _("copuchas cada 3 minutos") . '<br/>
+				'._("Límite de envíos global para usuarios con karma") . ' &lt;= ' . $globals['limit_3_minutes_karma'] . ' ('. _('se han enviado demasiadas historias en los últimos 3 minutos') ."): " . $globals['limit_3_minutes'] . ' ' . _("historias cada 3 minutos") . '<br/>
 				<br/>
-				'._("Límite de envíos global para usuarios con karma") . ' > ' . $globals['limit_3_minutes_karma'] .' ('. _('se han enviado demasiadas historias en los últimos 3 minutos') ."): " . ($globals['limit_3_minutes'] * 1.5) . ' ' . _("copucheos cada 3 minutos") . '<br/>
+				'._("Límite de envíos global para usuarios con karma") . ' > ' . $globals['limit_3_minutes_karma'] .' ('. _('se han enviado demasiadas historias en los últimos 3 minutos') ."): " . ($globals['limit_3_minutes'] * 1.5) . ' ' . _("votos cada 3 minutos") . '<br/>
 				<br/>
 				'._("Límite de envíos por usuario en las últimas 24 horas") . ' (' . _('debes esperar, tienes demasiadas noticias en cola de las últimas 24 horas') . "): " .$globals['limit_user_24_hours'] . ' ' ._("envíos") .'<br/>
 				<br/>
@@ -170,7 +170,7 @@ echo '
 
 echo '
 		<fieldset id="posts">
-			<legend>'._('nótames').'</legend>
+			<legend>'._('postits').'</legend>
 				'._("Karma a partir del cual se destacan las notas") . ': ' . $globals['post_highlight_karma'] . '<br/>
 				<br/>
 				'._("Karma a partir del cual se ocultan las notas") . ': ' . $globals['post_hide_karma'] . '<br/>
@@ -207,7 +207,7 @@ echo '
 				<br/>
 				'._("Para que sean contados en las sumas de karma del cálculo de un «depublish», los usuarios que voten positivo deben tener karma > ") . $globals['depublish_positive_karma'] . _(" y los que voten negativo karma > ") . $globals['depublish_negative_karma'] . '<br/>
 				<br/>
-				'._("Se considera «nuevo usuario» a los usuarios que no hayan enviado ninguna copucha o se hayan registrado hace menos de "). print_time($globals['new_user_time']) . '<br/>
+				'._("Se considera «nuevo usuario» a los usuarios que no hayan enviado ninguna historia o se hayan registrado hace menos de "). print_time($globals['new_user_time']) . '<br/>
 				<br/>';
 if ($globals['min_user_votes']) {
 
@@ -215,9 +215,9 @@ $total_links = (int) $db->get_var("select count(*) from links where link_date > 
 
 
 echo '
-				'._("Un «nuevo usuario» con karma &lt; "). $globals['new_user_karma'] ._(" y sin envíos deberá votar ") . $globals['min_user_votes'] . _(" copucheos antes de poder enviar").'<br/>
+				'._("Un «nuevo usuario» con karma &lt; "). $globals['new_user_karma'] ._(" y sin envíos deberá votar ") . $globals['min_user_votes'] . _(" votos antes de poder enviar").'<br/>
 				<br/>
-				'._("Un «nuevo usuario» con karma &lt; "). $globals['new_user_karma'] . _(" y con envíos deberá votar (cifra dinámica) ") . min(4, intval($total_links/20)) . _(" * (1 + nº de envíos del usuario en las últimas 24 h. que no estén en estado «discard») copucheos para poder enviar") . '<br/>
+				'._("Un «nuevo usuario» con karma &lt; "). $globals['new_user_karma'] . _(" y con envíos deberá votar (cifra dinámica) ") . min(4, intval($total_links/20)) . _(" * (1 + nº de envíos del usuario en las últimas 24 h. que no estén en estado «discard») votos para poder enviar") . '<br/>
 				<br/>';
 }
 

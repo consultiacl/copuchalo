@@ -14,7 +14,7 @@
 	<h5>
 	{% if l.warned %}<span class="fa fa-warning"></span>{% endif %}
 	{% if l.print_subname %}
-		<a href="{{ globals.base_url_general }}s/{{ l.sub_name }}{% if l.sub_status_origen != 'published' %}/queue{% endif %}"
+		<a href="{{ globals.base_url_general }}m/{{ l.sub_name }}{% if l.sub_status_origen != 'published' %}/queue{% endif %}"
                                 {% if l.sub_owner > 0 %}
                                         class="subname big"
                                         style="

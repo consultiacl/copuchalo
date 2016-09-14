@@ -8,9 +8,9 @@
 		{% if self.type != 'admin' AND self.user_level != 'disabled' %}
 			{% if self.can_vote %}
 				{% if self.user_can_vote %}
-					<span id="vc-p-{{ self.id }}" class="vote fa fa-arrow-circle-up" onClick="copuchalo_comment({{ current_user.user_id}},{{ self.id }},1)" title="{% trans _('informativo, opinión razonada...') %}"> </span>
+					<span id="vc-p-{{ self.id }}" class="vote fa fa-arrow-circle-up" onClick="mediatize_comment({{ current_user.user_id}},{{ self.id }},1)" title="{% trans _('informativo, opinión razonada...') %}"> </span>
 					{% include 'comment_summary_votes.html' %}
-	 				<span id="vc-n-{{ self.id }}" class="vote right fa fa-arrow-circle-down" onClick="copuchalo_comment({{ current_user.user_id}},{{ self.id }},-1)" title="{% trans _('solo para racismo, insultos, spam...') %}"></span>
+	 				<span id="vc-n-{{ self.id }}" class="vote right fa fa-arrow-circle-down" onClick="mediatize_comment({{ current_user.user_id}},{{ self.id }},-1)" title="{% trans _('solo para racismo, insultos, spam...') %}"></span>
 				{% else %}
 					{% if self.voted >  0 %}
 						<span id="vc-p-{{ self.id }}" class="vote fa fa-arrow-circle-up voted" title="{% trans _('votado positivo') %}"></span>

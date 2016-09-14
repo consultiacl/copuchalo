@@ -11,7 +11,7 @@ var base_url="{{ globals.base_url_general }}",
 		do_partial=false;
 	{% endif %}
 
-if (typeof window.history == "object" && (do_partial || navigator.userAgent.match(/copuchalo/i)) ) {
+if (typeof window.history == "object" && (do_partial || navigator.userAgent.match(/mediatize/i)) ) {
 	do_partial = true;
 }
 
@@ -64,7 +64,7 @@ function redirect(url) {
 	return false;
 }
 
-function copuchalo(user, id) {
+function mediatize(user, id) {
 	var url = base_url + "backend/menealo";
 	var content = "id=" + id + "&user=" + user + "&key=" + base_key + "&l=" + link_id + "&u=" + encodeURIComponent(document.referrer);
 	url = url + "?" + content;
@@ -77,7 +77,7 @@ function copuchalo(user, id) {
 	reportAjaxStats('vote', 'link');
 }
 
-function copuchalo_comment(user, id, value) {
+function mediatize_comment(user, id, value) {
 	var url = base_url + "backend/menealo_comment";
 	var content = "id=" + id + "&user=" + user + "&value=" + value + "&key=" + base_key + "&l=" + link_id ;
 	url = url + "?" + content;
@@ -90,7 +90,7 @@ function copuchalo_comment(user, id, value) {
 	reportAjaxStats('vote', 'comment');
 }
 
-function copuchalo_post(user, id, value) {
+function mediatize_post(user, id, value) {
 	var url = base_url + "backend/menealo_post";
 	var content = "id=" + id + "&user=" + user + "&value=" + value + "&key=" + base_key + "&l=" + link_id ;
 	url = url + "?" + content;

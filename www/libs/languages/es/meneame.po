@@ -1,4 +1,4 @@
-# Uso de la traducción para la adaptación para copuchalo.es
+# Uso de la traducción para la adaptación para mediatize.es
 # Copyleft (CC:BY-SA) 2015
 # This file is distributed under the same license as the meneame.net package.
 # Fermin <fmolina@gmail.com>, 2015.
@@ -563,11 +563,11 @@ msgid "reportar un bug"
 msgstr ""
 
 #: sneak.php:34 sneak.php:194 telnet.php:41 libs/html1.php:123
-msgid "sapear"
+msgid "chismosa"
 msgstr ""
 
 #: sneak.php:212 telnet.php:138
-msgid "sapos"
+msgid "chismes"
 msgstr ""
 
 #: sneak.php:224 story.php:66 story.php:96 telnet.php:149 topusers-big.php:22
@@ -1144,7 +1144,7 @@ msgid "vota si te gusta"
 msgstr ""
 
 #: libs/link.php:314
-msgid "copúchalo"
+msgid "mediatize"
 msgstr ""
 
 #: libs/link.php:316

@@ -82,7 +82,7 @@ $twemojis[_('transporte')] = array(
 
 echo '<div class="emoji-kbd">';
 echo '<ul class="emojiCat">';
-echo '<li><a href="#" data-target="cat-meneame" class="emoji-tab active">copúchalo</a></li>';
+echo '<li><a href="#" data-target="cat-meneame" class="emoji-tab active">mediatize</a></li>';
 
 if (! $globals['mobile'] ) {
 	foreach ($twemojis as $cat => $v) {

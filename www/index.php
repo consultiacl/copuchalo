@@ -173,7 +173,7 @@ function print_index_tabs($option=-1) {
 		foreach ($subs as $sub) {
 			$items[] = array(
 				'id'  => 9999,   // fake number
-				'url' => 's/'.$sub->name,
+				'url' => 'm/'.$sub->name,
 				'selected' => false,
 				'title' => $sub->name,
 			);
@@ -181,7 +181,7 @@ function print_index_tabs($option=-1) {
 	}
 	*/
 
-	$items[] = array('id' => 8, 'url' => '?meta=_*', 'title' => _('s/*'));
+	$items[] = array('id' => 8, 'url' => '?meta=_*', 'title' => _('m/*'));
 
 	// RSS teasers
 	switch ($option) {

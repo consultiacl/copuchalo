@@ -11,7 +11,7 @@ define("mnminclude", dirname(__FILE__).'/libs/');
 ini_set("include_path", '.:'.mnminclude.':'.mnmpath);
 
 $globals['basic_config'] = true; include('../config.php');
-$globals['site_name'] = 'Copúchalo REDUX';
+$globals['site_name'] = 'mediatize REDUX';
 
 // Specify you base url, "/" if is the root document
 // $globals['base_dir'] = '/meneame/';

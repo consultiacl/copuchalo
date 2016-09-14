@@ -17,7 +17,7 @@
 
 <label><input type="checkbox" checked="checked" name="sneak-vote" id="vote-status" onclick="toggle_control('vote')" />
 {% if  NOT globals.sneak_telnet %}
-<img src="{{ globals.base_static }}img/common/sneak-vote01.png" width="21" height="17" title="{% trans _('copuchas') %}" alt="{% trans _('copuchas') %}" />
+<img src="{{ globals.base_static }}img/common/sneak-vote01.png" width="21" height="17" title="{% trans _('votos') %}" alt="{% trans _('votos') %}" />
 {% else %}
 [+]{% trans _('votos') %}
 {% endif %}
@@ -67,9 +67,9 @@
 
 <label><input type="checkbox" checked="checked" name="sneak-post" id="post-status" onclick="toggle_control('post')" />
 {% if  NOT globals.sneak_telnet %}
-<img src="{{ globals.base_static }}img/common/sneak-newnotame01.png" width="21" height="17" alt="{% trans _('nótame') %}" title="{% trans _('nótame') %}"/>
+<img src="{{ globals.base_static }}img/common/sneak-newnotame01.png" width="21" height="17" alt="{% trans _('postits') %}" title="{% trans _('postits') %}"/>
 {% else %}
-[P]{% trans _('nótame') %}
+[P]{% trans _('postits') %}
 {% endif %}
 </label>
 
@@ -78,7 +78,7 @@
 {% endif %}
 
 
-<abbr title="{% trans _('total&nbsp;(registrados+jabber+anónimos)') %}">{% trans _('copuchentos') %}</abbr>: <strong><span id="ccnt"> </span></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<abbr title="{% trans _('total&nbsp;(registrados+jabber+anónimos)') %}">{% trans _('chismosas') %}</abbr>: <strong><span id="ccnt"> </span></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <abbr title="{% trans _('tiempo medio en milisegundos para procesar cada petición al servidor') %}">ping</abbr>: <span id="ping">---</span>
 </form>
 
@@ -121,7 +121,7 @@
 <div class="sneaker-ts"><strong>{% trans _('hora') %}</strong></div>
 <div class="sneaker-sub"><strong>{% trans _('sub') %}</strong></div>
 <div class="sneaker-type"><strong>{% trans _('acción') %}</strong></div>
-<div class="sneaker-votes"><strong><abbr title="{% trans _('copuchas') %}">cop</abbr>/<abbr title="{% trans _('comentarios') %}">com</abbr></strong></div>
+<div class="sneaker-votes"><strong><abbr title="{% trans _('votos') %}">cop</abbr>/<abbr title="{% trans _('comentarios') %}">com</abbr></strong></div>
 <div class="sneaker-story">&nbsp;<strong>{% trans _('noticia') %}</strong></div>
 <div class="sneaker-who">&nbsp;<strong>{% trans _('quién/qué') %}</strong></div>
 <div class="sneaker-status"><strong>{% trans _('estado') %}</strong></div>

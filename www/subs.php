@@ -22,7 +22,7 @@ if (isset($_GET['all'])) {
 $char_selected = $chars = false; // User for index by first letter
 
 
-do_header(_("subs menéame"), 's/');
+do_header(_("subs menéame"), 'm/');
 
 
 print_tabs($option);

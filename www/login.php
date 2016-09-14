@@ -123,27 +123,27 @@ function do_login() {
 
 	if (! $globals['mobile'] && $previous_login_failed < 3 && empty($_POST["processlogin"]) && empty($_COOKIE['u'])) {
 		echo '<div class="loginform wideonly">'."\n";
-		echo '<h4>'._('¿Qué es copúchalo?').'</h4>'."\n";
+		echo '<h4>'._('¿Qué es mediatize?').'</h4>'."\n";
 		echo '<p>'._('Es un sitio que te permite enviar una historia que será revisada por todos y será promovida, o no, a la página principal. Cuando un usuario envía una historia ésta queda en la <a href="queue">cola de pendientes</a> hasta que reúne los votos suficientes para ser promovida a la página principal').'.</p>'."\n";
 
-		echo '<h4>'._('¿Todavía no eres usuario de copúchalo?').'</h4>'."\n";
+		echo '<h4>'._('¿Todavía no eres usuario de mediatize?').'</h4>'."\n";
 		echo '<p>'._('Como usuario registrado podrás, entre otras cosas').':</p>'."\n";
 		echo '<ul>'."\n";
 		echo '<li>'."\n";
 		echo '<strong>'._('Enviar historias').'</strong><br />'."\n";
-		echo '<p>'._('Una vez registrado puedes enviar las historias que consideres interesantes para la comunidad. Si tienes algún tipo de duda sobre que tipo de historias puedes enviar revisa nuestras <a href="faq-es.php">preguntas frecuentes sobre copúchalo</a>').'.</p>'."\n";
+		echo '<p>'._('Una vez registrado puedes enviar las historias que consideres interesantes para la comunidad. Si tienes algún tipo de duda sobre que tipo de historias puedes enviar revisa nuestras <a href="faq-es.php">preguntas frecuentes sobre mediatize</a>').'.</p>'."\n";
 		echo '</li>'."\n";
 		echo '<li>'."\n";
 		echo '<strong>'._('Escribir comentarios').'</strong><br />'."\n";
-		echo '<p>'._('Puedes escribir tu opinión sobre las historias enviadas a copúchalo mediante comentarios de texto. También puedes votar positivamente aquellos comentarios ingeniosos, divertidos o interesantes y negativamente aquellos que consideres inoportunos').'.</p>'."\n";
+		echo '<p>'._('Puedes escribir tu opinión sobre las historias enviadas a mediatize mediante comentarios de texto. También puedes votar positivamente aquellos comentarios ingeniosos, divertidos o interesantes y negativamente aquellos que consideres inoportunos').'.</p>'."\n";
 		echo '</li>'."\n";
 		echo '<li>'."\n";
 		echo '<strong>'._('Perfil de usuario').'</strong><br />'."\n";
-		echo '<p>'._('Toda tu información como usuario está disponible desde la página de tu perfil. También puedes subir una imagen que representará a tu usuario en copúchalo. Incluso es posible compartir los ingresos publicitarios de Copúchalo, solo tienes que introducir el código de tu cuenta Google Adsense desde tu perfil').'.</p>'."\n";
+		echo '<p>'._('Toda tu información como usuario está disponible desde la página de tu perfil. También puedes subir una imagen que representará a tu usuario en mediatize. Incluso es posible compartir los ingresos publicitarios de mediatize, solo tienes que introducir el código de tu cuenta Google Adsense desde tu perfil').'.</p>'."\n";
 		echo '</li>'."\n";
 		echo '<li>'."\n";
-		echo '<strong>'._('Chatear en tiempo real desde copuchentos').'</strong><br />'."\n";
-		echo '<p>'._('Gracias a <a href="sneak.php">sapear</a> puedes ver en tiempo real toda la actividad de copúchalo. Además como usuario registrado podrás chatear con mucha más gente de la comunidad copúchalo').'</p>'."\n";
+		echo '<strong>'._('Chatear en tiempo real desde postits').'</strong><br />'."\n";
+		echo '<p>'._('Gracias a la <a href="sneak.php">chismosa</a> puedes ver en tiempo real toda la actividad de mediatize. Además como usuario registrado podrás chatear con mucha más gente de la comunidad mediatize').'</p>'."\n";
 		echo '</li>'."\n";
 		echo '</ul>'."\n";
 		echo '<br><h3><a href="register.php" class="registerbox">¡Regístrate ahora!</a></h3>'."\n";

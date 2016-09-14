@@ -45,7 +45,7 @@ function do_master($size) {
 function do_statics() {
 	global $globals;
 
-	$urls = Array('queue', 'sneak', 'copuchentos/', 
+	$urls = Array('queue', 'sneak', 'postits/', 
 			'cloud', 'popular', 'top_commented', 
 			'top_comments', 'top_users', 'legal', 'faq-es.php');
 

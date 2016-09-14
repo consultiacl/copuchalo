@@ -1,7 +1,7 @@
 <?php
 	include('config.php');
 	include(mnminclude.'html1.php');
-	do_header(_('FAQ') . ' | ' . _('copúchalo'));
+	do_header(_('FAQ') . ' | ' . _('mediatize'));
 ?>
 
 <div id="singlewrap">
@@ -9,7 +9,7 @@
 <h1>Preguntas frecuentes</h1>
 <br/>
 <ul>
-<li><h2>¿Qué es copúchalo?</h2>
+<li><h2>¿Qué es mediatize?</h2>
 <p>Es una web que te permite enviar noticias o historias que serán revisadas por todos y serán promovidas, o no, a la página principal según los votos recibidos. Cuando un usuario envía una noticia ésta queda en la <a target="_blank" href="queue"><em>cola de pendientes</em></a> hasta que reúne los votos suficientes para ser promovida a la página principal. El código con el que se ha hecho la web es un fork de Menéame, por lo que en su wiki puede leerse más información de su funcionamiento: <a target="_blank" href="http://meneame.wikispaces.com/" title="wiki meneame">wiki del menéame</a>.
 </p>
 </li>
@@ -23,7 +23,7 @@
 
 <li>
 <h2>¿Cómo promover las historias?</h2>
-<p>Selecciona la opción <a target="_blank" href="queue"><em>nuevas</em></a> y te aparecerán las noticias no publicadas, ordenadas descendentemente por fecha de envío. Sólo tienes que "copuchar" aquellas que más te agradan o consideres importantes. Una vez superado unos umbrales de votos y <em>karma</em> serán promovidas a la página principal.</p>
+<p>Selecciona la opción <a target="_blank" href="queue"><em>nuevas</em></a> y te aparecerán las noticias no publicadas, ordenadas descendentemente por fecha de envío. Sólo tienes que votar aquellas que más te agradan o consideres importantes. Una vez superado unos umbrales de votos y <em>karma</em> serán promovidas a la página principal.</p>
 <p>No te olvides de leer las <a target="_blank" href="legal">condiciones de uso</a>.</p>
 </li>
 
@@ -84,32 +84,27 @@
 </li>
 
 <li>
-<h2>¿Qué es copuchentos?</h2>
-<p>Una herramienta de comunicación entre los usuarios de copúchalo y se organiza en pequeños apuntes, como los mini-post de un blog colectivo --de todos los usuarios de copuchentos-- y a la vez individual. Puedes usarlo para cuestiones relacionadas con esta web o para explicar lo que quieras. Puedes escribir desde la web o el celular. Encontrarás <a target="_blank" href="http://meneame.wikispaces.com/N%C3%B3tame">más detalles en el wiki de Menéame</a>.</p>
+<h2>¿Qué es "postits"?</h2>
+<p>Una herramienta de comunicación entre los usuarios de mediatize y se organiza en pequeños apuntes, como los mini-post de un blog colectivo --de todos los usuarios de postits-- y a la vez individual. Puedes usarlo para cuestiones relacionadas con esta web o para explicar lo que quieras. Puedes escribir desde la web o el celular. Encontrarás <a target="_blank" href="http://meneame.wikispaces.com/N%C3%B3tame">más detalles en el wiki de Menéame</a>.</p>
 </li>
 
 <li>
-<h2>¿Para qué sirve la opción sapear?</h2>
-<p>Muestra lo que sucede en copúchalo en tiempo real. Si eres usuario registrado también puedes usarla para chatear.</p>
+<h2>¿Para qué sirve la opción chismosa?</h2>
+<p>Muestra lo que sucede en mediatize en tiempo real. Si eres usuario registrado también puedes usarla para chatear.</p>
 </li>
 
 <li>
-<h2><a name="we"></a>¿Quién está detrás del copúchalo?</h2>
-<p>Es un proyecto personal para crear una web con noticias propuestas por los mísmos usuarios y publicadas (pasadas a portada) también por éllos.
+<h2><a name="we"></a>¿Quién está detrás del mediatize?</h2>
+<p>Es un proyecto personal para crear una web con noticias propuestas por los mismos usuarios y publicadas (pasadas a portada) también por éllos.
 Encontrarás los datos de <strong>contacto</strong> en <a target="_blank" href="legal#contact">la página de las condiciones legales</a>.
 </p>
-</li>
-
-<li>
-<h2>¿Por qué es tan similar a Digg?</h2>
-<p>Menéame nació pareciéndose a él porque era un buen punto de partida, la interfaz e interacción con el usuario era simple y efectiva. En copúchalo se ha seguido imitando en cierta medida a Digg, pero respetando las peculiaridades de Menéame, como el voto anónimo y los <em>trackbacks</em> que se envían a los autores de blogs.</p>
 </li>
 
 <li>
 <h2>¿Cuáles son las diferencias fundamentales con Digg y otros servicios similares?</h2>
 <ul>
 <li>Se permiten votos anónimos.</li>
-<li>La publicación de la noticia no sólo está basada en los votos (copuchas), sino en el valor del karma de los usuarios que han votado.</li>
+<li>La publicación de la noticia no sólo está basada en los votos, sino en el valor del karma de los usuarios que han votado.</li>
 <li>El sistema está específicamente programado para interactuar vía <em>trackbacks</em> con los sistemas de <em>blogs</em> existentes. En la mayoría de los casos detecta automáticamente las direcciones de <em>trackback</em>.</li>
 <li>Hay diversos RSS, casi para todos los gustos, incluso de búsquedas personalizadas.</li>
 </ul>
@@ -118,7 +113,7 @@ Encontrarás los datos de <strong>contacto</strong> en <a target="_blank" href="
 
 <li>
 <h2>¿Qué software se usa?</h2>
-<p>El software está completamente desarrollado por Ricardo Galli, Benjamí Villoslada y colaboraciones de terceros, más las modificaciones hechas para copúchalo.</p>
+<p>El software está completamente desarrollado por Ricardo Galli, Benjamí Villoslada y colaboraciones de terceros, más las modificaciones hechas para mediatize.</p>
 </li>
 
 <li>

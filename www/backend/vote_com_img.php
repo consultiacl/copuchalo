@@ -18,7 +18,7 @@ $im = imagecreate(200, 16);
 $bg = imagecolorallocatealpha($im, 255, 255, 255, 0);
 $textcolor = imagecolorallocate($im, 255, 100, 0);
 
-imagestring($im, 3, 2, 1, ($votes_comments->link_votes+$votes_comments->link_anonymous). ' ' . _('copuchas') . ", $votes_comments->link_comments ". _('comentarios'), $textcolor);
+imagestring($im, 3, 2, 1, ($votes_comments->link_votes+$votes_comments->link_anonymous). ' ' . _('votos') . ", $votes_comments->link_comments ". _('comentarios'), $textcolor);
 		  
 header("Content-type: image/png");
 header('Cache-Control: max-age=120, must-revalidate');

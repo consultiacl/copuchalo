@@ -6,7 +6,7 @@
 <meta charset="utf-8" />
 
 <meta name="ROBOTS" content="NOARCHIVE" />
-<meta name="generator" content="copuchalo" />
+<meta name="generator" content="mediatize" />
 <meta name="referrer" content="always">
 
 <meta name="viewport" content="width=device-width, initial-scale=1{% if globals.mobile %}, user-scalable=no{% endif %}"/>
@@ -96,15 +96,15 @@
 
 <div id="header-top">
   <div id="nav-menu"><i class="fa fa-bars"></i></div>
-  <a href="{{ globals.base_url_general }}" title="{% trans _('portada') %} {{ globals.site_name }}" id="header-logo" class="logo-cop">copúchalo</a>
-  <span class="logo-ed" title="{% trans _('ediciones copuchentas') %}"></span>
+  <a href="{{ globals.base_url_general }}" title="{% trans _('portada') %} {{ globals.site_name }}" id="header-logo" class="logo-cop">mediatize</a>
+  <span class="logo-ed" title="{% trans _('ediciones mediatizadas') %}"></span>
 	{% if globals.mobile %}
 		<div class="header-editions">
 			<form class="editions-combo" action="" id="edition-{{ self.id }}">
 			<select name="editions" onchange="location = this.value;">
 				{% for s in sites %}
 					{% if s.sub AND s.meta %}
-						<option value="//{{ s.server_name }}{{ s.base_url }}s/{{ s.name }}" {% if s.id == this_site.id %} selected="selected" {% endif %}>{{ s.name }}</option>
+						<option value="//{{ s.server_name }}{{ s.base_url }}m/{{ s.name }}" {% if s.id == this_site.id %} selected="selected" {% endif %}>{{ s.name }}</option>
 					{% else %}
 						<option value="//{{ s.server_name }}{{ s.base_url }}" {% if s.id == this_site.id %} selected="selected" {% endif %}>{{ s.name_long }}</option>
 					{% endif %}
@@ -117,14 +117,14 @@
 {#
 		{% if this_site.sub %}
 			<li class="selected">
-				<a href="{{ this_site.base_url }}s/{{ this_site.name }}">{{ this_site.name }}</a>
+				<a href="{{ this_site.base_url }}m/{{ this_site.name }}">{{ this_site.name }}</a>
 			</li>
 		{% endif %}
 #}
 		{% for s in sites %}
 			<li {% if s.id == this_site.id %}class="selected"{% endif %}>
 				{% if s.sub AND s.meta %}
-					<a href="//{{ s.server_name }}{{ s.base_url }}s/{{ s.name }}">{{ s.name }}</a>
+					<a href="//{{ s.server_name }}{{ s.base_url }}m/{{ s.name }}">{{ s.name }}</a>
 				{% else %}
 					<a href="//{{ s.server_name }}{{ s.base_url }}">{{ s.name_long }}</a>
 				{% endif %}
@@ -194,7 +194,7 @@
 
 			{% if this_site.nsfw %}[nsfw]{% endif %}
 			{% if this_site.owner > 0 && current_user.user_id > 0 && (current_user.admin || this_site.owner == current_user.user_id) %}
-				<a class="share-icons-foot" title="editar" href="{{ globals.base_url }}s/{{ this_site.name }}/subedit"><span class="fa starsubheader fa-edit"></span></a>
+				<a class="share-icons-foot" title="editar" href="{{ globals.base_url }}m/{{ this_site.name }}/subedit"><span class="fa starsubheader fa-edit"></span></a>
 			{% endif %}
 			{% if this_site.sub %}{% exec print_follow_sub this_site.id as dummy %}{% endif %}
 			{% if this_site_properties.facebook_page %}
@@ -207,10 +207,10 @@
 
 		<div class="header-buttons">
 			{# {% if show_story %} #}
-				<a href="{{ base_url }}submit" alt="enviar copucha" title="enviar nueva copucha" class="header-btn">enviar copucha</a>
+				<a href="{{ base_url }}submit" alt="enviar historia" title="enviar nueva historia" class="header-btn">enviar historia</a>
 				&nbsp;
 			{# {% endif %} #}
-			<a href="{{ base_url }}queue" alt="ver nuevas" title="copuchar noticias pendientes" class="header-btn">nuevas</a>
+			<a href="{{ base_url }}queue" alt="ver nuevas" title="votar noticias pendientes" class="header-btn">nuevas</a>
 		</div>
 
 		<!--search-->

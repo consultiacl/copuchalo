@@ -101,7 +101,7 @@ class LCPBase {
 
 				case '|':
 					$url = rawurldecode($matches[5]);
-					return $matches[1].'<a href="'.$globals['base_url_general'].'s/'.$url.'" title="|'.$url.'">|'.$url.'</a>';
+					return $matches[1].'<a href="'.$globals['base_url_general'].'m/'.$url.'" title="|'.$url.'">|'.$url.'</a>';
 			}
 			return $matches[1].$matches[2];
 		};

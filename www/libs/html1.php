@@ -84,7 +84,7 @@ function do_header($title, $id='home', $options = false) {
 	$this_site_properties = SitesMgr::get_extended_properties();
 
 	if ($this_site->sub) {
-		$this_site->url = $this_site->base_url.'s/'.$this_site->name;
+		$this_site->url = $this_site->base_url.'m/'.$this_site->name;
 	} else {
 		$this_site->url = $this_site->base_url;
 	}
@@ -118,28 +118,28 @@ function do_header($title, $id='home', $options = false) {
 			if( $globals['mobile'] ) $left_options[] = new MenuOption(_('enviar historia'), $globals['base_url'].'submit', $id, _('enviar nueva historia'));
 			$show_story = true;
 		}
-		if( $globals['mobile'] ) $left_options[] = new MenuOption(_('nuevas'), $globals['base_url'].'queue', $id, _('copuchar noticias pendientes'));
+		if( $globals['mobile'] ) $left_options[] = new MenuOption(_('nuevas'), $globals['base_url'].'queue', $id, _('votar noticias pendientes'));
 		$left_options[] = new MenuOption(_('portada'), $globals['base_url'], $id, _('página principal'));
 		$left_options[] = new MenuOption(_('populares'), $globals['base_url'].'popular', $id, _('historias más votadas'));
 		$left_options[] = new MenuOption(_('más visitadas'), $globals['base_url'].'top_visited', $id, _('historias más visitadas/leídas'));
 		$left_options[] = new MenuOption(_('destacadas'), $globals['base_url'].'top_active', $id, _('historias más activas'));
 
 		$right_options = array();
-		$right_options[] = new MenuOption(_('s/'), $globals['base_url_general'].'subs', $id, _('sub copuchas'));
-		$right_options[] = new MenuOption(_('sapear'), $globals['base_url'].'sneak', $id, _('visualizador en tiempo real'));
-		$right_options[] = new MenuOption(_('copuchentos'), post_get_base_url(), $id, _('leer o escribir notas y mensajes privados'));
+		$right_options[] = new MenuOption(_('m/'), $globals['base_url_general'].'subs', $id, _('sub mediatizes'));
+		$right_options[] = new MenuOption(_('chismosa'), $globals['base_url'].'sneak', $id, _('visualizador en tiempo real'));
+		$right_options[] = new MenuOption(_('postits'), post_get_base_url(), $id, _('leer o escribir notas y mensajes privados'));
 		if( $globals['mobile'] ) $right_options[] = new MenuOption(_('galería'), 'javascript:fancybox_gallery(\'all\');', false, _('las imágenes subidas por los usuarios'));
 	} else {
 		$left_options = $options;
 		$right_options = array();
 		if( $globals['mobile'] ) {
 			$right_options[] = new MenuOption(_('portada'), $globals['base_url'], '', _('página principal'));
-			$right_options[] = new MenuOption(_('nuevas'), $globals['base_url'].'queue', '', _('copuchar noticias pendientes'));
+			$right_options[] = new MenuOption(_('nuevas'), $globals['base_url'].'queue', '', _('votar noticias pendientes'));
 		}
 
-		$right_options[] = new MenuOption(_('s/'), $globals['base_url_general'].'subs', $id, _('sub copuchas'));
-		$right_options[] = new MenuOption(_('sapear'), $globals['base_url'].'sneak', $id, _('visualizador en tiempo real'));
-		$right_options[] = new MenuOption(_('copuchentos'), post_get_base_url(), $id, _('leer o escribir notas y mensajes privados'));
+		$right_options[] = new MenuOption(_('m/'), $globals['base_url_general'].'subs', $id, _('sub mediatizes'));
+		$right_options[] = new MenuOption(_('chismosa'), $globals['base_url'].'sneak', $id, _('visualizador en tiempo real'));
+		$right_options[] = new MenuOption(_('postits'), post_get_base_url(), $id, _('leer o escribir notas y mensajes privados'));
 		//$right_options[] = new MenuOption(_('galería'), 'javascript:fancybox_gallery(\'all\');', false, _('las imágenes subidas por los usuarios'));
 	}
 

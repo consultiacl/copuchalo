@@ -39,7 +39,7 @@ if (! empty($_REQUEST['words'])) {
 
 do_header($title);
 
-$options = array('links' => _('historias'), 'comments' => _('comentarios'), 'posts' => _('notas'));
+$options = array('links' => _('historias'), 'comments' => _('comentarios'), 'posts' => _('postits'));
 
 Haanga::Load('trends.html', compact('options'));
 

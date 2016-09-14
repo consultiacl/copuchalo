@@ -267,7 +267,7 @@ class User {
 		$items[] = new MenuOption(_('subs'), get_user_uri($user, 'subs'), $id, _('sub menéames'));
 		$items[] = new MenuOption(_('historias'), get_user_uri($user, 'history'), $id, _('información de envíos'));
 		$items[] = new MenuOption(_('comentarios'), get_user_uri($user, 'commented'), $id, _('información de comentarios'));
-		$items[] = new MenuOption(_('notas'), post_get_base_url($user), $id, _('página de notas'));
+		$items[] = new MenuOption(_('postits'), post_get_base_url($user), $id, _('página de postits'));
 
 		return $items;
 	}

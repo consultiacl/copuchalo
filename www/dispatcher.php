@@ -20,7 +20,7 @@ $routes = array(
 	'go'		=> 'go.php',
 	'b'		=> 'bar.php',
 	'c'		=> 'comment.php',
-	's'		=> 'submnm.php',
+	'm'		=> 'submnm.php',
 	'user'		=> 'user.php',
 	'search'	=> 'search.php',
 	'between'	=> 'between.php',
@@ -41,7 +41,7 @@ $routes = array(
 	'faq-es'	=> 'faq-es.php',
 	'opensearch'	=> 'opensearch_plugin.php',
 	'backend'	=> 'backend/dispatcher.php',
-	'copuchentos'	=> 'sneakme/dispatcher.php',
+	'postits'	=> 'sneakme/dispatcher.php',
 	'mobile'	=> 'mobile/dispatcher.php',
 	'captcha'	=> 'captcha.php',
 );

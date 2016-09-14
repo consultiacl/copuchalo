@@ -50,7 +50,7 @@
 					{% else %}
 						{% trans _('Este envío tiene varios votos negativos.') %}
 					{% endif %}
-					<a href="{{ self.relative_permalink }}">{% trans _('Asegúrese') %}</a> {% trans _('antes de copuchar.') %}
+					<a href="{{ self.relative_permalink }}">{% trans _('Asegúrese') %}</a> {% trans _('antes de votar.') %}
 				{% endif %}
 				{% endif %}
 				</div>
@@ -66,7 +66,7 @@
 		{% if self.show_shakebox %}
 		<div class="sbox">
 			{# <div class="numcop {{ self.box_class }}"> #}
-				<a class="numcop {{ self.box_class }}" title="{{ self.total_votes }} {% trans _('copuchas') %}" id="a-votes-{{ self.id}}" href="{{ self.relative_permalink }}">{{ self.total_votes }}</a>
+				<a class="numcop {{ self.box_class }}" title="{{ self.total_votes }} {% trans _('votos') %}" id="a-votes-{{ self.id}}" href="{{ self.relative_permalink }}">{{ self.total_votes }}</a>
 			{# </div> #}
 
 			{% if not globals.bot %}
@@ -75,10 +75,10 @@
 					<span>{% trans _('cerrado') %}</span>
 				{% else %}
 					{% if not self.voted %}
-						<a class="btn" href="javascript:copuchalo({{ current_user.user_id}}, {{self.id}})" id="a-shake-{{ self.id }}">{% trans _('copúchalo') %}</a>
+						<a class="btn" href="javascript:mediatize({{ current_user.user_id}}, {{self.id}})" id="a-shake-{{ self.id }}">{% trans _('votar') %}</a>
 					{% else %}
 						{% if self.voted > 0 %}
-							<span id="a-shake-{{ self.id }}">{% trans _('¡bacán!') %}</span>
+							<span id="a-shake-{{ self.id }}">{% trans _('¡genial!') %}</span>
 						{% else %}
 							<span id="a-shake-{{ self.id }}" class="negative">{{ globals.negative_votes_values[self.voted] }}</span>
 						{% endif %}
@@ -95,7 +95,7 @@
 	{# #############################  URL TITLE  #################################### #}
 
 	<div class="title-header">
-		<a href="{{ globals.base_url_general }}s/{{ self.sub_name }}{% if self.status != 'published' %}/queue{% endif %}"
+		<a href="{{ globals.base_url_general }}m/{{ self.sub_name }}{% if self.status != 'published' %}/queue{% endif %}"
 			{% if self.sub_owner > 0 %}
 				class="subname"
 				style="

@@ -267,7 +267,7 @@ class Link extends LCPBase {
 			if ($value < 0) {
 				$dict['vote_description'] = get_negative_vote($value);
 			} else {
-				$dict['vote_description'] = _('¡bacán!');
+				$dict['vote_description'] = _('¡genial!');
 			}
 		}
 		$dict['votes'] = $this->votes;
@@ -1059,9 +1059,9 @@ class Link extends LCPBase {
 
 		if ( $this->is_sub && ($globals['submnm'] || $strict || self::$original_status || ! $this->allow_main_link) ) {
 			if (! empty($globals['submnm']) && $this->sub_status_id == SitesMgr::my_id() && ! $strict && ! self::$original_status) {
-				$base = $this->base_url . 's/'.$globals['submnm'].'/';
+				$base = $this->base_url . 'm/'.$globals['submnm'].'/';
 			} else {
-				$base = $this->base_url . 's/'.$this->sub_name.'/';
+				$base = $this->base_url . 'm/'.$this->sub_name.'/';
 			}
 		} else {
 			$base = $this->base_url.'story/';
@@ -1417,9 +1417,9 @@ class Link extends LCPBase {
 			$this->image_parser->debug = $debug;
 			$this->image_parser->referer = $this->get_permalink();
 		}
-		if ($debug) echo "<!-- Copuchalo, before image_parser -->\n";
+		if ($debug) echo "<!-- before image_parser -->\n";
 		$img = $this->image_parser->get();
-		if ($debug) echo "<!-- Copuchalo, after image_parser: $img->url -->\n";
+		if ($debug) echo "<!-- after image_parser: $img->url -->\n";
 		$this->thumb_status = 'checked';
 		$this->thumb = '';
 		if ($img) {
@@ -1427,15 +1427,16 @@ class Link extends LCPBase {
 			// Don't scale original image link, save original.
 			//thumbnail = $img->scale($globals['media_big_wide'], $globals['media_big_height']);
 			$img->save($filepath, IMAGETYPE_JPEG);
+echo "<!-- save: ".print_r($img)." filepath: $filepath -->";
 			if (! $this->move_tmp_image(basename($filepath), 'image/jpeg') ) {
 				$this->thumb_status = 'error';
 				if ($debug)
-					echo "<!-- Copuchalo, error saving thumbnail ".$this->get_permalink()." -->\n";
+					echo "<!-- error saving thumbnail ".$this->get_permalink()." -->\n";
 			} else {
 				//$this->image_parser->seen_add($img->url);
 				$this->thumb_status = 'remote';
 				if ($debug) {
-					echo "<!-- Copuchalo, new thumbnail $img->url -->\n";
+					echo "<!-- new thumbnail $img->url -->\n";
 				}
 			}
 		}
