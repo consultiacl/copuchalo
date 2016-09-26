@@ -129,7 +129,7 @@ function notify_user($from, $to, $text) {
 
 	$url = 'http://'.get_server_name().post_get_base_url('_priv');
 	$subject = "Notificación de mensaje privado de $sender->username";
-	$message = '<html lang="es"><head><meta charset="utf-8"/></head><body><p>'.$sender->username.' '._('escribió').":</p>\n\n".'<p><a href="'.$url.'">'.$url."</a></p>\n\n<p>".$text'.</p></body></html>';
+	$message = '<html lang="es"><head><meta charset="utf-8"/></head><body><p>'.$sender->username.' '._('escribió').":</p>\n\n".'<p><a href="'.$url.'">'.$url."</a></p>\n\n<p>".$text.'</p></body></html>';
 	require_once(mnminclude.'mail.php');
 	send_mail($user->email, $subject, $message);
 }
