@@ -235,6 +235,7 @@ overflow: hidden;
 }
 
 .subheader {
+	background: transparent;
 	display: block;
 	width: 312px;
 	font-size: 1em;

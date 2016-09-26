@@ -104,8 +104,8 @@ function mediatize_post(user, id, value) {
 }
 
 function respond_comment_vote(id, value) {
-	$('#vc-p-'+id).addClass('voted').attr('onclick','').unbind('click');
-	$('#vc-n-'+id).addClass('voted').attr('onclick','').unbind('click');
+	$('#vc-p-'+id).removeClass('fa-heart-o').addClass('fa-heart').attr('onclick','').unbind('click');
+	/*$('#vc-n-'+id).addClass('voted').attr('onclick','').unbind('click');*/
 }
 
 
@@ -117,9 +117,9 @@ function update_comment_vote(id, value, data) {
 		$('#vc-'+id).html(data.votes+"");
 		$('#vk-'+id).html(data.karma+"");
 		$('#vc-n-'+id).hide();
-		if (value < 0) {
+		/*if (value < 0) {
 			$('#vc-p-'+id).removeClass('fa-arrow-circle-up').addClass('fa-arrow-circle-down');
-		}
+		}*/
 	}
 }
 

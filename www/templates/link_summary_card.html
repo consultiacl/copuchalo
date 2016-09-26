@@ -195,14 +195,15 @@
 			<span>|</span>
 		{% endif %}
 
+		{% if content_full %}
 		<div class="nd-item">
 			<span>votos: </span>
 			<span title="{% trans _('usuarios') %}"  id="a-usu-{{ self.id }}">{{ self.votes }}</span>&nbsp;<span>·</span>
-			<span title="{% trans _('anónimos') %}"  id="a-ano-{{ self.id }}">{{ self.anonymous }}</span>&nbsp;<span>·</span>
-			<span title="{% trans _('negativos') %}" id="a-neg-{{ self.id }}">{{ self.negatives }}</span>
+			<span title="{% trans _('anónimos') %}"  id="a-ano-{{ self.id }}">{{ self.anonymous }}
 		</div>
 
 		<span>|</span>
+		{% endif %}
 
 		<div class="nd-item">
 			<span title="karma">karma: </span>
@@ -214,13 +215,18 @@
 				{% endif %}
 			</span>
 		</div>
+
+		{% if ! content_full %}
+		<span>|</span>
+		<a class="comments-link" href="{{ self.relative_permalink }}" title="{% trans _('comentarios de') %}: «{{ self.title }}»">comentarios ({{ self.comments }})</a>
+		{% endif %}
 	</div>
 	{% endif %}
 
 
 	{# #########################  NEWS INFO (FOOT) ################################## #}
 
-	{% if ! globals.bot %}
+	{% if content_full AND ! globals.bot %}
 	<div class="news-submitted">
 		{% if type != 'short' %}
 			<a href="{{ self.username | useruri }}" class="tooltip u:{{ self.author }}"><img src="{{ globals.base_static }}img/g.gif" data-src="{% exec get_avatar_url self.author, self.avatar, 25, 0 %}" data-2x="s:-25.:-40." alt="" class="lazy"/></a>
@@ -244,10 +250,9 @@
 
 
 
-
-
 	{# ############  SHARE OPTIONS & COMMENTS  ################# #}
 
+	{% if content_full %}
 	<div class="shareoptions">
 		{% set link = self.permalink %}
 		{% set title = self.title %}
@@ -263,11 +268,8 @@
 					 class="fa fa-star" {% else %} class="fa fa-star-o" {% endif %} ></span>
 			{% endif %}
 
-			{# <span style="margin-left:20px;">comentarios</span> #}
-
 			<a class="comment-bubble" href="{{ self.relative_permalink }}" title="{% trans _('comentarios de') %}: «{{ self.title }}»">{{ self.comments }}</a>
 
-			{# negativos #}
 			{% if self.can_vote_negative %}
 			<form class="negative-combo" action="" id="problem-{{ self.id }}">
 				<select name="ratings" onchange="report_problem(this.form,{{current_user.user_id}}, {{self.id}})">
@@ -280,7 +282,7 @@
 			{% endif %}
 		</div>
 	</div>
-
+	{% endif %}
 
 	{# ####################### BEST COMMENT!!! FALTA ########################## #}
 {#

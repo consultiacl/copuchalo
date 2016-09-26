@@ -12,15 +12,12 @@
 		<div class="comment-votes-info">
 		{% if self.can_vote %}
 			{% if self.user_can_vote %}
-				<span id="vc-p-{{ self.id }}" class="vote fa fa-arrow-circle-up" onClick="mediatize_post({{ current_user.user_id}},{{ self.id }},1)" title="{% trans _('informativo, opinión razonada...') %}"></span>
+				<span id="vc-p-{{ self.id }}" class="vote fa fa-heart-o" onClick="mediatize_post({{ current_user.user_id}},{{ self.id }},1)" title="{% trans _('informativo, opinión razonada...') %}"></span>
 				{% include 'post_summary_votes.html' %}
-				<span id="vc-n-{{ self.id }}" class="vote right fa fa-arrow-circle-down" onClick="mediatize_post({{ current_user.user_id}},{{ self.id }},-1)" title="{% trans _('sólo para racismo, insultos, spam...') %}"></span>
 			{% else %}
 				{% if self.voted > 0 %}
-					<span id="vc-p-{{ self.id }}" class="vote fa fa-arrow-circle-up voted" title="{% trans _('votado positivo') %}"></span>
-				{% else %}{% if self.voted < 0 %}
-					<span id="vc-n-{{ self.id }}" class="vote fa fa-arrow-circle-down voted" title="{% trans _('votado negativo') %}"></span>
-				{% endif %}{% endif %}
+					<span id="vc-p-{{ self.id }}" class="vote fa fa-heart voted" title="{% trans _('votado positivo') %}"></span>
+				{% endif %}
 				{% include 'post_summary_votes.html' %}
 			{% endif %}
 			{% else %}

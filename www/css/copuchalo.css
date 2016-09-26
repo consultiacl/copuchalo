@@ -24,13 +24,14 @@ body {
 .img-container img.img-story {
 	display: block;
 	margin: auto;
+	border: 1px solid rgba(0,0,0,0.05);
 }
 
 #header-top .logo-cop {
 	float: left;
-	background: #005be2;
+	background: #333;
         font-size: 1.3em;
-        color: #fff;
+        color: #eee;
         text-align: center;
 	margin: 0 5px 0 10px;
 	cursor: pointer;
@@ -51,8 +52,8 @@ body {
 	border: 0;
 	letter-spacing: 0px;
 	max-width: 14em;
-	background: #005be2;
-	color: #fff;
+	background: #333;
+	color: #eee;
 }
 
 .subheader form.tabs-combo {
@@ -77,7 +78,7 @@ body {
 
 .news-summary {
 	display: inline-block;
-	width: 312px;
+	width: 314px;
 	max-height: 675px;
 	padding: 9px;
 	margin-bottom: 5em;
@@ -354,8 +355,8 @@ max-width: 6em;
 	//color: #999;
 	margin: 10px 0 30px 0px;
 
-	color: #fff;
-	background: #000;
+	color: #eee;
+	background: #333;
 	//color: #000;
 	//background: #fff;
 	//border: 1px solid #000;
@@ -420,7 +421,7 @@ max-width: 6em;
 
 .fa-sign-in,
 .fa-user-plus {
-	color: #fff;
+	color: #eee;
 	font-size: 25px;
 	width: 25px;
 	height: 25px;
@@ -505,7 +506,7 @@ max-width: 6em;
 	font-size: 12px;
 	width: 12px;
 	height: 12px;
-	color: #000;
+	color: #333;
 	padding-left: 5px;
 }
 
@@ -544,7 +545,7 @@ max-width: 6em;
 
 /* ** SEARCH ** */
 .fa-search {
-	color: #fff;
+	color: #eee;
 	font-size: 20px;
 	width: 20px;
 	height: 20px;
@@ -581,13 +582,13 @@ max-width: 6em;
 	transition: all 0.35s, border-radius 0s;
 	width: 35px;
 	height: 30px;
-	background-color: #003c96;
+	background-color: #555;
 }
 
 #header-top .nav-search-group input.inputsearchbox {
 	display:block;
 	border: 0 none;
-	color: #fff;
+	color: #eee;
 	background: transparent;
 	width: 100%;
 	height: 34px;
@@ -645,7 +646,7 @@ max-width: 6em;
 
 .fa-bars,
 .fa-navicon {
-	color: #fff;
+	color: #eee;
 	font-size: 20px;
 	width: 10px;
 	height: 20px;
@@ -701,7 +702,7 @@ max-width: 6em;
 }
 
 .fa-rss-square {
-	color: #000;
+	color: #333;
 	font-size: 16px;
 	width: 16px;
 	height: 16px;
@@ -749,7 +750,7 @@ a.comment-bubble {
 	min-width: 28px;
 	height: 16px;
 	padding: 1px;
-	opacity: 1.0;
+	opacity: 0.6;
 	text-align: center;
 	vertical-align: text-top;
 	white-space: nowrap;
@@ -758,11 +759,11 @@ a.comment-bubble {
 	text-decoration: none;
 	color: #fff;
 	background: #000;   /* fallback */
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#bbb), to(#000));
-	background: -webkit-linear-gradient(#bbb, #000);
-	background: -moz-linear-gradient(#bbb, #000);
-	background: -o-linear-gradient(#bbb, #000);
-	background: linear-gradient(#bbb, #000);
+	//background: -webkit-gradient(linear, 0 0, 0 100%, from(#bbb), to(#000));
+	//background: -webkit-linear-gradient(#bbb, #000);
+	//background: -moz-linear-gradient(#bbb, #000);
+	//background: -o-linear-gradient(#bbb, #000);
+	//background: linear-gradient(#bbb, #000);
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
 	border-radius: 6px;
@@ -826,19 +827,21 @@ a.comment-bubble:after {  /* triangle */
 }
 
 .numcop.mnm-published, .numcop.mnm-published a {
-	color: #fff;
-	background-color: #005be2; /* fallback */
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#005be2), to(#3a97ff));
-	background: -webkit-linear-gradient(#005be2, #3a97ff);
-	background: -moz-linear-gradient(#005be2, #3a97ff);
-	background: -o-linear-gradient(#005be2, #3a97ff);
-	background: linear-gradient(#005be2, #3a97ff);
+	color: #eee;
+	background-color: #333;
+	//background-color: #005be2; /* fallback */
+	//background: -webkit-gradient(linear, 0 0, 0 100%, from(#005be2), to(#3a97ff));
+	//background: -webkit-linear-gradient(#005be2, #3a97ff);
+	//background: -moz-linear-gradient(#005be2, #3a97ff);
+	//background: -o-linear-gradient(#005be2, #3a97ff);
+	//background: linear-gradient(#005be2, #3a97ff);
 }
 
 .numcop.mnm-queued {
-	color: #005be2;
+	color: #333;
 	background-color: #fff;
-	border: #005be2 solid 1px;
+	border: #333 solid 1px;
+	padding: 3px 1px;
 }
 
 .numcop.mnm-queued a {
@@ -850,6 +853,7 @@ a.comment-bubble:after {  /* triangle */
 	color: #666;
 	background-color: #ddd;
 	border: solid #666 1px;
+	padding: 3px 1px;
 }
 
 /*
@@ -869,20 +873,17 @@ a.comment-bubble:after {  /* triangle */
 }
 
 .sbox .cop span {
-	background-color: transparent;
 	-webkit-border-radius: 4;
 	-moz-border-radius: 4;
 	border-radius: 4px;
 	//color: #fff;
+	color: #111;
+	background-color: #fff;
 	padding: 4px 20px 4px 20px;
-	border: solid #005be2 1px;
+	border: solid #111 1px;
 	text-decoration: none;
 	text-align: center;
 	-webkit-appearance: none;
-
-/* TODO */
-color: #005be2;
-background-color: transparent;
 
 	//background-color: #3a97ff; /* fallback */
 	//background: -webkit-gradient(linear, 0 0, 0 100%, from(#005be2), to(#3a97ff));
@@ -909,17 +910,18 @@ background-color: transparent;
 	-moz-border-radius: 4;
 	border-radius: 4px;
 	padding: 4px 20px 4px 20px;
-	border: solid #005be2 1px;
+	border: solid #333 1px;
 	text-decoration: none;
 	text-align: center;
 	-webkit-appearance: none;
-	color: #fff;
-	background-color: #3a97ff; /* fallback */
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#005be2), to(#3a97ff));
-	background: -webkit-linear-gradient(#005be2, #3a97ff);
-	background: -moz-linear-gradient(#005be2, #3a97ff);
-	background: -o-linear-gradient(#005be2, #3a97ff);
-	background: linear-gradient(#005be2, #3a97ff);
+	color: #eee;
+	background-color: #333;
+	//background-color: #3a97ff; /* fallback */
+	//background: -webkit-gradient(linear, 0 0, 0 100%, from(#005be2), to(#3a97ff));
+	//background: -webkit-linear-gradient(#005be2, #3a97ff);
+	//background: -moz-linear-gradient(#005be2, #3a97ff);
+	//background: -o-linear-gradient(#005be2, #3a97ff);
+	//background: linear-gradient(#005be2, #3a97ff);
 }
 
 .sbox .btn:hover {
@@ -961,7 +963,7 @@ background-color: transparent;
 }
 
 a.header-btn {
-	background-color: #e6f0ff;
+	background-color: #fff;
 	color: #444;
 	padding: 2px 10px;
 	border: solid #aaa 1px;
@@ -974,8 +976,8 @@ a.header-btn {
 
 a.header-btn:hover {
 	color: #fff;
-	background: #000;
-	border: solid #000 1px;
+	background: #333;
+	border: solid #333 1px;
 	text-decoration: none;
 	transition: all 0.1s ease;
 	-webkit-border-radius: 4;
@@ -1144,7 +1146,6 @@ a.header-btn:hover {
 }
 
 
-/* .fa-thumbs-up, .fa-thumbs-o-up, */
 .comment-meta .fa-plus-circle,
 .comment-meta .fa-arrow-circle-up {
 	color: #46af00;
@@ -1153,10 +1154,17 @@ a.header-btn:hover {
 	height: 20px;
 }
 
-/* .fa-thumbs-down, .fa-thumbs-o-down, */
 .comment-meta .fa-minus-circle,
 .comment-meta .fa-arrow-circle-down {
 	color: #e2005b;
+	font-size: 20px;
+	width: 20px;
+	height: 20px;
+}
+
+.comment-meta .fa-heart,
+.comment-meta .fa-heart-o {
+	color: #e00;
 	font-size: 20px;
 	width: 20px;
 	height: 20px;
@@ -1255,7 +1263,12 @@ margin-right: 20px;
 a.link-comment-header {
 	font-family: 'Roboto', sans-serif;
 	text-decoration: none;
-	color: #000;
+	color: #333;
+}
+
+
+.comments-link {
+	font-weight: bold;
 }
 
 /*
@@ -1327,7 +1340,7 @@ fieldset.sneaker {
 }
 
 #header-menu ul.menu01-itemsl li a {
-	color: #000;
+	color: #333;
 	background-color: transparent;
 	padding: 1px 6px 4px 6px;
 	text-decoration: none;
@@ -1338,8 +1351,8 @@ fieldset.sneaker {
 	position: absolute;
 	top: 100%;
 	left: 50%;
-	border-top-color: #000;
-	border-top: 6px solid #000;
+	border-top-color: #333;
+	border-top: 6px solid #333;
 	border-left: 6px solid transparent;
 	border-right: 6px solid transparent;
 	margin-left: -6px;
@@ -1350,7 +1363,7 @@ fieldset.sneaker {
 #header-menu ul.menu01-itemsl li.selected a,
 #header-menu ul.menu01-itemsl li.selected {
 	color: #fff;
-	background-color: #000;
+	background-color: #333;
 	position: relative;
 	transition: all 0.1s ease;
 }
@@ -1377,7 +1390,7 @@ fieldset.sneaker {
 }
 
 #header-center ul.menu01-itemsr li a {
-	color: #000;
+	color: #333;
 	background-color: transparent;
 	padding: 1px 6px 4px 6px;
 	text-decoration: none;
@@ -1388,7 +1401,7 @@ fieldset.sneaker {
 #header-center ul.menu01-itemsr li.selected a,
 #header-center ul.menu01-itemsr li.selected {
 	color: #fff;
-	background-color: #000;
+	background-color: #e2b22b;
 	position: relative;
 	transition: all 0.1s ease;
 }
@@ -1401,7 +1414,7 @@ fieldset.sneaker {
 	font-size: 0.8em;
 	margin-left: 11px;
         white-space: nowrap;
-	background: #e6f0ff;
+	background: #eee;
 }
 
 .subheader li {
@@ -1412,7 +1425,7 @@ fieldset.sneaker {
 }
 
 .subheader li a {
-	color: #000;
+	color: #333;
 	background-color: transparent;
 	text-decoration: none;
 }
@@ -1423,7 +1436,7 @@ fieldset.sneaker {
 .subheader li.selected a,
 .subheader li.selected {
 	color: #fff;
-	background-color: #000;
+	background-color: #333;
 	position: relative;
 	transition: all 0.1s ease;
 }
@@ -1432,7 +1445,7 @@ fieldset.sneaker {
 	display: inline-block;
 	padding: 3px 7px;
 	color: #fff;
-	background-color: #000;
+	background-color: #333;
 	text-decoration: none;
 	border-radius: 4px;
 }
