@@ -584,7 +584,19 @@ function do_subs() {
 
 	$sql = "select subs.* from subs, prefs where pref_user_id = $user->id and pref_key = 'sub_follow' and subs.id = pref_value order by name asc";
 	$subs = $db->get_results($sql);
+	$subs_followers_counter = $db->get_results("select subs.id, count(*) as c from subs, prefs where pref_key = 'sub_follow' and subs.id = pref_value group by subs.id order by c desc;");
+
 	if ($subs) {
+
+		foreach ($subs as $s) {
+			foreach ($subs_followers_counter as $sub_counter) {
+				if ($s->id == $sub_counter->id) {
+					$s->followers = $sub_counter->c;
+				}
+			}
+			if (!isset($s->followers)) $s->followers=0;
+		}
+
 		$title = _('suscripciones');
 		Haanga::Load('subs_simple.html', compact('title', 'subs'));
 	}
@@ -596,7 +608,18 @@ function do_subs() {
 		$sql = "select subs.* from subs where subs.sub = 1 and subs.owner = $user->id";
 	}
 	$subs = $db->get_results($sql);
+
 	if ($subs) {
+
+		foreach ($subs as $s) {
+			foreach ($subs_followers_counter as $sub_counter) {
+				if ($s->id == $sub_counter->id) {
+					$s->followers = $sub_counter->c;
+				}
+			}
+			if (!isset($s->followers)) $s->followers=0;
+		}
+
 		$title = _('subs de') . " $user->username";
 		if ($current_user->user_id > 0 && $user->id == $current_user->user_id && SitesMgr::can_edit(0)) $can_edit = true;
 		else $can_edit = false;
@@ -604,4 +627,3 @@ function do_subs() {
 		Haanga::Load('subs.html', compact('title', 'subs', 'can_edit'));
 	}
 }
-

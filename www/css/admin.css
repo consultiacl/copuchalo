@@ -9,7 +9,7 @@ border-radius-topleft: 3px;
 
 .tabsub-this {
 font-weight: bold;
-background-color: #FFEDC6;
+background-color: #e6f0ff;
 }
 
 .tabsub {
@@ -17,7 +17,7 @@ height: 22px !important;
 margin: 10px 0 20px 0;
 padding-left: 20px;
 border-bottom: 1px solid;
-border-color: #ff6400;
+border-color: #005be2;
 }
 
 .tabsub li {
@@ -37,18 +37,18 @@ border-left: 1px solid;
 border-right: 1px solid;
 font-size: 12px;
 text-decoration: none;
-border-color: #ff6400;
-color: #ff6400;
+border-color: #005be2;
+color: #005be2;
 }
 
 .tabsub li a:hover {
 text-decoration: none;
-background-color: #FFEDC6;
+background-color: #e6f0ff;
 }
 
 .tabsub li.tabsub-this {
 height: 23px;
-background-color: #FFEDC6;
+background-color: #e6f0ff;
 }
 
 .tabsub li.tabsub-this a {
@@ -62,7 +62,7 @@ background: #fff;
 
 .tabsub a:visited,
 .tabsub-shakeit a:visited {
-color: #ff6400;
+color: #005be2;
 }
 
 .thiscat a {

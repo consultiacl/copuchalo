@@ -363,7 +363,7 @@ cursor: pointer;
 
 /*
 #header-top .userlogin {
-background: url({{ globals.base_static }}img/common/icons-common.png) no-repeat 10px -265px;
+background: url({{ globals.base_static }}img/common/icons-common.png) no-repeat 10px -240px;
 background-size: 20px 300px;
 width:40px;
 height:30px;
@@ -437,7 +437,6 @@ cursor: pointer;
 .subname.big {
 	font-size: 110%;
 }
-
 
 /* ********************* search box *********************** */
 
@@ -2324,7 +2323,7 @@ display: inline-block;
 height: 18px;
 width: 18px;
 margin: 0px 4px 0px 4px;
-background: url({{ globals.base_static }}img/common/icons-common.png) no-repeat 0px -40px;
+background: url({{ globals.base_static }}img/common/icons-common.png) no-repeat 0px -35px;
 background-size: 20px 300px;
 overflow: hidden !important;
 color: transparent !important;
@@ -2461,4 +2460,15 @@ background-size: 24px 24px;
 border: none;
 border-radius: 50%;
 }
+
+.reportform {
+	padding: 40px;
+	background-color: #e6f0ff;
+}
+
+.reportform p {
+margin-bottom: 15px;
+font-size: 14px;
+}
+
 

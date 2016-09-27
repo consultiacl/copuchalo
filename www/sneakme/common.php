@@ -98,7 +98,7 @@ function do_post_subheader($content, $selected = false, $rss = false, $rss_title
 			foreach ($content as $text => $url) {
 				if ($selected === $n) $class_b = ' class = "selected"';
 				else {
-					if ($n > 3) $class_b=' class="wideonly"';
+					if ($n > 4) $class_b=' class="wideonly"';
 					else $class_b='';
 				}
 				echo '<li'.$class_b.'><a href="'.$url.'">'.$text.'</a></li>';

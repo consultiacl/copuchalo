@@ -43,6 +43,9 @@
 			<span onclick="comment_reply({{self.id}}, '{{ self.prefix_id }}')" title="{% trans _('responder') %}" class="fa fa-reply"></span>
 		{% endif %}
 
+ 		{% if self.can_report %}
+        		<span onclick="report_comment({{self.id}})" title="{% trans _('reportar comentario') %}" class="fa fa-bullhorn"></span>
+		{% endif %}
 	</div>
 
 		<div class="comment-info">
