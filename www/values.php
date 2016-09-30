@@ -164,13 +164,13 @@ echo '
 			<legend>'._('registros').'</legend>
 				'._("Los nombres de usuario deben ser de 3 o más caracteres y comenzar por una letra") . '<br/>
 				<br/>
-				'._("Las contraseñas deben ser de 6 o más caracteres e incluir mayúsculas, minúsculas y números") .'<br/>
+				'._("Las contraseñas deben ser de 8 o más caracteres e incluir mayúsculas, minúsculas y números") .'<br/>
 				<br/>
 				'._("Registros desde la misma IP") . ': ' . _("para registrar otro usuario desde la misma dirección debes esperar 24 horas") . '<br/>
 				<br/>
 				'._("Registros desde la misma subred") . ' (xxx.yyy.zzz.*): ' . _("para registrar otro usuario desde la misma red debes esperar 6 horas") . '<br/>
 				<br/>
-				'._("Registros desde la misma subred") . ' (xxx.yyy.*.*): ' . _("para registrar otro usuario desde la misma red debes esperar unos minutos") . ' ('. _("una hora") . ')<br/>
+				'._("Registros desde la misma subred") . ' (xxx.yyy.*.*): ' . _("para registrar otro usuario desde la misma red debes esperar una hora") . ')<br/>
 		</fieldset>';
 
 
