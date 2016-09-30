@@ -8,7 +8,7 @@
 		{% if self.type != 'admin' AND self.user_level != 'disabled' %}
 			{% if self.can_vote %}
 				{% if self.user_can_vote %}
-					<span id="vc-p-{{ self.id }}" class="vote fa fa-heart-o" onClick="mediatize_comment({{ current_user.user_id}},{{ self.id }},1)" title="{% trans _('informativo, opinión razonada...') %}"> </span>
+					<span id="vc-p-{{ self.id }}" class="vote fa fa-heart-o" onClick="mediatize_comment({{ current_user.user_id}},{{ self.id }},1)" title="{% trans _('me gusta') %}"> </span>
 					{% include 'comment_summary_votes.html' %}
 				{% else %}
 					{% if self.voted >  0 %}
@@ -19,7 +19,7 @@
 			{% else %}
 				{% if c_value !== false %}
 					{% if c_value > 0 %}
-						<span id="vc-p-{{ self.id }}" class="vote fa fa-heart" title="{% trans _('me gusta') %}"></span>
+						<span id="vc-p-{{ self.id }}" class="vote fa fa-heart voted" title="{% trans _('me gusta') %}"></span>
 					{% endif %}
 				{% endif %}
 				{% include 'comment_summary_votes.html' %}
