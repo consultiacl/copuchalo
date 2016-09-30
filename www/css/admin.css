@@ -78,9 +78,9 @@ font-weight: bold;
     overflow: hidden;
     border: 1px solid;
     margin: 0 0 5px 0;
-    color: #FF6400;
-    background: #FFF;
-    border-color: #FF9400;
+    color: #777;
+    background: #fff;
+    border-color: #80b3ff;
 }
 
 
@@ -101,7 +101,7 @@ table.decorated td.normal {
 
 a.admin-button, a.admin-button:hover, a.admin-button:visited {
     color: #fff;
-    background-color: #FF6400;
+    background-color: #005be2;
     padding: 2px 5px;
     border-radius: 5px;
     text-decoration: none;
