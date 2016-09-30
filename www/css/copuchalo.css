@@ -438,6 +438,7 @@ max-width: 6em;
 }
 
 .fa-link,
+.fa-bullhorn,
 .fa-star,
 .fa-star-o,
 .fa-reply,
@@ -1116,7 +1117,7 @@ a.header-btn:hover {
 	display: block;
 	float: left;
 	height: 20px;
-	max-width: 70%;
+	max-width: 75%;
 	overflow: hidden;
 	padding: 2px 1px;
 }
@@ -1171,6 +1172,7 @@ a.header-btn:hover {
 }
 
 .comment-meta .fa-link,
+.comment-meta .fa-bullhorn,
 .comment-meta .fa-star,
 .comment-meta .fa-star-o,
 .edname       .fa-star,
@@ -1222,6 +1224,7 @@ a.header-btn:hover {
 }
 
 .comment-meta .fa-link:hover,
+.comment-meta .fa-bullhorn:hover,
 .comment-meta .fa-star:hover,
 .comment-meta .fa-star-o:hover,
 .edname       .fa-star:hover,

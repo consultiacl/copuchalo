@@ -131,6 +131,11 @@ $sql = "SELECT".Link::SQL."INNER JOIN (SELECT link FROM sub_statuses $from WHERE
 //syslog(LOG_INFO, "sql1: SELECT SQL_CACHE count(*) FROM sub_statuses $from WHERE $where");
 //syslog(LOG_INFO, $sql);
 
+$globals['site_id'] = SitesMgr::my_id();
+
+// Search for sponsored link
+if (!empty($globals['sponsored_link_uri'])) $sponsored_link = Link::from_db($globals['sponsored_link_uri'], 'uri');
+
 $links = $db->object_iterator($sql, "Link");
 if ($links) {
 	$counter = 0;
@@ -145,7 +150,9 @@ if ($links) {
 		$link->max_len = 600;
 		$link->print_summary('frontpage');
 		$counter++;
-		Haanga::Safe_Load('private/ad-interlinks.html', compact('counter', 'page_size'));
+		Haanga::Safe_Load('private/ad-interlinks.html', compact('counter', 'page_size', 'sponsored_link'));
+		//Haanga::Safe_Load('private/ad-interlinks.html', compact('counter', 'page_size', 'sponsored_link'));
+		//$link->print_summary();$counter++;
 	}
 }
 

@@ -1,3 +1,6 @@
+{% if sponsored %}
+        {% try_include 'private/sponsored/link.html' %}
+{% else %}
 <div class="news-summary">
 	<div class="news-body">
 
@@ -290,5 +293,7 @@
 
 {% if globals.link %}
 	{% exec do_banner_story as dummy %}
+{% endif %}
+
 {% endif %}
 

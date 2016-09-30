@@ -42,8 +42,6 @@ class Comment extends LCPBase {
 
 		if (! $current_user->user_id ) return false;
 
-
-
 		if (! $time) $time = $globals['now'];
 		$previous = (int) $db->get_var("select pref_value from prefs where pref_user_id = $current_user->user_id and pref_key = '$key'");
 		if ($time > $previous) {
@@ -271,7 +269,7 @@ class Comment extends LCPBase {
 		$this->check_visibility();
 
 		/* pickup the correct css for comments */
-		if ($this->hidden || $this->ignored)  {
+		if ($this->hidden || $this->ignored && !$link->is_sponsored())  {
 			$this->comment_meta_class = 'comment-meta hidden';
 			$this->comment_class = 'comment-body hidden';
 		} else {
@@ -293,7 +291,6 @@ class Comment extends LCPBase {
 			$this->comment_class .= ' user';
 		}
 
-
 		$this->prepare_summary_text($length);
 
 		$this->can_vote = $current_user->user_id > 0  && $this->author != $current_user->user_id && $this->date > $globals['now'] - $globals['time_enabled_comments'] && $this->user_level != 'disabled';
@@ -303,6 +300,7 @@ class Comment extends LCPBase {
 
 		$this->has_votes_info = $this->votes > 0 && $this->date > $globals['now'] - 30*86400; // Show votes if newer than 30 days
 		$this->can_reply = $current_user->user_id > 0 && $this->date > $globals['now'] - $globals['time_enabled_comments'];
+		$this->can_report = $this->can_reply && Report::check_min_karma() && ($this->author != $current_user->user_id) && $this->type != 'admin' && !$this->hidden && !$this->ignored && !$link->is_sponsored();
 
 		$vars = array('self' => $this);
 		$vars['c_value'] = $c_value;

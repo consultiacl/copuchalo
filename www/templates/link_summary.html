@@ -1,3 +1,6 @@
+{% if sponsored %}
+	{% try_include 'private/sponsored/link.html' %}
+{% else %}
 <div class="news-summary2">
 	<div class="news-body2">
 
@@ -286,4 +289,5 @@
 	</div>
 </div>
 
+{% endif %}
 
