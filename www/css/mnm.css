@@ -274,7 +274,7 @@ cursor: pointer;
 }
 
 #header-top .logo-ed {
-	background: url('{{ globals.base_static }}img/cpchl/gc_white.svg') no-repeat left top;
+	background: url('{{ globals.base_static }}img/mdtz/logo-white.svg') no-repeat left top;
 	background-size: 20px 20px;
 	height:20px;
 	width:20px;
