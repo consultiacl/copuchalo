@@ -1123,6 +1123,16 @@ function share_tw(e) {
 	return false;
 }
 
+function togglecomment(e) {
+	var $e = $(e);
+	var t = $e.parents(".threader:first").find(".threader:first");
+	var r = t.hasClass("collapsed");
+
+	if( t[0] ) {
+		t.toggleClass("collapsed"), r ? $e.text("[–]") : $e.text("[+]");
+	}
+}
+
 /* scrollstop plugin for jquery +1.9 */
 (function(){
 	var latency = 75;

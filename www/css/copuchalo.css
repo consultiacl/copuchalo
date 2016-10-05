@@ -1247,6 +1247,20 @@ a.header-btn:hover {
 	overflow:hidden
 }
 
+
+.comments .expand {
+	font: normal x-small verdana,arial,helvetica,sans-serif;
+	padding-right: 10px;
+	color: #333;
+	vertical-align: text-top;
+	text-decoration: none;
+}
+
+.comments .collapsed {
+	display: none;
+}
+
+
 /*
 .comment-meta .vote.up {
 	background-position: 0px 0px;

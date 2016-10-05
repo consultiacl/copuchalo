@@ -2,7 +2,7 @@
 	<a href="{{ self.url }}"><strong>#{{ self.order }}</strong></a>&nbsp;&nbsp;
 {% else %}
 	{% if self.link_permalink %}
-		<a href="{{ self.link_permalink }}/c0{{ self.order }}#c-{{ self.order }}" rel="nofollow"><strong>#{{ self.order }}</strong></a>&nbsp;&nbsp;
+		<a href="javascript:void(0)" class="expand" onclick="return togglecomment(this)">[-]</a><a href="{{ self.link_permalink }}/c0{{ self.order }}#c-{{ self.order }}" rel="nofollow"><strong>#{{ self.order }}</strong></a>&nbsp;&nbsp;
 	{% else %}
 		<strong>#{{ self.order }}</strong>&nbsp;&nbsp;
 	{% endif %}
