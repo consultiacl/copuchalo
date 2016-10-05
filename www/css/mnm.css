@@ -884,7 +884,7 @@ clear: both;
 	vertical-align: top;
 	background: #000;
 	font-size: 85%;
-	color: #fff;
+	color: #eee;
 	text-align: left;
 }
 
@@ -918,12 +918,12 @@ clear: both;
 #footcol1 h5, #footcol2 h5, #footcol3 h5, #footcol4 h5, #footcol5 h5 {
 	font-size: 1.2em;
 	font-weight: bold;
-	color: #fff;
+	color: #eee;
 	margin-bottom: 7px;
 }
 
 #footcol1 a, #footcol2 a, #footcol3 a, #footcol4 a, #footcol4 a {
-	color: #fff;
+	color: #eee;
 }
 
 
@@ -938,12 +938,12 @@ clear: both;
 	//background: #000;
 	background: #005be2;
 	font-size: 85%;
-	color: #fff;
+	color: #eee;
 	text-align: center;
 }
 
 #footthingy a {
-	color: #fff;
+	color: #eee;
 }
 
 #footthingy .copuchin {
@@ -1435,8 +1435,8 @@ font-size: 100%;
 	padding: 5px 0px 5px 0px;
 	font-weight: bold;
 	text-align: center;
-	background: #000;
-	color: #fff;
+	background: #333;
+	color: #eee;
 }
 
 .comments-list {
