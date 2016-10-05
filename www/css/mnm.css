@@ -1400,9 +1400,9 @@ padding-right: 2px;
 }
 
 .commentform a:link, .commentform a:visited {
-border-bottom-width: 1px;
-border-bottom-style: dotted;
-color: #FFF;
+	border-bottom-width: 1px;
+	border-bottom-style: dotted;
+	color: #eee;
 }
 
 .commentform .submit {
