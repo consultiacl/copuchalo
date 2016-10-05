@@ -1150,17 +1150,19 @@ a.header-btn:hover {
 .comment-meta .fa-plus-circle,
 .comment-meta .fa-arrow-circle-up {
 	color: #46af00;
-	font-size: 20px;
+	font-size: 16px;
 	width: 20px;
 	height: 20px;
+	opacity: 0.8;
 }
 
 .comment-meta .fa-minus-circle,
 .comment-meta .fa-arrow-circle-down {
 	color: #e2005b;
-	font-size: 20px;
+	font-size: 16px;
 	width: 20px;
 	height: 20px;
+	opacity: 0.8;
 }
 
 .comment-meta .fa-heart,
@@ -1178,12 +1180,12 @@ a.header-btn:hover {
 .edname       .fa-star,
 .edname       .fa-star-o,
 .comment-meta .fa-reply {
-	font-size: 20px;
+	font-size: 16px;
 	width: 20px;
 	height: 20px;
 	margin: 0 5px;
 	cursor: pointer;
-	opacity: 0.6;
+	opacity: 0.4;
 }
 
 .comment-meta .fa-reply-all {
