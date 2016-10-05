@@ -1250,10 +1250,11 @@ a.header-btn:hover {
 }
 
 
+/* Expanding and collapsing comments */
 .comments .expand {
 	font: normal x-small verdana,arial,helvetica,sans-serif;
 	padding-right: 10px;
-	color: #333;
+	color: #aaa;
 	vertical-align: text-top;
 	text-decoration: none;
 }
