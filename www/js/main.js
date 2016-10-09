@@ -1125,7 +1125,7 @@ function share_tw(e) {
 
 function togglecomment(e) {
 	var $e = $(e);
-	var t = $e.parents(".threader:first").find(".threader:first");
+	var t = $e.parents(".threader:first").find(".threader");
 	var r = t.hasClass("collapsed");
 
 	if( t[0] ) {
