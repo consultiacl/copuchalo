@@ -9,12 +9,10 @@
 			{% if self.can_vote %}
 				{% if self.user_can_vote %}
 					<span id="vc-p-{{ self.id }}" class="vote fa fa-heart-o" onClick="mediatize_comment({{ current_user.user_id}},{{ self.id }},1)" title="{% trans _('me gusta') %}"> </span>
-					{% include 'comment_summary_votes.html' %}
 				{% else %}
 					{% if self.voted >  0 %}
 						<span id="vc-p-{{ self.id }}" class="vote fa fa-heart voted" title="{% trans _('me gusta') %}"></span>
 					{% endif %}
-					{% include 'comment_summary_votes.html' %}
 				{% endif %}
 			{% else %}
 				{% if c_value !== false %}
@@ -22,8 +20,8 @@
 						<span id="vc-p-{{ self.id }}" class="vote fa fa-heart voted" title="{% trans _('me gusta') %}"></span>
 					{% endif %}
 				{% endif %}
-				{% include 'comment_summary_votes.html' %}
 			{% endif %}
+			{% include 'comment_summary_votes.html' %}
 		{% endif %}
 
 		<a href="{% exec self.get_relative_individual_permalink %}" title="permalink" class="fa fa-link comment-link-margin"></a>
