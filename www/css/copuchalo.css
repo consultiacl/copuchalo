@@ -1251,7 +1251,7 @@ a.header-btn:hover {
 
 
 /* Expanding and collapsing comments */
-.comments .expand {
+.comment-body .expand {
 	/*font: normal x-small verdana,arial,helvetica,sans-serif;*/
 	font-family: 'Graphik Web';
 	font-size: initial;
