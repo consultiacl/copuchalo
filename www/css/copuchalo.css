@@ -1252,10 +1252,12 @@ a.header-btn:hover {
 
 /* Expanding and collapsing comments */
 .comments .expand {
-	font: normal x-small verdana,arial,helvetica,sans-serif;
+	/*font: normal x-small verdana,arial,helvetica,sans-serif;*/
+	font-family: 'Graphik Web';
+	font-size: initial;
 	padding-right: 10px;
 	color: #aaa;
-	vertical-align: text-top;
+	vertical-align: baseline;
 	text-decoration: none;
 }
 

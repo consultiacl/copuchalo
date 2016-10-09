@@ -302,3 +302,7 @@ a.comment-bubble {
 	height: 30px;
 }
 
+.comments .expand {
+	vertical-align: middle;
+}
+
