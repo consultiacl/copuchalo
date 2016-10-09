@@ -13,11 +13,11 @@ define('DEBUG', false);
 //header("Content-Type: text/html");
 
 
-define ('MAX', 2);        //1.15);
+define ('MAX', 1.15);
 define ('MIN', 1.0);
-define ('PUB_MIN', 150);  //1);
-define ('PUB_MAX', 400);  //75);
-define ('PUB_PERC', 1);  //0.15);
+define ('PUB_MIN', 1);
+define ('PUB_MAX', 75);
+define ('PUB_PERC', 0.15);
 
 $past_karma = 0;
 
@@ -33,8 +33,7 @@ foreach ($sites as $site) {
 
 	if (! $site_info->sub) {
 		echo "**********************   SUBS  -PROMOTE-   **********************************************\n";
-		/*promote_from_subs($site, 24, 80, 8);*/
-		promote_from_subs($site, 24*15, 20, 2);
+		promote_from_subs($site, 24, 80, 8);
 		echo "*****************************************************************************************\n";
 	}
 }
@@ -80,9 +79,9 @@ function promote($site_id) {
 
 	$min_karma_coef = $globals['min_karma_coef'];
 
-        // From 24 hours to 24*15 hours (15 days = 360 hours)
-	$links_queue = $db->get_var("SELECT SQL_NO_CACHE count(*) from sub_statuses WHERE id = $site_id and date > date_sub(now(), interval 360 hour) and status in ('published', 'queued')");
-	$links_queue_all = $db->get_var("SELECT SQL_NO_CACHE count(*) from sub_statuses, links WHERE id = $site_id and date > date_sub(now(), interval 360 hour) and link_id = link and link_votes > 0");
+        // 24 hours
+	$links_queue = $db->get_var("SELECT SQL_NO_CACHE count(*) from sub_statuses WHERE id = $site_id and date > date_sub(now(), interval 24 hour) and status in ('published', 'queued')");
+	$links_queue_all = $db->get_var("SELECT SQL_NO_CACHE count(*) from sub_statuses, links WHERE id = $site_id and date > date_sub(now(), interval 24 hour) and link_id = link and link_votes > 0");
 
 
 	$pub_estimation = intval(max(min($links_queue * PUB_PERC, PUB_MAX), PUB_MIN));
@@ -108,47 +107,35 @@ function promote($site_id) {
 		$diff = max($diff * 2, $interval);
 	}
 
-	//$decay = min(MAX, MAX - ($diff/$interval)*(MAX-MIN) );
-	//$decay = max($min_karma_coef, $decay);
-        $decay = 0.1;
+	$decay = min(MAX, MAX - ($diff/$interval)*(MAX-MIN) );
+	$decay = max($min_karma_coef, $decay);
 
 	if ($diff > $interval * 2) {
 		$must_publish = true;
 		$output .= "Delayed! <br/>";
 	}
 	$output .= "Last published at: " . get_date_time($last_published) ."<br/>\n";
-	//$output .= "24hs queue: $links_queue/$links_queue_all, Published: $links_published -> $links_published_projection Published goal: $pub_estimation, Interval: $interval secs, difference: ". intval($now - $last_published)." secs, Decay: $decay<br/>\n";
-	$output .= "15days queue: $links_queue/$links_queue_all, Published: $links_published -> $links_published_projection Published goal: $pub_estimation, Interval: $interval secs, difference: ". intval($now - $last_published)." secs, Decay: $decay<br/>\n";
+	$output .= "24hs queue: $links_queue/$links_queue_all, Published: $links_published -> $links_published_projection Published goal: $pub_estimation, Interval: $interval secs, difference: ". intval($now - $last_published)." secs, Decay: $decay<br/>\n";
 
 	$continue = true;
 	$published=0;
 
-	//$past_karma_long = intval($db->get_var("SELECT SQL_NO_CACHE avg(karma) from sub_statuses WHERE id = $site_id and date >= date_sub(now(), interval 7 day) and status='published'"));
-	//$past_karma_short = intval($db->get_var("SELECT SQL_NO_CACHE avg(karma) from sub_statuses WHERE id = $site_id and date >= date_sub(now(), interval 12 hour) and status='published'"));
+	$past_karma_long = intval($db->get_var("SELECT SQL_NO_CACHE avg(karma) from sub_statuses WHERE id = $site_id and date >= date_sub(now(), interval 7 day) and status='published'"));
+	$past_karma_short = intval($db->get_var("SELECT SQL_NO_CACHE avg(karma) from sub_statuses WHERE id = $site_id and date >= date_sub(now(), interval 12 hour) and status='published'"));
 
-	//$past_karma = 0.5 * max(40, $past_karma_long) + 0.5 * max(20, $past_karma_short);
-	//$min_past_karma = (int) ($past_karma * $min_karma_coef);
-	//$last_resort_karma = (int) $past_karma * 0.8;
-
-	$past_karma_long = intval($db->get_var("SELECT SQL_NO_CACHE avg(karma) from sub_statuses WHERE id = $site_id and date >= date_sub(now(), interval 30 day) and status='published'"));
-	$past_karma_short = intval($db->get_var("SELECT SQL_NO_CACHE avg(karma) from sub_statuses WHERE id = $site_id and date >= date_sub(now(), interval 15 day) and status='published'"));
-	$past_karma = 0.5 * max(10, $past_karma_long) + 0.5 * max(5, $past_karma_short);
+	$past_karma = 0.5 * max(40, $past_karma_long) + 0.5 * max(20, $past_karma_short);
 	$min_past_karma = (int) ($past_karma * $min_karma_coef);
-	$last_resort_karma = (int) $past_karma * 0.2;
+	$last_resort_karma = (int) $past_karma * 0.8;
 
 
-	/* //////////////
+	//////////////
 	$min_karma = round(max($past_karma * $decay, 20));
 
 	if ($decay >= 1) $max_to_publish = 3;
 	else $max_to_publish = 1;
 
 	$min_votes = 3;
-	///////////// */
-
-	$min_karma = round(max($past_karma * $decay, 5));
-	$max_to_publish = 10;
-	$min_votes = 2;
+	/////////////
 
 	$limit_karma = round(min($past_karma,$min_karma) * 0.40);
 	$bonus_karma = round(min($past_karma,$min_karma) * 0.35);
@@ -156,8 +143,7 @@ function promote($site_id) {
 
 	/// Get common votes links' averages
 
-	//$days = 7;
-	$days = 30;
+	$days = 7;
 
 
 	// Balance metas
@@ -218,9 +204,9 @@ function promote($site_id) {
 			}
 
 			if (!empty($link->coef) && $link->coef > 1) {
-				//if ($decay > 1)
-				//	$karma_threshold = $past_karma;
-				//else
+				if ($decay > 1)
+					$karma_threshold = $past_karma;
+				else
 					$karma_threshold = $min_karma;
 			} else {
 				// Otherwise use normal decayed min_karma
@@ -605,3 +591,4 @@ function update_link_karma($site, $link, $past_karma) {
 	return $changes;
 
 }
+

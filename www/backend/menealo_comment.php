@@ -66,9 +66,9 @@ if ($comment->date < time() - $globals['time_enabled_comments']) {
 }
 
 // Check the user is not a clon by cookie of others that voted the same cooemnt
-//if (UserAuth::check_clon_votes($current_user->user_id, $id, 5, 'comments') > 0) {
-//	error(_('no se puede votar con clones'));
-//}
+if (UserAuth::check_clon_votes($current_user->user_id, $id, 5, 'comments') > 0) {
+	error(_('no se puede votar con clones'));
+}
 
 if ($value > 0) {
 	$votes_freq = intval($db->get_var("select count(*) from votes where vote_type='comments' and vote_user_id=$current_user->user_id and vote_date > subtime(now(), '0:0:30') and vote_value > 0 and vote_ip_int = ".$globals['user_ip_int']));

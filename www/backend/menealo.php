@@ -60,11 +60,11 @@ else $ip_check = '';
 $votes_freq = $db->get_var("select count(*) from votes where vote_type='links' and vote_user_id=$current_user->user_id and vote_date > subtime(now(), '0:0:30') $ip_check");
 
 // Check the user is not a clon by cookie of others that voted the same link
-//if ($current_user->user_id > 0 && $link->status != 'published') {
-//	if (UserAuth::check_clon_votes($current_user->user_id, $link->id, 5, 'links') > 0) {
-//		error(_('no se puede votar con clones'));
-//	}
-//}
+if ($current_user->user_id > 0 && $link->status != 'published') {
+	if (UserAuth::check_clon_votes($current_user->user_id, $link->id, 5, 'links') > 0) {
+		error(_('no se puede votar con clones'));
+	}
+}
 
 if ($current_user->user_id > 0) $freq = 3;
 else $freq = 2;
@@ -74,7 +74,6 @@ if ($link->status == 'published')  $freq *= 2; // Allow to play a little more if
 
 // Check for clicks vs votes
 // to avoid "cowboy votes" without reading the article
-/*
 if (!empty($link->url) && $globals['click_counter'] 
 	&& ! $link->user_clicked()) {
 	if ($link->votes > 3 && $link->negatives  > 2 && $current_user->user_id > 0 && $link->votes/10 < $link->negatives && $link->get_clicks() < $link->total_votes * 1.5) {
@@ -86,7 +85,7 @@ if (!empty($link->url) && $globals['click_counter']
 		error(_('no leído, y con más votos que lecturas').' ('.$link->get_clicks().' < '.$link->total_votes.')');
 	}
 }
-*/
+
 if ($votes_freq > $freq) {
 	if ($current_user->user_id > 0 && $current_user->user_karma > 4 && $link->status != 'published') {
 		// Crazy votes attack, decrease karma

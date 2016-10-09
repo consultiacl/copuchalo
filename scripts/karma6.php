@@ -432,12 +432,10 @@ foreach ($res as $dbuser) {
 	$old_karma = $user->karma;
 	if ($user->karma > $karma) {
 		if ($karma < $karma_base || $penalized > 1) {
-			//$user->karma = 0.7*$user->karma + 0.3*$karma; // In case of very low karma, penalized more
-			$user->karma = 0.8*$user->karma + 0.2*$karma; // In case of very low karma, penalized more
+			$user->karma = 0.7*$user->karma + 0.3*$karma; // In case of very low karma, penalized more
 		} else {
 			// Decrease very slowly
-			//$user->karma = 0.95*$user->karma + 0.05*$karma;
-			$user->karma = 0.99*$user->karma + 0.01*$karma;
+			$user->karma = 0.95*$user->karma + 0.05*$karma;
 		}
 	} else {
 		// Increase/decrease faster

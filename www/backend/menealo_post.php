@@ -48,7 +48,7 @@ if ($value != -1 && $value != 1) {
 
 $vote = new Vote('posts', $id, $current_user->user_id);
 $vote->link=$id;
-if ($vote->exists(false)) {
+if ($vote->exists()) {
 	error(_('ya se votó antes con el mismo usuario o IP'));
 }
 
