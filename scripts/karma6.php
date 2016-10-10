@@ -3,7 +3,7 @@
 <?php
 include('../config.php');
 
-header("Content-Type: text/plain");
+//header("Content-Type: text/plain");
 
 // Delete old logs
 $db->query("delete from logs where log_type in ('comment_new','login_failed') and log_date < date_sub(now(), interval 24 hour)");
