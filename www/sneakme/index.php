@@ -229,7 +229,8 @@ if ($current_user->user_id > 0) {
 }
 
 if ($view != 4) {
-	$posts = $db->object_iterator("SELECT".Post::SQL."INNER JOIN (SELECT post_id FROM posts $from WHERE $where $order_by $limit) as id USING (post_id)", 'Post');
+	//$posts = $db->object_iterator("SELECT".Post::SQL."INNER JOIN (SELECT post_id FROM posts $from WHERE $where $order_by $limit) as id USING (post_id)", 'Post');
+	$posts = $db->object_iterator("SELECT".Post::SQL."INNER JOIN (SELECT post_id FROM posts $from WHERE $where) as id USING (post_id) $order_by $limit", 'Post');
 	if ($posts) {
 		$ids = array();
 		echo '<ol class="comments-list">';
