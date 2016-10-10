@@ -39,8 +39,8 @@
 
 	{% if self.can_edit %}
 		&nbsp;&nbsp;
-		<span class="fa fa-pencil comment-pencil"></span>
-		<a class="edit-btn comment-btn" href="javascript:comment_edit({{ self.id }}, 'cid-{{ self.prefix_id }}{{ self.id }}')" title="{% trans _('editar comentario') %}">{% trans _('editar') %}</a>
+		<div><span class="fa fa-pencil comment-pencil"></span>
+		<a class="edit-btn comment-btn" href="javascript:comment_edit({{ self.id }}, 'cid-{{ self.prefix_id }}{{ self.id }}')" title="{% trans _('editar comentario') %}">{% trans _('editar') %}</a></div>
 	{% endif %}
 
 
