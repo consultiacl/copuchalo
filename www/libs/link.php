@@ -1439,7 +1439,7 @@ class Link extends LCPBase {
 			// Don't scale original image link, save original.
 			//thumbnail = $img->scale($globals['media_big_wide'], $globals['media_big_height']);
 			$img->save($filepath, IMAGETYPE_JPEG);
-echo "<!-- save: ".print_r($img)." filepath: $filepath -->";
+			if($debug) echo "<!-- save: ".print_r($img)." filepath: $filepath -->";
 			if (! $this->move_tmp_image(basename($filepath), 'image/jpeg') ) {
 				$this->thumb_status = 'error';
 				if ($debug)
