@@ -77,7 +77,7 @@ $vote->value = $value * $current_user->user_karma;
 $post = Post::from_db($id);
 
 if (! $post) {
-	error(_('nota no existente'));
+	error(_('postit no existente'));
 }
 
 if ($post->author == $current_user->user_id) {

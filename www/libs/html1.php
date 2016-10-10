@@ -127,7 +127,7 @@ function do_header($title, $id='home', $options = false) {
 		$right_options = array();
 		$right_options[] = new MenuOption(_('m/'), $globals['base_url_general'].'subs', $id, _('sub mediatizes'));
 		$right_options[] = new MenuOption(_('chismosa'), $globals['base_url'].'sneak', $id, _('visualizador en tiempo real'));
-		$right_options[] = new MenuOption(_('postits'), post_get_base_url(), $id, _('leer o escribir notas y mensajes privados'));
+		$right_options[] = new MenuOption(_('postits'), post_get_base_url(), $id, _('leer o escribir postits y mensajes privados'));
 		if( $globals['mobile'] ) $right_options[] = new MenuOption(_('galería'), 'javascript:fancybox_gallery(\'all\');', false, _('las imágenes subidas por los usuarios'));
 	} else {
 		$left_options = $options;
@@ -139,7 +139,7 @@ function do_header($title, $id='home', $options = false) {
 
 		$right_options[] = new MenuOption(_('m/'), $globals['base_url_general'].'subs', $id, _('sub mediatizes'));
 		$right_options[] = new MenuOption(_('chismosa'), $globals['base_url'].'sneak', $id, _('visualizador en tiempo real'));
-		$right_options[] = new MenuOption(_('postits'), post_get_base_url(), $id, _('leer o escribir notas y mensajes privados'));
+		$right_options[] = new MenuOption(_('postits'), post_get_base_url(), $id, _('leer o escribir postits y mensajes privados'));
 		//$right_options[] = new MenuOption(_('galería'), 'javascript:fancybox_gallery(\'all\');', false, _('las imágenes subidas por los usuarios'));
 	}
 
@@ -794,7 +794,7 @@ function do_best_posts() {
 	$res = $db->get_results("select post_id from posts, users where post_date > '$min_date' and  post_user_id = user_id and post_karma > 0 order by post_karma desc limit 10");
 	if ($res && count($res) > 4) {
 		$objects = array();
-		$title = _('mejores notas');
+		$title = _('mejores postits');
 		$url = post_get_base_url('_best');
 		foreach ($res as $p) {
 			$obj = new stdClass();

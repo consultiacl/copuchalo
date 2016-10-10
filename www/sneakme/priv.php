@@ -73,7 +73,7 @@ if ($messages) {
 	echo '<ol class="comments-list">';
 	foreach ($messages as $message) {
 		if ( $message_id > 0 && $user->id > 0 && $user->id != $message->author) {
-			echo '<li>'. _('Error: nota no existente') . '</li>';
+			echo '<li>'. _('Error: postit no existente') . '</li>';
 		} else {
 			echo '<li>';
 			$message->print_summary();

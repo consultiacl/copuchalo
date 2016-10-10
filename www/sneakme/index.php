@@ -44,7 +44,7 @@ $short_content = false;
 switch ($argv[0]) {
 	case '_best':
 		$tab_option = 2;
-		$page_title = _('mejores notas') . ' | ' . _('mediatize');
+		$page_title = _('mejores postits') . ' | ' . _('mediatize');
 		$min_date = date("Y-m-d H:00:00", time() - 86400); //  about 24 hours
 		$where = "post_date > '$min_date'";
 		$order_by = "ORDER BY post_karma desc";
@@ -84,7 +84,7 @@ switch ($argv[0]) {
 				$globals['thumbnail'] = get_avatar_url($user->id, $user->avatar, 80);
 			}
 
-			//$page_title = sprintf(_('nota de %s'), $user->username) . " ($post_id)";
+			//$page_title = sprintf(_('postit de %s'), $user->username) . " ($post_id)";
 			$globals['search_options']['u'] = $user->username;
 			$where = "post_id = $post_id";
 			$order_by = "";
@@ -146,7 +146,7 @@ switch ($argv[0]) {
 
 				default:
 					$view = 0;
-					$page_title = sprintf(_('notas de %s'), $user->username);
+					$page_title = sprintf(_('postits de %s'), $user->username);
 					$globals['search_options']['u'] = $user->username;
 					$where = "post_user_id=$user->id";
 					$order_by = "ORDER BY post_id desc";
@@ -238,7 +238,7 @@ if ($view != 4) {
 			// Don't show admin post if it's her own profile.
 			if ($post->admin && !$current_user->admin && $user->id == $post->author) continue;
 			if ($post_id > 0 && $user->id > 0 && $user->id != $post->author) {
-				echo '<li>' . _('Error: nota no existente') . '</li>';
+				echo '<li>' . _('Error: postit no existente') . '</li>';
 			} else {
 				echo '<li>';
 				$post->print_summary();

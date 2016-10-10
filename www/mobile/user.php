@@ -107,7 +107,7 @@ function do_profile() {
 	}
 	echo '<dt>'._('publicadas').':</dt><dd>'.$user->published_links.' ('.$percent.'%)</dd>';
 	echo '<dt>'._('comentarios').':</dt><dd>'.$user->total_comments.'</dd>';
-	echo '<dt>'._('notas').':</dt><dd>'.$user->total_posts.'</dd>';
+	echo '<dt>'._('postits').':</dt><dd>'.$user->total_posts.'</dd>';
 	echo '<dt>'._('votos').':</dt><dd>'.$user->total_votes.'</dd>';
 
 	echo '</dl>';

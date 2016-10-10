@@ -29,12 +29,6 @@
 
 
 <li>
-<h2>¿Qué es esa nota sobre votos negativos que me aparece en algunas noticias?</h2>
-<p>Indica que la noticia tiene una relación de votos negativos alta, y de votarla podría perjudicar tu <em>karma</em>. Los envíos que reúnan muchos votos negativos serán movidos a la cola de descartadas.</p>
-</li>
-
-
-<li>
 <h2>¿Sólo cuenta el número de votos?</h2>
 <p>No, cuentan también el <em>karma</em>, si es voto anónimo o no, y el número de <em>problemas</em> reportados (votos negativos).
 </p>

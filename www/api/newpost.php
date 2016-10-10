@@ -70,13 +70,13 @@ $post->src='api';
 $post->content=$text;
 
 if($post->same_text_count(60) > 0) {
-		echo 'KO: ' . _('nota previamente grabada');
+		echo 'KO: ' . _('postit previamente grabado');
 		die;
 };
 
 // Verify that there are a period of 1 minute between posts.
 if(intval($db->get_var("select count(*) from posts where post_user_id = $user->id and post_date > date_sub(now(), interval 1 minute)"))> 0) {
-		echo 'KO: ' . _('debe esperar 1 minuto entre notas');
+		echo 'KO: ' . _('debe esperar 1 minuto entre postits');
 		die;
 };
 
@@ -90,6 +90,6 @@ if ($same_links > 2) {
 
 
 $post->store();
-echo 'OK: ' . _('nota grabada');
+echo 'OK: ' . _('postit grabado');
 
 ?>

@@ -57,7 +57,7 @@ $post = new Post;
 $post->id=$id;
 $post->read();
 if(!$post->read) {
-	not_found('<strong>Error: </strong>' . _('nota no encontrada'));
+	not_found('<strong>Error: </strong>' . _('postit no encontrado'));
 	die;
 }
 header('Location:  http://'.get_server_name().post_get_base_url($post->id));

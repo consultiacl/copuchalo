@@ -34,7 +34,7 @@ if (!empty($_REQUEST['user_id'])) {
 			$post->author=$current_user->user_id;
 			$post->print_edit_form();
 		} else {
-			echo 'Error: ' . _('debe esperar entre notas');
+			echo 'Error: ' . _('debe esperar entre postits');
 			die;
 		}
 	}
@@ -100,7 +100,7 @@ function save_post ($post_id) {
 
 		// Verify that there are a period of 1 minute between posts.
 		if(intval($db->get_var("select count(*) from posts where post_user_id = $current_user->user_id and post_date > date_sub(now(), interval ".$globals['posts_period']." second)"))> 0) {
-			echo 'ERROR: ' . _('debe esperar entre notas');
+			echo 'ERROR: ' . _('debe esperar entre postits');
 			die;
 		};
 
@@ -114,7 +114,7 @@ function save_post ($post_id) {
 			if ($same_links > 2) {
 				$reduction = $same_links * 0.2;
 				$user = new User($current_user->user_id);
-				$user->add_karma(-$reduction, _('demasiados enlaces al mismo dominio en las notas'));
+				$user->add_karma(-$reduction, _('demasiados enlaces al mismo dominio en los postits'));
 				syslog(LOG_NOTICE, "Meneame: post_edit decreasing $reduction of karma to $user->username (now $user->karma)");
 			}
 			$post->store();

@@ -34,8 +34,8 @@ function get_posts_menu($tab_selected, $username) {
 	}
 
 	$items = array();
-	$items[] = new MenuOption(_('todas'), post_get_base_url(''), $id, _('todas las notas'));
-	$items[] = new MenuOption(_('popular'), post_get_base_url('_best'), $id, _('notas populares'));
+	$items[] = new MenuOption(_('todas'), post_get_base_url(''), $id, _('todos los postits'));
+	$items[] = new MenuOption(_('popular'), post_get_base_url('_best'), $id, _('postits populares'));
 	if ($globals['google_maps_api']) {
 		$items[] = new MenuOption(_('mapa'), post_get_base_url('_geo'), $id, _('mapa animado'));
 	}
@@ -60,7 +60,7 @@ function do_post_subheader($content, $selected = false, $rss = false, $rss_title
 		echo '<div class="subheader">';
 
 		if ($current_user->user_id > 0 && Post::can_add()) {
-			echo '<a class="note" href="javascript:post_new()">'._('nueva nota').'</a>';
+			echo '<a class="note" href="javascript:post_new()">'._('nuevo postit').'</a>';
 		}
 
 		if (is_array($content) && !empty($content)) {
@@ -87,9 +87,9 @@ function do_post_subheader($content, $selected = false, $rss = false, $rss_title
 
 		if ($current_user->user_id > 0) {
 			if (Post::can_add()) {
-				echo '<li><span><a class="toggler" href="javascript:post_new()" title="'._('nueva').'">&nbsp;'._('nota').'<span class="fa fa-pencil note-pencil"></span></a></span></li>';
+				echo '<li><span><a class="toggler" href="javascript:post_new()" title="'._('nueva').'">&nbsp;'._('postit').'<span class="fa fa-pencil note-pencil"></span></a></span></li>';
 			} else {
-				echo '<li><span><a href="javascript:return;">'._('nota').'</a></span></li>';
+				echo '<li><span><a href="javascript:return;">'._('postit').'</a></span></li>';
 			}
 		}
 

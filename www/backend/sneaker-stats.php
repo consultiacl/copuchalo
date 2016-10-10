@@ -141,12 +141,12 @@ function do_stats2($string) {
 
 	$comment .= _('votos') . ':&nbsp;' . $db->get_var("select count(*) from votes where vote_type='links' and vote_date > date_sub(now(), interval $hours hour)") . ', ';
 	$comment .= _('votos comentarios') . ':&nbsp;' . $db->get_var("select count(*) from votes where vote_type='comments' and vote_date > date_sub(now(), interval $hours hour)") . ', ';
-	$comment .= _('votos notas') . ':&nbsp;' . $db->get_var("select count(*) from votes where vote_type='posts' and vote_date > date_sub(now(), interval $hours hour)") . ', ';
+	$comment .= _('votos postits') . ':&nbsp;' . $db->get_var("select count(*) from votes where vote_type='posts' and vote_date > date_sub(now(), interval $hours hour)") . ', ';
 	$comment .= _('historias') . ':&nbsp;' . $db->get_var("select count(*) from links where link_date > date_sub(now(), interval $hours hour)") . ', ';
 	$comment .= _('publicadas') . ':&nbsp;' . $db->get_var("select count(*) from links where link_status='published' and link_date > date_sub(now(), interval $hours hour)") . ', ';
 	$comment .= _('descartadas') . ':&nbsp;' . $db->get_var("select count(*) from links where link_status='discard' and link_date > date_sub(now(), interval $hours hour)") . ', ';
 	$comment .= _('comentarios') . ':&nbsp;' . $db->get_var("select count(*) from logs where log_type = 'comment_new' and log_date > date_sub(now(), interval $hours hour)")  . ', ';
-	$comment .= _('notas') . ':&nbsp;' . $db->get_var("select count(*) from logs where log_type = 'post_new' and log_date > date_sub(now(), interval $hours hour)")  . ', ';
+	$comment .= _('postits') . ':&nbsp;' . $db->get_var("select count(*) from logs where log_type = 'post_new' and log_date > date_sub(now(), interval $hours hour)")  . ', ';
 	$comment .= _('usuarios nuevos') . ':&nbsp;' . $db->get_var("select count(*) from logs, users where log_type = 'user_new' and log_date > date_sub(now(), interval $hours hour) and user_id = log_ref_id and user_validated_date is not null");
 	return $comment;
 }

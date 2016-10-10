@@ -60,7 +60,7 @@ if ($user->bio) {
 /*
 $post = new Post;
 if ($post->read_last($user->id)) {
-	echo '<br clear="left"><strong>'._('última nota').'</strong>:<br/>';
+	echo '<br clear="left"><strong>'._('último postit ').'</strong>:<br/>';
 	$post->show_avatar = false;
 	$post->print_text(150);
 }

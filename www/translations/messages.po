@@ -350,7 +350,7 @@ msgstr ""
 
 #: mobile/user.php:121 backend/sneaker-stats.php:142 user.php:362 user.php:751
 #: sneakme_rss2.php:85
-msgid "notas"
+msgid "postits"
 msgstr ""
 
 #: mobile/user.php:122 story.php:434 libs/comment.php:179
@@ -742,11 +742,11 @@ msgid "editar"
 msgstr ""
 
 #: libs/post.php:238
-msgid "edición nota"
+msgid "edición postit"
 msgstr ""
 
 #: libs/post.php:240
-msgid "nueva nota"
+msgid "nuevo postit"
 msgstr ""
 
 #: libs/post.php:254 submit.php:526 editlink.php:126
@@ -758,15 +758,15 @@ msgid "guardar"
 msgstr ""
 
 #: libs/post.php:281
-msgid "insertar una nota"
+msgid "insertar un postit"
 msgstr ""
 
 #: libs/post.php:283
-msgid "espera unos minutos para entrar otra nota"
+msgid "espera unos minutos para entrar otro postit"
 msgstr ""
 
 #: libs/post.php:287
-msgid "obtener notas en rss2"
+msgid "obtener postits en rss2"
 msgstr ""
 
 #: libs/post.php:288
@@ -942,7 +942,7 @@ msgid "candidatas en «%s»"
 msgstr ""
 
 #: libs/html1.php:909 sneakme/index.php:58
-msgid "mejores notas"
+msgid "mejores postits"
 msgstr ""
 
 #: libs/html1.php:935
@@ -1648,27 +1648,27 @@ msgid "nótames"
 msgstr ""
 
 #: values.php:172
-msgid "Karma a partir del cual se destacan las notas"
+msgid "Karma a partir del cual se destacan los postits"
 msgstr ""
 
 #: values.php:174
-msgid "Karma a partir del cual se ocultan las notas"
+msgid "Karma a partir del cual se ocultan los postits"
 msgstr ""
 
 #: values.php:176
-msgid "Tiempo de espera entre notas"
+msgid "Tiempo de espera entre postits"
 msgstr ""
 
 #: values.php:178
-msgid "Tiempo de edición de notas"
+msgid "Tiempo de edición de postits"
 msgstr ""
 
 #: values.php:180
-msgid "Tiempo de edición de notas siendo admin"
+msgid "Tiempo de edición de postits siendo admin"
 msgstr ""
 
 #: values.php:182
-msgid "El karma que gana o pierde un usuario por los votos a sus notas es"
+msgid "El karma que gana o pierde un usuario por los votos a sus postits es"
 msgstr ""
 
 #: values.php:182
@@ -2208,7 +2208,7 @@ msgid "teléfono móvil"
 msgstr ""
 
 #: profile.php:127
-msgid "sólo necesario si enviarás notas al nótame vía SMS"
+msgid "sólo necesario si enviarás postits vía SMS"
 msgstr ""
 
 #: profile.php:128
@@ -2260,7 +2260,7 @@ msgid "se eliminarán automáticamente los datos personales."
 msgstr ""
 
 #: profile.php:197
-msgid "las notas serán eliminadas, los envíos y comentarios NO se borrarán."
+msgid "los postits serán eliminados, los envíos y comentarios NO se borrarán."
 msgstr ""
 
 #: profile.php:198
@@ -2301,7 +2301,7 @@ msgstr ""
 
 #: geo/post.php:22 backend/get_post_tooltip.php:39 backend/get_post_url.php:39
 #: backend/get_post_url.php:53
-msgid "usuario o nota no encontrada"
+msgid "usuario o postit no encontrada"
 msgstr ""
 
 #: geo/get_form.php:16 geo/delete.php:16 geo/save.php:16
@@ -2642,7 +2642,7 @@ msgid "datos recibidos incorrectamente"
 msgstr ""
 
 #: backend/get_favorite_post.php:15
-msgid "falta el ID de la nota"
+msgid "falta el ID del postit"
 msgstr ""
 
 #: backend/get_favorite_post.php:19 backend/menealo_post.php:23
@@ -2653,19 +2653,19 @@ msgid "falta el código de usuario"
 msgstr ""
 
 #: backend/post_sms_store.php:56
-msgid "texto muy corto, nota no insertada"
+msgid "texto muy corto, postit no insertado"
 msgstr ""
 
 #: backend/post_sms_store.php:72
-msgid "teléfono no encontrado, nota no insertada"
+msgid "teléfono no encontrado, postit no insertado"
 msgstr ""
 
 #: backend/post_sms_store.php:77
-msgid "el karma es muy bajo, nota no insertada"
+msgid "el karma es muy bajo, postit no insertado"
 msgstr ""
 
 #: backend/post_sms_store.php:90
-msgid "nota enviada previamente, nota no insertada"
+msgid "postit enviado previamente, postit no insertado"
 msgstr ""
 
 #: backend/post_sms_store.php:95
@@ -2673,7 +2673,7 @@ msgid "debe esperar 1 minuto entre apuntes vía SMS"
 msgstr ""
 
 #: backend/post_sms_store.php:102
-msgid "nota insertada"
+msgid "postit insertado"
 msgstr ""
 
 #: backend/menealo_post.php:19 backend/menealo_comment.php:21
@@ -2723,7 +2723,7 @@ msgid "falta el ID del enlace"
 msgstr ""
 
 #: backend/get_p_v.php:38
-msgid "nota"
+msgid "postit"
 msgstr ""
 
 #: backend/menealo.php:21
@@ -2779,7 +2779,7 @@ msgid "error actualizando, probablemente tiempo de edición excedido"
 msgstr ""
 
 #: backend/get_user_info.php:44
-msgid "última nota"
+msgid "último postit"
 msgstr ""
 
 #: backend/sneaker-stats.php:17
@@ -2816,7 +2816,7 @@ msgid "votos comentarios"
 msgstr ""
 
 #: backend/sneaker-stats.php:137
-msgid "votos notas"
+msgid "votos postits"
 msgstr ""
 
 #: backend/sneaker-stats.php:143
@@ -2916,7 +2916,7 @@ msgid "noticia antigua o no existente"
 msgstr ""
 
 #: backend/post_edit.php:37
-msgid "debe esperar entre notas"
+msgid "debe esperar entre postits"
 msgstr ""
 
 #: backend/post_edit.php:50 api/newpost.php:58
@@ -2932,11 +2932,11 @@ msgid "el karma es muy bajo"
 msgstr ""
 
 #: backend/post_edit.php:90 api/newpost.php:79
-msgid "debe esperar 1 minuto entre notas"
+msgid "debe esperar 1 minuto entre postits"
 msgstr ""
 
 #: backend/post_edit.php:105
-msgid "demasiados enlaces al mismo dominio en las notas"
+msgid "demasiados enlaces al mismo dominio en los postits"
 msgstr ""
 
 #: backend/post_edit.php:115
@@ -3208,20 +3208,20 @@ msgstr ""
 
 #: sneakme/index.php:118
 #, php-format
-msgid "nota de %s"
+msgid "postit de %s"
 msgstr ""
 
 #: sneakme/index.php:127 sneakme_rss2.php:50
 #, php-format
-msgid "notas de %s"
+msgid "postits de %s"
 msgstr ""
 
 #: sneakme/index.php:160
-msgid "notas de las últimas 24 horas"
+msgid "postits de las últimas 24 horas"
 msgstr ""
 
 #: sneakme/index.php:194
-msgid "Error: nota no existente"
+msgid "Error: postit no existente"
 msgstr ""
 
 #: sneakme/index.php:250 sneakme/index.php:252
@@ -3379,11 +3379,11 @@ msgid "Exceso de votos negativos injustos a comentarios"
 msgstr ""
 
 #: olh/karma6.php:352
-msgid "Votos a notas contabilizados"
+msgid "Votos a postits contabilizados"
 msgstr ""
 
 #: olh/karma6.php:364
-msgid "Exceso de votos negativos injustos a notas"
+msgid "Exceso de votos negativos injustos a postits"
 msgstr ""
 
 #: olh/karma6.php:379
@@ -3460,11 +3460,11 @@ msgid "clave del API incorrecta"
 msgstr ""
 
 #: api/newpost.php:73
-msgid "nota previamente grabada"
+msgid "postit previamente grabado"
 msgstr ""
 
 #: api/newpost.php:93
-msgid "nota grabada"
+msgid "postit grabado"
 msgstr ""
 
 #: api/check_url.php:41 api/check_url_complete.php:41
@@ -3489,7 +3489,7 @@ msgid "Nótame"
 msgstr ""
 
 #: sneakme_rss2.php:40
-msgid "búsqueda en notas"
+msgid "búsqueda en postits"
 msgstr ""
 
 #: sneakme_rss2.php:68

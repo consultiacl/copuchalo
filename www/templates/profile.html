@@ -86,7 +86,7 @@ addPostCode(function(){$('textarea').autosize();});
 {#
 {% if user.id  == current_user.user_id %}
 	<p><label>{% trans _('teléfono móvil') %}:</label><br/>
-	<span class="note">{% trans _('sólo necesario si enviarás notas al nótame vía SMS') %}</span><br/>
+	<span class="note">{% trans _('sólo necesario si enviarás postits vía SMS') %}</span><br/>
 	<span class="note">{% trans _('pon el número completo, con código de país: +34123456789') %}</span><br/>
 	<input type="text" autocomplete="off" name="phone" id="phone" value="{{ user.phone }}" />
 	</p>
@@ -166,7 +166,7 @@ addPostCode(function(){$('textarea').autosize();});
 	<p><i class="fa fa-warning"></i>{% trans _('¡atención! la cuenta será deshabilitada.') %}</p>
 	<br/>
 	<p class="note">{% trans _('se eliminarán automáticamente los datos personales.') %}<br/>
-	{% trans _('las notas serán eliminadas, los envíos y comentarios NO se borrarán.') %}</p></br>
+	{% trans _('los postits serán eliminados, los envíos y comentarios NO se borrarán.') %}</p></br>
 	<p><label>{% trans _('sí, quiero deshabilitarla') %}: <input  name="disable" type="checkbox" value="1"/>
 	</label></p>
 	<br/>

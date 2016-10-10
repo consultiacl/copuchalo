@@ -179,22 +179,22 @@ echo '
 echo '
 		<fieldset id="posts">
 			<legend>'._('postits').'</legend>
-				'._("Karma a partir del cual se destacan las notas") . ': ' . $globals['post_highlight_karma'] . '<br/>
+				'._("Karma a partir del cual se destacan los postits") . ': ' . $globals['post_highlight_karma'] . '<br/>
 				<br/>
-				'._("Karma a partir del cual se ocultan las notas") . ': ' . $globals['post_hide_karma'] . '<br/>
+				'._("Karma a partir del cual se ocultan los postits") . ': ' . $globals['post_hide_karma'] . '<br/>
 				<br/>
-				'._("Tiempo de espera entre notas") . ': ' . print_time($globals['posts_period']) . '<br/>
+				'._("Tiempo de espera entre postits") . ': ' . print_time($globals['posts_period']) . '<br/>
 				<br/>
-				'._("Tiempo de edición de notas") . ': ' . print_time($globals['posts_edit_time']) . '<br/>
+				'._("Tiempo de edición de postits") . ': ' . print_time($globals['posts_edit_time']) . '<br/>
 				<br/>
-				'._("Tiempo de edición de notas siendo admin") . ': ' .print_time($globals['posts_edit_time_admin']) . '<br/>
+				'._("Tiempo de edición de postits siendo admin") . ': ' .print_time($globals['posts_edit_time_admin']) . '<br/>
 				<br/>
-				'._("El karma que gana o pierde un usuario por los votos a sus notas es") . ' ' . ($globals['comment_votes_multiplier'] / $globals['post_votes_multiplier']) . ' ' . _("veces menor al karma que hubiese conseguido si esos mismos votos fuesen a sus comentarios") . '<br/>
+				'._("El karma que gana o pierde un usuario por los votos a sus postits es") . ' ' . ($globals['comment_votes_multiplier'] / $globals['post_votes_multiplier']) . ' ' . _("veces menor al karma que hubiese conseguido si esos mismos votos fuesen a sus comentarios") . '<br/>
 		</fieldset>';
 
 echo '
 		<fieldset id="images">
-			<legend>'._('imágenes en comentarios y notas').'</legend>
+			<legend>'._('imágenes en comentarios y postits').'</legend>
 				'._("Karma mínimo") . ': ' . $globals['media_min_karma'] . '<br/>
 				<br/>
 				'._("Tamaño máximo en bytes") . ': ' . $globals['media_max_size'] . '<br/>

@@ -12,7 +12,7 @@ include(mnminclude.'favorites.php');
 header('Content-Type: text/plain; charset=UTF-8');
 
 if(!($link=intval($_REQUEST['id']))) {
-	error(_('falta el ID de la nota'). " $link");
+	error(_('falta el ID del postit'). " $link");
 }
 
 if(!($user = intval($_REQUEST['type']))) {

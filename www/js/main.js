@@ -1851,7 +1851,7 @@ var fancyBox = new function () {
 	function field_text(field) {
 		var a = {
 			privates: "{% trans _('privados nuevos') %}",
-			posts: "{% trans _('respuestas a notas') %}",
+			posts: "{% trans _('respuestas a postits') %}",
 			comments: "{% trans _('respuestas a comentarios') %}",
 			friends: "{% trans _('nuevos amigos') %}"
 		};

@@ -19,7 +19,7 @@ if (!empty($_GET['id'])) {
 		$date = $matches[2];
 		$id = (int) $db->get_var("select post_id from posts, users where user_login = '$user' and post_user_id = user_id and post_date < FROM_UNIXTIME($date) order by post_date desc limit 1");
 		if (!$id > 0) {
-			echo '<strong>Error: </strong>' . _('usuario o nota no encontrada');
+			echo '<strong>Error: </strong>' . _('usuario o postit no encontrada');
 			die;
 		}
 	} else {
