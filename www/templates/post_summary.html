@@ -12,11 +12,11 @@
 		<div class="comment-votes-info">
 		{% if self.can_vote %}
 			{% if self.user_can_vote %}
-				<span id="vc-p-{{ self.id }}" class="vote fa fa-heart-o" onClick="mediatize_post({{ current_user.user_id}},{{ self.id }},1)" title="{% trans _('informativo, opinión razonada...') %}"></span>
+				<span id="vc-p-{{ self.id }}" class="vote fa fa-thumbs-o-up" onClick="mediatize_post({{ current_user.user_id}},{{ self.id }},1)" title="{% trans _('informativo, opinión razonada...') %}"></span>
 				{% include 'post_summary_votes.html' %}
 			{% else %}
 				{% if self.voted > 0 %}
-					<span id="vc-p-{{ self.id }}" class="vote fa fa-heart voted" title="{% trans _('votado positivo') %}"></span>
+					<span id="vc-p-{{ self.id }}" class="vote fa fa-thumbs-up voted" title="{% trans _('votado positivo') %}"></span>
 				{% endif %}
 				{% include 'post_summary_votes.html' %}
 			{% endif %}

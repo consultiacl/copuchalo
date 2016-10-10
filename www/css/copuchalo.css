@@ -1165,8 +1165,8 @@ a.header-btn:hover {
 	opacity: 0.8;
 }
 
-.comment-meta .fa-heart,
-.comment-meta .fa-heart-o {
+.comment-meta .fa-thumbs-up,
+.comment-meta .fa-thumbs-o-up {
 	color: #e00;
 	font-size: 16px;
 	width: 20px;

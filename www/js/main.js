@@ -104,7 +104,7 @@ function mediatize_post(user, id, value) {
 }
 
 function respond_comment_vote(id, value) {
-	$('#vc-p-'+id).removeClass('fa-heart-o').addClass('fa-heart').attr('onclick','').unbind('click');
+	$('#vc-p-'+id).removeClass('fa-thumbs-o-up').addClass('fa-thumbs-up').attr('onclick','').unbind('click');
 	/*$('#vc-n-'+id).addClass('voted').attr('onclick','').unbind('click');*/
 }
 

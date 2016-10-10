@@ -1476,7 +1476,7 @@ margin-bottom: 10px;
 
 .comment-body.author {    /* brown */
 	border-color: #ecae00;
-	background: #fff2d1; /* fallback */
+	background: #fff8e8; /* fallback */
 	//background: -webkit-gradient(linear, 0 0, 0 100%, from(#fbf6e6), to(#f6e9c4));
 	//background: -webkit-linear-gradient(#fbf6e6, #f6e9c4);
 	//background: -moz-linear-gradient(#fbf6e6, #f6e9c4);
@@ -1485,7 +1485,7 @@ margin-bottom: 10px;
 }
 
 .comment-body.high.author {    /* brown */
-	background: #ffd978;
+	background: #ffeab5;
 	//background-image: url({{ globals.base_static }}img/common/comment-high-01.png);
 	//background-image: url({{ globals.base_static }}img/common/comment-high-01.png), linear-gradient(#f9efd5, #eccf80);
 	//background-position: 99% 1px;
