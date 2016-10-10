@@ -71,7 +71,7 @@ else $freq = 2;
 
 
 if ($link->status == 'published')  $freq *= 2; // Allow to play a little more if published
-
+/*
 // Check for clicks vs votes
 // to avoid "cowboy votes" without reading the article
 if (!empty($link->url) && $globals['click_counter'] 
@@ -85,7 +85,7 @@ if (!empty($link->url) && $globals['click_counter']
 		error(_('no leído, y con más votos que lecturas').' ('.$link->get_clicks().' < '.$link->total_votes.')');
 	}
 }
-
+*/
 if ($votes_freq > $freq) {
 	if ($current_user->user_id > 0 && $current_user->user_karma > 4 && $link->status != 'published') {
 		// Crazy votes attack, decrease karma
