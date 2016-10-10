@@ -168,9 +168,9 @@ if ($tab_option == 4) {
 	if ($current_user->user_id == $user->id) {
 		//$conversation_extra = ' ['.Post::get_unread_conversations($user->id).']';
 		$conversation_extra = ' [<span id="p_c_counter">0</span>]';
-		$whose = _('mías');
+		$whose = _('míos');
 	} else {
-		$whose = _('suyas');
+		$whose = _('suyos');
 	}
 	$options = array(
 		$whose => post_get_base_url($user->username),
@@ -189,7 +189,7 @@ if ($tab_option == 4) {
 	$view = 0;
 
 	$options = array(
-		_('todas') => post_get_base_url(''),
+		_('todos') => post_get_base_url(''),
 		_('amigos') => post_get_base_url("$current_user->user_login/_friends"),
 		_('favoritos') => post_get_base_url("$current_user->user_login/_favorites"),
 		_('conversación').$conversation_extra => post_get_base_url("$current_user->user_login/_conversation"),

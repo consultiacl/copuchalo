@@ -28,13 +28,13 @@ function get_posts_menu($tab_selected, $username) {
 			break;
 		case 1:
 		default:
-			$id = _('todas');
+			$id = _('todos');
 			break;
 
 	}
 
 	$items = array();
-	$items[] = new MenuOption(_('todas'), post_get_base_url(''), $id, _('todos los postits'));
+	$items[] = new MenuOption(_('todos'), post_get_base_url(''), $id, _('todos los postits'));
 	$items[] = new MenuOption(_('popular'), post_get_base_url('_best'), $id, _('postits populares'));
 	if ($globals['google_maps_api']) {
 		$items[] = new MenuOption(_('mapa'), post_get_base_url('_geo'), $id, _('mapa animado'));
