@@ -30,7 +30,7 @@
 
 <li>
 <h2>¿Sólo cuenta el número de votos?</h2>
-<p>No, cuentan también el <em>karma</em>, si es voto anónimo o no, y el número de <em>problemas</em> reportados (votos negativos).
+<p>No, cuentan también el <em>karma</em> y si es voto anónimo o no.
 </p>
 </li>
 
@@ -54,8 +54,8 @@
 </li>
 
 <li>
-<h2>No puedo votar negativo ni/o los comentarios</h2>
-<p>Hace falta un karma mínimo para votar negativo y otro para cualquier voto a los comentarios. Se pueden consultar los <a target="_blank" href="values">valores de los parámetros básicos</a> sobre karma y límites para más información sobre el tema.</p>
+<h2>No puedo votar a comentarios o postits</h2>
+<p>Hace falta un karma mínimo para votar comentarios y postits. Se pueden consultar los <a target="_blank" href="values">valores de los parámetros básicos</a> sobre karma y límites para más información sobre el tema.</p>
 </li>
 
 

@@ -126,10 +126,6 @@ echo '
 		<fieldset id="votes">
 			<legend>'._('votos abiertos').'</legend>
 				'._("Tiempo que permanecen abiertos los votos") . ': ' . print_time($globals['time_enabled_votes']) . '<br/>
-				<br/>
-				'._("Tiempo abiertos los negativos si se ha extendido el tiempo de voto negativo") . ': ' . print_time($globals['time_enabled_votes']) . '<br/>
-				<br/>
-				'._("Tiempo abiertos los negativos si no se ha extendido el tiempo de voto negativo") . ': ' . print_time($globals['time_enabled_negative_votes']) . '<br/>
 		</fieldset>';
 
 
@@ -208,14 +204,8 @@ echo '
 
 echo '
 		<fieldset id="formulas">
-			<legend>'._('fórmulas').'</legend>
-				'._("El «depublish» ocurre cuando la suma del karma de los votantes de negativos > suma del karma de los votantes de positivos o que la suma de los votantes negativos > (karma de la historia / 2)") . '<br/>
-				<br/>
-				'._("Para el «depublish» también debe cumplirse que la suma del karma de los votantes de negativos > (karma del envío / 6) o que el núm. de votos negativos > (núm. de votos positivos / 6)") . '<br/>
-				<br/>
-				'._("Para que sean contados en las sumas de karma del cálculo de un «depublish», los usuarios que voten positivo deben tener karma > ") . $globals['depublish_positive_karma'] . _(" y los que voten negativo karma > ") . $globals['depublish_negative_karma'] . '<br/>
-				<br/>
-				'._("Se considera «nuevo usuario» a los usuarios que no hayan enviado ninguna historia o se hayan registrado hace menos de "). print_time($globals['new_user_time']) . '<br/>
+			<legend>'._('fórmulas').'</legend>'
+				 ._("Se considera «nuevo usuario» a los usuarios que no hayan enviado ninguna historia o se hayan registrado hace menos de "). print_time($globals['new_user_time']) . '<br/>
 				<br/>';
 if ($globals['min_user_votes']) {
 
@@ -231,8 +221,6 @@ echo '
 
 echo '
 				'._("Un «nuevo usuario» solo podrá enviar ") . $globals['new_user_links_limit'] . ' ' .  _("historias cada") . ' ' .print_time($globals['new_user_links_interval']) . ' ('._('debes esperar, ya se enviaron varias con el mismo usuario o dirección IP'). ')<br/>
-				<br/>
-				'._("Un «nuevo usuario» con envíos recientes") . ' ( &lt; ' . print_time($globals['new_user_links_interval']) . ') ' . _("y karma") . ' &lt; ' . $globals['karma_propaganda'] ._(" no podrá enviar si esos envíos han tenido más de 10 negativos y los negativos") . ' > (positivos * 1,5)<br/>
 		</fieldset>';
 
 

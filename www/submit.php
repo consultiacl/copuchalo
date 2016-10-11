@@ -281,16 +281,6 @@ function do_submit1() {
 			return false;
 		}
 
-		// avoid users sending continuous "rubbish" or "propaganda", specially new users
-		// it takes in account the number of positive votes in the last six hours
-		if ($same_user > 1 && $current_user->user_karma < $globals['karma_propaganda']) {
-			$positives_received = $db->get_var("select sum(link_votes) from links where link_date > date_sub(now(), interval $user_links_interval hour) and link_author = $current_user->user_id");
-			$negatives_received = $db->get_var("select sum(link_negatives) from links where link_date > date_sub(now(), interval $user_links_interval hour) and link_author = $current_user->user_id");
-			if ($negatives_received > 10 && $negatives_received > $positives_received * 1.5) {
-				add_submit_error( _('debes esperar, has tenido demasiados votos negativos en tus últimos envíos'));
-				return false;
-			}
-		}
 	} // END anti_spam
 
 	$link=new Link;
@@ -421,7 +411,7 @@ function do_submit1() {
 				return false;
 			} else {
 				add_submit_error( $e,
-					_('continúe, pero tenga en cuenta que podría recibir votos negativos').' '. '<a href="'.$globals['base_url_general'].$globals['legal'].'">'._('(condiciones de uso)').'</a>');
+					_('continúe, pero tenga en cuenta las').' '. '<a href="'.$globals['base_url_general'].$globals['legal'].'">'._('(condiciones de uso)').'</a>');
 				syslog(LOG_NOTICE, "warn, high ratio, continue ($current_user->user_login): $link->url");
 			}
 		}
