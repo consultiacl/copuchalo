@@ -421,7 +421,7 @@ function do_vertical_tags($what=false) {
 	if ($globals['mobile'] || $globals['submnm'] ) return;
 
 	if (!empty($what)) {
-		$status = '= "'.$what. '"';
+		$status = "= '".$what. "'";
 	} else {
 		$status = "!= 'discarded'";
 	}
@@ -436,10 +436,10 @@ function do_vertical_tags($what=false) {
 	$max_pts = 22;
 
 	$min_date = date("Y-m-d H:i:00", $globals['now'] - 172800); // 48 hours (edit! 2zero)
-	$from_where = "FROM links, sub_statuses WHERE id = ".SitesMgr::my_id()." AND link_id = link and link_date > '$min_date' and link_status='$status'";
+	$from_where = "FROM links, sub_statuses WHERE id = ".SitesMgr::my_id()." AND link_id = link and link_date > '$min_date' and link_status$status";
 	$max = 3;
 
-	$res = $db->get_col("select link_tags $from_where");
+	$res = $db->get_col("select link_tags $from_where"); 
 	if ($res && count($res) > 5) {
 		$url = $globals['base_url'].'cloud';
 		$title = _('etiquetas');
