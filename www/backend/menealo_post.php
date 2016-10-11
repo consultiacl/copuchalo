@@ -42,7 +42,7 @@ if ($current_user->user_karma < $globals['min_karma_for_post_votes']) {
 
 $value = intval($_REQUEST['value']);
 
-if ($value != -1 && $value != 1) {
+if ($value != 1) {
 	error(_('valor del voto incorrecto'));
 }
 
@@ -66,13 +66,13 @@ if ($votes_freq > $freq) {
 		$user->read();
 		$user->karma = $user->karma - 0.1;
 		$user->store();
-		error(_('¡tranquilo cowboy!, tu karma ha bajado: ') . $user->karma);
+		error(_('¡tranquilo cowboy!, tu karma ha bajado (-0.1): ') . $user->karma);
 	} else	{
 		error(_('¡tranquilo cowboy!'));
 	}
 }
 
-$vote->value = $value * $current_user->user_karma;
+$vote->value = round($current_user->user_karma);
 
 $post = Post::from_db($id);
 

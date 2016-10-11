@@ -43,12 +43,8 @@ if ($current_user->user_karma < $globals['min_karma_for_comment_votes']) {
 
 $value = intval($_REQUEST['value']);
 
-if ($value != -1 && $value != 1) {
+if ($value != 1) {
 	error(_('Valor del voto incorrecto'));
-}
-
-if ($value < 0 && $current_user->user_id == (int) $db->get_var("select link_author from links, comments where comment_id = $id and link_id = comment_link_id")) {
-	error(_('no votes negativo a comentarios de tus envíos'));
 }
 
 $comment = new Comment();
@@ -70,46 +66,23 @@ if (UserAuth::check_clon_votes($current_user->user_id, $id, 5, 'comments') > 0) 
 	error(_('no se puede votar con clones'));
 }
 
-if ($value > 0) {
-	$votes_freq = intval($db->get_var("select count(*) from votes where vote_type='comments' and vote_user_id=$current_user->user_id and vote_date > subtime(now(), '0:0:30') and vote_value > 0 and vote_ip_int = ".$globals['user_ip_int']));
-	$freq = 10;
-} else {
-	$votes_freq = intval($db->get_var("select count(*) from votes where vote_type='comments' and vote_user_id=$current_user->user_id and vote_date > subtime(now(), '0:0:30') and vote_value <= 0 and vote_ip_int = ".$globals['user_ip_int']));
-	$freq = 5;
-}
+$votes_freq = intval($db->get_var("select count(*) from votes where vote_type='comments' and vote_user_id=$current_user->user_id and vote_date > subtime(now(), '0:0:30') and vote_ip_int = ".$globals['user_ip_int']));
+$freq = 10;
 
 if ($votes_freq > $freq) {
 	if ($current_user->user_id > 0 && $current_user->user_karma > 4) {
 		// Crazy votes attack, decrease karma
 		// she does not deserve it :-)
 		$user = new User($current_user->user_id);
-		$user->add_karma(-0.2, _('Voto cowboy a comentarios'));
-		error(_('¡tranquilo cowboy!, tu karma ha bajado: ') . $user->karma);
+		$user->add_karma(-0.1, _('Voto cowboy a comentarios'));
+		error(_('¡tranquilo cowboy!, tu karma ha bajado (-0.1): ') . $user->karma);
 	} else	{
 		error(_('¡tranquilo cowboy!'));
 	}
 }
 
-// EXPERIMENTAL: the negative karma to comments depends upon the number of comments and posts
-$hours = 168;
-$comments = $db->get_var("select count(*) from comments where comment_user_id = $current_user->user_id and comment_date > date_sub(now(), interval $hours hour) and comment_karma > 0");
-$posts = $db->get_var("select count(*) from posts where post_user_id = $current_user->user_id and post_date > date_sub(now(), interval $hours hour) and post_karma >= 0");
-$negatives = $db->get_var("select count(*) from votes where vote_type = 'comments' and vote_user_id = $current_user->user_id and vote_date > date_sub(now(), interval $hours hour) and vote_value < 0");
-
-
-if (! $current_user->admin && ! $current_user->special) {
-	if ($value < 0)  {
-		$points = 2 * $comments + $posts - $negatives;
-		$value = round(-1 * max(min($points, $current_user->user_karma), 1)); // Min is -1 
-	} else {
-		$points = 4 * $comments + $posts - $negatives;
-		$value = round(max(min($points, $current_user->user_karma), 3)); // Min is 3
-	}
-} else {
-	$value = round($value * $current_user->user_karma);
-}
-
-
+// The value of the vote is always the user karma
+$value = round($current_user->user_karma);
 
 if (!$comment->insert_vote($value)) {
 	error(_('ya se votó antes con el mismo usuario o IP'));

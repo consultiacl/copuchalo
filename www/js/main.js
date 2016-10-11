@@ -105,7 +105,6 @@ function mediatize_post(user, id, value) {
 
 function respond_comment_vote(id, value) {
 	$('#vc-p-'+id).removeClass('fa-thumbs-o-up').addClass('fa-thumbs-up').attr('onclick','').unbind('click');
-	/*$('#vc-n-'+id).addClass('voted').attr('onclick','').unbind('click');*/
 }
 
 
@@ -116,10 +115,6 @@ function update_comment_vote(id, value, data) {
 	} else {
 		$('#vc-'+id).html(data.votes+"");
 		$('#vk-'+id).html(data.karma+"");
-		$('#vc-n-'+id).hide();
-		/*if (value < 0) {
-			$('#vc-p-'+id).removeClass('fa-arrow-circle-up').addClass('fa-arrow-circle-down');
-		}*/
 	}
 }
 
@@ -209,29 +204,6 @@ function check_checkfield(fieldname, mess) {
 		/* box is not checked */
 		return false;
 	}
-}
-
-function report_problem(frm, user, id) {
-	if (frm.ratings.value == 0) return;
-	mDialog.confirm("{% trans _('¿desea votar') %} <em>" + frm.ratings.options[frm.ratings.selectedIndex].text +"</em>?",
-		function () {report_problem_yes(frm, user, id)}, function () {report_problem_no(frm, user, id)});
-	return false;
-}
-
-function report_problem_no(frm, user, id) {
-		frm.ratings.selectedIndex=0;
-}
-
-function report_problem_yes(frm, user, id) {
-	var content = "id=" + id + "&user=" + user + '&value=' +frm.ratings.value + "&key=" + base_key	+ "&l=" + link_id + "&u=" + encodeURIComponent(document.referrer);
-	var url = base_url + "backend/problem?" + content;
-	$.getJSON(url,
-		 function(data) {
-			parseLinkAnswer(id, data);
-		}
-	);
-	reportAjaxStats('vote', 'link');
-	return false;
 }
 
 function pref_input_check (id) {
