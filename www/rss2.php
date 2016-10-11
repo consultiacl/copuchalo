@@ -265,7 +265,7 @@ if ($links) {
 			if ($link->status != 'published') $rel = 'rel="nofollow"';
 			else $rel = '';
 
-			echo '<p>&#187;&nbsp;<a href="http://'.get_server_name().$globals['base_url'].'go?id='.$link->id.'"';
+			echo '<p>&#187;&nbsp;<a href="https://'.get_server_name().$globals['base_url'].'go?id='.$link->id.'"';
 			echo " $rel>"._('noticia original')."</a> (".parse_url($link->url, 1).")</p>";
 
 			echo "]]></description>\n";
@@ -276,7 +276,7 @@ if ($links) {
 		//echo '<wfw:comments>'.$link->comments().'</wfw:comments>';
 		// echo "		<trackback:ping>".get_trackback($link->id)."</trackback:ping>\n";  // no standard
 		//echo "<content:encoded><![CDATA[ ]]></content:encoded>\n";
-		echo '		<wfw:commentRss>http://'.get_server_name().$globals['base_url'].'comments_rss?id='.$link->id.'</wfw:commentRss>';
+		echo '		<wfw:commentRss>https://'.get_server_name().$globals['base_url'].'comments_rss?id='.$link->id.'</wfw:commentRss>';
 		echo "	</item>\n\n";
 	}
 }
@@ -301,22 +301,22 @@ function do_header($title) {
 	header('Content-type: text/xml; charset=UTF-8', true);
 	echo '<?xml version="1.0" encoding="UTF-8"?'.'>' . "\n";
 	echo '<rss version="2.0" '."\n";
-	echo '	xmlns:atom="http://www.w3.org/2005/Atom"'."\n";
-	echo '	xmlns:content="http://purl.org/rss/1.0/modules/content/"'."\n";
-	echo '	xmlns:wfw="http://wellformedweb.org/CommentAPI/"'."\n";
-	echo '	xmlns:dc="http://purl.org/dc/elements/1.1/"'."\n";
-	echo '	xmlns:georss="http://www.georss.org/georss"'."\n";
-	echo '	xmlns:media="http://search.yahoo.com/mrss/"'."\n";
+	echo '	xmlns:atom="https://www.w3.org/2005/Atom"'."\n";
+	echo '	xmlns:content="https://purl.org/rss/1.0/modules/content/"'."\n";
+	echo '	xmlns:wfw="https://wellformedweb.org/CommentAPI/"'."\n";
+	echo '	xmlns:dc="https://purl.org/dc/elements/1.1/"'."\n";
+	echo '	xmlns:georss="https://www.georss.org/georss"'."\n";
+	echo '	xmlns:media="https://search.yahoo.com/mrss/"'."\n";
 	echo '	xmlns:mediatize="https://www.mediatize.net/faq-es.php"'."\n";
 	echo ' >'. "\n";
 	echo '<channel>'."\n";
 	echo'	<title>'.$title.'</title>'."\n";
-	echo '	<atom:link href="http://'.get_server_name().__(clean_input_url($_SERVER['REQUEST_URI'])).'" rel="self" type="application/rss+xml" />'."\n";
-	echo'	<link>http://'.get_server_name().$home.'</link>'."\n";
-	//echo"	<image><title>$title</title><link>http://".get_server_name().$home."</link><url>http://".get_static_server_name().$globals['base_url']."img/mnm/eli-rss.png</url></image>\n";
+	echo '	<atom:link href="https://'.get_server_name().__(clean_input_url($_SERVER['REQUEST_URI'])).'" rel="self" type="application/rss+xml" />'."\n";
+	echo'	<link>https://'.get_server_name().$home.'</link>'."\n";
+	echo"	<image><title>$title</title><link>https://".get_server_name().$home."</link><url>https://".get_static_server_name().$globals['base_url']."img/favicons/logo_64x64.png</url></image>\n";
 	echo'	<description>'._('Sitio colaborativo de publicación y comunicación entre blogs').'</description>'."\n";
 	echo'	<pubDate>'.date("r", $last_modified).'</pubDate>'."\n";
-	echo'	<generator>http://blog.mediatize.info/</generator>'."\n";
+	echo'	<generator>https://blog.mediatize.info/</generator>'."\n";
 	echo'	<language>'.$dblang.'</language>'."\n";
 	if ($globals['pubsub'] && $globals['main_published_rss']) {
 		echo '	<atom:link rel="hub" href="'.$globals['pubsub'].'"/>'."\n";

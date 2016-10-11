@@ -16,7 +16,7 @@ $page_size = $globals['page_size'];
 $page = get_current_page();
 $offset=($page-1)*$page_size;
 
-$globals['extra_head'] .= '<link rel="alternate" type="application/rss+xml" title="'._('blogs de Mediatize').'" href="http://'.get_server_name().$globals['base_url_general'].'blogs_rss2.php" />'."\n";
+$globals['extra_head'] .= '<link rel="alternate" type="application/rss+xml" title="'._('blogs de Mediatize').'" href="https://'.get_server_name().$globals['base_url_general'].'blogs_rss2.php" />'."\n";
 do_header(_('apuntes de blogs') . ' | ' . _('mediatize'));
 do_tabs('main', _('apuntes'), true);
 
