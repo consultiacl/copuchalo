@@ -11,7 +11,7 @@ header('Content-Type: text/xml; charset=utf-8');
 
 echo '<?xml version="1.0" encoding="UTF-8"?>'."\n";
 echo '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">'."\n";
-echo '<ShortName>Menéame Search</ShortName>'."\n";
+echo '<ShortName>Mediatize Search</ShortName>'."\n";
 echo '<Description>'._('noticias elegidas por los usuarios').'</Description>'."\n";
 echo '<InputEncoding>UTF-8</InputEncoding>'."\n";
 echo '<Image height="16" width="16">http://'.get_static_server_name().$globals['base_url'].'img/favicons/favicon4.ico</Image>'."\n";
@@ -23,3 +23,4 @@ echo '<Param name="q" value="{searchTerms}"/>'."\n";
 echo '</Url>'."\n";
 echo '<SearchForm>http://'.get_server_name().$globals['base_url'].'search</SearchForm>'."\n";
 echo '</OpenSearchDescription>'."\n";
+

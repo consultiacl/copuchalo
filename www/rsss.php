@@ -16,8 +16,8 @@ $page_size = $globals['page_size'];
 $page = get_current_page();
 $offset=($page-1)*$page_size;
 
-$globals['extra_head'] .= '<link rel="alternate" type="application/rss+xml" title="'._('blogs de Menéame').'" href="http://'.get_server_name().$globals['base_url_general'].'blogs_rss2.php" />'."\n";
-do_header(_('apuntes de blogs') . ' | ' . _('menéame'));
+$globals['extra_head'] .= '<link rel="alternate" type="application/rss+xml" title="'._('blogs de Mediatize').'" href="http://'.get_server_name().$globals['base_url_general'].'blogs_rss2.php" />'."\n";
+do_header(_('apuntes de blogs') . ' | ' . _('mediatize'));
 do_tabs('main', _('apuntes'), true);
 
 /*** SIDEBAR 
@@ -54,9 +54,9 @@ if ($entries) {
 }
 echo '</table>';
 echo '<fieldset id="nota"><legend>'._('postit').'</legend>';
-echo _('Los enlaces son de apuntes de blogs indicados en el perfil de usuarios activos de Menéame.');
+echo _('Los enlaces son de apuntes de blogs indicados en el perfil de usuarios activos de Mediatize.');
 echo ' ';
-echo _('No tienen relación con meneame.net, ni han sido seleccionados por su comunidad de usuarios.');
+echo _('No tienen relación con mediatize.info, ni han sido seleccionados por su comunidad de usuarios.');
 echo '</fieldset>';
 
 do_pages($rows, $page_size);
