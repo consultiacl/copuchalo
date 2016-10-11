@@ -236,10 +236,36 @@ echo '
 		</fieldset>';
 
 
+if(($result = $db->get_results("select user_login, user_level from users where user_level in ('god','admin','blogger') order by user_level"))) {
+	echo '<fieldset id="admins">
+		<legend>'._('usuarios con privilegios').'</legend>
+			<style type="text/css">
+			table {
+				border-collapse:separate;
+			}
+			th {
+				text-align: center;
+			}
+			td {
+				border:1px solid black;
+				padding:5px;
+			}
+			</style>
+		<table>
+			<thead>
+    			<tr>
+			<th>Usuario</th>
+			<th>Nivel</th>
+			</tr>
+			</thead>
+			<tbody>';
+		foreach($result as $idx=>$object) {
+			echo "<tr><td>".$object->user_login."</td><td>".$object->user_level."</td></tr>";
+		}
+	echo '</tbody></table></fieldset>';
+}
 
-
-echo '
-</div>';
+echo '</div>';
 
 do_footer_menu();
 do_footer();
