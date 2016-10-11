@@ -94,7 +94,7 @@ class OAuthBase {
 			$user->email_register = $this->username.'@'.$this->service;
 			$user->username_register = $user->username;
 		}
-		syslog(LOG_NOTICE, "Meneame new user from $this->service: $user->username, $user->names");
+		syslog(LOG_NOTICE, "new user from $this->service: $user->username, $user->names");
 		$user->store();
 
 		Log::insert('user_new', $user->id, $user->id);

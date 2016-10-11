@@ -140,7 +140,7 @@ function check_and_save($comment, $link) {
 
 		if ($current_user->user_id == $comment->author && $comment->banned
 				&& $current_user->Date() > $globals['now'] - 86400) {
-			syslog(LOG_NOTICE, "Meneame: editcomment not stored, banned link ($current_user->user_login)");
+			syslog(LOG_NOTICE, "editcomment not stored, banned link ($current_user->user_login)");
 			return _('comentario no insertado, enlace a sitio deshabilitado (y usuario reciente)');
 		}
 

@@ -118,7 +118,7 @@ function save_profile() {
 		$old_user_id = $user->id;
 		$user->disable(true);
 		Log::insert('user_delete', $old_user_id, $old_user_id );
-		syslog(LOG_NOTICE, "Meneame, disabling $old_user_id ($old_user_login) by $current_user->user_login -> $user->username ");
+		syslog(LOG_NOTICE, "disabling $old_user_id ($old_user_login) by $current_user->user_login -> $user->username ");
 		$current_user->Logout(get_user_uri($user->username));
 		die;
 	}

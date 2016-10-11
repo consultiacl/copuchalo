@@ -84,7 +84,7 @@ $same_links = $post->same_links_count();
 if ($same_links > 2) {
 	$reduction = $same_links * 0.2;
 	$user->karma = $user->karma - $reduction;
-	syslog(LOG_NOTICE, "Meneame: newpost decreasing $reduction of karma to $user->username (now $user->karma)");
+	syslog(LOG_NOTICE, "newpost decreasing $reduction of karma to $user->username (now $user->karma)");
 	$user->store();
 }
 

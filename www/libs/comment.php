@@ -394,7 +394,7 @@ class Comment extends LCPBase {
 				$link_ban = check_ban($link, 'hostname', false, true); // Mark this comment as containing a banned link
 				$this->banned |= $link_ban;
 				if ($link_ban) {
-					syslog(LOG_NOTICE, "Meneame: banned link in comment: $match ($current_user->user_login)");
+					syslog(LOG_NOTICE, "banned link in comment: $match ($current_user->user_login)");
 				}
 				if (array_search($components['host'], $this->links) === false)
 					$this->links[] = $components['host'];
@@ -530,7 +530,7 @@ class Comment extends LCPBase {
 				$l = implode(',', $clones);
 				$c = (int) $db->get_var("select count(*) from comments where comment_date > date_sub(now(), interval $hours hour) and comment_user_id in ($l)");
 				if ($c > 0) {
-					syslog(LOG_NOTICE, "Meneame, clon comment ($current_user->user_login, $comment->ip) in $link->uri");
+					syslog(LOG_NOTICE, "clon comment ($current_user->user_login, $comment->ip) in $link->uri");
 					return _('ya hizo un comentario con usuarios clones');
 				}
 			}
@@ -542,13 +542,13 @@ class Comment extends LCPBase {
 			// Avoid astroturfing from the same link's author
 			if ($link->status != 'published' && $link->ip == $globals['user_ip'] && $link->author != $comment->author) {
 				UserAuth::insert_clon($comment->author, $link->author, $link->ip);
-				syslog(LOG_NOTICE, "Meneame, comment-link astroturfing ($current_user->user_login, $link->ip): ".$link->get_permalink());
+				syslog(LOG_NOTICE, "comment-link astroturfing ($current_user->user_login, $link->ip): ".$link->get_permalink());
 				return _('no se puede comentar desde la misma IP del autor del envío');
 			}
 
 			// Avoid floods with clones from the same IP
 			if (intval($db->get_var("select count(*) from comments where comment_link_id = $link->id and comment_ip='$comment->ip' and comment_user_id != $comment->author")) > 1) {
-				syslog(LOG_NOTICE, "Meneame, comment astroturfing ($current_user->user_login, $comment->ip)");
+				syslog(LOG_NOTICE, "comment astroturfing ($current_user->user_login, $comment->ip)");
 				return _('demasiados comentarios desde la misma IP con usuarios diferentes');
 			}
 		}
@@ -562,7 +562,7 @@ class Comment extends LCPBase {
 		if (! $current_user->admin) {
 			$comment->get_links();
 			if ($comment->banned && $current_user->Date() > $globals['now'] - 86400) {
-				syslog(LOG_NOTICE, "Meneame: comment not inserted, banned link ($current_user->user_login)");
+				syslog(LOG_NOTICE, "comment not inserted, banned link ($current_user->user_login)");
 				return _('comentario no insertado, enlace a sitio deshabilitado (y usuario reciente)');
 			}
 
@@ -666,7 +666,7 @@ class Comment extends LCPBase {
 
 		foreach ($orders as $order => $val) {
 			if ($refs > 10) { // Limit the number of references to avoid abuses/spam
-				syslog(LOG_NOTICE, "Meneame: too many references in comment: $this->id ($current_user->user_login)");
+				syslog(LOG_NOTICE, "too many references in comment: $this->id ($current_user->user_login)");
 				break;
 			}
 			if (! preg_match('/^\d+/', $order)) {

@@ -2,7 +2,7 @@
 <!-- by Miguel Angel Pedregosa Pareja -->
 <!-- http://sys3.es/migue/blog/ -->
 <!-- Versión 2.5 adaptado para Meneame 2 en su diseño de 3 columnas-->
-<generator xmlns="http://www.mozilla.org/microsummaries/0.1" name="Meneame Last Post">
+<generator xmlns="http://www.mozilla.org/microsummaries/0.1" name="Mediatize Last Post">
   <template>
     <transform xmlns="http://www.w3.org/1999/XSL/Transform" version="1.0">
       <output method="text"/>

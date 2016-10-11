@@ -44,7 +44,7 @@ echo json_encode($dict);
 
 
 function json_error($mess) {
-	syslog(LOG_INFO, "Meneame: avatar $mess");
+	syslog(LOG_INFO, "avatar $mess");
 	$dict['error'] = $mess;
 	echo json_encode($dict);
 	die;
