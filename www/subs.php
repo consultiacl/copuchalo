@@ -100,21 +100,20 @@ do_footer();
 function print_tabs($option) {
 	global $current_user;
 
-	if (SitesMgr::my_id() == 1 && SitesMgr::can_edit(0)) $can_edit = true;
-	else $can_edit = false;
+	//if (SitesMgr::my_id() == 1 && SitesMgr::can_edit(0)) $can_edit = true;
+	//else $can_edit = false;
 
 	$items = array();
 	
 	if ($current_user->user_id) {
 		$suscriptions_num = count(SitesMgr::get_subscriptions($current_user->user_id));
-    	$items[] = array('id' => 0, 'url' => 'subs?subscribed', 'title' => _('suscripciones')." [$suscriptions_num]");
+		$items[] = array('id' => 0, 'url' => 'subs?subscribed', 'title' => _('suscripciones')." [$suscriptions_num]");
 	}
-    $items[] = array('id' => 1, 'url' => 'subs?active', 'title' => _('más activos'));
+	$items[] = array('id' => 1, 'url' => 'subs?active', 'title' => _('más activos'));
 	$items[] = array('id' => 2, 'url' => 'subs?all', 'title' => _('todos'));
-	if ($can_edit) {
+	//if ($can_edit) {
 		$items[] = array('id' => 3, 'url' => 'subedit', 'title' => _('crear sub'));
-	}
-
+	//}
 
 	$vars = compact('items', 'option');
 	return Haanga::Load('print_tabs.html', $vars);
