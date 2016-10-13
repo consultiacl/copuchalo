@@ -173,7 +173,7 @@ def do_site(site_id, site):
 		query = """
 			replace into annotations
 				(annotation_key, annotation_expire, annotation_text)
-				values (%s, date_add(now(), interval 10 minute), %s)
+				values (%s, date_add(now(), interval 1 hour), %s)
 		"""
 		cursor_update.execute(query, ('top-link-'+site, annotations))
 		cursor_update.close()
