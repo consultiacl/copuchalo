@@ -306,7 +306,7 @@ switch ($tab_option) {
 case 1:
 case 2:
 	echo '<div class="comments">';
-	if($link->comments > 0) echo '<div class="comments-page-header">comentarios</div>';
+	if($link->comments > 0) echo '<div class="comments-page-header">comentarios ('.$link->comments.')</div>';
 
 	if($tab_option == 1) {
 		print_external_analysis($link);
@@ -465,7 +465,7 @@ case 9:
 /////////////// TODO: in progress
 case 10:
 	echo '<div class="comments">';
-	if($link->comments > 0) echo '<div class="comments-page-header">comentarios</div>';
+	if($link->comments > 0) echo '<div class="comments-page-header">comentarios ('.$link->comments.')</div>';
 
 	include_once(mnminclude.'commenttree.php');
 	$tree = new CommentTree();

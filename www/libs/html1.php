@@ -446,7 +446,7 @@ function do_vertical_tags($what=false) {
 		$content = '';
 
 		foreach ($res as $line) {
-			$list = explode(',', mb_strtolower($line));
+			$list = explode(',', mb_strtolower($line, 'UTF-8'));
 			foreach ($list as $w) {
 				$w = trim($w);
 				$words[$w]++;
@@ -470,7 +470,7 @@ function do_vertical_tags($what=false) {
 			} else {
 				$content .= $globals['base_url'].'search?p=tags&amp;q=';
 			}
-			$content .= urlencode($word).'">'.$word.'</a>  ';
+			$content .= $word.'">'.$word.'</a>  ';
 		}
 		if ($max > 2) {
 			$vars = compact('content', 'title', 'url');

@@ -203,8 +203,7 @@
 			<div class="nd-item">
 				<span>votos: </span>
 				<span title="{% trans _('usuarios') %}"  id="a-usu-{{ self.id }}">{{ self.votes }}</span>&nbsp;<span>·</span>
-				<span title="{% trans _('anónimos') %}"  id="a-ano-{{ self.id }}">{{ self.anonymous }}</span>&nbsp;<span>·</span>
-				<span title="{% trans _('negativos') %}" id="a-neg-{{ self.id }}">{{ self.negatives }}</span>
+				<span title="{% trans _('anónimos') %}"  id="a-ano-{{ self.id }}">{{ self.anonymous }}</span>
 			</div>
 
 			<span>|</span>
@@ -241,7 +240,7 @@
 			{% endif %}
 			<span data-ts="{{ self.sent_date }}" class="ts visible" title="{% trans _('enviado') %}: ">____</span>
     		{% if self.status == 'published' %}
-			    {% trans _('publicado: ') %}
+			    {% trans _(', publicado: ') %}
 				<span data-ts="{{ self.sub_date }}" class="ts visible" title="{% trans _('publicado') %}: ">____</span>
 			{% endif %}
 		  </div>

@@ -33,7 +33,7 @@ body {
         font-size: 1.3em;
         color: #eee;
         text-align: center;
-	margin: 0 5px 0 10px;
+	margin: 2px 5px 0 10px;
 	cursor: pointer;
 	vertical-align: middle;
 	text-decoration: none;
@@ -83,6 +83,19 @@ body {
 	padding: 9px;
 	margin-bottom: 5em;
 	vertical-align: top;
+}
+
+.news-front-pub {
+	font-family: 'Roboto', sans-serif;
+	font-size: 0.7rem;
+	white-space: nowrap;
+	color: #666;
+}
+
+.news-front-pub a:link, 
+.news-front-pub a:visited {
+	font-weight: bold;
+	color: #555;
 }
 
 .news-body {

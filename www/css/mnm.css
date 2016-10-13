@@ -184,7 +184,6 @@ label {
 a {
 	text-decoration: none;
 	outline: none;
-	vertical-align: baseline;
 	color: #444;
 }
 
@@ -275,10 +274,10 @@ cursor: pointer;
 
 #header-top .logo-ed {
 	background: url('{{ globals.base_static }}img/mdtz/logo-white.svg') no-repeat left top;
-	background-size: 20px 20px;
-	height:20px;
-	width:20px;
-	margin: 5px 10px 5px 5px;
+	background-size: 25px 25px;
+	height:25px;
+	width:25px;
+	margin: 3px 10px 5px 5px;
 	vertical-align: middle;
 	float:left;
 }
@@ -730,9 +729,15 @@ padding-bottom:6px;
 }
 
 .sidebox .cell {
-margin: 5px 0;
-min-height:35px;
-clear: both;
+	margin: 5px 0;
+	min-height:35px;
+	clear: both;
+}
+
+.sidebox .celltags {
+	margin: 5px 0;
+	min-height: 40px;
+	clear: both;
 }
 
 .sidebox .thumbnail {
@@ -810,12 +815,13 @@ clear: both;
 
 .sidebox .tagcloud {
 	color: #005be2;
-	margin:1px;
+	margin:2px;
 	text-align: center;
 }
 
 .sidebox .comments {
 	margin: 0 2px;
+	font-size: 0.8em;
 }
 
 .sidebox img.avatar {
@@ -832,7 +838,7 @@ clear: both;
 	clear: left;
 	display: block;
 	font-size: 90%;
-	color:#005be2;
+	color:#333;
 	margin: 0 0 10px 0;
 }
 
@@ -851,14 +857,15 @@ clear: both;
 }
 
 .sidebox .rss li {
-	font-size: 90%;
+	font-size: 80%;
 	color: #005be2;
 	display:block;
-	padding-left: 24px;
-	background: url({{ globals.base_static }}img/common/h9_rss.png) no-repeat 4px 0px;
-	margin: 10px 0 10px 0px;
+	margin: 15px;
 }
 
+.sidebox .rss li a:hover {
+	text-decoration: none;
+}
 
 
 
@@ -1568,8 +1575,11 @@ color: #aaa;
 font-weight: bold;
 }
 
-.news-details span, .news-details div, .comment-votes-info span, .comment-votes-info div, .comment-meta span {
-vertical-align: top;
+
+.comment-votes-info span,
+.comment-votes-info div,
+.comment-meta span {
+	vertical-align: top;
 }
 
 

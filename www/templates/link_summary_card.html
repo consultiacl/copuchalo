@@ -220,8 +220,15 @@
 		</div>
 
 		{% if ! content_full %}
-		<span>|</span>
-		<a class="comments-link" href="{{ self.relative_permalink }}" title="{% trans _('comentarios de') %}: «{{ self.title }}»">comentarios ({{ self.comments }})</a>
+			<span>|</span>
+			<a class="comments-link" href="{{ self.relative_permalink }}" title="{% trans _('comentarios de') %}: «{{ self.title }}»">comentarios ({{ self.comments }})</a>
+			<br>
+			<span class="news-front-pub">{% trans _('enviado por') %} <a href="{% exec get_user_uri self.username, 'history' %}">{{ self.username }}</a></span>
+			{% if self.status == 'published' %}
+				<span class="news-front-pub">|<span>
+				<span class="news-front-pub">{% trans _('publicado: ') %}</span>
+				<span data-ts="{{ self.sub_date }}" class="news-front-pub ts visible" title="{% trans _('publicado') %}: ">____</span>
+			{% endif %}
 		{% endif %}
 	</div>
 	{% endif %}
@@ -244,8 +251,8 @@
 			{% trans _('enviado: ') %}
 		{% endif %}
 		<span data-ts="{{ self.sent_date }}" class="ts visible" title="{% trans _('enviado') %}: ">____</span>
-    	{% if self.status == 'published' %}
-		    {% trans _('publicado: ') %}
+	    	{% if self.status == 'published' %}
+		    {% trans _(', publicado: ') %}
 			<span data-ts="{{ self.sub_date }}" class="ts visible" title="{% trans _('publicado') %}: ">____</span>
 		{% endif %}
 	  </div>
