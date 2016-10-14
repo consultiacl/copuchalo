@@ -16,7 +16,7 @@ define('DEBUG', false);
 define ('MAX', 1.15);
 define ('MIN', 1.0);
 define ('PUB_MIN', 1);
-define ('PUB_MAX', 75);
+define ('PUB_MAX', 38); //75);
 define ('PUB_PERC', 0.15);
 
 $past_karma = 0;
@@ -33,7 +33,7 @@ foreach ($sites as $site) {
 
 	if (! $site_info->sub) {
 		echo "**********************   SUBS  -PROMOTE-   **********************************************\n";
-		promote_from_subs($site, 24, 40, 8);
+		promote_from_subs($site, 24, 50, 8);
 		echo "*****************************************************************************************\n";
 	}
 }
