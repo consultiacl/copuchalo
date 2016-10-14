@@ -348,7 +348,7 @@ class SitesMgr {
 	}
 
 	static public function can_edit($id = -1) {
-		global $current_user, $db;
+		global $globals, $current_user, $db;
 
 		if (! $current_user->user_id) return false;
 		if ($current_user->admin) return true;
@@ -360,7 +360,7 @@ class SitesMgr {
 
 		$n = $db->get_var("select count(*) from subs where owner = $current_user->user_id");
 
-		return $n < 10 && time() - $current_user->user_date > 86400*10;
+		return $n < $globals['max_subs_user'] && time() - $current_user->user_date > 86400*$globals['min_days_create_sub'];
 	}
 
 	static public function my_parent() {
