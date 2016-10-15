@@ -663,7 +663,7 @@ function print_external_analysis($link) {
 function print_relevant_comments($link) {
 	global $globals, $db;
 
-	if ($link->comments < 10 ) return;
+	if ($link->comments < 5 ) return;
 	if ($link->comments > 30 && $globals['now'] - $link->date < 86400*4) $do_cache = true;
 	else $do_cache = false;
 
@@ -673,7 +673,7 @@ function print_relevant_comments($link) {
 	}
 
 	$karma = intval($globals['comment_highlight_karma']/2);
-	$limit = min(15, intval($link->comments/10));
+	$limit = min(15, intval($link->comments/5));
 
 	// For the SQL
 	$extra_limit = $limit * 2;
