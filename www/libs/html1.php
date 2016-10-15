@@ -875,7 +875,7 @@ function do_last_subs($status = 'published', $count = 10, $order = 'date') {
 			}
 			$links[] = $link;
 		}
-		$subclass = 'brown';
+		$subclass = ''; // brown
 		$url = $globals['base_url_general'].'subs';
 		$vars = compact('links', 'title', 'subclass', 'url');
 		$output = Haanga::Load('best_stories.html', $vars, true);
