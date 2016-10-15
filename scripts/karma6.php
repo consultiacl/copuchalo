@@ -212,16 +212,18 @@ foreach ($res as $dbuser) {
 
 		$discarded_given = (int) $db->get_var("SELECT SQL_NO_CACHE count(*) FROM votes,links WHERE vote_type='links' and vote_user_id = $user->id and vote_date > $discarded_history_from  and vote_value > 0 AND link_id = vote_link_id AND link_status in ('discard', 'autodiscard') and link_author != $user->id");
 
-		$abuse_given = (int) $db->get_var("SELECT SQL_NO_CACHE count(*) FROM votes,links WHERE vote_type='links' and vote_user_id = $user->id and vote_date > $history_from  and vote_value > 0 AND link_id = vote_link_id AND link_status in ('abuse') and link_author != $user->id");
+		//$abuse_given = (int) $db->get_var("SELECT SQL_NO_CACHE count(*) FROM votes,links WHERE vote_type='links' and vote_user_id = $user->id and vote_date > $history_from  and vote_value > 0 AND link_id = vote_link_id AND link_status in ('abuse') and link_author != $user->id");
 
 		$karma2 = min($points_given, $points_given * pow($published_average, 2) * ($published_points/($published_links/5) - ($nopublished_given/$published_links)/10) - 0.1 * $discarded_given);
 
+		/*
 		if ($abuse_given > 0) {
 			$pun = $abuse_given * 1;
 			$karma2 -= $pun;
 			$output .= _('Descuento por votar a enlaces que violan las reglas')." ($abuse_given):  $pun\n";
 			$penalized += 2;
 		}
+		*/
 
 		if ($karma2 > 0) {
 			// Count the  comments of the users during the analised period
