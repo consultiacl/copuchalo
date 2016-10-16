@@ -13,11 +13,11 @@ define('DEBUG', false);
 //header("Content-Type: text/html");
 
 
-define ('MAX', 1.15);
+define ('MAX', 1.05);
 define ('MIN', 1.0);
 define ('PUB_MIN', 1);
-define ('PUB_MAX', 38); //75);
-define ('PUB_PERC', 0.15);
+define ('PUB_MAX', 20); 75);
+define ('PUB_PERC', 0.05);
 
 $past_karma = 0;
 
@@ -33,7 +33,7 @@ foreach ($sites as $site) {
 
 	if (! $site_info->sub) {
 		echo "**********************   SUBS  -PROMOTE-   **********************************************\n";
-		promote_from_subs($site, 24, 80, 8);
+		promote_from_subs($site, 24, 100, 10);
 		echo "*****************************************************************************************\n";
 	}
 }
