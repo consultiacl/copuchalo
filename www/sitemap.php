@@ -29,7 +29,7 @@ if (empty($_SERVER['QUERY_STRING'])) {
 function do_master($size) {
 	global $globals, $db;
 
-	echo '<sitemapindex xmlns="'.$globals['scheme'].'//www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+	echo '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
 
 	echo '<sitemap>'."\n";
 	echo '<loc>'.$globals['scheme'].'//'.get_server_name().$globals['base_url'].'sitemap?statics</loc>'."\n";
@@ -49,7 +49,7 @@ function do_statics() {
 			'cloud', 'popular', 'top_commented', 
 			'top_comments', 'top_users', 'legal', 'faq-es.php');
 
-	echo '<urlset xmlns="'.$globals['scheme'].'//www.sitemaps.org/schemas/sitemap/0.9">'."\n";
+	echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n";
 	// The index
 	echo '<url>'."\n";
 	echo '<loc>'.$globals['scheme'].'//'.get_server_name().$globals['base_url'].'</loc>'."\n";
@@ -77,7 +77,7 @@ function do_published($page) {
 	} else {
 		$server = get_server_name();
 	}
-	echo '<urlset xmlns="'.$globals['scheme'].'//www.sitemaps.org/schemas/sitemap/0.9">'."\n";
+	echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n";
 	foreach ($result as $uri) {
 		echo '<url>'."\n";
 		echo '<loc>'.$globals['scheme'].'//'.$server.$globals['base_url'].'story/'.$uri.'</loc>'."\n";
@@ -97,7 +97,7 @@ function do_last_published() {
 	} else {
 		$server = get_server_name();
 	}
-	echo '<urlset xmlns="'.$globals['scheme'].'//www.sitemaps.org/schemas/sitemap/0.9">'."\n";
+	echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n";
 	foreach ($result as $uri) {
 		echo '<url>'."\n";
 		echo '<loc>'.$globals['scheme'].'//'.$server.$globals['base_url'].'story/'.$uri.'</loc>'."\n";
