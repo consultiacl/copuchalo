@@ -41,7 +41,7 @@
 addPostCode(function () {
 	$("#header-logo").attr('href', '{{ self.permalink }}')
 		.attr('href', '{{ self.permalink }}')
-		.attr('title', "{% trans _('ir a') %} «{{ self.title }}» {% trans _('en menéame') %}")
+		.attr('title', "{% trans _('ir a') %} «{{ self.title }}» {% trans _('en mediatize') %}")
 		.click(function () { location.href='{{ self.permalink }}' })
 		.after($('#bar'));
 });

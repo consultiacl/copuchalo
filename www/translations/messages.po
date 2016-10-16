@@ -38,7 +38,7 @@ msgstr ""
 #: topstories.php:63 promote.php:14 sneakme/index.php:58 friends.php:32
 #: topusers.php:63 api/check_url_simple.php:18 map.php:17 cloud.php:41
 #: faq-es.php:4 topcommented.php:33
-msgid "menéame"
+msgid "mediatize"
 msgstr ""
 
 #: comment.php:102 story.php:188 libs/link.php:702 submit.php:471
@@ -199,7 +199,7 @@ msgid "noticias pendientes"
 msgstr ""
 
 #: mobile/shakeit.php:22 mobile/topstories.php:49
-msgid "menéame mobile"
+msgid "mediatize mobile"
 msgstr ""
 
 #: mobile/login.php:73 mobile/login.php:118 login.php:118 login.php:172
@@ -794,7 +794,7 @@ msgid "Este mensaje ha sido enviado a solicitud de la dirección: "
 msgstr ""
 
 #: libs/mail.php:27
-msgid "el equipo de menéame"
+msgid "el equipo de mediatize"
 msgstr ""
 
 #: libs/mail.php:30
@@ -814,7 +814,7 @@ msgid "menear pendientes"
 msgstr ""
 
 #: libs/html1.php:117
-msgid "menéame search"
+msgid "mediatize search"
 msgstr ""
 
 #: libs/html1.php:169 libs/ads-credits-functions.php:102
@@ -822,7 +822,7 @@ msgid "ayuda"
 msgstr ""
 
 #: libs/html1.php:176
-msgid "menéame te saluda en "
+msgid "mediatize te saluda en "
 msgstr ""
 
 #: libs/html1.php:177
@@ -1048,7 +1048,7 @@ msgid "versión móvil"
 msgstr ""
 
 #: libs/ads-credits-functions.php:115
-msgid "menéame TV"
+msgid "mediatize TV"
 msgstr ""
 
 #: libs/ads-credits-functions.php:116
@@ -2442,7 +2442,7 @@ msgid "¿noticias?"
 msgstr ""
 
 #: login.php:67
-msgid "¿Qué es menéame?"
+msgid "¿Qué es mediatize?"
 msgstr ""
 
 #: login.php:68
@@ -2450,7 +2450,7 @@ msgid "Es un sitio que te permite enviar una historia que será revisada por tod
 msgstr ""
 
 #: login.php:70
-msgid "¿Todavía no eres usuario de menéame?"
+msgid "¿Todavía no eres usuario de mediatize?"
 msgstr ""
 
 #: login.php:71
@@ -2462,7 +2462,7 @@ msgid "Enviar historias"
 msgstr ""
 
 #: login.php:75
-msgid "Una vez registrado puedes enviar las historias que consideres interesantes para la comunidad. Si tienes algún tipo de duda sobre que tipo de historias puedes enviar revisa nuestras <a href=\"faq-es.php\">preguntas frecuentes sobre menéame</a>"
+msgid "Una vez registrado puedes enviar las historias que consideres interesantes para la comunidad. Si tienes algún tipo de duda sobre que tipo de historias puedes enviar revisa nuestras <a href=\"faq-es.php\">preguntas frecuentes sobre mediatize</a>"
 msgstr ""
 
 #: login.php:78
@@ -2470,7 +2470,7 @@ msgid "Escribir comentarios"
 msgstr ""
 
 #: login.php:79
-msgid "Puedes escribir tu opinión sobre las historias enviadas a menéame mediante comentarios de texto. También puedes votar positivamente aquellos comentarios ingeniosos, divertidos o interesantes y negativamente aquellos que consideres inoportunos"
+msgid "Puedes escribir tu opinión sobre las historias enviadas a mediatize mediante comentarios de texto. También puedes votar positivamente aquellos comentarios ingeniosos, divertidos o interesantes y negativamente aquellos que consideres inoportunos"
 msgstr ""
 
 #: login.php:82
@@ -2478,7 +2478,7 @@ msgid "Perfil de usuario"
 msgstr ""
 
 #: login.php:83
-msgid "Toda tu información como usuario está disponible desde la página de tu perfil. También puedes subir una imagen que representará a tu usuario en menéame. Incluso es posible compartir los ingresos publicitarios de Menéame, solo tienes que introducir el código de tu cuenta Google Adsense desde tu perfil"
+msgid "Toda tu información como usuario está disponible desde la página de tu perfil. También puedes subir una imagen que representará a tu usuario en mediatize. Incluso es posible compartir los ingresos publicitarios de Menéame, solo tienes que introducir el código de tu cuenta Google Adsense desde tu perfil"
 msgstr ""
 
 #: login.php:86
@@ -2486,7 +2486,7 @@ msgid "Chatear en tiempo real desde la fisgona"
 msgstr ""
 
 #: login.php:87
-msgid "Gracias a la <a href=\"sneak.php\">fisgona</a> puedes ver en tiempo real toda la actividad de menéame. Además como usuario registrado podrás chatear con mucha más gente de la comunidad menéame"
+msgid "Gracias a la <a href=\"sneak.php\">fisgona</a> puedes ver en tiempo real toda la actividad de mediatize. Además como usuario registrado podrás chatear con mucha más gente de la comunidad mediatize"
 msgstr ""
 
 #: login.php:168

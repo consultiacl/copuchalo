@@ -11,7 +11,7 @@ include(mnminclude.'html1.php');
 
 $globals['ads'] = false;
 promote_style();
-do_header(_('promote') . ' | ' . _('menéame'));
+do_header(_('promote') . ' | ' . _('mediatize'));
 echo '<div id="singlewrap">'."\n";
 
 $site_id = SitesMgr::my_id();

@@ -21,7 +21,7 @@ $globals['ads'] = false;
 
 $page_size = 50;
 $offset=(get_current_page()-1)*$page_size;
-$page_title = _('mensajes privados') . ' | '._('menéame');
+$page_title = _('mensajes privados') . ' | '._('mediatize');
 
 switch ($argv[1]) {
 	case 'sent':

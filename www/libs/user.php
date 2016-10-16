@@ -264,7 +264,7 @@ class User {
 		$items = array();
 		$items[] = new MenuOption(_('perfil'), get_user_uri($user), $id, _('información de usuario'));
 		$items[] = new MenuOption(_('relaciones'), get_user_uri($user, 'friends'), $id, _('amigos e ignorados'));
-		$items[] = new MenuOption(_('subs'), get_user_uri($user, 'subs'), $id, _('sub menéames'));
+		$items[] = new MenuOption(_('subs'), get_user_uri($user, 'subs'), $id, _('subs mediatize'));
 		$items[] = new MenuOption(_('historias'), get_user_uri($user, 'history'), $id, _('información de envíos'));
 		$items[] = new MenuOption(_('comentarios'), get_user_uri($user, 'commented'), $id, _('información de comentarios'));
 		$items[] = new MenuOption(_('postits'), post_get_base_url($user), $id, _('página de postits'));

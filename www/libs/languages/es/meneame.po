@@ -274,7 +274,7 @@ msgid "FAQ"
 msgstr ""
 
 #: faq-es.php:6
-msgid "qué es menéame"
+msgid "qué es mediatize"
 msgstr ""
 
 #: index.php:34 shakeit.php:23
@@ -1015,7 +1015,7 @@ msgid "¡la jefa!"
 msgstr ""
 
 #: libs/html1.php:61
-msgid "acerca de menéame"
+msgid "acerca de mediatize"
 msgstr ""
 
 #: libs/html1.php:64
@@ -1039,7 +1039,7 @@ msgid "buscar..."
 msgstr ""
 
 #: libs/html1.php:107
-msgid "menéame"
+msgid "mediatize"
 msgstr ""
 
 #: libs/html1.php:108
@@ -1194,7 +1194,7 @@ msgid "Este mensaje ha sido enviado a solicitud de la dirección: "
 msgstr ""
 
 #: libs/mail.php:24
-msgid "el equipo de menéame"
+msgid "el equipo de mediatize"
 msgstr ""
 
 #: libs/mail.php:29

@@ -10,7 +10,7 @@
 <br/>
 <ul>
 <li><h2>¿Qué es mediatize?</h2>
-<p>Es una web que te permite enviar noticias o historias que serán revisadas por todos y serán promovidas, o no, a la página principal según los votos recibidos. Cuando un usuario envía una noticia ésta queda en la <a target="_blank" href="queue"><em>cola de pendientes</em></a> hasta que reúne los votos suficientes para ser promovida a la página principal. El código con el que se ha hecho la web es un fork de Menéame, por lo que en su wiki puede leerse más información de su funcionamiento: <a target="_blank" href="http://meneame.wikispaces.com/" title="wiki meneame">wiki del menéame</a>.
+<p>Es una web que te permite enviar noticias o historias que serán revisadas por todos y serán promovidas, o no, a la página principal según los votos recibidos. Cuando un usuario envía una noticia ésta queda en la <a target="_blank" href="queue"><em>cola de pendientes</em></a> hasta que reúne los votos suficientes para ser promovida a la página principal.
 </p>
 </li>
 
