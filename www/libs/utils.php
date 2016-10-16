@@ -643,6 +643,7 @@ function put_emojis_callback($matches) {
 			'confused' => 'confused.png" alt=":-S" title=":-S :S" width="18" height="18"',
 			'cool' => 'cool.png" alt="8-D" title=":cool: 8-D" width="18" height="18"',
 			'cry' => 'cry.gif" alt=":\'(" title=":cry: :\'(" width="18" height="18"',
+			'cunao' => 'cunao.png" alt=":\'(" title=":cunao: :\'(" width="18" height="18"',
 			'ffu' => 'ffu.png" alt=":ffu:" title=":ffu:" width="23" height="18"',
 			'goatse' => 'goatse.png" alt=":goatse:" title=":goatse:" width="18" height="18"',
 			'grin' =>'grin.png" alt=":-D" title=":-D" width="18" height="18"',
@@ -742,6 +743,7 @@ function normalize_smileys($str) {
 	$str=preg_replace('/(\s|^):calzador:/i', '$1{calzador}', $str);
 	$str=preg_replace('/(\s|^):tinfoil:/i', '$1{tinfoil}', $str);
 	$str=preg_replace('/(\s|^):clap:/i', '$1{clap}', $str);
+	$str=preg_replace('/(\s|^):cunao:/i', '$1{cunao}', $str);
 
 	return $str;
 }

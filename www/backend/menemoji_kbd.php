@@ -14,6 +14,7 @@ $menemojis = array(
 			'confused' => 'confused.png',
 			'cool' => 'cool.png',
 			'cry' => 'cry.gif',
+			'cunao' => 'cunao.png',
 			'ffu' => 'ffu.png',
 			'goatse' => 'goatse.png',
 			'grin' =>'grin.png',
