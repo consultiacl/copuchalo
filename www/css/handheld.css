@@ -115,6 +115,16 @@ font-size: small;
 	margin: 15px 0 0 0;
 }
 
+
+.news-content,
+.news-content2 {
+	font-size: 0.9em;
+}
+
+.comment-body {
+	font-size: inherit;
+}
+
 .comment-meta .comment-info {
 max-width: 24%;
 }
