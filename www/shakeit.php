@@ -41,6 +41,8 @@ const SQL = " link_id as id, link_author as author, link_blog as blog, link_stat
         LEFT JOIN link_clicks as clicks on (clicks.id = links.link_id)
         LEFT JOIN media ON (media.type='link' and media.id = link_id and media.version = 0) ";
 
+$SQL_CALL = Link::SQL;
+
 $from = '';
 switch ($globals['meta']) {
 	case '_subs':
@@ -65,6 +67,7 @@ switch ($globals['meta']) {
 		$rows = -1;
 		$tab = 8;
 		Link::$original_status = true; // Show status in original sub
+		$SQL_CALL = SQL;
 		break;
 	case '_friends':
 		$globals['noindex'] = true;
@@ -141,7 +144,7 @@ echo '<div id="newswrap">'."\n";
 // Old optimizacions from Galli are not correct for other databases like MariaDB: https://gallir.wordpress.com/2011/02/02/optimizando-obsesivamente-las-consultas-al-mysql/ 
 
 //$sql = "SELECT".Link::SQL."INNER JOIN (SELECT link FROM sub_statuses $from WHERE $where $order_by LIMIT $offset,$page_size) as ids on (ids.link = link_id)";
-$sql = "SELECT".SQL."INNER JOIN (SELECT link FROM sub_statuses $from WHERE $where) as ids on (ids.link = link_id) $order_by LIMIT $offset,$page_size";
+$sql = "SELECT".$SQL_CALL."INNER JOIN (SELECT link FROM sub_statuses $from WHERE $where) as ids on (ids.link = link_id) $order_by LIMIT $offset,$page_size";
 
 $links = $db->object_iterator($sql, "Link");
 if ($links) {
