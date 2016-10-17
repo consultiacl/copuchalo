@@ -16,7 +16,7 @@ define('DEBUG', false);
 define ('MAX', 1.05);
 define ('MIN', 1.0);
 define ('PUB_MIN', 1);
-define ('PUB_MAX', 20); 75);
+define ('PUB_MAX', 20); //75);
 define ('PUB_PERC', 0.05);
 
 $past_karma = 0;
