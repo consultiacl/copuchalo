@@ -93,6 +93,8 @@
 </head>
 <body>
 
+{% try_include 'private/body.html' %}
+
 <div id="header-top">
   <div id="nav-menu"><i class="fa fa-bars"></i></div>
   <a href="{{ globals.base_url_general }}" title="{% trans _('portada') %} {{ globals.site_name }}" id="header-logo" class="logo-cop">mediatize</a>
