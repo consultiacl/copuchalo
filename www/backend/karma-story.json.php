@@ -20,7 +20,7 @@ if(!$link->read) die;
 if ( ($array = $link->read_annotation("link-karma")) != false ) {
 	$data['anonymous'] = array();
 	$data['positives'] = array();
-	$data['negatives'] = array();
+	//$data['negatives'] = array();
 	$data['karma'] = array();
 	$data['clicks'] = array();
 

@@ -1362,7 +1362,7 @@ class Link extends LCPBase {
 		$dict['site_name'] = $site_name;
 		$dict['time'] = time();
 		$dict['positives'] = $this->votes;
-		$dict['negatives'] = $this->negatives;
+		//$dict['negatives'] = $this->negatives;
 		$dict['anonymous'] = $this->anonymous;
 		$dict['clicks'] = $this->clicks;
 		if (empty($this->old_karma)) {
