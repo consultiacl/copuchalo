@@ -120,6 +120,7 @@ function do_header($title, $id='home', $options = false) {
 		}
 		if( $globals['mobile'] ) $left_options[] = new MenuOption(_('nuevas'), $globals['base_url'].'queue', $id, _('votar noticias pendientes'));
 		$left_options[] = new MenuOption(_('portada'), $globals['base_url'], $id, _('página principal'));
+		$left_options[] = new MenuOption(_('nuevas'), $globals['base_url'].'queue', $id, _('votar noticias pendientes'));
 		$left_options[] = new MenuOption(_('populares'), $globals['base_url'].'popular', $id, _('historias más votadas'));
 		$left_options[] = new MenuOption(_('más visitadas'), $globals['base_url'].'top_visited', $id, _('historias más visitadas/leídas'));
 		$left_options[] = new MenuOption(_('destacadas'), $globals['base_url'].'top_active', $id, _('historias más activas'));
