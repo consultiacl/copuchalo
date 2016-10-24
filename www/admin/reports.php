@@ -45,7 +45,7 @@ switch ($operation) {
 		break;
 	case 'change_status':
 		if (!check_security_key($_REQUEST['key'])) die;
-		$report = Report::from_db($_REQUEST['report_id'], $_REQUEST['report_type']);
+		$report = Report::from_db($_REQUEST['report_id']);
 		$status = $_REQUEST['new_report_status'];
 		update_status($report, $status);
 		header("Location: " . $_SERVER['REQUEST_URI']);

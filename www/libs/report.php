@@ -86,9 +86,7 @@ class Report extends LCPBase
 		global $db, $current_user;
 
 		$sql = "select count(*) from reports where report_ref_id=$report_ref_id and report_user_id={$current_user->user_id} and report_type='$report_type'";
-		$already_reported = (bool) $db->get_var($sql);
-
-		return $already_reported;
+		return (bool) $db->get_var($sql);
 	}
 
 	static function check_report_user_limit()
