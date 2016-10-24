@@ -962,16 +962,16 @@ function priv_new(user_id) {
 	});
 }
 
-function report_comment(comment_id) {
+function report(id, type) {
 
 	$.ajax({
 		type: 'POST',
-		url: base_url + 'backend/report_comment.php',
+		url: base_url + 'backend/report.php',
 		dataType: 'json',
-		data: { 'process': 'check_can_report', 'id': comment_id, 'key': base_key},
+		data: { 'process': 'check_can_report', 'id': id, 'type': type, 'key': base_key},
 		success: function(data) {
 			if (! data.error) {
-				show_report_dialog(comment_id);
+				show_report_dialog(id, type);
 			} else {
 				mDialog.notify("error: " + data.error , 5);
 			}
@@ -979,15 +979,15 @@ function report_comment(comment_id) {
 	});
 }
 
-function show_report_dialog(comment_id) {
+function show_report_dialog(id, type) {
 
 	var w, h;
-	var url = base_url + 'backend/report_comment.php?id='+comment_id+"&key="+base_key;
+	var url = base_url + 'backend/report.php?id='+id+"&type="+type+"&key="+base_key;
 	if (is_mobile) {
 		w = h = '100%';
 	} else {
-		w = '400px';
-		h = '250px';
+		w = '500px';
+		h = '400px';
 	}
 
 	$.colorbox({href: url,
@@ -1019,7 +1019,7 @@ function show_report_dialog(comment_id) {
 		overlayClose: false,
 		opacity: 0.1,
 		transition: 'none',
-		title: "{% trans _('reporte de comentario') %}",
+		title: "{% trans _('reporte') %}",
 		scrolling: false,
 		open: true,
 		className: 'report',

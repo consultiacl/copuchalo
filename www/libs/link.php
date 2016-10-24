@@ -730,20 +730,22 @@ class Link extends LCPBase {
 		}
 		$this->content = $this->to_html($this->content);
 		$this->show_tags = $show_tags;
-		$this->relative_permalink	 = $this->get_relative_permalink();
-		$this->permalink	 = $this->get_permalink(false, $this->relative_permalink); // To avoid double verification
+		$this->relative_permalink = $this->get_relative_permalink();
+		$this->permalink = $this->get_permalink(false, $this->relative_permalink); // To avoid double verification
 		$this->show_shakebox = $type != 'preview' && $this->votes > 0;
-		$this->has_warning	 = !(!$this->check_warn() || $this->is_discarded());
-		$this->is_editable	= $this->is_editable();
-		$this->url_str	= preg_replace('/^www\./', '', parse_url($this->url, 1));
+		$this->has_warning = !(!$this->check_warn() || $this->is_discarded());
+		$this->is_editable= $this->is_editable();
+		$this->url_str = preg_replace('/^www\./', '', parse_url($this->url, 1));
 		$this->has_thumb();
 		$this->map_editable = $this->geo && $this->is_map_editable();
-		$this->can_vote_negative = !$this->voted && $this->votes_enabled &&
-				$this->negatives_allowed($globals['link_id'] > 0) &&
-				$type != 'short' &&
-				$type != 'preview' &&
-				!$this->is_sponsored();
-
+		$this->can_report = 	$this->votes_enabled &&
+					Report::check_min_karma() &&
+					!$this->is_discarded() &&
+					$type != 'short' &&
+					$type != 'preview' &&
+					$current_user->user_id > 0 &&
+					($this->author != $current_user->user_id) &&
+					!$this->is_sponsored();
 
 		if ($this->status == 'abuse' || $this->has_warning) {
 			$this->negative_text = FALSE;

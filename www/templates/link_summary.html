@@ -262,7 +262,9 @@
 					<span title="{% trans _('favorito') %}" id="favl-{{ self.id }}" onclick="add_remove_fav('favl-{{ self.id }}', 'link', {{ self.id }})" {% if self.favorite %}
 						 class="fa fa-star" {% else %} class="fa fa-star-o" {% endif %} ></span>
 				{% endif %}
-
+				{% if self.can_report %}
+					<span onclick="report({{self.id}},'link')" title="{% trans _('reportar historia') %}" class="fa fa-bullhorn"></span>
+				{% endif %}
 				<a class="comment-bubble" href="{{ self.relative_permalink }}" title="{% trans _('comentarios de') %}: «{{ self.title }}»">{{ self.comments }}</a>
 			</div>
 		</div>

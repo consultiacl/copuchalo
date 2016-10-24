@@ -18,7 +18,7 @@ $operation = $_REQUEST["op"] ? $_REQUEST["op"] : 'list';
 $search = $_REQUEST["s"];
 $orderby = $_REQUEST["order_by"];
 
-$selected_tab = "comment_reports";
+$selected_tab = "reports";
 if ($_REQUEST["tab"]) {
 	$selected_tab = clean_input_string($_REQUEST["tab"]);
 }
@@ -39,13 +39,13 @@ $key = get_security_key();
 
 switch ($operation) {
 	case 'list':
-		do_header(_('Comment reports'));
+		do_header(_('Reports'));
 		do_admin_tabs($selected_tab);
 		do_report_list($selected_tab, $search, $report_status, $report_date, $orderby, $key, $statistics);
 		break;
 	case 'change_status':
 		if (!check_security_key($_REQUEST['key'])) die;
-		$report = Report::from_db($_REQUEST['report_id']);
+		$report = Report::from_db($_REQUEST['report_id'], $_REQUEST['report_type']);
 		$status = $_REQUEST['new_report_status'];
 		update_status($report, $status);
 		header("Location: " . $_SERVER['REQUEST_URI']);
@@ -70,7 +70,7 @@ function do_report_list($selected_tab, $search, $report_status, $report_date, $o
 		}
 	}
 
-	$where = "WHERE report_type='" . Report::REPORT_TYPE_LINK_COMMENT . "'";
+	$where = "WHERE 1>0";   //" . Report::REPORT_TYPE_LINK_COMMENT . "'";
 	if ($report_status) {
 		$where .= " AND report_status IN ('" . join("','", $report_status) . "')";
 	}
@@ -107,9 +107,14 @@ function do_report_list($selected_tab, $search, $report_status, $report_date, $o
 
 	$rows = $db->get_var("SELECT count(*) FROM reports " . $where);
 
-	$sql = "SELECT" . Report::SQL_COMMENT_GROUPED . " $where GROUP BY ref_id, reason ORDER BY $orderby $order LIMIT $offset,$page_size";
+	$sql = "SELECT" . Report::SQL_BASE . " $where GROUP BY ref_id, reason ORDER BY $orderby $order LIMIT $offset,$page_size";
 
-	$reports = group_by_comment( $db->get_results($sql));
+	$reports = group_by_report($db->get_results($sql));
+
+//syslog(LOG_INFO, "SQL: ".$sql);
+//syslog(LOG_INFO, "REPORTS: ".print_r($reports,true));
+//var_dump($reports);
+
 
 	Haanga::Load('admin/reports/list.html', compact('reports', 'selected_tab', 'key', 'search', 'report_status', 'report_date', 'statistics'));
 
@@ -123,7 +128,7 @@ function update_status($report, $status)
 
 	$report_modified = $globals['now'];
 
-	return $db->query("UPDATE reports SET report_status='$status', report_revised_by={$current_user->user_id}, report_modified=FROM_UNIXTIME($report_modified) WHERE report_ref_id={$report->ref_id} AND report_reason='{$report->reason}' AND report_type='link_comment'");
+return $db->query("UPDATE reports SET report_status='$status', report_revised_by={$current_user->user_id}, report_modified=FROM_UNIXTIME($report_modified) WHERE report_ref_id={$report->ref_id} AND report_reason='{$report->reason}' AND report_type='{$report->type}'");
 }
 
 function calculate_statistics()
@@ -138,7 +143,7 @@ function calculate_statistics()
 
 }
 
-function group_by_comment($reports) {
+function group_by_report($reports) {
 
 	$grouped_reports = array();
 	$parsed = array();
@@ -162,5 +167,5 @@ function group_by_comment($reports) {
 	}
 
 	return $grouped_reports;
-
 }
+

@@ -37,7 +37,7 @@
 		{% endif %}
 
  		{% if self.can_report AND self.type != 'admin' %}
-        		<span onclick="report_comment({{self.id}})" title="{% trans _('reportar comentario') %}" class="fa fa-bullhorn"></span>
+        		<span onclick="report({{self.id}},'comment')" title="{% trans _('reportar comentario') %}" class="fa fa-bullhorn"></span>
 		{% endif %}
 	</div>
 

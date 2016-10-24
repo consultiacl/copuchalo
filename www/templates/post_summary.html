@@ -30,6 +30,9 @@
 		{% if current_user.user_id > 0 %}
 			<span id="favp-{{ self.prefix_id }}{{ self.id }}" onclick="add_remove_fav('favp-{{ self.prefix_id }}{{ self.id }}', 'post', {{ self.id }})" {% if self.favorite %} class="fa fa-star" {% else %} class="fa fa-star-o" {% endif %} ></span>
 			<span onclick="post_reply({{self.id}},'{{ self.username}}')" title="{% trans _('responder') %}" class="fa fa-reply"></span>
+			{% if self.can_report AND ! self.post_is_admin %}
+				<span onclick="report({{self.id}},'post')" title="{% trans _('reportar postit') %}" class="fa fa-bullhorn"></span>
+			{% endif %}
 		{% endif %}
 	</div>
 

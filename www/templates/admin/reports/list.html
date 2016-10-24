@@ -32,7 +32,7 @@
 
                 <th style="width: 20%">
                     <a href="{{globals.base_url}}admin/reports.php?tab={{selected_tab}}{% if search %}&s={{search}}{% endif %}">
-                        {% trans _('comentario') %}
+                        {% trans _('objeto del reporte') %}
                     </a>
                 </th>
 
@@ -50,7 +50,7 @@
 
                 <th>
                     <a href="{{globals.base_url}}admin/reports.php?tab={{selected_tab}}{% if search %}&s={{search}}{% endif %}&order_by=reporter_user_login">
-                        {% trans _('autor del comentario') %}
+                        {% trans _('autor del objeto') %}
                     </a>
                 </th>
 
@@ -86,15 +86,31 @@
             {% for row in reports %}
             {% for i, report in row.lines %}
             <tr>
-
                 {% if i==0 %}
                     <td rowspan="{{row.num_lines}}">
-                        {% if report.author_user_login %}
-                        <a class="tooltip c:{{ report.comment_link_id }}-{{ report.comment_order }}" href="/story/{{report.comment_link_uri}}/c0{{ report.comment_order }}#c-{{ report.comment_order }}" target="blank">
-                            {% trans _('ir a comentario') %}
-                        </a>
+                        {% if report.type == 'link' %}
+                             {% if report.author_user_login %}
+                                 <a class="tooltip l:{{ report.ref_id }}" href="/story/{{ report.uri }}" target="blank">
+                                     {% trans _('ir a historia') %}
+                                 </a>
+                             {% endif %}
+                        {% endif %}
+                        {% if report.type == 'comment' %}
+                             {% if report.author_user_login %}
+        	                 <a class="tooltip c:{{ report.comment_link_id }}-{{ report.comment_order }}" href="/story/{{report.comment_link_uri}}/c0{{ report.comment_order }}#c-{{ report.comment_order }}" target="blank">
+                                     {% trans _('ir a comentario') %}
+                        	 </a>
+                             {% endif %}
+                        {% endif %}
+                        {% if report.type == 'post' %}
+                             {% if report.author_user_login %}
+        	                 <a class="tooltip p:{{ report.ref_id }}" href="/postits/{{ report.ref_id }}" target="blank">
+                                     {% trans _('ir a postit') %}
+                        	 </a>
+                             {% endif %}
                         {% endif %}
                     </td>
+                {% endif %}
 
                     <td>
                         {{ report.report_num }}
@@ -120,7 +136,7 @@
                             Incumple la legalidad española vigente
                         {% endif %}
                         {% if report.reason == 'violate_rules' %}
-                            Viola las normas de uso
+                            Incumple las condiciones de uso
                         {% endif %}
                         {% if report.reason == 'inappropriate_content' %}
                             Contenido inapropiado
@@ -129,18 +145,15 @@
                             Spam
                         {% endif %}
                     </td>
-                    {#
-                    <td>
-                        <a target="_blank" href="{{globals.base_url}}user/{{report.author_user_login}}/{{report.author_id}}" class="tooltip u:{{report.author_id}}" style="overflow: hidden;white-space: nowrap;">
-                            {{ report.author_user_login }}
-                        </a>
-                    </td>
-                    #}
+
+               {% if i==0 %}
                     <td rowspan="{{row.num_lines}}">
                         <a target="_blank" href="{{globals.base_url}}user/{{report.author_user_login}}/{{report.author_id}}" class="tooltip u:{{report.author_id}}" style="overflow: hidden;white-space: nowrap;">
                             {{ report.author_user_login }}
                         </a>
                     </td>
+               {% endif %}
+
                     <td>
                         <a class="fancybox admin-button" href="{{globals.base_url}}admin/report_ajax.php?id={{report.ref_id}}&reason={{report.reason}}&process=get_reporters" title="Información de reportes">Ver</a>
                     </td>
@@ -150,6 +163,7 @@
 
                             <input type="hidden" name="op" value="change_status">
                             <input type="hidden" name="report_id" value="{{report.id}}">
+                            <input type="hidden" name="report_type" value="{{report.type}}">
                             <input type="hidden" name="key" value="{{key}}">
                             <select name="new_report_status" onchange="this.form.submit()">
                                 <option value="pending" {% if report.status=="pending" %} selected="selected" {% endif %}>
@@ -168,96 +182,19 @@
                         </form>
                     </td>
                     <td>
-                        {% if report.revisor_user_login%}
-                        {{report.revisor_user_login}}
+                        {% if report.revisor_user_login %}
+                            {{ report.revisor_user_login }}
                         {% else %}
-                        --
+                            --
                         {% endif %}
                     </td>
                     <td>
-                        {% if report.modified%}
-                        {{report.modified}}
+                        {% if report.modified %}
+                            {{ report.modified }}
                         {% else %}
-                        --
+                            --
                         {% endif %}
                     </td>
-                {% else %}
-
-                    <td>
-                        {{ report.report_num }}
-                    </td>
-
-                    <td class="normal">
-                        {% if report.reason == 'insult' %}
-                        Insultos directos
-                        {% endif %}
-                        {% if report.reason == 'incites_hatred' %}
-                        Incitación al odio
-                        {% endif %}
-                        {% if report.reason == 'advertising' %}
-                        Promoción comercial de productos o servicios
-                        {% endif %}
-                        {% if report.reason == 'violence_porn' %}
-                        Material pornográfico o de violencia gráfica
-                        {% endif %}
-                        {% if report.reason == 'private_data' %}
-                        Contiene datos personales propios o de un tercero
-                        {% endif %}
-                        {% if report.reason == 'legality' %}
-                        Incumple la legalidad española vigente
-                        {% endif %}
-                        {% if report.reason == 'violate_rules' %}
-                        Viola las normas de uso
-                        {% endif %}
-                        {% if report.reason == 'inappropriate_content' %}
-                        Contenido inapropiado
-                        {% endif %}
-                        {% if report.reason == 'spam' %}
-                        Spam
-                        {% endif %}
-                    </td>
-                    <td>
-                        <a class="fancybox admin-button" href="{{globals.base_url}}admin/report_ajax.php?id={{report.ref_id}}&reason={{report.reason}}&process=get_reporters" title="Información de reportes">Ver</a>
-                    </td>
-                    <td>{{report.date}}</td>
-                    <td>
-                        <form method="post" action="{{_SERVER.REQUEST_URI|escape}}">
-
-                            <input type="hidden" name="op" value="change_status">
-                            <input type="hidden" name="report_id" value="{{report.id}}">
-                            <input type="hidden" name="key" value="{{key}}">
-                            <select name="new_report_status" onchange="this.form.submit()">
-                                <option value="pending" {% if report.status=="pending" %} selected="selected" {% endif %}>
-                                    pending
-                                </option>
-                                <option value="debate" {% if report.status=="debate" %} selected="selected" {% endif %}>
-                                    debate
-                                </option>
-                                <option value="penalized" {% if report.status=="penalized" %} selected="selected" {% endif %}>
-                                    penalized
-                                </option>
-                                <option value="dismissed" {% if report.status=="dismissed" %} selected="selected" {% endif %}>
-                                    dismissed
-                                </option>
-                            </select>
-                        </form>
-                    </td>
-                    <td>
-                        {% if report.revisor_user_login%}
-                        {{report.revisor_user_login}}
-                        {% else %}
-                        --
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if report.modified%}
-                        {{report.modified}}
-                        {% else %}
-                        --
-                        {% endif %}
-                    </td>
-
-                {% endif %}
             </tr>
             {% endfor %}
             {% endfor %}

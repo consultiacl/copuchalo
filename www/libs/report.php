@@ -9,7 +9,9 @@
 class Report extends LCPBase
 {
 
-	const REPORT_TYPE_LINK_COMMENT = 'link_comment';
+	const REPORT_TYPE_LINK    = 'link';
+	const REPORT_TYPE_COMMENT = 'comment';
+	const REPORT_TYPE_POST    = 'post';
 
 	const REPORT_STATUS_PENDING = 'pending';
 	const REPORT_STATUS_DEBATE = 'debate';
@@ -26,23 +28,18 @@ class Report extends LCPBase
 	const REPORT_REASON_REVEILS_PRIVATE_DATA = 'private_data';
 	const REPORT_REASON_BREACH_LEGALITY = 'legality';
 
-	const SQL_COMMENT = " report_id as id, report_type as type, report_date as date, report_modified as modified, report_status as status, report_reason as reason, reporters.user_id as reporter_id, reporters.user_level as reporter_user_level, reporters.user_login as reporter_user_login, authors.user_id as author_id, authors.user_level as author_user_level, authors.user_login as author_user_login, revisors.user_id as revisor_id, revisors.user_level as revisor_user_level, revisors.user_login as revisor_user_login, report_ip as ip, comment_id as ref_id, comment_order, comment_link_id, link_uri as comment_link_uri FROM reports
+	const SQL_BASE = " count(*) as report_num, report_id as id, report_type as type, report_ref_id as ref_id, report_date as date, report_modified as modified, report_status as status, report_reason as reason, reporters.user_id as reporter_id, reporters.user_level as reporter_user_level, reporters.user_login as reporter_user_login, authors.user_id as author_id, authors.user_level as author_user_level, authors.user_login as author_user_login, revisors.user_id as revisor_id, revisors.user_level as revisor_user_level, revisors.user_login as revisor_user_login, report_ip as ip, comment_order, comment_link_id, links.link_uri as comment_link_uri, lnk.link_uri as uri FROM reports
 	LEFT JOIN users as reporters on (reporters.user_id = report_user_id)
 	LEFT JOIN comments on (comments.comment_id = reports.report_ref_id)
 	LEFT JOIN links on (comments.comment_link_id = links.link_id)
-	LEFT JOIN users as authors on (authors.user_id = comments.comment_user_id)
-	LEFT JOIN users as revisors on (revisors.user_id = reports.report_revised_by) ";
-
-	const SQL_COMMENT_GROUPED = " count(*) as report_num, report_id as id, report_type as type, report_date as date, report_modified as modified, report_status as status, report_reason as reason, reporters.user_id as reporter_id, reporters.user_level as reporter_user_level, reporters.user_login as reporter_user_login, authors.user_id as author_id, authors.user_level as author_user_level, authors.user_login as author_user_login, revisors.user_id as revisor_id, revisors.user_level as revisor_user_level, revisors.user_login as revisor_user_login, report_ip as ip, comment_id as ref_id, comment_order, comment_link_id, link_uri as comment_link_uri FROM reports
-	LEFT JOIN users as reporters on (reporters.user_id = report_user_id)
-	LEFT JOIN comments on (comments.comment_id = reports.report_ref_id)
-	LEFT JOIN links on (comments.comment_link_id = links.link_id)
+	LEFT JOIN links as lnk on (lnk.link_id = reports.report_ref_id)
+	LEFT JOIN posts on (posts.post_id = reports.report_ref_id)
 	LEFT JOIN users as authors on (authors.user_id = comments.comment_user_id)
 	LEFT JOIN users as revisors on (revisors.user_id = reports.report_revised_by) ";
 
 	// sql fields to build an object from mysql
 	public $id = 0;
-	public $type = Report::REPORT_TYPE_LINK_COMMENT;
+	public $type = '';
 	public $date;
 	public $status = Report::REPORT_STATUS_PENDING;
 	public $reason = '';
@@ -53,16 +50,11 @@ class Report extends LCPBase
 	public $modified = null;
 	public $ip;
 
-	static function from_db($id, $report_type = Report::REPORT_TYPE_LINK_COMMENT)
+	static function from_db($id)
 	{
 		global $db;
 
-		$selector = "report_id = $id and report_type = '$report_type'";
-
-		if ($report_type == Report::REPORT_TYPE_LINK_COMMENT) {
-			$sql = "SELECT" . Report::SQL_COMMENT . "WHERE $selector";
-		}
-
+		$sql = "SELECT" . Report::SQL_BASE . "WHERE report_id = $id";
 		return $db->get_object($sql, 'Report');
 	}
 
@@ -85,15 +77,15 @@ class Report extends LCPBase
 	{
 		global $current_user, $globals;
 
-		return ($globals['min_karma_for_report_comments'] > $current_user->karma);
+		return ($globals['min_karma_for_report'] > $current_user->karma);
 
 	}
 
-	static function already_reported($report_ref_id)
+	static function already_reported($report_ref_id, $report_type)
 	{
 		global $db, $current_user;
 
-		$sql = "select count(*) from reports where report_ref_id=$report_ref_id and report_user_id={$current_user->user_id}";
+		$sql = "select count(*) from reports where report_ref_id=$report_ref_id and report_user_id={$current_user->user_id} and report_type='$report_type'";
 		$already_reported = (bool) $db->get_var($sql);
 
 		return $already_reported;
@@ -103,17 +95,17 @@ class Report extends LCPBase
 	{
 		global $db, $current_user, $globals;
 
-		$sql = "select count(*) from reports where report_user_id={$current_user->user_id} and (NOW() - report_date) < 86400";
-		$number_reports_24h = $db->get_var($sql);
+		$sql = "select count(*) from reports where report_user_id={$current_user->user_id} and (NOW() - report_date) < 86400";  // 24h
+		$number_reports = $db->get_var($sql);
 
-		return $number_reports_24h < $globals['max_reports_for_comments'];
+		return $number_reports < $globals['max_reports'];
 	}
 
-	static function get_total_in_status($status, $type = self::REPORT_TYPE_LINK_COMMENT)
+	static function get_total_in_status($status)
 	{
 		global $db;
 
-		$sql = "select count(*) from reports where report_status='$status' and report_type='$type'";
+		$sql = "select count(*) from reports where report_status='$status'";
 		return $db->get_var($sql);
 	}
 
@@ -136,7 +128,7 @@ class Report extends LCPBase
 			$r = $db->query("INSERT INTO reports (report_date, report_type, report_reason, report_user_id, report_ref_id, report_status, report_modified, report_revised_by, report_ip) VALUES(FROM_UNIXTIME($report_date), '$report_type', '$report_reason', $report_user_id, $report_ref_id, '$report_status', null, null, '$report_ip')");
 			$this->id = $db->insert_id;
 		} else {
-			$r = $db->query("UPDATE reports set report_date=FROM_UNIXTIME($report_date), report_type='$report_type', report_reason='$report_reason', report_user_id=$report_user_id, report_ref_id=$report_ref_id, report_status='$report_status', report_modified=FROM_UNIXTIME($report_modified), report_revised_by=$report_revised_by, report_ip='$report_ip'");
+			$r = $db->query("UPDATE reports set report_date=FROM_UNIXTIME($report_date), report_type='$report_type', report_reason='$report_reason', report_user_id=$report_user_id, report_ref_id=$report_ref_id, report_status='$report_status', report_modified=FROM_UNIXTIME($report_modified), report_revised_by=$report_revised_by, report_ip='$report_ip' where report_id=$this->id");
 		}
 
 		if (!$r) {
@@ -148,3 +140,4 @@ class Report extends LCPBase
 		return true;
 	}
 }
+

@@ -14,17 +14,6 @@
 		</div>
 	{% endif %}
 
-	{% if self.can_vote_negative %}
-		<form  class="tool" action="" id="problem-{{ self.id }}">
-		<select name="ratings"	onchange="report_problem(this.form,{{current_user.user_id}}, {{self.id}})">
-			<option value="0" selected="selected">{% trans _('problema') %}</option>
-			{% for pkey, pvalue in globals.negative_votes_values %}
-				<option value="{{pkey}}">{{ pvalue }}</option>
-			{% endfor %}
-		</select>
-		</form>
-	{% endif %}
-
 	{#
 	<a class="tooltip l:{{ self.id }} info">i</a>
 	#}

@@ -170,10 +170,11 @@ class Post extends LCPBase {
 
 
 		$this->is_disabled   = ($this->ignored || ($this->hidden && ($current_user->user_comment_pref & 1) == 0)) && !$this->admin;
-		$this->can_vote	  = $current_user->user_id > 0 && $this->author != $current_user->user_id &&  $this->date > time() - $globals['time_enabled_votes'] && !$this->admin ;
+		$this->can_vote	  = $current_user->user_id > 0 && $this->author != $current_user->user_id &&  $this->date > $globals['now'] - $globals['time_enabled_votes'] && !$this->admin ;
 		$this->user_can_vote =  $current_user->user_karma > $globals['min_karma_for_comment_votes'] && ! $this->voted && !$this->admin;
-		$this->show_votes	= ($this->votes > 0 && $this->date > $globals['now'] - 30*86400) && !$this->admin; // Show votes if newer than 30 days
+		$this->show_votes	= ($this->votes > 0 && $this->date > $globals['now'] - $globals['time_enabled_votes']) && !$this->admin;
 		$this->show_avatar = !$this->admin;
+		$this->can_report = $this->can_vote && Report::check_min_karma() && ($this->author != $current_user->user_id) && !$this->admin && !$this->hidden && !$this->ignored;
 
 		$this->prepare_summary_text($length);
 

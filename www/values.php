@@ -56,8 +56,8 @@ if($globals['min_karma_for_comments']) {
 				';
 }
 
-if($globals['min_karma_for_report_comments']) {
-	echo _("Karma mínimo para reportar comentarios") . ': '. $globals['min_karma_for_report_comments'] . '<br/>
+if($globals['min_karma_for_report']) {
+	echo _("Karma mínimo para reportar") . ': '. $globals['min_karma_for_report'] . '<br/>
 				<br/>
 				';
 }
@@ -111,8 +111,6 @@ echo '
 				'._("Tiempo que permanecen abiertos los comentarios en historias autodescartados") . ': ' . print_time($globals['time_enabled_comments_status']['autodiscard']) . '<br/>
 				<br/>
 				'._("Tiempo que permanecen abiertos los comentarios en historias descartados por abuso") . ': ' . print_time($globals['time_enabled_comments_status']['abuse']) . '<br/>
-				<br/>
-				'._("Número máximo de reportes de comentarios en las últimas 24 horas") . ': ' . $globals['max_reports_for_comments'] . '<br/>
 				<br/>				
 				'._("Tiempo que debe pasar desde el registro para que un nuevo usuario pueda comentar") . ': ' . print_time($globals['min_time_for_comments']) . '<br/>
 		</fieldset>';
@@ -203,7 +201,7 @@ echo '
 
 
 echo '
-		<fieldset id="formulas">
+		<fieldset id="Otros valores">
 			<legend>'._('fórmulas').'</legend>'
 				 ._("Se considera «nuevo usuario» a los usuarios que no hayan enviado ninguna historia o se hayan registrado hace menos de "). print_time($globals['new_user_time']) . '<br/>
 				<br/>';
@@ -221,6 +219,8 @@ echo '
 
 echo '
 				'._("Un «nuevo usuario» solo podrá enviar ") . $globals['new_user_links_limit'] . ' ' .  _("historias cada") . ' ' .print_time($globals['new_user_links_interval']) . ' ('._('debes esperar, ya se enviaron varias con el mismo usuario o dirección IP'). ')<br/>
+				<br/>
+				'._("Número máximo de reportes en las últimas 24 horas") . ': ' . $globals['max_reports'] . '<br/>
 		</fieldset>';
 
 

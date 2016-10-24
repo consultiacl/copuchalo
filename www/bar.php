@@ -36,8 +36,6 @@ setcookie('k', $globals['security_key'], 0, $globals['base_url']);
 // From libks/link.php print_summary()
 $link->is_votable();
 $link->permalink = $link->get_permalink();
-$link->can_vote_negative = !$link->voted && $link->votes_enabled &&
-		$link->negatives_allowed(true);
 $link->get_box_class();
 $vars = compact('type');
 $vars['self'] = $link;
