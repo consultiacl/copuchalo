@@ -208,7 +208,7 @@ function mobile_redirect() {
 function do_pages_reverse($total, $page_size=25, $margin = true) {
 	global $db, $globals;
 
-	if ($total > 0 && $total < $page_size) return;
+	if ($total >= 0 && $total < $page_size) return;
 
 	if (! $globals['mobile']) {
 		$index_limit = 5;
@@ -293,7 +293,7 @@ function do_pages_reverse($total, $page_size=25, $margin = true) {
 function do_pages($total, $page_size=25, $margin = true) {
 	global $db, $globals;
 
-	if ($total > 0 && $total < $page_size) return;
+	if ($total >= 0 && $total < $page_size) return;
 
 	if (! $globals['mobile']) {
 		$index_limit = 5;
