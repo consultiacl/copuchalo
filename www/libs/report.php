@@ -34,7 +34,7 @@ class Report extends LCPBase
 	LEFT JOIN links on (comments.comment_link_id = links.link_id)
 	LEFT JOIN links as lnk on (lnk.link_id = reports.report_ref_id)
 	LEFT JOIN posts on (posts.post_id = reports.report_ref_id)
-	LEFT JOIN users as authors on (authors.user_id = comments.comment_user_id)
+	LEFT JOIN users as authors on ((authors.user_id = comments.comment_user_id AND reports.report_type = 'comment') OR (authors.user_id = lnk.link_author AND reports.report_type = 'link') OR (authors.user_id = posts.post_user_id AND reports.report_type = 'post'))
 	LEFT JOIN users as revisors on (revisors.user_id = reports.report_revised_by) ";
 
 	// sql fields to build an object from mysql
