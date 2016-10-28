@@ -31,7 +31,7 @@ function twitter_post($auth, $link, $link_url) {
 		}
 
 		// Text to tweet (link title)
-		$text_tweet = $link->title
+		$text_tweet = $link->title;
 
 		if($thumb) {
 			// if an image is attached, you loose 23 chars
