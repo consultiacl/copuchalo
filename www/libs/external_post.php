@@ -6,7 +6,7 @@
 //		http://www.affero.org/oagpl.html
 // AFFERO GENERAL PUBLIC LICENSE is also included in the file called "COPYING".
 
-function twitter_post($auth, $text, $link_url, $image = false) {
+function twitter_post($auth, $link, $link_url) {
 
 	if (empty($auth['twitter_token']) || empty($auth['twitter_token_secret']) || empty($auth['twitter_consumer_key']) ||  empty($auth['twitter_consumer_secret'])) {
 		syslog(LOG_NOTICE, "twitter_token, twitter_token_secret, twitter_consumer_key or twitter_consumer_secret not defined");
@@ -23,15 +23,25 @@ function twitter_post($auth, $text, $link_url, $image = false) {
 
  		$maxlen = 140 - 24; // minus the url length
 
-		if($image) {
+		// Get image from link
+		if ($link->has_thumb() && !empty($link->media_url)) {
+                	$thumb = $link->media_url;
+		} else {
+                	$thumb = get_avatar_url($link->author, $link->avatar, 80);
+		}
+
+		// Text to tweet (link title)
+		$text_tweet = $link->title
+
+		if($thumb) {
 			// if an image is attached, you loose 23 chars
 			$maxlen -= 23;
-			$msg = mb_substr(text_to_summary(html_entity_decode($text), $maxlen), 0, $maxlen);
+			$msg = mb_substr(text_to_summary(html_entity_decode($text_tweet), $maxlen), 0, $maxlen);
 			$message = $msg . ' ' . $link_url;
 
 			//build an array of images to send to twitter
 			$reply = $cb->media_upload(array(
-				'media' => $image
+				'media' => $thumb
 			));
 			//upload the file to your twitter account
 			$mediaID = $reply->media_id_string;
@@ -42,7 +52,7 @@ function twitter_post($auth, $text, $link_url, $image = false) {
 				'media_ids' => $mediaID
 			);
 		} else {
-			$msg = mb_substr(text_to_summary(html_entity_decode($text), $maxlen), 0, $maxlen);
+			$msg = mb_substr(text_to_summary(html_entity_decode($text_tweet), $maxlen), 0, $maxlen);
 			$message = $msg . ' ' . $link_url;
 
 			$params = array(
@@ -63,7 +73,7 @@ function twitter_post($auth, $text, $link_url, $image = false) {
 		syslog(LOG_INFO, "Error publishing to Twitter: ".$reply->errors[0]->message." (code: ".$reply->errors[0]->code.")");
 		return false;
 	} else {
-		syslog(LOG_INFO, "Published to Twitter: $message");
+		syslog(LOG_INFO, "Published to Twitter: $message" . (($thumb) ? " with image $thumb" : ""));
 		return true;
 	}
 }

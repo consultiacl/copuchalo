@@ -54,15 +54,6 @@ function do_posts($link) {
 	$url = $link->get_permalink($info->sub);
 	echo "Posting $url: ".$globals['server_name']."\n"; 
 
-	// NEW format
-	$image = false;
-	if ($link->has_thumb()) {
-		$media = $link->get_media();
-		if ($media && file_exists($media->pathname())) {
-			$image = $media->pathname();
-		}
-	}
-
 	if ($globals['url_shortener']) {
 		$short_url = $link->get_short_permalink();
 	} else {
@@ -74,7 +65,7 @@ function do_posts($link) {
 		$r = false;
 		$tries = 0;
 		while (! $r && $tries < 4) {
-			$r = twitter_post($globals, $link->title, $short_url, $image);
+			$r = twitter_post($globals, $link, $short_url);
 			$tries++;
 			if (! $r) sleep(4);
 		}
