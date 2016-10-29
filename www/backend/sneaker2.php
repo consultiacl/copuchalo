@@ -459,7 +459,7 @@ function get_post($time, $type, $postid, $userid) {
 	$json['ts'] = $time;
 	$json['type'] = $type;
 	$json['who'] = $event->user_login;
-	$json['status'] = _('nótame');
+	$json['status'] = _('postit');
 	$json['title'] = put_smileys(text_to_summary(preg_replace('/(@[\S.-]+)(,\d+)/','$1',$event->post_content),130));
 	if (mb_strlen(trim($json['title'])) == 0) $json['title'] = '...';
 	$json['votes'] = 0;
