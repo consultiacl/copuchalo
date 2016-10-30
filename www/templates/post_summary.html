@@ -42,10 +42,8 @@
 			<a class="username" href="{%exec post_get_base_url self.username %}">{{ self.username }}</a>
 			{% else %}
 			<strong>{% trans _('admin') %}</strong>
-			{% if current_user.admin %}({{ self.username }}){% endif %}
+			({{ self.username }})
 			{% endif %}
-
-
 		</div>
 	</div>
 </div>
