@@ -79,14 +79,14 @@ El establecimiento de un hiperenlace, enlace, intercambio, no implica en ningún
 
 <li>Se deberá marcar como <b>NSFW</b> al "sub mediatize" si se permite el envío de noticias o imágenes no aptas para menores y/o lugares de trabajo.</li>
 
-<li>Se ruega a los administradores de cada sitio que hagan cumplir las normas, descartando aquellos envíos que violen las normas #2 a #8, y/o las leyes chilenas en estas materias.</li>
+<li>Se ruega a los administradores de cada sitio que hagan cumplir las normas, descartando aquellos envíos que violen las normas #2 a #8, y/o las leyes españolas en estas materias.</li>
 
 <li>Nos reservamos el derecho a eliminar o cambiar de propietarios a aquellos subs que no se usen, hayan quedado en desuso o que sus administradores lo hayan abandonado.</li>
 </ol>
 
 <br/><br/>
 <p>
-El incumplimiento de las condiciones de uso podría significar el bloqueo de la <strong>cuenta de usuario</strong> y/o <strong>dominio web</strong>, el <strong>borrado y/o edición</strong> del texto ofensivo, y las medidas y denuncias adecuadas según las leyes chilenas. El incumplimiento reiterado de las normas usando cuentas nuevas o alternativas implicará la <strong>deshabilitación automática</strong> de las mismas en cuanto sean detectadas.
+El incumplimiento de las condiciones de uso podría significar el bloqueo de la <strong>cuenta de usuario</strong> y/o <strong>dominio web</strong>, el <strong>borrado y/o edición</strong> del texto ofensivo, y las medidas y denuncias adecuadas según las leyes españolas. El incumplimiento reiterado de las normas usando cuentas nuevas o alternativas implicará la <strong>deshabilitación automática</strong> de las mismas en cuanto sean detectadas.
 </p>
 <p>Con el objetivo de mejorar el servicio y minimizar los problemas, Mediatize se reserva el derecho a modificar y actualizar las condiciones de uso sin previo aviso.</p>
 
