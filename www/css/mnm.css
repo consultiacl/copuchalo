@@ -658,9 +658,9 @@ text-decoration: underline;
 	//background: -moz-linear-gradient(#000, #bbb);
 	//background: -o-linear-gradient(#000, #bbb);
 	//background: linear-gradient(#000, #bbb);
-	//-webkit-border-radius: 3px;
-	//-moz-border-radius: 3px;
-	//border-radius: 3px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
 }
 
 .sidebox.red .header {
@@ -671,9 +671,9 @@ text-decoration: underline;
 	//background: -moz-linear-gradient(#4590ff, #80b3ff);
 	//background: -o-linear-gradient(#4590ff, #80b3ff);
 	//background: linear-gradient(#4590ff, #80b3ff);
-	//-webkit-border-radius: 3px;
-	//-moz-border-radius: 3px;
-	//border-radius: 3px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
 }
 
 .sidebox.brown .header {
@@ -761,7 +761,7 @@ padding-bottom:6px;
 	text-align: center;
 	//font-size: 12px;
 	border: 1px solid #aaa;
-	//border-radius: 3px;
+	border-radius: 2px;
 	color: #444;
 	background-color: #fff;
 	//background-color: #f6f9ff; /* fallback */
@@ -789,14 +789,14 @@ padding-bottom:6px;
 }
 
 .sidebox .votes.queued {
-	color: #444;
+/*	color: #444;
 	border: 1px solid #eee;
-	background-color: #ddd; /* fallback */
+	background-color: #ddd;
 	background: -webkit-gradient(linear, 0 0, 0 100%, from(#999), to(#ddd));
 	background: -webkit-linear-gradient(#999, #ddd);
 	background: -moz-linear-gradient(#999, #ddd);
 	background: -o-linear-gradient(#999, #ddd);
-	background: linear-gradient(#999, #ddd);
+	background: linear-gradient(#999, #ddd); */
 }
 
 .sidebox .mainsites ul {
