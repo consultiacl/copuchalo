@@ -85,10 +85,34 @@ El establecimiento de un hiperenlace, enlace, intercambio, no implica en ningún
 </ol>
 
 <br/><br/>
+
+<h2 id="normadmin">Normas específicas para los usuarios con privilegios</h2>
+<ol>
+<li>El usuario con privilegios (en general, administradores) se abstendrá de intervenir salvo que sea absolutamente necesario.</li>
+<li>Podrán usar la web como usuario normal, pero deberá ser respetuoso y educado, guardando las buenas formas y evitando crear rencillas entre los demás usuarios (no poniéndose nunca de parte de uno u otro).</li>
+<li>No utilizará su posición para beneficiar ni perjudicar a nadie.</li>
+<li>Poseerá una única cuenta (a excepción de los administradores técnicos del sitio).</li>
+<li>En caso de intervención, seguirá el siguiente protocolo según el caso:
+     <ul>
+	<li>Si la intervención conlleva el cierre de un envío por violación de las condiciones de uso, se asegurará de que procede mediante consulta a los demás usuarios con privilegios.</li>
+	<li>Si el cierre de una historia o noticia es por petición del usuario que la ha publicado, se podrá hacer sin más dilación (siempre que no sea portada del sitio, en cuyo caso tendrá que ser consultado con los demás usuarios con privilegios).</li>
+	<li>Si la intervención conlleva la edición de un envío o cambio de URL del envío, será siempre por petición del usuario.</li>
+	<li>Cualquier otra intervención o reporte de usuario se estudiará entre todos los usuarios con privilegios (o de su gran mayoría), nunca se acturará de forma personal.</li>
+	<li>Ante un conflicto entre usuarios en el que sea necesario intervenir, el usuario con privilegios hará siempre una labor de mediación para resolver el conflicto. De no llegar a un acuerdo de resolución satisfactorio para las partes en conflicto, se actuará en los términos que establece el punto anterior.</li>
+     </ul>
+</li>
+<li>La potestad para asignar o revocar un privilegio a un usuario quedará supeditada al quórum de los demás usuarios con privilegios. En caso de revocación, será valorada también la opinión general que pueda desprenderse de los comentarios y postits de los usuarios del sitio.</li>
+<li>La lista actualizada de usuarios con privilegios puede consultarse al final de la página <a href="<?php echo $globals['base_url_general']; ?>values">parámetros básicos</a>.</li>
+</ol>
+
+<br/><br/>
+
 <p>
-El incumplimiento de las condiciones de uso podría significar el bloqueo de la <strong>cuenta de usuario</strong> y/o <strong>dominio web</strong>, el <strong>borrado y/o edición</strong> del texto ofensivo, y las medidas y denuncias adecuadas según las leyes españolas. El incumplimiento reiterado de las normas usando cuentas nuevas o alternativas implicará la <strong>deshabilitación automática</strong> de las mismas en cuanto sean detectadas.
+El <strong>incumplimiento de las condiciones de uso</strong> podría significar el bloqueo de la <strong>cuenta de usuario</strong> y/o <strong>dominio web</strong>, el <strong>borrado y/o edición</strong> del texto ofensivo, y las medidas y denuncias adecuadas según las leyes españolas. El incumplimiento reiterado de las normas usando cuentas nuevas o alternativas implicará la <strong>deshabilitación automática</strong> de las mismas en cuanto sean detectadas.
 </p>
 <p>Con el objetivo de mejorar el servicio y minimizar los problemas, Mediatize se reserva el derecho a modificar y actualizar las condiciones de uso sin previo aviso.</p>
+
+<br/><br/>
 
 </div>
 </div>
