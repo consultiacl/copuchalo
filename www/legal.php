@@ -102,7 +102,7 @@ El establecimiento de un hiperenlace, enlace, intercambio, no implica en ningún
      </ul>
 </li>
 <li>La potestad para asignar o revocar un privilegio a un usuario quedará supeditada al quórum de los demás usuarios con privilegios. En caso de revocación, será valorada también la opinión general que pueda desprenderse de los comentarios y postits de los usuarios del sitio.</li>
-<li>La lista actualizada de usuarios con privilegios puede consultarse al final de la página <a href="<?php echo $globals['base_url_general']; ?>values">parámetros básicos</a>.</li>
+<li>La lista actualizada de usuarios con privilegios puede consultarse al final de la página <a href="<?php echo $globals['base_url_general']; ?>values#admins">parámetros básicos</a>.</li>
 </ol>
 
 <br/><br/>
