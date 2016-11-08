@@ -38,6 +38,8 @@ if ($page > 1) {
 
 do_header($pagetitle, _('portada'));
 
+$order_by = "ORDER BY sub_date DESC ";
+
 $from = '';
 switch ($globals['meta']) {
 	case '_subs':
@@ -55,6 +57,7 @@ switch ($globals['meta']) {
 		$from = ", subs";
 		$where = "sub_statuses.status='published' AND sub_statuses.id = sub_statuses.origen and sub_statuses.date > $from_time and sub_statuses.origen = subs.id and subs.owner > 0";
 		$rows = -1;
+		$order_by = "ORDER BY date DESC ";
 		Link::$original_status = true; // Show status in original sub
 		print_index_tabs(8);
 		break;
@@ -114,7 +117,7 @@ if (! $globals['mobile'] && $page == 1 && empty($globals['meta']) && ($top = Lin
 // Old optimizacions from Galli are not correct for other databases like MariaDB: https://gallir.wordpress.com/2011/02/02/optimizando-obsesivamente-las-consultas-al-mysql/ 
 
 //$order_by = "ORDER BY date DESC ";
-$order_by = "ORDER BY sub_date DESC ";
+//$order_by = "ORDER BY sub_date DESC ";
 
 if (!$rows) $rows = $db->get_var("SELECT SQL_CACHE count(*) FROM sub_statuses $from WHERE $where");
 
