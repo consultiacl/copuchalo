@@ -672,6 +672,7 @@ function put_emojis_callback($matches) {
 			'foreveralone' => 'foreveralone.png" alt=":foreveralone:" title=":foreveralone:" width="20" height="18"',
 			'pagafantas' => 'pagafantas.png" alt=":pagafantas:" title=":pagafantas:" width="25" height="18"',
 			'popcorn' => 'popcorn.gif" alt=":popcorn:" title=":popcorn:" width="29" height="18"',
+			'vomiton' => 'vomiton.gif" alt=":vomiton:" title=":vomiton:" width="19" height="19"',
 
 			'take' => 'takemymoney.png" alt=":take:" title=":take:" width="29" height="18"',
 			'professor' => 'professor.png" alt=":professor:" title=":professor:" width="18" height="24"',
@@ -735,6 +736,7 @@ function normalize_smileys($str) {
 	$str=preg_replace('/(\s|^):foreveralone:/i', '$1{foreveralone}', $str);
 	$str=preg_replace('/(\s|^):pagafantas:/i', '$1{pagafantas}', $str);
 	$str=preg_replace('/(\s|^):popcorn:/i', '$1{popcorn}', $str);
+	$str=preg_replace('/(\s|^):vomiton:/i', '$1{vomiton}', $str);
 
 	$str=preg_replace('/(\s|^):take:/i', '$1{take}', $str);
 	$str=preg_replace('/(\s|^):professor:/i', '$1{professor}', $str);

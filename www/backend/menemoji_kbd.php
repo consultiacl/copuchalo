@@ -49,6 +49,7 @@ $menemojis = array(
 			'calzador' => 'calzador.png',
 			'clap' => 'clap.gif',
 			'tinfoil' => 'tinfoil.gif',
+			'vomiton' => 'vomiton.gif',
 	);
 
 $twemojis[_('gente')] = array(
