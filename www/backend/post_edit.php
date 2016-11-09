@@ -34,7 +34,7 @@ if (!empty($_REQUEST['user_id'])) {
 			$post->author=$current_user->user_id;
 			$post->print_edit_form();
 		} else {
-			echo 'Error: ' . _('debe esperar entre postits') . ' (' . $globals['posts_period'] . ' segundos)');
+			echo 'Error: ' . _('debe esperar entre postits') . ' (' . $globals['posts_period'] . ' segundos)';
 			die;
 		}
 	}
@@ -100,7 +100,7 @@ function save_post ($post_id) {
 
 		// Verify that there are a period of 1 minute between posts.
 		if(intval($db->get_var("select count(*) from posts where post_user_id = $current_user->user_id and post_date > date_sub(now(), interval ".$globals['posts_period']." second)"))> 0) {
-			echo 'ERROR: ' . _('debe esperar entre postits') . ' (' . $globals['posts_period'] . ' segundos)');
+			echo 'ERROR: ' . _('debe esperar entre postits') . ' (' . $globals['posts_period'] . ' segundos)';
 			die;
 		};
 
