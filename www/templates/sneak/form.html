@@ -23,6 +23,7 @@
 {% endif %}
 </label>
 
+{#
 <label><input type="checkbox" checked="checked" name="sneak-problem" id="problem-status" onclick="toggle_control('problem')" />
 {% if  NOT globals.sneak_telnet %}
 <img src="{{ globals.base_static }}img/common/sneak-problem01.png" width="21" height="17" alt="{% trans _('problema') %}" title="{% trans _('problema') %}"/>
@@ -30,6 +31,7 @@
 [-]{% trans _('problema') %}
 {% endif %}
 </label>
+#}
 
 <label><input type="checkbox" checked="checked" name="sneak-comment" id="comment-status" onclick="toggle_control('comment')" />
 {% if  NOT globals.sneak_telnet %}
