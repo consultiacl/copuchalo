@@ -302,7 +302,7 @@ function writeStorage(key, value) {
 	if(typeof(Storage)!=="undefined") {
 		localStorage.setItem(key, value);
 	} else {
-		createCookie("n_"+user_id+"_ts", value, 0);
+		createCookie(key, value, 0);
 	}
 }
 
