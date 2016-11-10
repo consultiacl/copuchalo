@@ -11,7 +11,7 @@
 	<div class="img-container">
 	{% if self.thumb_uri %}
 		<a href="{{ self.media_url }}" title="{% trans _('miniatura') %}">
-			<img class="img-story2 lazy" data-2x='s:thumb:thumb_2x:' data-src='//{{globals.server_name}}/{{ self.thumb_uri }}' src="{{ globals.base_static }}img/g.gif" alt=''/>
+			<img class="img-story2 lazy" data-src='//{{globals.server_name}}/{{ self.thumb_uri }}' src="{{ globals.base_static }}img/g.gif" alt=''/>
 		</a>
 	{% else %}
 		<img class="img-story2" src="{{ globals.base_static }}img/cpchl/no-image.png"/>
