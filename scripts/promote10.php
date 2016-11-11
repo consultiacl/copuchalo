@@ -17,7 +17,7 @@ define ('MAX', 1.15);
 define ('MIN', 1.0);
 define ('PUB_MIN', 1);
 define ('PUB_MAX', 75);
-define ('PUB_PERC', 0.15);
+define ('PUB_PERC', 0.4); //0.15);
 
 $past_karma = 0;
 
@@ -96,7 +96,9 @@ function promote($site_id) {
 	$from_time = "date_sub(now(), interval $hours hour)";
 
 	$last_published = $db->get_var("SELECT SQL_NO_CACHE UNIX_TIMESTAMP(max(date)) from sub_statuses WHERE id = $site_id and status='published'");
-	if (!$last_published) $last_published = $now - 24*3600*30;
+	if (!$last_published)
+		$last_published = $now - $globals['time_enabled_votes'];
+
 	$links_published = (int) $db->get_var("select SQL_NO_CACHE count(*) from sub_statuses where id = $site_id and status = 'published' and date > date_sub(now(), interval 24 hour)");
 	$links_published_projection = 4 * (int) $db->get_var("select SQL_NO_CACHE count(*) from sub_statuses where id = $site_id and status = 'published' and date > date_sub(now(), interval 6 hour)");
 
@@ -115,7 +117,7 @@ function promote($site_id) {
 		$output .= "Delayed! <br/>";
 	}
 	$output .= "Last published at: " . get_date_time($last_published) ."<br/>\n";
-	$output .= "24hs queue: $links_queue/$links_queue_all, Published: $links_published -> $links_published_projection Published goal: $pub_estimation, Interval: $interval secs, difference: ". intval($now - $last_published)." secs, Decay: $decay<br/>\n";
+	$output .= "24hs queue: $links_queue/$links_queue_all, Published: $links_published -> $links_published_projection Published goal: $pub_estimation, Interval: $interval secs, difference: ". intval($diff)." secs, Decay: $decay<br/>\n";
 
 	$continue = true;
 	$published=0;

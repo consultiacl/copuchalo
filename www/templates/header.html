@@ -207,10 +207,10 @@
 		</div>
 
 		<div class="header-buttons">
-			{# {% if show_story %} #}
+			{% if show_story %}
 				<a href="{{ base_url }}submit" alt="enviar historia" title="enviar nueva historia" class="header-btn">enviar historia</a>
 				&nbsp;
-			{# {% endif %} #}
+			{% endif %}
 			<a href="{{ base_url }}queue" alt="ver nuevas" title="votar noticias pendientes" class="header-btn">nuevas</a>
 		</div>
 
