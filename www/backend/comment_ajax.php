@@ -131,6 +131,7 @@ function check_and_save($comment, $link) {
 		if ($current_user->user_level == 'god') {
 			if ($_POST['type'] == 'admin') {
 				$comment->type = 'admin';
+				$comment->author = $current_user->user_id;
 			} else {
 				$comment->type = 'normal';
 			}
