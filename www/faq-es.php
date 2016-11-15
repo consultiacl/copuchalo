@@ -73,7 +73,7 @@
 
 <li>
 <h2>¿Qué es esa pestaña "descartadas" en la página de votación de pendientes (nuevas)?</h2>
-<p>Cuando una noticia recibe más reportes de "problemas" que votos positivos, es movida a esta cola. Los usuarios pueden seguir votando y si consigue los votos suficientes volverá a la cola de pendientes normal.
+<p>Van a esa cola las noticias que: se "autodescartan" (por el propio usuario, dentro de los primeros 30 minutos desde su envío) y las que "descartan" los usuarios con privilegios del sitio por vulneración de las <a target="_blank" href="https://www.mediatize.info/legal#tos">condiciones de uso</a>.</p>
 </p>
 </li>
 
