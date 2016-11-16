@@ -721,7 +721,7 @@ var mDialog = new function() {
 
 function comment_edit(id, DOMid) {
 	$target=$('#' + DOMid).parent();
-	$.getJSON(base_url_sub + 'comment_ajax', { id: id }, function (data) {
+	$.getJSON(base_url_sub + 'comment_ajax', { "id": id }, function (data) {
 		if ( ! data.error ) {
 			$target.html(data.html);
 			$target.find('textarea').setFocusToEnd();
@@ -759,7 +759,7 @@ function comment_reply(id, prefix) {
 	var $target = $('<div class="threader"></div>');
 	$parent.append($target);
 
-	$.getJSON(base_url_sub + 'comment_ajax', { reply_to: id }, function (data) {
+	$.getJSON(base_url_sub + 'comment_ajax', { "reply_to": id }, function (data) {
 		if ( ! data.error ) {
 			var $e = $('<div id="comment_ajax_form" style="margin: 10px 0 20px 0"></div>');
 			$e.append(data.html);
@@ -790,17 +790,30 @@ function comment_reply(id, prefix) {
 }
 
 function post_load_form(id, container) {
-	var url = base_url + 'backend/post_edit?id='+id+"&key="+base_key;
-	$.get(url, function (html) {
-			if (html.length > 0) {
-				if (html.match(/^ERROR:/i)) {
-					mDialog.notify(html, 2);
-				} else {
-					$('#'+container).html(html).trigger('DOMChanged', $('#'+container));
-				}
-				reportAjaxStats('html', 'post_edit');
-			}
-		});
+	var url = base_url + 'backend/post_edit';
+	$.getJSON(url, { "id": id, "key": base_key }, function (data) {
+		if(data.error) {
+			mDialog.notify(data.error, 2);
+		} else {
+			$('#'+container).html(data.html).trigger('DOMChanged', $('#'+container));
+			var options = {
+				dataType: 'json',
+				success: function (data) {
+					if (! data.error) {
+						$('#'+container).html(data.html);
+					} else {
+						mDialog.notify("error: " + data.error, 5)
+					}
+					$('#'+container).trigger('DOMChanged', $('#'+container));
+				},
+				error: function () {
+					mDialog.notify("error", 3);
+				},
+			};
+			$('#thisform'+id).ajaxForm(options);
+		}
+		reportAjaxStats('html', 'post_edit');
+	});
 }
 
 

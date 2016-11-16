@@ -142,7 +142,7 @@ class Post extends LCPBase {
 		return false;
 	}
 
-	function print_summary($length=0) {
+	function print_summary($length=0, $dontecho = false) {
 		global $current_user, $globals;
 
 		if(!$this->read) $this->read();
@@ -181,7 +181,7 @@ class Post extends LCPBase {
 		$vars = compact('post_meta_class', 'post_class', 'length');
 		/* reference $this to use in the template */
 		$vars['self'] = $this;
-		return Haanga::Load('post_summary.html', $vars);
+		return Haanga::Load('post_summary.html', $vars, $dontecho);
 	}
 
 	function print_user_avatar($size=40) {
@@ -224,7 +224,7 @@ class Post extends LCPBase {
 		return preg_replace('/(@[\S.-]+)(,\d+)/','$1',$this->content);
 	}
 
-	function print_edit_form() {
+	function print_edit_form($dontecho = false) {
 		global $globals, $current_user;
 
 		if ($this->id == 0) {
@@ -234,7 +234,7 @@ class Post extends LCPBase {
 
 		$vars = array();
 		$vars['self'] = $this;
-		return Haanga::Load('post_edit.html', $vars);
+		return Haanga::Load('post_edit.html', $vars, $dontecho);
 	}
 
 	function vote_exists() {

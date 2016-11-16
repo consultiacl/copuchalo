@@ -14,6 +14,9 @@ if (! defined('mnmpath')) {
 array_push($globals['cache-control'], 'no-cache');
 http_cache();
 
+header('Content-Type: application/json; charset=utf-8');
+
+
 $post = new Post;
 if (!empty($_REQUEST['user_id'])) {
 	$post_id = intval($_REQUEST['post_id']);
@@ -26,16 +29,17 @@ if (!empty($_REQUEST['user_id'])) {
 	if (!empty($_REQUEST['id'])) {
 		// She wants to edit the post
 		$post->id = intval($_REQUEST['id']);
-		if ($post->read()) $post->print_edit_form();
+		if ($post->read()) {
+			return_post($post->print_edit_form(true));
+		}
 	} else {
 		// A new post
 		if (!$post->read_last($current_user->user_id) || time() - $post->date > $globals['posts_period']) {
 			$post = new Post;
 			$post->author=$current_user->user_id;
-			$post->print_edit_form();
+			return_post($post->print_edit_form(true));
 		} else {
-			echo 'Error: ' . _('debe esperar entre postits') . ' (' . $globals['posts_period'] . ' segundos)';
-			die;
+			error_post('Error: ' . _('debe esperar entre postits') . ' (' . $globals['posts_period'] . ' segundos)');
 		}
 	}
 }
@@ -48,21 +52,18 @@ function save_post ($post_id) {
 	$post = new Post;
 	$_POST['post'] = clean_text_with_tags($_POST['post'], 0, false, $globals['posts_len']);
 
-	if ($current_user->user_level == 'god' && $_POST['admin'] == true) {
-		$post->admin = true;
-	}
+	// Post admin is checked
+	$post_is_admin = ($current_user->user_level == 'god' && $_POST['admin'] == true);
 
 	if (!empty($_FILES['image']['tmp_name'])) {
 		$limit_exceded = Upload::current_user_limit_exceded($_FILES['image']['size']);
 		if ($limit_exceded) {
-			echo 'ERROR: ' . $limit_exceded;
-			die;
+			error_post('ERROR: ' . $limit_exceded);
 		}
 	}
 
 	if (mb_strlen($_POST['post']) < 5) {
-		echo 'ERROR: ' . _('texto muy corto');
-		die;
+		error_post('ERROR: ' . _('texto muy corto'));
 	}
 	if ($post_id > 0) {
 		$post->id = $post_id;
@@ -76,34 +77,36 @@ function save_post ($post_id) {
 			($current_user->user_level == 'god' && time() - $post->date < $globals['posts_edit_time_admin'] * 1.5)) &&
 			$_POST['key']  == $post->randkey ) {
 			$post->content=$_POST['post'];
+			$post->admin = $post_is_admin;
+			$post->author = $current_user->user_id;
+			$post->username=$current_user->user_login;
 			if (strlen($post->content) > 0 ) {
 				$post->store();
 				store_image($post);
 			}
 		} else {
-			echo 'ERROR: ' . _('no tiene permisos para grabar');
-			die;
+			error_post('ERROR: ' . _('no tiene permisos para grabar'));
 		}
 	} else {
 
 		if ($current_user->user_id != intval($_POST['user_id'])) die;
 
 		if ($current_user->user_karma < $globals['min_karma_for_posts']) {
-			echo 'ERROR: ' . _('el karma es muy bajo');
-			die;
+			error_post('ERROR: ' . _('el karma es muy bajo'));
 		}
 
 		// Check the post wasn't already stored
 		$post->randkey=intval($_POST['key']);
-		$post->author=$current_user->user_id ;
+		$post->author=$current_user->user_id;
+		$post->username=$current_user->user_login;
 		$post->content=$_POST['post'];
 
 		// Verify that there are a period of 1 minute between posts.
 		if(intval($db->get_var("select count(*) from posts where post_user_id = $current_user->user_id and post_date > date_sub(now(), interval ".$globals['posts_period']." second)"))> 0) {
-			echo 'ERROR: ' . _('debe esperar entre postits') . ' (' . $globals['posts_period'] . ' segundos)';
-			die;
-		};
+			error_post('ERROR: ' . _('debe esperar entre postits') . ' (' . $globals['posts_period'] . ' segundos)');
+		}
 
+		$post->admin = $post_is_admin;
 		$same_text = $post->same_text_count();
 		$same_links = $post->same_links_count(10);
 
@@ -122,13 +125,11 @@ function save_post ($post_id) {
 			store_image($post);
 		} else {
 			$db->commit();
-			echo 'ERROR: ' . _('comentario grabado previamente');
-			die;
+			error_post('ERROR: ' . _('comentario grabado previamente'));
 		}
 	}
 
-
-	$post->print_summary();
+	return_post($post->print_summary(0, true));
 }
 
 function store_image($post) {
@@ -140,5 +141,19 @@ function store_image($post) {
 	}
 
 	$post->media_date = time(); // To show the user the new thumbnail
+}
+
+function error_post($error) {
+	$data['html'] = '';
+	$data['error'] = $error;
+	echo json_encode($data);
+	die;
+}
+
+function return_post($html) {
+	$data['html'] = $html;
+	$data['error'] = '';
+	echo json_encode($data);
+	die;
 }
 
