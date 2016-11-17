@@ -1712,7 +1712,7 @@ var fancyBox = new function () {
 			data = decode_data(readStorage("n_"+user_id));
 
 			var a = ['privates', 'posts', 'comments', 'friends'];
-			var b = ['fa-envelope', 'fa-pencil-square-o', 'fa-commenting', 'fa-users'];
+			var b = ['fa-envelope', 'fa-pencil-square-o', 'fa-comments', 'fa-users'];
 			for (var i=0; i < a.length; i++) {
 				field = a[i];
 				var counter = (data && data[field]) ? data[field] : 0;

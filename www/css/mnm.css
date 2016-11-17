@@ -2484,8 +2484,8 @@ width: auto;
 	display:none;
 	background:url({{ globals.base_static }}img/common/uparr-48-w.png) no-repeat center center rgba(0,0,0,0.3);
 	//background-size: 24px 24px;
-	border: 2px #bbb solid;
-	border-radius: 2px;
+	//border: 2px #bbb solid;
+	border-radius: 8px;
 }
 
 .reportform {

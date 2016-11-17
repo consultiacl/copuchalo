@@ -21,7 +21,7 @@
 			<li class="usertext wideonly"><a href="{{ current_user.user_login|useruri }}" class="tooltip u:{{ current_user.user_id }}">{{current_user.user_login}}</a></li>
 		{% endif %}
 		{% if current_user.admin %}
-			<li class="usertext"><a href="{{ globals.base_url_general }}admin/bans.php"><i class="fa fa-dashboard"></i></a></li>
+			<li class="usertext"><a href="{{ globals.base_url_general }}admin/bans.php" title="Utilidades administración"><i class="fa fa-gear"></i></a></li>
 		{% endif %}
 		<li id="notifier"></li>
 		<li id="usermenu"><img id="avatar" src="{{ globals.base_static }}img/g.gif" data-2x="s:-40.:-80." data-src="{% exec get_avatar_url current_user.user_id, current_user.user_avatar, 40 %}" class="lazy" alt="{{current_user.user_login}}"/></li>

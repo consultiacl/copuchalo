@@ -650,7 +650,7 @@ max-width: 6em;
 
 
 
-.fa-dashboard  {
+.fa-gear {
 	color: #fff;
 	font-size: 20px;
 	width: 20px;
@@ -670,13 +670,13 @@ max-width: 6em;
 
 /* effectos */
 .fa-navicon:hover,
-.fa-dashboard:hover {
+.fa-gear:hover {
 	opacity: 0.6;
 }
 
 .fa-envelope,
 .fa-pencil-square-o,
-.fa-commenting,
+.fa-comments,
 .fa-users,
 .fa-user,
 .fa-power-off {
