@@ -1718,6 +1718,12 @@ var fancyBox = new function () {
 				var counter = (data && data[field]) ? data[field] : 0;
 				$e.append("<div><a href='"+base_url_sub+"go?id="+user_id+"&what="+field+"'><i class='fa "+b[i]+"'></i>" + counter + " " + field_text(field) + "</a></div>");
 			}
+			{% if current_user.user_level == 'admin' OR current_user.user_level == 'god' %}
+				var counter = (data && data['adminposts']) ? data['adminposts'] : 0;
+				$e.append("<div><a href='"+base_url_sub+"go?id={{ globals.admin_user_id }}&what=adminposts'><i class='fa fa-pencil-square-o'></i>" + counter + " postits admin</a></div>");
+				var counter = (data && data['admincomments']) ? data['admincomments'] : 0;
+				$e.append("<div><a href='"+base_url_sub+"go?id={{ globals.admin_user_id }}&what=admincomments'><i class='fa fa-comments'></i>" + counter + " comentarios admin</a></div>");
+			{% endif %}
 			$e.show();
 			check_counter = 0;
 		} else {
@@ -1780,6 +1786,7 @@ var fancyBox = new function () {
 		document.title = document.title.replace(/^\(\d+\) /, '');
 		area.html(data.total);
 		$('#p_c_counter').html(data.posts);
+		$('#p_c_counter_admin').html(data.adminposts);
 		if (data.total > 0) {
 			area.addClass('nonzero');
 			document.title = '('+data.total+') ' + document.title;
@@ -1825,11 +1832,11 @@ var fancyBox = new function () {
 	function decode_data(str) {
 		if (! str) return null;
 		var a = str.split(",");
-		return {total: a[0], privates: a[1], posts: a[2], comments: a[3], friends: a[4]};
+		return {total: a[0], privates: a[1], posts: a[2], comments: a[3], friends: a[4], adminposts: a[5], admincomments: a[6]};
 	}
 
 	function encode_data(data) {
-		var a = [data.total, data.privates, data.posts, data.comments, data.friends];
+		var a = [data.total, data.privates, data.posts, data.comments, data.friends, data.adminposts, data.admincomments];
 		return a.join(",");
 	}
 

@@ -29,6 +29,14 @@ if ($id > 0) {
 			$url = get_user_uri($current_user->user_login, 'friends_new');
 			do_redirection($url);
 			exit(0);
+		case 'adminposts':
+			$url = post_get_base_url('admin') . '/_conversation';
+			do_redirection($url);
+			exit(0);
+		case 'admincomments':
+			$url = get_user_uri('admin', 'conversation');
+			do_redirection($url);
+			exit(0);
 		case 'post':
 			$url = $globals['scheme'].'//'.get_server_name().post_get_base_url($id);
 			do_redirection($url);

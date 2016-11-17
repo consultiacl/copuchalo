@@ -154,9 +154,11 @@ if (!empty($user->names)) {
 	do_header($login, 'profile', User::get_menu_items($view, $login));
 }
 
-// Used to show the user the number of unread answers to her comments
+// Used to show user number of unread answers to comments
 if ($current_user->user_id == $user->id) {
 	$globals['extra_comment_conversation'] = ' ['.Comment::get_unread_conversations($user->id).']';
+} elseif($current_user->user_level == 'admin' || $current_user->user_level == 'god') {
+	$globals['extra_comment_conversation'] = ' ['.Comment::get_unread_conversations($globals['admin_user_id']).']';
 } else {
 	$globals['extra_comment_conversation'] = '';
 }
@@ -429,8 +431,12 @@ function do_conversation () {
 	if ($comments) {
 		$last_read = print_comment_list($comments, $user);
 	}
-	if ($last_read > 0 && $current_user->user_id == $user->id) {
-		Comment::update_read_conversation($timestamp_read);
+	if ($last_read > 0) {
+		if($current_user->user_id == $user->id) {      // $current_user->user_login == $login_url
+			Comment::update_read_conversation($timestamp_read, $current_user->user_id);
+		} elseif ($current_user->user_level == 'admin' || $current_user->user_level == 'god') {
+			Comment::update_read_conversation($timestamp_read, $globals['admin_user_id']);
+		}
 	}
 }
 

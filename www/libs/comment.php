@@ -36,21 +36,21 @@ class Comment extends LCPBase {
 		return $db->get_object("SELECT".Comment::SQL."WHERE comment_id = $id", 'Comment');
 	}
 
-	static function update_read_conversation($time = false) {
+	static function update_read_conversation($time = false, $user_id = 0) {
 		global $db, $globals, $current_user;
 		$key = 'c_last_read';
 
 		if (! $current_user->user_id ) return false;
 
 		if (! $time) $time = $globals['now'];
-		$previous = (int) $db->get_var("select pref_value from prefs where pref_user_id = $current_user->user_id and pref_key = '$key'");
+		$previous = (int) $db->get_var("select pref_value from prefs where pref_user_id = $user_id and pref_key = '$key'");
 		if ($time > $previous) {
-			$r = $db->query("delete from prefs where pref_user_id = $current_user->user_id and pref_key = '$key'");
+			$r = $db->query("delete from prefs where pref_user_id = $user_id and pref_key = '$key'");
 			if ($r) {
-				$db->query("insert into prefs set pref_user_id = $current_user->user_id, pref_key = '$key', pref_value = $time");
+				$db->query("insert into prefs set pref_user_id = $user_id, pref_key = '$key', pref_value = $time");
 			}
 		}
-		return User::reset_notification($current_user->user_id, 'comment');
+		return User::reset_notification($user_id, 'comment');
 	}
 
 	static function get_unread_conversations($user = 0) {

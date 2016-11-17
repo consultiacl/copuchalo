@@ -29,7 +29,16 @@ $notifications->comments = (int) Comment::get_unread_conversations($current_user
 $notifications->privates = (int) PrivateMessage::get_unread($current_user->user_id);
 $notifications->friends = count(User::get_new_friends($current_user->user_id));
 
-$notifications->total = $notifications->posts + $notifications->privates + $notifications->friends + $notifications->comments;
+# Admin notifications
+if($current_user->user_level == 'admin' OR $current_user->user_level == 'god') {
+	$notifications->adminposts = (int) Post::get_unread_conversations($globals['admin_user_id']);
+	$notifications->admincomments = (int) Comment::get_unread_conversations($globals['admin_user_id']);
+} else {
+	$notifications->adminposts = 0;
+	$notifications->admincomments = 0;
+}
+
+$notifications->total = $notifications->posts + $notifications->privates + $notifications->friends + $notifications->comments + $notifications->adminposts + $notifications->admincomments;
 echo json_encode($notifications);
 
 
@@ -49,6 +58,12 @@ function do_redirect($type) {
 			break;
 		case 'friends':
 			$url = get_user_uri($current_user->user_login, 'friends_new');
+			break;
+		case 'adminposts':
+			$url = post_get_base_url("admin") . '/_conversation';
+			break;
+		case 'admincomments':
+			$url = get_user_uri("admin", 'conversation');
 			break;
 	}
 	header("HTTP/1.1 302 Moved");

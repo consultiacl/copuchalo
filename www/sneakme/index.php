@@ -171,6 +171,9 @@ if ($tab_option == 4) {
 		$whose = _('míos');
 	} else {
 		$whose = _('suyos');
+		if($user->username == 'admin' && $current_user->user_level == 'admin' || $current_user->user_level == 'god') {
+			$conversation_extra = ' [<span id="p_c_counter_admin">0</span>]';
+		}
 	}
 	$options = array(
 		$whose => post_get_base_url($user->username),
@@ -266,8 +269,12 @@ if ($view != 4) {
 		}
 
 		// Update conversation time
-		if ($view == 3 && $time_read > 0 && $user->id == $current_user->user_id) {
-			Post::update_read_conversation($time_read);
+		if ($view == 3 && $time_read > 0) {
+			if($current_user->user_id == $user->id) {
+				Post::update_read_conversation($time_read, $current_user->user_id);            
+			} elseif ($current_user->user_level == 'admin' || $current_user->user_level == 'god') {
+				Post::update_read_conversation($time_read, $globals['admin_user_id']);
+			}
 		}
 		echo '</div>';
 	}
