@@ -1723,6 +1723,8 @@ var fancyBox = new function () {
 				$e.append("<div><a href='"+base_url_sub+"go?id={{ globals.admin_user_id }}&what=adminposts'><i class='fa fa-pencil-square-o'></i>" + counter + " postits admin</a></div>");
 				var counter = (data && data['admincomments']) ? data['admincomments'] : 0;
 				$e.append("<div><a href='"+base_url_sub+"go?id={{ globals.admin_user_id }}&what=admincomments'><i class='fa fa-comments'></i>" + counter + " comentarios admin</a></div>");
+				var counter = (data && data['adminreports']) ? data['adminreports'] : 0;
+				$e.append("<div><a href='"+base_url_sub+"go?id={{ globals.admin_user_id }}&what=adminreports'><i class='fa fa-list-alt'></i>" + counter + " reportes admin</a></div>");
 			{% endif %}
 			$e.show();
 			check_counter = 0;
@@ -1832,11 +1834,11 @@ var fancyBox = new function () {
 	function decode_data(str) {
 		if (! str) return null;
 		var a = str.split(",");
-		return {total: a[0], privates: a[1], posts: a[2], comments: a[3], friends: a[4], adminposts: a[5], admincomments: a[6]};
+		return {total: a[0], privates: a[1], posts: a[2], comments: a[3], friends: a[4], adminposts: a[5], admincomments: a[6], adminreports: a[7]};
 	}
 
 	function encode_data(data) {
-		var a = [data.total, data.privates, data.posts, data.comments, data.friends, data.adminposts, data.admincomments];
+		var a = [data.total, data.privates, data.posts, data.comments, data.friends, data.adminposts, data.admincomments, data.adminreports];
 		return a.join(",");
 	}
 

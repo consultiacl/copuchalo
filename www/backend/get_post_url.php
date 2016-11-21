@@ -41,7 +41,7 @@ if (!empty($_GET['id'])) {
 			if (! $uid) {
 				not_found('<strong>Error: </strong>' . _('usuario inexistente'));
 			} else {
-				header('Location:  http://'.get_server_name().post_get_base_url($user));
+				header('Location:  https://'.get_server_name().post_get_base_url($user));
 				die;
 			}
 			die;
@@ -60,6 +60,6 @@ if(!$post->read) {
 	not_found('<strong>Error: </strong>' . _('postit no encontrado'));
 	die;
 }
-header('Location:  http://'.get_server_name().post_get_base_url($post->id));
+header('Location:  https://'.get_server_name().post_get_base_url($post->id));
 echo $link;
 

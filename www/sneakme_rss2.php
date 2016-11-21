@@ -108,10 +108,10 @@ if ($posts) {
 		$content = htmlentities2unicodeentities(put_smileys($post->to_html($post->clean_content())));
 		echo "	<item>\n";
 		echo "		<title>$title</title>\n";
-		echo "		<link>http://".get_server_name().post_get_base_url($post->username).'/'.$post->id."</link>\n";
+		echo "		<link>https://".get_server_name().post_get_base_url($post->username).'/'.$post->id."</link>\n";
 		echo "		<pubDate>".date("r", $post->date)."</pubDate>\n";
 		echo "		<dc:creator>$post->username</dc:creator>\n";
-		echo "		<guid>http://".get_server_name().post_get_base_url($post->username).'/'.$post->id."</guid>\n";
+		echo "		<guid>https://".get_server_name().post_get_base_url($post->username).'/'.$post->id."</guid>\n";
 		// Insert GEO
 		if (($latlng = geo_latlng('user', $post->author))) {
 			echo "		<georss:point>$latlng->lat $latlng->lng</georss:point>\n";
@@ -152,12 +152,12 @@ function do_header($title) {
 	echo ' >'. "\n";
 	echo '<channel>'."\n";
 	echo '	<title>'.$title.'</title>'."\n";
-	echo '	<atom:link href="http://'.get_server_name().__(clean_input_url($_SERVER['REQUEST_URI'])).'" rel="self" type="application/rss+xml" />'."\n";
-	echo '	<link>http://'.get_server_name().post_get_base_url().'</link>'."\n";
-	//echo "	<image><title>".$title."</title><link>http://".get_server_name().post_get_base_url()."</link><url>http://".get_static_server_name().$globals['base_url']."img/common/eli-rss.png</url></image>\n";
-	echo '	<description>'._('Sitio colaborativo de publicación y comunicación entre blogs').'</description>'."\n";
+	echo '	<atom:link href="https://'.get_server_name().__(clean_input_url($_SERVER['REQUEST_URI'])).'" rel="self" type="application/rss+xml" />'."\n";
+	echo '	<link>https://'.get_server_name().post_get_base_url().'</link>'."\n";
+	//echo "	<image><title>".$title."</title><link>https://".get_server_name().post_get_base_url()."</link><url>https://".get_static_server_name().$globals['base_url']."img/common/eli-rss.png</url></image>\n";
+	echo '	<description>'._('Agregador social colaborativo de publicación y comunicación').'</description>'."\n";
 	echo '	<pubDate>'.date("r", $last_modified).'</pubDate>'."\n";
-	echo '	<generator>http://blog.meneame.net/</generator>'."\n";
+	echo '	<generator>https://blog.mediatize.info/</generator>'."\n";
 	echo '	<language>'.$dblang.'</language>'."\n";
 }
 

@@ -37,6 +37,10 @@ if ($id > 0) {
 			$url = get_user_uri('admin', 'conversation');
 			do_redirection($url);
 			exit(0);
+		case 'adminreports':
+			$url = 'https://'.get_server_name().'/admin/reports.php';
+			do_redirection($url);
+			exit(0);
 		case 'post':
 			$url = $globals['scheme'].'//'.get_server_name().post_get_base_url($id);
 			do_redirection($url);

@@ -75,7 +75,7 @@ switch ($argv[0]) {
 			if(!$user->read()) {
 				do_error(_('usuario no encontrado'), 404);
 			}
-			$globals['permalink'] = 'http://'.get_server_name().post_get_base_url($post_id);
+			$globals['permalink'] = 'https://'.get_server_name().post_get_base_url($post_id);
 			// Fill title
 			$summary = text_to_summary($db->get_var("SELECT post_content from posts where post_id = $post_id"), 250);
 			$globals['description'] = _('Autor') . ": $user->username, " . _('Resumen') . ': '. $summary;
