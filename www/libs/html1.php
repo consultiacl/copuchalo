@@ -791,7 +791,7 @@ function do_best_posts() {
 	if(memcache_mprint($key)) return;
 	echo '<!-- Calculating '.__FUNCTION__.' -->';
 
-	$min_date = date("Y-m-d H:i:00", $globals['now'] - 86400*30); // about 24 hours
+	$min_date = date("Y-m-d H:i:00", $globals['now'] - 86400); // about 24 hours
 	$res = $db->get_results("select post_id from posts, users where post_date > '$min_date' and  post_user_id = user_id and post_karma > 0 order by post_karma desc limit 10");
 	if ($res && count($res) > 4) {
 		$objects = array();
