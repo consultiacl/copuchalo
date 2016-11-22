@@ -6,7 +6,7 @@ if (empty($current_user->user_login)) {
 	die;
 }
 
-if (!empty($_GET['id']) && $current_user->user_level == 'god') {
+if (!empty($_GET['id']) && ($current_user->user_level == 'god' || $current_user->user_level == 'admin')) {
 	$user = new User(intval($_GET['id']));
 } else {
 	$user = new User($current_user->user_id);
