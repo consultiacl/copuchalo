@@ -111,7 +111,7 @@ if (! $globals['mobile'] && $page == 1 && empty($globals['meta']) && ($top = Lin
 }
 
 
-// *** Sorting in a subselect only works with myslq:
+// *** Sorting in a subselect only works with mysql:
 //     http://stackoverflow.com/questions/26372511/mysql-order-by-inside-subquery
 //     https://mariadb.atlassian.net/browse/MDEV-3926
 // Old optimizacions from Galli are not correct for other databases like MariaDB: https://gallir.wordpress.com/2011/02/02/optimizando-obsesivamente-las-consultas-al-mysql/ 
