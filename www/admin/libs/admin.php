@@ -12,6 +12,13 @@ if (!$current_user->admin) {
 
 function do_admin_tabs($tab_selected = false)
 {
+	global $db;
+
+	$users['enabled']  = (int) $db->get_var("SELECT count(*) FROM users WHERE user_level in ('normal', 'special')");
+	$users['disabled'] = (int) $db->get_var("SELECT count(*) FROM users WHERE user_level in ('autodisabled', 'disabled')");
+	$users['admin']    = (int) $db->get_var("SELECT count(*) FROM users WHERE user_level in ('blogger', 'admin', 'god')");
+	$users['total']    = $users['enabled'] + $users['disabled'] + $users['admin'];
+
 	$tabs = [
 		"hostname" => 'bans.php?tab=hostname',
 		"punished_hostname" => 'bans.php?tab=punished_hostname',
@@ -24,5 +31,5 @@ function do_admin_tabs($tab_selected = false)
 		"reports" => 'reports.php'
 	];
 
-	Haanga::Load("admin/tabs.html", compact('tabs', 'tab_selected'));
+	Haanga::Load("admin/tabs.html", compact('tabs', 'tab_selected', 'users'));
 }
