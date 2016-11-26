@@ -53,7 +53,7 @@ if ($entries) {
 
 }
 echo '</table>';
-echo '<fieldset id="nota"><legend>'._('postit').'</legend>';
+echo '<fieldset id="nota"><legend>'._('nota').'</legend>';
 echo _('Los enlaces son de apuntes de blogs indicados en el perfil de usuarios activos de Mediatize.');
 echo ' ';
 echo _('No tienen relación con mediatize.info, ni han sido seleccionados por su comunidad de usuarios.');

@@ -85,19 +85,19 @@ def main():
 				post += " " + link
 			post += "\n"
 
-		post += '\nhttp://'+dbconf.domain+dbconf.blogs['viewer']+" #blogs"
+		post += '\nhttps://'+dbconf.domain+dbconf.blogs['viewer']+" #blogs"
 		print post
 		try:
 			url = """
-				http://{d}{newpost}?user={post_user}&key={post_key}&text={t}
+				https://{d}{newpost}?user={post_user}&key={post_key}&text={t}
 			""".format(d= dbconf.domain,
 						t= urllib.quote_plus(post),
 						**dbconf.blogs)
 			## TODO: Use timeout parameter instead of
 			##       socket.setdefaulttimeout(timeout)
-			urlpost = urllib2.urlopen(url)
+			#urlpost = urllib2.urlopen(url)
 			print urlpost.read(100)
-			urlpost.close()
+			#urlpost.close()
 		except KeyError:
 			print "Error posting", url
 			pass
