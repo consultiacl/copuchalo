@@ -98,8 +98,6 @@ echo '
 				<br/>
 				'._("Karma a partir del cual se destacan los comentarios") . ': ' . $globals['comment_highlight_karma'] . '<br/>
 				<br/>
-				'._("Karma a partir del cual se ocultan los comentarios") . ': ' . $globals['comment_hidden_karma'] . '<br/>
-				<br/>
 				'._("Límite de comentarios por historia") . ': ' . $globals['max_comments'] . '<br/>
 				<br/>
 				'._("Tiempo que permanecen abiertos los comentarios en historias en portada") . ': ' . print_time($globals['time_enabled_comments']) . '<br/>
@@ -174,8 +172,6 @@ echo '
 		<fieldset id="posts">
 			<legend>'._('postits').'</legend>
 				'._("Karma a partir del cual se destacan los postits") . ': ' . $globals['post_highlight_karma'] . '<br/>
-				<br/>
-				'._("Karma a partir del cual se ocultan los postits") . ': ' . $globals['post_hide_karma'] . '<br/>
 				<br/>
 				'._("Tiempo de espera entre postits") . ': ' . print_time($globals['posts_period']) . '<br/>
 				<br/>
