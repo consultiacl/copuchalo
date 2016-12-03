@@ -101,7 +101,7 @@ function send_pear_mail($to, $domain, $subject, $message) {
 	$mime->setTXTBody($text);
 	$mime->setHTMLBody($message);
 
-	$body = $mime->get();
+	$body = $mime->get() . "-";            // Added trailing dash to fix bug in pear mail
 	$headers = $mime->headers($headers);
 
 	// Sending the email
