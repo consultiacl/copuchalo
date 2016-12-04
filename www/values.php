@@ -132,9 +132,9 @@ echo '
 echo '
 		<fieldset id="links">
 			<legend>'._('envíos').'</legend>
-				'._("Límite de envíos global para usuarios con karma") . ' &lt;= ' . $globals['limit_3_minutes_karma'] . ' ('. _('se han enviado demasiadas historias en los últimos 3 minutos') ."): " . $globals['limit_3_minutes'] . ' ' . _("historias cada 3 minutos") . '<br/>
+				'._("Límite de envíos global para usuarios con karma") . ' &lt;= ' . $globals['limit_3_minutes_karma'] . ' ('. _('se han enviado demasiadas historias en los últimos 3 minutos') ."): " . $globals['limit_3_minutes'] . ' ' . _("envíos cada 3 minutos") . '<br/>
 				<br/>
-				'._("Límite de envíos global para usuarios con karma") . ' > ' . $globals['limit_3_minutes_karma'] .' ('. _('se han enviado demasiadas historias en los últimos 3 minutos') ."): " . ($globals['limit_3_minutes'] * 1.5) . ' ' . _("votos cada 3 minutos") . '<br/>
+				'._("Límite de envíos global para usuarios con karma") . ' > ' . $globals['limit_3_minutes_karma'] .' ('. _('se han enviado demasiadas historias en los últimos 3 minutos') ."): " . ($globals['limit_3_minutes'] * 1.5) . ' ' . _("envíos cada 3 minutos") . '<br/>
 				<br/>
 				'._("Límite de envíos por usuario en las últimas 24 horas") . ' (' . _('debes esperar, tienes demasiadas noticias en cola de las últimas 24 horas') . "): " .$globals['limit_user_24_hours'] . ' ' ._("envíos") .'<br/>
 				<br/>
@@ -143,8 +143,6 @@ echo '
 				'._("Tiempo que tarda un borrador en eliminarse automáticamente") . ': ' . print_time($globals['draft_time']) . '<br/>
 				<br/>
 				'._("Máximo de borradores por usuario") . ' (' . _('has hecho demasiados intentos, debes esperar o continuar con ellos desde la') . " " . _('cola de descartadas') . '): ' . $globals['draft_limit'] . '<br/>
-				<br/>
-				'._("Porcentaje de karma de historia que sufre un «depublish» y vuelve a pendientes"). ': ' . intval(100 / $globals['depublish_karma_divisor']) . '<br/>
 		</fieldset>';
 
 
