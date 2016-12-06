@@ -4,6 +4,7 @@ from __future__ import division
 import gettext
 _ = gettext.gettext
 import dbconf
+import time
 from utils import DBM
 
 def main():
@@ -124,8 +125,8 @@ def do_site(site_id, site):
 	cursor.close()
 
 	print "*********************************************************************"
-	print "Site:", site, "Votes average:", votes_average, v_average, \
-			"Comments average:", comments_average, c_average
+	print "****", time.strftime("%d/%m/%y"), "**** SITE:", site, ", Votes average:", votes_average, v_average, \
+			", Comments average:", comments_average, c_average
 
 	for link_id, link_value in links.items():
 		if link_value['c'] > 0 \
@@ -136,7 +137,7 @@ def do_site(site_id, site):
 						   + link_value['clicks'] * (1 - link_value['old']/86400) * 0.03)
 
 	sorted_ids = sorted(links, cmp=lambda x, y:
-											cmp(links[y]['w'], links[x]['w']))
+							cmp(links[y]['w'], links[x]['w']))
 
 	if sorted_ids:
 		annotations = ','.join([unicode(x) for x in sorted_ids[:10]])
@@ -168,7 +169,7 @@ def do_site(site_id, site):
 
 
 	if annotations:
-		print "top-link: ", annotations
+		print "top-link:", annotations
 		cursor_update = DBM.cursor('update')
 		query = """
 			replace into annotations
