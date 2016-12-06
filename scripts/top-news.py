@@ -125,7 +125,7 @@ def do_site(site_id, site):
 	cursor.close()
 
 	print "*******************************************************************************************************"
-	print "****", time.strftime("%d/%m/%Y, %H:M:S (%Z)"), "**** SITE:", site, ", Votes average:", votes_average, v_average, \
+	print "****", time.strftime("%d/%m/%Y, %H:%M:%S (%Z)"), "**** SITE:", site, ", Votes average:", votes_average, v_average, \
 			", Comments average:", comments_average, c_average
 
 	for link_id, link_value in links.items():
