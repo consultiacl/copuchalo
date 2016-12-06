@@ -124,8 +124,8 @@ def do_site(site_id, site):
 
 	cursor.close()
 
-	print "*********************************************************************"
-	print "****", time.strftime("%d/%m/%y"), "**** SITE:", site, ", Votes average:", votes_average, v_average, \
+	print "*******************************************************************************************************"
+	print "****", time.strftime("%d/%m/%Y, %H:M:S (%Z)"), "**** SITE:", site, ", Votes average:", votes_average, v_average, \
 			", Comments average:", comments_average, c_average
 
 	for link_id, link_value in links.items():
@@ -182,7 +182,6 @@ def do_site(site_id, site):
 		print "Stored:", annotations
 	else:
 		print "No one selected"
-	print "---------------------"
 
 def c_avrg(the_dict, exclude):
 	""" Calculate the average excluding the given element"""
