@@ -1,6 +1,7 @@
 #!/usr/bin/php
 <?php
-include(dirname(__FILE__).'/../www/config.php');
+
+include('../config.php');
 global $_SERVER;
 
 if (isset($argv[1])) {
