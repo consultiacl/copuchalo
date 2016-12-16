@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{globals.lang}}" prefix="og: http://ogp.me/ns#">
+<html lang="{{ globals.lang }}" prefix="og: http://ogp.me/ns#">
 
 {% if ! globals.partial %}
 <head>
@@ -24,38 +24,44 @@
 {% endif %}
 
 {% if globals.tags %}
-	<meta name="keywords" content="{{globals.tags}}" />
+	<meta name="keywords" content="{{ globals.tags }}" />
 {% endif %}
 
 {% if globals.description %}
-	<meta name="description" content="{{globals.description}}" />
+	<meta name="description" content="{{ globals.description }}" />
+	<meta name="twitter:description" content="{{ globals.description }}" />
+	<meta property="og:description" content="{{ globals.description }}" />
 {% endif %}
 
 {% if globals.permalink AND title %}
+	<meta name="article:section" content="{{ globals.sub_name }}"  />
+
 	{# Twitter Card #}
-	<meta name="twitter:card" content="summary">
-	<meta name="twitter:title" content="{{title}}">
+	<meta name="twitter:url" content="{{ globals.permalink }}" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="{{ title }}" />
 	{% if globals.twitter_user %}
-		<meta name="twitter:site" content="@{{globals.twitter_user}}">
+		<meta name="twitter:site" content="@{{ globals.twitter_user }}" />
+		<meta name="twitter:creator" content="@{{ globals.twitter_user }}" />
 	{% endif %}
 	{% if globals.thumbnail %}
-   		<meta property="og:image" content="{{globals.thumbnail}}"/>
-   		<meta name="twitter:image" content="{{globals.thumbnail}}"/>
+		<meta name="twitter:image" content="{{ globals.thumbnail }}" />
+		<meta property="og:image" content="{{ globals.thumbnail }}" />
 	{% endif %}
-	<meta property="og:url" content="{{ globals.permalink }}">
-	<meta property="og:title" content="{{title}}">
-	<meta property="og:description" content="{{ globals.description }}">
+	<meta property="og:type" content="article"  />
+	<meta property="og:url" content="{{ globals.permalink }}" />
+	<meta property="og:title" content="{{ title }}" />
 {% endif %}
 
-<link rel="search" type="application/opensearchdescription+xml" title="{% trans _('búsqueda')%}" href="{{ globals.scheme }}//{{globals.server_name}}{{ globals.base_url_general }}opensearch"/>
-<link rel="alternate" type="application/rss+xml" title="{% trans _('publicadas')%}" href="//{{globals.server_name}}{{ globals.base_url }}rss" />
-<link rel="alternate" type="application/rss+xml" title="{% trans _('pendientes')%}" href="//{{globals.server_name}}{{ globals.base_url }}rss?status=queued" />
+<link rel="search" type="application/opensearchdescription+xml" title="{% trans _('búsqueda')%}" href="{{ globals.scheme }}//{{ globals.server_name }}{{ globals.base_url_general }}opensearch" />
+<link rel="alternate" type="application/rss+xml" title="{% trans _('publicadas') %}" href="//{{ globals.server_name }}{{ globals.base_url }}rss" />
+<link rel="alternate" type="application/rss+xml" title="{% trans _('pendientes') %}" href="//{{ globals.server_name }}{{ globals.base_url }}rss?status=queued" />
 
 {# {% endif %} #}
 {# /Save bandwidth for mobiles #}
 
 
-<title>{{title}}</title>
+<title>{{ title }}</title>
 
 
 {% if globals.css_main %}

@@ -103,8 +103,7 @@ if (($argc = count($url_args)) > 1) {
 
 // Change to a min_value is times is changed for the current link_status
 if ($globals['time_enabled_comments_status'][$link->status]) {
-	$globals['time_enabled_comments'] = min($globals['time_enabled_comments_status'][$link->status],
-											$globals['time_enabled_comments']);
+	$globals['time_enabled_comments'] = min($globals['time_enabled_comments_status'][$link->status], $globals['time_enabled_comments']);
 }
 
 // Check for comment post
@@ -267,10 +266,11 @@ $globals['extra_head'] .= '<link rel="canonical" href="'.$link->get_canonical_pe
 $globals['extra_head'] .= '<link rel="alternate" type="application/rss+xml" title="'._('comentarios esta noticia').'" href="'.$globals['scheme'].'//'.get_server_name().$globals['base_url'].'comments_rss?id='.$link->id.'" />';
 
 if ($link->has_thumb()) {
-	$globals['thumbnail'] = $link->media_url;
+	$globals['thumbnail'] = htmlspecialchars_decode($link->media_url);
 }
 
 $globals['description'] = text_to_summary($link->content, 250);
+$globals['sub_name'] = $link->sub_name;
 
 do_header($link->title, 'post');
 
