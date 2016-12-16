@@ -91,11 +91,5 @@ function do_posts($link) {
 			if (! $r) sleep(4);
 		}
 	}
-
-	/*
-	if ($globals['pubsub']) {
-		pubsub_post();
-	}
-	*/
 }
 

@@ -55,17 +55,7 @@ if (! $comment) {
 	exit(2);
 }
 
-$image = false;
-if ($comment->media_size > 0) {
-	$media = new Upload('comment', $comment->id);
-	if ($media->read()) {
-		$image = $media->pathname();
-		$maxlen -= 24;
-	}
-}
-
-
-$url = $globals[scheme].'//'.get_server_name().$comment->get_relative_individual_permalink();
+$url = $globals['scheme'].'//'.get_server_name().$comment->get_relative_individual_permalink();
 syslog(LOG_INFO, "posting comment $url");
 
 //  Store in cache
@@ -82,7 +72,5 @@ $ids[] = $comment->id;
 $previous = implode(',', $ids);
 Annotation::store_text($key, $previous, time() + 86400);
 
-//twitter_post($properties, '&#x1f4ac; '.$comment->content, $url, $image);
-twitter_post($globals, '&#x1f4ac; '.$comment->content, $url, $image);
-
+twitter_post($globals, $comment, $url, '&#x1f4ac;');
 

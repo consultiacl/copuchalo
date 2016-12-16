@@ -55,10 +55,9 @@ if (! in_array($tops[0], $history) ) {
 	$a_history->text = implode(',',$history);
 	$a_history->store();
 
-
-	//twitter_post($properties, $text, $url); 
-	//facebook_post($properties, $link, $intro);
-	twitter_post($globals, $text, $url); 
+	//twitter_post($properties, $text, $url);
+        //facebook_post($properties, $link, $intro);
+	twitter_post($globals, $link, $url, $intro);
 	facebook_post($globals, $link, $intro);
 }
 

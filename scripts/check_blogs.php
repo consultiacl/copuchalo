@@ -1,3 +1,5 @@
+#!/usr/bin/php
+
 <?php
 
 // This file checks the rss of a blog against its url.
@@ -6,7 +8,7 @@ include('../config.php');
 include(mnminclude.'blog.php');
 include(mnminclude.'link.php');
 
-header("Content-Type: text/plain");
+//header("Content-Type: text/plain");
 
 $blog = new Blog;
 //$count = $db->get_var("SELECT count(*) from blogs where blog_url regexp 'http://.+/.+'");
@@ -29,14 +31,14 @@ foreach($ids as $dbid) {
 			$old_id = $db->get_var("select blog_id from blogs where blog_key = '$blog->key' and blog_id != $blog->id");
 			if ($old_id > 0) {
 				echo "REPE: $old_id -> $blog->id<br>\n";
-				$db->query("update links set link_blog=$blog->id where link_blog=$old_id");
-				$db->query("delete from blogs where blog_id = $old_id");
+				//$db->query("update links set link_blog=$blog->id where link_blog=$old_id");
+				//$db->query("delete from blogs where blog_id = $old_id");
 			}
 			$blog->store();
 		}
 	} else {
 		echo "Deleting $dbid\n";
-		$db->query("delete from blogs where blog_id = $dbid");
+		//$db->query("delete from blogs where blog_id = $dbid");
 	}
 
 }
