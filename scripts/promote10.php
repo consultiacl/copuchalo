@@ -75,6 +75,7 @@ function promote($site_id) {
 	global $db, $globals, $output;
 
 	SitesMgr::__init($site_id);
+	$site_name = SitesMgr::get_name($site_id);
 	$output = '';
 
 	$min_karma_coef = $globals['min_karma_coef'];
@@ -182,6 +183,8 @@ function promote($site_id) {
 			$annotation = new Annotation("promote-$site_id");
 			$annotation->text = $output;
 			$annotation->store();
+			$annotation = new Annotation("top-queue-$site_id");
+			$annotation->delete();
 		} else {
 			echo "OUTPUT:\n. ".strip_tags($output)."\n";
 		}
@@ -199,7 +202,7 @@ function promote($site_id) {
 			$link = Link::from_db($dblink->link_id);
 			if ($link->is_sponsored()) continue;
 			$changes = update_link_karma($site_id, $link, $past_karma);
-			
+
 			if (! DEBUG && $link->thumb_status == 'unknown' && $link->karma > $limit_karma ) {
 				echo "Adding $link->id to thumb queue\n";
 				array_push($thumbs_queue, $link->id);
@@ -227,6 +230,13 @@ function promote($site_id) {
 				}
 			}
 			$output .= print_row($link, $changes);
+
+			// Store info to publish top queued story in social networks
+			if($i == 0) {
+			    $annotation = new Annotation("top-queue-$site_name");
+			    $annotation->text = $link->id;
+			    $annotation->store();
+			}
 
 			usleep(10000);
 			$i++;
