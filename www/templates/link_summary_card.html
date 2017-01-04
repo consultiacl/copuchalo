@@ -114,7 +114,7 @@
 
 
 
-	{% if type == 'full' || type == 'preview' %}
+	{% if type == 'full' OR type == 'preview' %}
 
 		{# ###############################  CONTENT ############################### #}
 
@@ -156,7 +156,7 @@
 
 	{# ############################### LABELS ############################ #}
 
-	{% if globals.link || ((self.is_editable OR self.status == 'queued') AND globals.now - self.date < 7200) || type == 'short' %}
+	{% if globals.link OR ((self.is_editable OR self.status == 'queued') AND globals.now - self.date < 7200) OR type == 'short' %}
 		{% if self.show_tags AND self.tags %}
 		<div class="news-details">
 			<div class="nd-item">
