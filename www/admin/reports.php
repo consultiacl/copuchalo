@@ -59,7 +59,7 @@ function do_report_list($selected_tab, $search, $report_status, $report_date, $o
 	global $db, $offset, $page_size, $globals;
 
 	if (empty($orderby)) {
-		$orderby = 'report_num';
+		$orderby = 'report_date';  // 'report_num';
 		$order = "DESC";
 	} else {
 		$orderby = preg_replace('/[^a-z_]/i', '', $orderby);
