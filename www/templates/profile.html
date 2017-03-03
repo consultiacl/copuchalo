@@ -163,11 +163,10 @@ addPostCode(function(){$('textarea').autosize();});
 {# Disable the account #}
 {% if user.id  == current_user.user_id %}
 	<br/><fieldset><legend>{% trans _('deshabilitar cuenta') %}</legend>
-	<p><i class="fa fa-warning"></i>{% trans _('¡atención! la cuenta será deshabilitada.') %}</p>
+	<p><i class="fa fa-warning"></i>{% trans _('¡ATENCIÓN! La cuenta será deshabilitada definitivamente.') %}</p>
 	<br/>
-	<p class="note">{% trans _('se eliminarán automáticamente los datos personales.') %}<br/>
-	{% trans _('los postits serán eliminados, los envíos y comentarios NO se borrarán.') %}</p></br>
-	<p><label>{% trans _('sí, quiero deshabilitarla') %}: <input  name="disable" type="checkbox" value="1"/>
+	<p class="note">{% trans _('Los postits, envíos, amigos y comentarios NO se borrarán.') %}</p></br>
+	<p><label>{% trans _('Sí, quiero deshabilitarla') %}: <input  name="disable" type="checkbox" value="1"/>
 	</label></p>
 	<br/>
 	<p><input type="submit" name="disabledme" value="{% trans _('deshabilitar cuenta') %}" class="button" /></p>

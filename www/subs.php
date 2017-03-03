@@ -11,12 +11,17 @@ include(mnminclude.'html1.php');
 
 if (empty($routes)) die; // Don't allow to be called bypassing dispatcher
 
-if (isset($_GET['all'])) {
-	$option = 2; // Show all subs
-} elseif (! $current_user->user_id || isset($_GET['active']))  {
-	$option = 1; // Show active
-} elseif (isset($_GET['subscribed'])) {
-	$option = 0; // Show suscribed
+if (isset($_GET['all'])) {                  // Show all subs
+	$option = 2;
+} elseif (isset($_GET['random'])) {         // Show random sub
+	$sub = SitesMgr::get_random_sub();
+	$url = 'https://'.get_server_name().$sub->base_url.'temas/'.$sub->name;
+	redirect(html_entity_decode($url), 307);
+	exit(0);
+} elseif (! $current_user->user_id || isset($_GET['active']))  {    // Show active
+	$option = 1;
+} elseif (isset($_GET['subscribed'])) {     // Show suscribed
+	$option = 0;
 } else {
 	$option = count(SitesMgr::get_subscriptions($current_user->user_id)) > 0 ? 0 : 1;
 }
@@ -24,7 +29,7 @@ if (isset($_GET['all'])) {
 $char_selected = $chars = false; // User for index by first letter
 
 
-do_header(_("subs mediatize"), 'm/');
+do_header(_("subs mediatize"), 'temas');
 
 
 print_tabs($option);
@@ -46,8 +51,7 @@ switch ($option) {
 	case 1:
 		$all = false;
 		$template = 'subs.html';
-		$sql = "select subs.*, user_id, user_login, user_avatar, count(*) as c from subs LEFT JOIN users ON (user_id = owner), sub_statuses where date > date_sub(now(), interval 5 day) and subs.id = sub_statuses.id and sub_statuses.id = sub_statuses.origen and sub_statuses.status = 'published' and subs.sub = 1 group by subs.id order by c desc limit 50";
-		$subs = $db->get_results($sql);
+		$subs = SitesMgr::get_subs_active();
 		break;
 	default:
 		$all = true;

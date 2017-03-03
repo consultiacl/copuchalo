@@ -10,7 +10,7 @@
 //$globals['alternate_db_server'] = 'backend';
 
 include('../config.php');
-$db->connect_timeout = 3;
+//$db->connect_timeout = 3;
 
 if (! $current_user->user_id) die;
 
@@ -41,12 +41,11 @@ if($current_user->user_level == 'admin' OR $current_user->user_level == 'god') {
 }
 
 $notifications->total = $notifications->posts + $notifications->privates + $notifications->friends + $notifications->comments + $notifications->adminposts + $notifications->admincomments + $notifications->adminreports;
-echo json_encode($notifications);
+die(json_encode($notifications));
 
 
 function do_redirect($type) {
 	global $globals, $current_user;
-	$url = '/'; // If everything fails, it will be redirected to the home
 
 	switch ($type) {
 		case 'privates':
@@ -70,9 +69,14 @@ function do_redirect($type) {
 		case 'adminreports':
 			$url = 'https://'.get_server_name().'/admin/reports.php';
 			break;
+		default: 
+			$url = '/'; // If everything fails, it will be redirected to the home
+			break;
 	}
+
 	header("HTTP/1.1 302 Moved");
 	header('Location: ' . $url);
 	header("Content-Length: 0");
+
 }
 

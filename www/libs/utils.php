@@ -842,7 +842,7 @@ function memcache_minit () {
 
 
 	if ($memcache) return true;
-	if ($globals['memcache_host']) {
+	if (isset($globals['memcache_host'])) {
 		$memcache = new Memcached;
 		if (!isset($globals['memcache_port'])) $globals['memcache_port'] = 11211;
 		if ( ! $memcache->addServer($globals['memcache_host'], $globals['memcache_port']) ) {
@@ -864,7 +864,7 @@ function memcache_mget ($key) {
 }
 
 
-function memcache_madd ($key, $value, $expire=86400) {   //3600) {
+function memcache_madd ($key, $value, $expire=3600) {
 	global $memcache, $globals;
 
 	// Check for memcache

@@ -102,6 +102,9 @@ echo '</div>';
 /*** END SIDEBAR ***/
 
 echo '<div id="newswrap">';
+//echo '<div class="row no-gutters">';
+//echo '<div class="row">';
+echo '<div>';
 
 do_banner_top_news();
 
@@ -161,7 +164,7 @@ if ($links) {
 
 
 do_pages($rows, $page_size);
-echo '</div>';
+echo '</div></div>';
 
 do_footer_menu();
 do_footer();
@@ -183,7 +186,7 @@ function print_index_tabs($option=-1) {
 		foreach ($subs as $sub) {
 			$items[] = array(
 				'id'  => 9999,   // fake number
-				'url' => 'm/'.$sub->name,
+				'url' => 'temas/'.$sub->name,
 				'selected' => false,
 				'title' => $sub->name,
 			);
@@ -191,7 +194,7 @@ function print_index_tabs($option=-1) {
 	}
 	*/
 
-	$items[] = array('id' => 8, 'url' => '?meta=_*', 'title' => _('m/*'));
+	$items[] = array('id' => 8, 'url' => '?meta=_*', 'title' => _('temas/*'));
 
 	// RSS teasers
 	switch ($option) {

@@ -402,6 +402,9 @@ function fancybox_gallery(type, user, link) {
 	$('#gallery').load(url);
 }
 
+
+
+
 /**
   Strongly modified, onky works with DOM2 compatible browsers.
 	Ricardo Galli
@@ -1196,6 +1199,7 @@ function togglecomment(e) {
 
 
 /* User Menu */
+/*
 (function () {
 	var panel = $('#user-panel');
 
@@ -1218,7 +1222,7 @@ function togglecomment(e) {
 		}
 	};
 })();
-
+*/
 
 /* Back to top plugin
  * From http://www.jqueryscript.net/demo/Customizable-Back-To-Top-Button-with-jQuery-backTop/
@@ -1670,77 +1674,51 @@ var fancyBox = new function () {
 /* notifier */
 (function () {
 	var timeout = false;
-	var area;
-	var panel_visible = false;
 	var current_count = -1;
 	var has_focus = true;
 	var check_counter = 0;
 	var base_update = 15000;
 	var last_connect = null;
+	var notifier = $('#notifier');
+	var counter = $('#p_c_counter');
+	var counteradmin = $('#p_c_counter_admin');
 
-	if (! user_id > 0 || (area = $('#notifier')).length == 0) return;
-	$(window).on('unload onAjax', function() { hide(); });
-
-	area.click(click);
+	/*if (! user_id > 0 || (area = $('#notifier')).length == 0) return;*/
+	/*if (! user_id > 0) return;*/
+	/*$(window).on('unload onAjax', function() { $('.dropdown').hide(); });*/
+	/*
 	$(window).on("DOMChanged", function () {current_count = -1; restart(); });
 	$(window).focus(restart);
-
 	$(window).blur(function() {
 		has_focus = false;
 	});
-
+	*/
 	setTimeout(update, 500); /* We are not in a hurry */
 
-
-	function click_handler(e) {
-		if (! panel_visible) return;
-		if ($(e.target).closest('#notifier, #notifier_panel').length == 0) {
-			/* click happened outside */
-			hide();
-			e.preventDefault();
+	/* Notifications dropdown */
+	$('#notifications').on('show.bs.dropdown', function() {
+		data = decode_data(readStorage("n_"+user_id));
+		var html = "";
+		var a = ['privates', 'posts', 'comments', 'friends'];
+		var b = ['fa-envelope', 'fa-pencil-square-o', 'fa-comments', 'fa-users'];
+		for (var i=0; i < a.length; i++) {
+			field = a[i];
+			var counter = (data && data[field]) ? data[field] : 0;
+			html += "<li><a href='"+base_url_sub+"go?id="+user_id+"&what="+field+"'><i class='fa "+b[i]+"'></i>" + counter + " " + field_text(field) + "</a></li>";
 		}
+		{% if current_user.user_level == 'admin' OR current_user.user_level == 'god' %}
+			html += "<li class='divider'></li>";
+			var counter = (data && data['adminposts']) ? data['adminposts'] : 0;
+			html += "<li><a href='"+base_url_sub+"go?id={{ globals.admin_user_id }}&what=adminposts'><i class='fa fa-pencil-square-o'></i>" + counter + " postits admin</a></li>";
+			var counter = (data && data['admincomments']) ? data['admincomments'] : 0;
+			html += "<li><a href='"+base_url_sub+"go?id={{ globals.admin_user_id }}&what=admincomments'><i class='fa fa-comments'></i>" + counter + " comentarios admin</a></li>";
+			var counter = (data && data['adminreports']) ? data['adminreports'] : 0;
+			html += "<li><a href='"+base_url_sub+"go?id={{ globals.admin_user_id }}&what=adminreports'><i class='fa fa-list-alt'></i>" + counter + " reportes admin</a></li>";
+		{% endif %}
 
-	};
-
-	function click() {
-		if (! panel_visible) {
-			panel_visible = true;
-			$e = $('<div id="notifier_panel"> </div>');
-			$e.appendTo("body");
-			$('html').on('click', click_handler);
-
-			data = decode_data(readStorage("n_"+user_id));
-
-			var a = ['privates', 'posts', 'comments', 'friends'];
-			var b = ['fa-envelope', 'fa-pencil-square-o', 'fa-comments', 'fa-users'];
-			for (var i=0; i < a.length; i++) {
-				field = a[i];
-				var counter = (data && data[field]) ? data[field] : 0;
-				$e.append("<div><a href='"+base_url_sub+"go?id="+user_id+"&what="+field+"'><i class='fa "+b[i]+"'></i>" + counter + " " + field_text(field) + "</a></div>");
-			}
-			{% if current_user.user_level == 'admin' OR current_user.user_level == 'god' %}
-				var counter = (data && data['adminposts']) ? data['adminposts'] : 0;
-				$e.append("<div><a href='"+base_url_sub+"go?id={{ globals.admin_user_id }}&what=adminposts'><i class='fa fa-pencil-square-o'></i>" + counter + " postits admin</a></div>");
-				var counter = (data && data['admincomments']) ? data['admincomments'] : 0;
-				$e.append("<div><a href='"+base_url_sub+"go?id={{ globals.admin_user_id }}&what=admincomments'><i class='fa fa-comments'></i>" + counter + " comentarios admin</a></div>");
-				var counter = (data && data['adminreports']) ? data['adminreports'] : 0;
-				$e.append("<div><a href='"+base_url_sub+"go?id={{ globals.admin_user_id }}&what=adminreports'><i class='fa fa-list-alt'></i>" + counter + " reportes admin</a></div>");
-			{% endif %}
-			$e.show();
-			check_counter = 0;
-		} else {
-			hide();
-			update();
-		}
-		return false;
-	};
-
-
-	function hide() {
-		$('html').off('click', click_handler);
-		$("#notifier_panel").remove();
-		panel_visible = false;
-	};
+		$('#notifier-dropdown').empty().append(html);
+		check_counter = 0;
+	});
 
 	function update() {
 		var next_update;
@@ -1786,14 +1764,14 @@ var fancyBox = new function () {
 		}
 
 		document.title = document.title.replace(/^\(\d+\) /, '');
-		area.html(data.total);
-		$('#p_c_counter').html(data.posts);
-		$('#p_c_counter_admin').html(data.adminposts);
+		notifier.html(data.total);
+		counter.html(data.posts);
+		counteradmin.html(data.adminposts);
 		if (data.total > 0) {
-			area.addClass('nonzero');
+			notifier.removeClass('zero');
 			document.title = '('+data.total+') ' + document.title;
 		} else {
-			area.removeClass('nonzero');
+			notifier.addClass('zero');
 		}
 		current_count = data.total;
 	};
@@ -1810,7 +1788,8 @@ var fancyBox = new function () {
 		check_counter++;
 		last_connect = connect_time;
 
-		$.getJSON(base_url+"backend/notifications.json?check="+check_counter+"&has_focus="+has_focus,
+		/*$.getJSON(base_url+"backend/notifications.json?check="+check_counter+"&has_focus="+has_focus,*/
+		$.getJSON(base_url+"backend/notifications.json",
 			function (data) {
 				var now;
 				now = new Date().getTime();

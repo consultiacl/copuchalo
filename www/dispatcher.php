@@ -21,6 +21,7 @@ $routes = array(
 	'b'		=> 'bar.php',
 	'c'		=> 'comment.php',
 	'm'		=> 'submnm.php',
+	'temas'		=> 'submnm.php',
 	'user'		=> 'user.php',
 	'search'	=> 'search.php',
 	'between'	=> 'between.php',

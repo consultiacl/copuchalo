@@ -1,7 +1,32 @@
+/* *************** */
+/* Handheld config */
+/* *************** */
+
+
+.temas {
+	font-size: 25px;
+}
+
+#header-center, #header-menu, #sidebar, #edlist, .logo-ed, .wideonly, .wide, .temas {
+	display: none;
+	background: none !important;
+}
+
+/*
+@media (min-width:500px) and (orientation:landscape) {
+    .wide {
+        display: inline-block;
+    }
+}
+*/
+
+
+
 /* Avoid auto zoom */
 textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="email"], input[type="url"], input[type="search"] {
 font-size: 16px;
 }
+
 
 #variable {
 min-width: 0;
@@ -49,9 +74,10 @@ min-width: 0;
 }
 
 #nav-menu {
-	margin-top: 10px;
+	margin-left: 10px;
 }
 
+/*
 #header-top .logo-cop {
 	margin-top: 8px;
 }
@@ -70,7 +96,7 @@ min-width: 0;
 #notifier_panel div {
 	font-size: 16px;
 }
-
+*/
 #header-top ul#userinfo {
 	height: 40px;
 	margin: auto 0;
@@ -91,21 +117,11 @@ min-width: 0;
 	height:40px;
 }
 
-
-#header-center, #header-menu, #sidebar, #edlist, .logo-ed, .wideonly, .wide {
-	display: none;
-	background: none !important;
-}
-
-@media (min-width:500px) and (orientation:landscape) {
-    .wide {
-        display: inline-block;
-    }
-}
-
+/*
 #notifier_panel {
 position:fixed;
 }
+*/
 
 .sneaker {
 font-size: small;
@@ -220,6 +236,7 @@ opacity:0.8;
 font-weight: normal;
 }
 
+/*
 .ts.nomobile {
 text-decoration: underline;
 font-weight: bold;
@@ -235,13 +252,18 @@ overflow: hidden;
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     .ts.nomobile { background-image:url('{{ globals.base_static }}img/common/icons-common-2x.png'); }
 }
+*/
 
 /* ********************* */
 .news-summary {
-	display: block;
-	padding: 0px;
-	max-height: none;
-	margin: 0 auto 2em auto;
+	//display: block;
+	//padding: 0px;
+	//max-height: none;
+	margin-bottom: 2em;
+}
+
+.news-summary-height {
+	height: auto;
 }
 
 .subheader {
@@ -267,9 +289,11 @@ table.keyvalue {
         padding-top: 30px;
 }
 
+/*
 .sbox .cop span, .sbox .btn {
 	padding: 2px 20px 4px 20px;
 }
+*/
 
 /*
 .icons-header {
@@ -298,7 +322,6 @@ table.keyvalue {
 a.comment-bubble {
 	min-width: 30px;
 	height: 18px;
-	padding: 2px;
 }
 
 #user-panel {

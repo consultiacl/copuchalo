@@ -359,10 +359,10 @@ class User {
 		$this->store();
 		syslog(LOG_INFO, "User disabled: $this->id");
 
+		/*
 		// Delete relationships
 		$db->query("DELETE FROM friends WHERE friend_type='manual' and (friend_from = $this->id or friend_to = $this->id)");
 
-		/*
 		// Delete posts' conversations
 		$db->query("delete from conversations where conversation_type = 'post' and conversation_user_to = $this->id");
 
@@ -374,10 +374,11 @@ class User {
 			}
 		}
 		$db->commit();
-		*/
 
 		// Delete posts
 		$db->query("delete from posts where post_user_id = $this->id");
+		*/
+
 		// Delete user's meta
 		$db->query("delete from annotations where annotation_key = 'user_meta-$this->id'");
 
@@ -385,15 +386,13 @@ class User {
 		$db->query("DELETE FROM prefs WHERE pref_user_id = $this->id");
 
 		return true;
-
-
 	}
 
 	function store($full_save = true) {
 		global $db, $current_user, $globals;
 
 		if(!$this->date) $this->date=$globals['now'];
-	/*
+		/*
 		if($full_save && empty($this->ip)) {
 			$this->ip=$globals['user_ip'];
 		}

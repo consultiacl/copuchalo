@@ -12,7 +12,7 @@ Haanga::Load('css/copuchalo.css');
 /* Include handheld classes for mobile/tablets */
 
 if (! $globals['mobile']) { /* If not mobile, it's a @media rule */
-	echo "@media (max-width: 800px) {";
+	echo "@media (max-width: 767px) {";
 }
 
 Haanga::Load('css/handheld.css');

@@ -184,7 +184,7 @@ class SitesMgr {
 						break;
 					default:
 						$do_current = true;
-						syslog(LOG_INFO, "Menéame, status unknown in link $link->id");
+						syslog(LOG_INFO, "status unknown in link $link->id");
 				}
 				$me->status = $link->status;
 			}
@@ -347,6 +347,12 @@ class SitesMgr {
 		return $db->get_col("select id from subs where parent = 0 and enabled");
 	}
 
+	static public function get_random_sub() {
+		global $db;
+
+		return $db->get_row("select sql_no_cache * from subs where parent = 0 and enabled = 1 and meta = 0 order by rand() limit 1");
+	}
+
 	static public function can_edit($id = -1) {
 		global $globals, $current_user, $db;
 
@@ -375,6 +381,21 @@ class SitesMgr {
 		global $db;
 
 		return $db->get_results("select subs.* from subs, prefs where pref_user_id = $user and pref_key = 'sub_follow' and subs.id = pref_value order by name asc");
+	}
+
+	static public function get_subs_active($all = true) {
+		global $db, $globals;
+
+		$where = ($all) ? '' : ' and subs.meta = 0 ';
+
+		$key = 'subs_active' . $globals['v'];
+		if(!($subs = memcache_mget($key))) {
+			$subs = $db->get_results("select subs.*, user_id, user_login, user_avatar, count(*) as c from subs LEFT JOIN users ON (user_id = owner), sub_statuses where date > date_sub(now(), interval 500 day) and subs.id = sub_statuses.id and sub_statuses.id = sub_statuses.origen and sub_statuses.status = 'published' and subs.sub = 1 $where group by subs.id order by c desc limit 50");
+			memcache_madd($key, json_encode($subs));
+		} else {
+			$subs = json_decode($subs);
+		}
+		return $subs;
 	}
 
 	static public function store_extended_properties($id = false, &$prefs) {

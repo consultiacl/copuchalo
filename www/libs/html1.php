@@ -62,7 +62,7 @@ function do_header($title, $id='home', $options = false) {
 
 	// Security headers
 	header('X-Frame-Options: SAMEORIGIN');
-	header('X-UA-Compatible: IE=edge,chrome=1');
+	header('X-UA-Compatible: IE=edge');
 	if ($globals['force_ssl'] && $globals['https']) {
 		header('Strict-Transport-Security: max-age=15638400'); // 181 days, ssllabs doesn't like less than 180
 	}
@@ -84,7 +84,7 @@ function do_header($title, $id='home', $options = false) {
 	$this_site_properties = SitesMgr::get_extended_properties();
 
 	if ($this_site->sub) {
-		$this_site->url = $this_site->base_url.'m/'.$this_site->name;
+		$this_site->url = $this_site->base_url.'temas/'.$this_site->name;
 	} else {
 		$this_site->url = $this_site->base_url;
 	}
@@ -126,7 +126,7 @@ function do_header($title, $id='home', $options = false) {
 		$left_options[] = new MenuOption(_('destacadas'), $globals['base_url'].'top_active', $id, _('historias más activas'));
 
 		$right_options = array();
-		$right_options[] = new MenuOption(_('m/'), $globals['base_url_general'].'subs', $id, _('sub mediatizes'));
+		$right_options[] = new MenuOption(_('temas'), $globals['base_url_general'].'subs', $id, _('sub mediatizes'));
 		$right_options[] = new MenuOption(_('chismosa'), $globals['base_url'].'sneak', $id, _('visualizador en tiempo real'));
 		$right_options[] = new MenuOption(_('postits'), post_get_base_url(), $id, _('leer o escribir postits y mensajes privados'));
 		if( $globals['mobile'] ) $right_options[] = new MenuOption(_('galería'), 'javascript:fancybox_gallery(\'all\');', false, _('las imágenes subidas por los usuarios'));
@@ -138,7 +138,7 @@ function do_header($title, $id='home', $options = false) {
 			$right_options[] = new MenuOption(_('nuevas'), $globals['base_url'].'queue', '', _('votar noticias pendientes'));
 		}
 
-		$right_options[] = new MenuOption(_('m/'), $globals['base_url_general'].'subs', $id, _('sub mediatizes'));
+		$right_options[] = new MenuOption(_('temas'), $globals['base_url_general'].'subs', $id, _('sub mediatizes'));
 		$right_options[] = new MenuOption(_('chismosa'), $globals['base_url'].'sneak', $id, _('visualizador en tiempo real'));
 		$right_options[] = new MenuOption(_('postits'), post_get_base_url(), $id, _('leer o escribir postits y mensajes privados'));
 		//$right_options[] = new MenuOption(_('galería'), 'javascript:fancybox_gallery(\'all\');', false, _('las imágenes subidas por los usuarios'));
@@ -146,6 +146,7 @@ function do_header($title, $id='home', $options = false) {
 
 	$vars = compact('title', 'greeting', 'id', 'left_options', 'right_options', 'sites', 'this_site', 'this_site_properties', 'show_story');
 	$vars['base_url'] = $globals['base_url'];
+	$vars['subs'] = SitesMgr::get_subs_active(); //false);
 	return Haanga::Load('header.html', $vars);
 }
 

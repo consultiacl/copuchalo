@@ -1,35 +1,102 @@
-<ul id="userinfo">
-	{% if ! globals.mobile %}
-		<li class="nav-search">
-			<form id="headersearch" action="{{ globals.base_url }}search" method="get" name="top_search">
-				{% if globals.search_options %}
-					{% for name, value in globals.search_options %}
-						<input type="hidden" name="{{name}}" value="{{value}}"/>
-					{% endfor %}
-				{% endif %}
-				<div class="nav-search-group">
-					{# <label for="search" class="sr-only">Buscar...</label> #}
-					<input class="inputsearchbox" name="q" type="search" placeholder="buscar..." {% if globals.q %}value="{{globals.q|escape}}"{% endif %}/>
-					<span class="fa fa-search search-icon"></span>
+<div class="userspace">
+{#
+{% if ! globals.mobile %}
+	<div class="searchbox-header">
+		<form class="searchform-header" action="{{ globals.base_url }}search" method="get" name="top_search">
+			{% if globals.search_options %}
+				{% for name, value in globals.search_options %}
+					<input type="hidden" name="{{name}}" value="{{value}}"/>
+				{% endfor %}
+			{% endif %}
+			<div style="position: relative">
+				<i id="search-icon-header" class="fa fa-search" onclick="$(this).closest('form').submit();"></i>
+				<input class="input-searchbox-header" name="q" type="text" placeholder="Buscar..." {% if globals.q %}value="{{globals.q|escape}}"{% endif %}/>
+			</div>
+		</form>
+	</div>
+{% endif %}
+#}
+
+{% if current_user.user_id > 0 %}
+	<div class="header-userspace">
+	<div class="userinfo">
+{#
+		{% if globals.mobile %}
+			<div id="notifier"></div>
+			<div id="usermenu">
+				<img id="avatar" src="{{ globals.base_static }}img/g.gif" data-2x="s:-40.:-80." data-src="{% exec get_avatar_url current_user.user_id, current_user.user_avatar, 40 %}" class="lazy" alt="{{current_user.user_login}}"/>
+			</div>
+		{% else %}
+#}
+			{# USERMENU #}
+			<div class="btn-group">
+				<div id="usermenu" data-toggle="dropdown" {#class="tooltip u:{{ current_user.user_id }}"#} >
+					<img id="avatar" src="{{ globals.base_static }}img/g.gif" data-2x="s:-25.:-40." data-src="{% exec get_avatar_url current_user.user_id, current_user.user_avatar, 25 %}" class="lazy" alt="{{current_user.user_login}}"/>
+					{% if ! globals.mobile %}<div class="usertext wideonly"><span>{{current_user.user_login}}</span></div>{% endif %}
 				</div>
-			</form>
-		</li>
-	{% endif %}
+				<ul class="dropdown-menu usermenu bullet pull-right" id="user-panel">
+					<li><a href="{{ current_user.user_login|useruri }}"><i class="fa fa-user"></i>{%trans _('ver perfil')%}</a></li>
+					<li><a href="/profile?login={{ current_user.user_login }}"><i class="fa fa-pencil-square-o"></i>{%trans _('modificar perfil')%}</a></li>
+					{% if current_user.admin %}
+						<li><a href="{{ globals.base_url_general }}admin/bans.php"><i class="fa fa-gear"></i>{%trans _('admin utils')%}</a></li>
+					{% endif %}
+					<li><a href="#" onclick="location.href='{{ globals.base_url_general }}login?op=logout&amp;return=%2F'"><i class="fa fa-power-off"></i>{%trans _('cerrar sesión')%}</a></li>
+				</ul>
+			</div>
 
-	{% if current_user.user_id > 0 %}
+			{# NOTIFICATIONS #}
+			<div class="btn-group" id="notifications">
+				<div class="notifier-zone" data-toggle="dropdown">
+					<i class="fa fa-bell"></i>
+					<span id="notifier" class="notifier-badge"></span>
+				</div>
+				<ul class="dropdown-menu notifications bullet pull-right" id="notifier-dropdown">
+					<li>hola</li>
+					<li>que tal</li>
+				</ul>
+			</div>
+		{# {% endif %} #}
+	</div>
+	</div>
+{% else %}
+	<div class="header-buttons">
+		{#<a class="header-btn register-btn" href="{{ globals.base_url_general }}login?return={{globals.uri|urlencode}}" title="{% trans _('login') %}">entrar <span class="caret"></span></a>#}
+		<a class="header-btn register-btn" href="#" class="dropdown-toggle" data-toggle="dropdown">entrar <span class="caret"></span></a>
+			<ul id="login-dp" class="dropdown-menu loginmenu bullet pull-right">
+				<li>
+					<div class="row">
+						<div class="col-md-12">
+							<b>Entrar con</b>
+							<div class="social-buttons">
+								<a href="#" class="btn btn-fb"><i class="fa fa-facebook-official"></i>Facebook</a>
+								<a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i>Twitter</a>
+							</div>
+							<b>o bien</b>
+							<form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
+								<div class="form-group">
+									 <label class="sr-only" for="name">Usuario o dirección de correo</label>
+									 <input type="text" class="form-control" id="name" name="username" placeholder="Usuario o dirección de correo" tabindex="1" required>
+								</div>
+								<div class="form-group">
+									<label class="sr-only" for="password">Contraseña</label>
+									<input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" tabindex="2" required>
+									<div class="help-block text-right"><a href="/login?op=recover">¿Olvidó su contraseña?</a></div>
+								</div>
+								<div class="form-group">
+									<button type="submit" class="btn btn-primary btn-block">Entrar</button>
+									<div class="checkbox text-left"><label for="remember"><input type="checkbox" name="persistent" id="remember" tabindex="3"> recuérdame</label></div>
+								</div>
+							</form>
+						</div>
+						<div class="bottom text-center">
+							¿Nuevo aquí? <a href="register"><b>¡Únase!</b></a>
+						</div>
+					</div>
+				</li>
+			</ul>
 		{% if ! globals.mobile %}
-			<li class="usertext wideonly"><a href="{{ current_user.user_login|useruri }}" class="tooltip u:{{ current_user.user_id }}">{{current_user.user_login}}</a></li>
+			<a class="header-btn register-btn" href="{{ globals.base_url_general }}register" title="{% trans _('registro') %}">registro</a>
 		{% endif %}
-		{% if current_user.admin %}
-			<li class="usertext"><a href="{{ globals.base_url_general }}admin/bans.php" title="Utilidades administración"><i class="fa fa-gear"></i></a></li>
-		{% endif %}
-		<li id="notifier"></li>
-		<li id="usermenu"><img id="avatar" src="{{ globals.base_static }}img/g.gif" data-2x="s:-40.:-80." data-src="{% exec get_avatar_url current_user.user_id, current_user.user_avatar, 40 %}" class="lazy" alt="{{current_user.user_login}}"/></li>
-
-	{% else %}
-		<li class="login-icon"><a href="{{ globals.base_url_general }}login?return={{globals.uri|urlencode}}" title="{% trans _('login') %}"><i class="fa fa-sign-in"></i></a></li>
-		<li class="login-icon"><a href="{{ globals.base_url_general }}register" title="{% trans _('registro') %}"><i class="fa fa-user-plus"></i></a></li>
-	{% endif %}
-</ul>
-
-
+	</div>
+{% endif %}
+</div>

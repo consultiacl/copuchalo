@@ -9,15 +9,18 @@
 <meta name="generator" content="mediatize" />
 <meta name="referrer" content="always">
 
+{#<meta name="theme-color" content="#405ba0" />#}
+<meta name="theme-color" content="#333" />
+
 <meta name="viewport" content="width=device-width, initial-scale=1{% if globals.mobile %}, user-scalable=no{% endif %}"/>
 
-{# Save bandwidth for mobiles #}
-{# {% if not globals.mobile %} #}
 
-	<link href="//fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet" type="text/css" />
-	<link href="//static.digg.com/static/fonts/css/fonts-base.css" rel="stylesheet" type="text/css">
-	<link href="//static.digg.com/static/fonts/css/fonts-additional.css" rel="stylesheet" type="text/css">
-	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet" type="text/css" />
+{#<link href="//fonts.googleapis.com/css?family=Open-sans:400,500,700" rel="stylesheet" type="text/css" />#}
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Lato:300,400,700" rel="stylesheet" type="text/css">
+<link href="//static.digg.com/static/fonts/css/fonts-base.css" rel="stylesheet" type="text/css">
+<link href="//static.digg.com/static/fonts/css/fonts-additional.css" rel="stylesheet" type="text/css">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 {% if globals.noindex %}
 	<meta name="robots" content="noindex,nofollow" />
@@ -57,16 +60,17 @@
 <link rel="alternate" type="application/rss+xml" title="{% trans _('publicadas') %}" href="//{{ globals.server_name }}{{ globals.base_url }}rss" />
 <link rel="alternate" type="application/rss+xml" title="{% trans _('pendientes') %}" href="//{{ globals.server_name }}{{ globals.base_url }}rss?status=queued" />
 
-{# {% endif %} #}
-{# /Save bandwidth for mobiles #}
-
 
 <title>{{ title }}</title>
 
 
 {% if globals.css_main %}
-	<link rel="stylesheet" type="text/css" media="all" href="{{ globals.base_url_general }}v_{{ globals.v }}/css/{{globals.css_main}}"/>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	{#<link rel="stylesheet" type="text/css" media="all" href="{{ globals.base_url_general }}v_{{ globals.v }}/css/{{globals.css_main}}"/>#}
+	<link rel="stylesheet" type="text/css" media="all" href="{{globals.base_static}}css/{{globals.css_main}}"/>
 {% endif %}
+
 
 {% for css in globals.extra_css %}
 <link rel="stylesheet" type="text/css" media="all" href="{{globals.base_static}}css/{{css}}"/>
@@ -75,11 +79,16 @@
 {# <meta name="mobile-web-app-capable" content="yes"> #}
 {% if globals.favicon %}
 	<link rel="shortcut icon" href="{{globals.base_static}}{{globals.favicon}}" type="image/x-icon"/>
+	<link rel="icon" href="{{globals.base_static}}{{globals.favicon}}" type="image/x-icon"/>
 {% else %}
 	<link rel="shortcut icon"  href="{{globals.base_static}}img/favicons/logo_196x196.png" type="image/png" sizes="196x196"/>
+	<link rel="icon"  href="{{globals.base_static}}img/favicons/logo_196x196.png" type="image/png" sizes="196x196"/>
 	<link rel="shortcut icon"  href="{{globals.base_static}}img/favicons/logo_128x128.png" type="image/png" sizes="128x128"/>
+	<link rel="icon"  href="{{globals.base_static}}img/favicons/logo_128x128.png" type="image/png" sizes="128x128"/>
 	<link rel="shortcut icon"  href="{{globals.base_static}}img/favicons/logo_64x64.png" type="image/png" sizes="64x64"/>
+	<link rel="icon"  href="{{globals.base_static}}img/favicons/logo_64x64.png" type="image/png" sizes="64x64"/>
 	<link rel="shortcut icon" href="{{globals.base_static}}img/favicons/logo_16x16.png" type="image/png" sizes="16x16"/>
+	<link rel="icon" href="{{globals.base_static}}img/favicons/logo_16x16.png" type="image/png" sizes="16x16"/>
 {% endif %}
 
 <link rel="apple-touch-icon" href="{{globals.base_static}}img/favicons/apple-touch-icon.png"/>
@@ -101,17 +110,73 @@
 
 {% try_include 'private/body.html' %}
 
+
 <div id="header-top">
-  <div id="nav-menu"><i class="fa fa-bars"></i></div>
-  <a href="{{ globals.base_url_general }}" title="{% trans _('portada') %} {{ globals.site_name }}" id="header-logo" class="logo-cop">mediatize</a>
-  <span class="logo-ed" title="{% trans _('ediciones mediatizadas') %}"></span>
-	{% if globals.mobile %}
+
+ {# HEADER: TOOLS, etc #}
+ <div class="header-full">
+ <div class="header-top-in">
+
+  {# LOGO #}
+  <div class="header-container-left">
+	<div class="header-container-in">
+		{% if ! globals.mobile %}
+		<div class="logo-margins">
+			<img class="logo-header" title="{% trans _('ediciones mediatize') %}" alt="{% trans _('ediciones mediatize') %}" src="{{ globals.base_static }}img/mdtz/logo-white.svg">
+		</div>
+		{% else %}
+			<div id="nav-menu">
+				<i class="fa fa-bars"></i>
+			</div>
+		{% endif %}
+	</div>
+	<div class="header-container-in">
+		<div class="logo-margins">
+			<a class="logo-letters" href="{{ globals.base_url_general }}" title="{% trans _('Portada') %} {{ globals.site_name }}">mediatize</a>
+		</div>
+	</div>
+
+	{% if ! globals.mobile %}
+		<div class="header-buttons">
+			{% if show_story %}
+				<a href="{{ base_url }}submit" title="enviar nueva historia" class="header-btn">+ enviar</a>
+			{% endif %}
+			<a href="{{ base_url }}queue"   title="votar noticias pendientes" class="header-btn">nuevas</a>
+			<a href="{{ base_url }}sneak"   title="chismosa" class="header-btn">chismosa</a>
+			<a href="{{ base_url }}postits" title="postits" class="header-btn">postits</a>
+		</div>
+		{#
+		<div class="header-menu02">
+			<ul class="menu01-itemsr">
+				{% for o in right_options %}
+					<li {% if o.selected %}class="selected"{% endif %} title="{{ o.title }}"><a href="{{ o.url }}">{{ o.text }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+		#}
+
+		<div class="header-buttons header-buttons-wide">
+			<div class="searchbox-header">
+				<form class="searchform-header" action="{{ globals.base_url }}search" method="get" name="top_search">
+					{% if globals.search_options %}
+						{% for name, value in globals.search_options %}
+							<input type="hidden" name="{{name}}" value="{{value}}"/>
+						{% endfor %}
+					{% endif %}
+					<div style="position: relative">
+						<i id="search-icon-header" class="fa fa-search" onclick="$(this).closest('form').submit();"></i>
+						<input class="input-searchbox-header" name="q" type="text" placeholder="Buscar..." {% if globals.q %}value="{{globals.q|escape}}"{% endif %}/>
+					</div>
+				</form>
+			</div>
+		</div>
+	{% else %}
 		<div class="header-editions">
 			<form class="editions-combo" action="" id="edition-{{ self.id }}">
 			<select name="editions" onchange="location = this.value;">
 				{% for s in sites %}
 					{% if s.sub AND s.meta %}
-						<option value="//{{ s.server_name }}{{ s.base_url }}m/{{ s.name }}" {% if s.id == this_site.id %} selected="selected" {% endif %}>{{ s.name }}</option>
+						<option value="//{{ s.server_name }}{{ s.base_url }}temas/{{ s.name }}" {% if s.id == this_site.id %} selected="selected" {% endif %}>{{ s.name }}</option>
 					{% else %}
 						<option value="//{{ s.server_name }}{{ s.base_url }}" {% if s.id == this_site.id %} selected="selected" {% endif %}>{{ s.name_long }}</option>
 					{% endif %}
@@ -119,29 +184,74 @@
 			</select>
 			</form>
 		</div>
-	{% else %}
-		<ul id="edlist">
-{#
+	{% endif %}
+  </div>  {# header-container-left #}
+
+  {# HEADER RIGHT: userinfo #}
+  {% include "header_userinfo.html" %}
+
+ </div> {# header-top-in #}
+ </div> {# header-full #}
+
+ {# TEMAS #}
+ <div class="temas">
+    <div class="temas-sub">
+	<div class="temas-menu">
+		<span class="dropdown">temas<i class="fa fa-caret-down"></i></span>
+	</div>
+	<div class="temas-menu">
+		<span class="separator">|</span>
+	</div>
+	<div class="temas-line floatl">
+		<ul class="temas-list lspace">
+			<li><a href="{{ globals.base_url_general }}subs?all">todos</a></li>
+			<li><a href="{{ globals.base_url_general }}subs?random">aleatorio</a></li>
+		</ul>
+	</div>
+	<div class="temas-menu">
+		<span class="separator">|</span>
+	</div>
+	<div class="temas-line">
+		<ul class="temas-list lspace">
+		{#
 		{% if this_site.sub %}
 			<li class="selected">
-				<a href="{{ this_site.base_url }}m/{{ this_site.name }}">{{ this_site.name }}</a>
+				<a href="{{ this_site.base_url }}temas/{{ this_site.name }}">{{ this_site.name }}</a>
 			</li>
 		{% endif %}
-#}
+		#}
 		{% for s in sites %}
-			<li {% if s.id == this_site.id %}class="selected"{% endif %}>
+			<li>
 				{% if s.sub AND s.meta %}
-					<a href="//{{ s.server_name }}{{ s.base_url }}m/{{ s.name }}">{{ s.name }}</a>
+					<a href="//{{ s.server_name }}{{ s.base_url }}temas/{{ s.name }}" {% if s.id == 1 %}class="highlight-tema"{% endif %}>{{ s.name }}</a>
+				{% else %}
+					<a href="//{{ s.server_name }}{{ s.base_url }}" {% if s.id == 1 %}class="highlight-tema"{% endif %}>{{ s.name_long }}</a>
+				{% endif %}
+			</li>
+		{% endfor %}
+		{% for s in subs %}
+			<li>
+				{% if s.sub AND s.meta %}
+					<a href="//{{ s.server_name }}{{ s.base_url }}temas/{{ s.name }}">{{ s.name }}</a>
 				{% else %}
 					<a href="//{{ s.server_name }}{{ s.base_url }}">{{ s.name_long }}</a>
 				{% endif %}
 			</li>
 		{% endfor %}
 		</ul>
-	{% endif %}
+	</div>
+	{#
+	<div class="more-subs">
+		<a href="//{{ s.server_name }}{{ s.base_url }}subs">{% if current_user.user_id > 0 %}editar{% else %}más{% endif %} »</a>
+	</div>
+ 	#}
+    </div>
+ </div>   {# TEMAS #}
 
-  {% include "header_userinfo.html" %}
-</div>
+</div> {# header-top #}
+
+
+
 
 <div id="variable">
 {% else %} {# PARTIAL partial #}
@@ -201,7 +311,7 @@
 
 			{% if this_site.nsfw %}[nsfw]{% endif %}
 			{% if this_site.owner > 0 && current_user.user_id > 0 && (current_user.admin OR this_site.owner == current_user.user_id) %}
-				<a class="share-icons-foot" title="editar" href="{{ globals.base_url }}m/{{ this_site.name }}/subedit"><span class="fa starsubheader fa-edit"></span></a>
+				<a class="share-icons-foot" title="editar" href="{{ globals.base_url }}temas/{{ this_site.name }}/subedit"><span class="fa starsubheader fa-edit"></span></a>
 			{% endif %}
 			{% if this_site.sub %}{% exec print_follow_sub this_site.id as dummy %}{% endif %}
 			{% if this_site_properties.facebook_page %}
@@ -212,6 +322,7 @@
 			{% endif %}
 		</div>
 
+		{#
 		<div class="header-buttons">
 			{% if show_story %}
 				<a href="{{ base_url }}submit" alt="enviar historia" title="enviar nueva historia" class="header-btn">enviar historia</a>
@@ -219,6 +330,7 @@
 			{% endif %}
 			<a href="{{ base_url }}queue" alt="ver nuevas" title="votar noticias pendientes" class="header-btn">nuevas</a>
 		</div>
+		#}
 
 		<!--search-->
 		<div id="searchform" class="searchform">
@@ -234,6 +346,7 @@
 		</div>
 		<!--end search-->
 
+		{#
 		<div class="header-menu02">
 			<ul class="menu01-itemsr">
 				{% for o in right_options %}
@@ -241,17 +354,11 @@
 				{% endfor %}
 			</ul>
 		</div>
+		#}
 	</div><!--header-center-->
 
 </div><!--header-->
 
-<!-- user-panel -->
-<div id="user-panel">
-	<div><a href="{{ current_user.user_login|useruri }}"><i class="fa fa-user"></i>{%trans _('ver perfil')%}</a></div>
-	<div><a href="/profile?login={{ current_user.user_login }}"><i class="fa fa-pencil-square-o"></i>{%trans _('modificar perfil')%}</a></div>
-	{#<div><a href="#" onclick="location.href='{{ globals.base_url_general }}login?op=logout&amp;return={{globals.uri|urlencode}}'"><i class="fa fa-power-off"></i>{%trans _('cerrar sesión')%}</a></div>#}
-	<div><a href="#" onclick="location.href='{{ globals.base_url_general }}login?op=logout&amp;return=%2F'"><i class="fa fa-power-off"></i>{%trans _('cerrar sesión')%}</a></div>
-</div>
 
 
 <div id="wrap">
