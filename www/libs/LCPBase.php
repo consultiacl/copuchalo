@@ -45,12 +45,12 @@ class LCPBase {
 						$id = substr($matches[2], 1);
 						if (is_a($this, 'Comment')) {
 							if ($id > 0) {
-								return $matches[1].'<a class="tooltip c:'.$this->link.'-'.$id.'" href="'.$this->link_permalink.'/c0'.$id.'#c-'.$id.'" rel="nofollow">#'.$id.'</a>';
+								return $matches[1].'<a class="suggestion c:'.$this->link.'-'.$id.'" href="'.$this->link_permalink.'/c0'.$id.'#c-'.$id.'" rel="nofollow">#'.$id.'</a>';
 							} else {
-								return $matches[1].'<a class="tooltip l:'.$this->link.'" href="'.$this->link_permalink.'" rel="nofollow">#'.$id.'</a>';
+								return $matches[1].'<a class="suggestion l:'.$this->link.'" href="'.$this->link_permalink.'" rel="nofollow">#'.$id.'</a>';
 							}
 						} elseif (is_a($this, 'Link')) {
-							return $matches[1].'<a class="tooltip c:'.$this->id.'-'.$id.'" href="'.$this->get_permalink().'/c0'.$id.'#c-'.$id.'" rel="nofollow">#'.$id.'</a>';
+							return $matches[1].'<a class="suggestion c:'.$this->id.'-'.$id.'" href="'.$this->get_permalink().'/c0'.$id.'#c-'.$id.'" rel="nofollow">#'.$id.'</a>';
 						}
 					} else {
 						switch (get_class($this)) {
@@ -80,9 +80,9 @@ class LCPBase {
 							$id = '';
 						}
 						$user_url = urlencode($user);
-						return $matches[1]."<a class='tooltip p:$user_url$id-$this->date' href='".$globals['base_url']."backend/get_post_url?id=$user_url$id;".$this->date."'>@$user</a>";
+						return $matches[1]."<a class='suggestion p:$user_url$id-$this->date' href='".$globals['base_url']."backend/get_post_url?id=$user_url$id;".$this->date."'>@$user</a>";
 					} else {
-						return $matches[1]."<a class='tooltip u:$ref' href='".get_user_uri($ref)."'>@$ref</a>";
+						return $matches[1]."<a class='suggestion u:$ref' href='".get_user_uri($ref)."'>@$ref</a>";
 					}
 					break;
 

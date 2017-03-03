@@ -103,7 +103,7 @@ class PrivateMessage extends LCPBase {
 
 	function print_user_avatar($size=40) {
 		global $globals;
-		echo '<a href="'.get_user_uri($this->username).'" class="tooltip u:'.$this->author.'"><img class="avatar" src="'.get_avatar_url($this->author, $this->avatar, $size).'" width="'.$size.'" height="'.$size.'" alt="'.$this->username.'"/></a>';
+		echo '<a href="'.get_user_uri($this->username).'" class="suggestion u:'.$this->author.'"><img class="avatar" src="'.get_avatar_url($this->author, $this->avatar, $size).'" width="'.$size.'" height="'.$size.'" alt="'.$this->username.'"/></a>';
 	}
 
 	function print_text($length = 0) {

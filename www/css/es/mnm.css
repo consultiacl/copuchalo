@@ -1024,7 +1024,7 @@ box-shadow: 0 0 4px rgba(0,255,0,0.8);
 -webkit-box-shadow: 0 0 4px rgba(0,163,131,0.8);
 }
 
-.tooltip {
+.suggestion {
 cursor: pointer;
 }
 
@@ -1613,7 +1613,7 @@ border-radius: 5px;
 color: #FF6400;
 }
 
-.comment-body .tooltip {
+.comment-body .suggestion {
 color: #C85000;
 text-decoration: underline;
 }
@@ -1657,12 +1657,12 @@ color: #C85000;
 color: #aaa;
 }
 
-.comment-body .avatar, #tooltip-text .avatar {
+.comment-body .avatar, #suggestion-text .avatar {
 float: left;
 margin: 2px 10px 2px 0;
 }
 
-.comment-body .thumb, #tooltip-text .thumb {
+.comment-body .thumb, #suggestion-text .thumb {
 padding:4px;
 background:#fff;
 vertical-align: top;
@@ -2200,7 +2200,7 @@ background: #FFBE94;
 color: #FF6400;
 }
 
-#tooltip-text {
+#suggestion-text {
 border-radius:3px;
 text-align: left;
 position:absolute;

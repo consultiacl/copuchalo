@@ -79,7 +79,7 @@
 			});
 
 		function showTooltip(x, y, contents) {
-			$('<div id="tooltip">' + contents + '</div>').css( {
+			$('<div id="suggestion">' + contents + '</div>').css( {
 				position: 'absolute',
 				display: 'none',
 				top: y,
@@ -124,11 +124,11 @@
 						if (k_annotation[ktime] != '') txt = txt + '<br><strong>notes</strong><br/>'+k_annotation[ktime];
 					}
 
-					$("#tooltip").remove();
+					$("#suggestion").remove();
 					showTooltip(item.pageX, item.pageY, txt);
 				}
 			} else {
-				$("#tooltip").remove();
+				$("#suggestion").remove();
 				previousPoint = null;
 			}
 		});

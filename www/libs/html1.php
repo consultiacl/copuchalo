@@ -559,7 +559,7 @@ function do_best_comments() {
 			$obj->avatar = $comment->user_avatar;
 			$obj->title = $comment->link_title;
 			$obj->username = $comment->user_login;
-			$obj->tooltip = 'c';
+			$obj->suggestion = 'c';
 			$objects[] = $obj;
 		}
 		$vars = compact('objects', 'title', 'url');
@@ -604,7 +604,7 @@ function do_best_story_comments($link) {
 			$obj->avatar = $comment->user_avatar;
 			$obj->title = text_to_summary($comment->content, 75);
 			$obj->username = $comment->user_login;
-			$obj->tooltip = 'c';
+			$obj->suggestion = 'c';
 			$objects[] = $obj;
 		}
 		$vars = compact('objects', 'title', 'url');
@@ -809,7 +809,7 @@ function do_best_posts() {
 			$obj->avatar = $post->avatar;
 			$obj->title = text_to_summary($post->clean_content(), 80);
 			$obj->username = $post->username;
-			$obj->tooltip = 'p';
+			$obj->suggestion = 'p';
 			$objects[] = $obj;
 		}
 		$vars = compact('objects', 'title', 'url');

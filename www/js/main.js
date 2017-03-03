@@ -424,38 +424,38 @@ function fancybox_gallery(type, user, link) {
 	var active = false;
 	var last = null;
 	var ajaxs = {'u': 'get_user_info',
-				'p': "get_post_tooltip",
-				'c': "get_comment_tooltip",
+				'p': "get_post_suggestion",
+				'c': "get_comment_suggestion",
 				'l': "get_link",
 				'b': "get_ban_info",
-				'w': "get_comment_warn_tooltip"};
+				'w': "get_comment_warn_suggestion"};
 
 
 	$.extend({
-		tooltip: function () {
+		suggestion: function () {
 			if (! is_mobile) start();
 		}
 	});
 
 	function stop() {
 		hide();
-		$(document).off('mouseenter mouseleave', '.tooltip');
+		$(document).off('mouseenter mouseleave', '.suggestion');
 		$(document).off('touchstart', stop);
 		touchable = true;
 	}
 
 	function start(o) {
 		if (box == null) {
-			box = $("<div>").attr({ id: 'tooltip-text' });
+			box = $("<div>").attr({ id: 'suggestion-text' });
 			$('body').append( box );
 		}
-		$(document).on('touchstart', stop); /* Touch detected, disable tooltips */
-		$(document).on('mouseenter mouseleave', '.tooltip',
+		$(document).on('touchstart', stop); /* Touch detected, disable suggestions */
+		$(document).on('mouseenter mouseleave', '.suggestion',
 			function (event) {
 				if (event.type == 'mouseenter') {
 					try {
 						var args = $(this).attr('class').split(' ');
-						var i = args.indexOf('tooltip');
+						var i = args.indexOf('suggestion');
 						args = args[i+1].split(':');
 						var key = args[0];
 						var value = args[1];
@@ -479,7 +479,7 @@ function fancybox_gallery(type, user, link) {
 		active = true;
 
 		$(document).on('onAjax', hide);
-		$(document).on('mousemove.tooltip', function (e) { mouseMove(e) });
+		$(document).on('mousemove.suggestion', function (e) { mouseMove(e) });
 		if (box.outerWidth() > 0) {
 			if ($(window).width() - event.pageX < box.outerWidth() * 1.05) reverse = true;
 			else reverse = false;
@@ -506,7 +506,7 @@ function fancybox_gallery(type, user, link) {
 			clearTimeout(timer);
 			timer = null;
 		}
-		$(document).off('mousemove.tooltip');
+		$(document).off('mousemove.suggestion');
 		active = false;
 		box.hide();
 	}
@@ -537,7 +537,7 @@ function fancybox_gallery(type, user, link) {
 				success: function(html) {
 					last = url;
 					show(html);
-					reportAjaxStats('tooltip', script);
+					reportAjaxStats('suggestion', script);
 				}
 			});
 		}
@@ -2023,7 +2023,7 @@ function analyze_hash(force) {
 
 		if (e.type != "click") {
 			if ($a.data('done')) return true;
-			if ((m = aClass.match(/l:(\d+)/)) && ! aClass.match(/tooltip/) ) {
+			if ((m = aClass.match(/l:(\d+)/)) && ! aClass.match(/suggestion/) ) {
 				$a.attr('href', base_url_sub + "go?id=" + m[1]);
 				$a.data('done', 1);
 				$a.data('real_href', href);
@@ -2270,7 +2270,7 @@ $(document).ready(function () {
 	$('img.lazy').unveil({base_url: base_static, version: version_id, cache_dir: base_cache, threshold: 100});
 	$('#backTop').backTop();
 
-	$.tooltip();
+	$.suggestion();
 
 	$('.showmytitle').on('click', function () {
 		mDialog.content('<span style="font-size: 12px">'+$(this).attr('title')+'</span>');

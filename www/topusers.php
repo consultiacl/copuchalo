@@ -106,7 +106,7 @@ if ($users) {
 		$user->read();
 		$user->all_stats();
 		echo '<tr>';
-		echo '<td style="font-size:100%"><a href="'.get_user_uri($user->username).'" class="tooltip u:'.$user->id.'"><img class="avatar" src="'.get_avatar_url($user->id, $user->avatar, 20).'" width="20" height="20" alt="avatar"/>&nbsp;'.$user->username.'</a></td>';
+		echo '<td style="font-size:100%"><a href="'.get_user_uri($user->username).'" class="suggestion u:'.$user->id.'"><img class="avatar" src="'.get_avatar_url($user->id, $user->avatar, 20).'" width="20" height="20" alt="avatar"/>&nbsp;'.$user->username.'</a></td>';
 		echo '<td class="short">'.$user->karma.'&nbsp;';
 		$user->print_medals();
 		echo '</td>';

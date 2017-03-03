@@ -46,7 +46,7 @@
             {% for ban in bans %}
             <tr>
                 <td>{{ban.ban_text|clean_text}}</td>
-                <td class="tooltip b:{{ban.ban_id}}" style="overflow: hidden;white-space: nowrap;">
+                <td class="suggestion b:{{ban.ban_id}}" style="overflow: hidden;white-space: nowrap;">
                     {{ ban.ban_comment|txt_shorter:50|clean_text }}
                 </td>
                 <td>{{ban.ban_date}}</td>

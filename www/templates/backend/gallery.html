@@ -15,13 +15,13 @@ var $colorbox;
 function formatTitle() {
 	var t_i_u = this.title.split(",");
 
-	script = 'get_'+t_i_u[0]+'_tooltip.php';
+	script = 'get_'+t_i_u[0]+'_suggestion.php';
 	if (t_i_u[0] == 'post') {
 		type = '{% trans _('postit de') %}';
-		tooltip_code = 'p';
+		suggestion_code = 'p';
 	} else {
 		type = '{% trans _('comentario de') %}';
-		tooltip_code = 'c';
+		suggestion_code = 'c';
 	}
 
 	url = base_url + 'go.php?what=' + t_i_u[0] + '&id=' + t_i_u[1];
@@ -42,7 +42,7 @@ function formatTitle() {
 		}
 	}
 		
-	who = '<div><a class="tooltip '+tooltip_code+':'+t_i_u[1]+'" href="'+url+'" target="_blank" style="margin-bottom: 4px"><span class="wideonly">' + type + '&nbsp;</span>' + t_i_u[2] + '</a>'+image_link+extra+'</div>';
+	who = '<div><a class="suggestion '+suggestion_code+':'+t_i_u[1]+'" href="'+url+'" target="_blank" style="margin-bottom: 4px"><span class="wideonly">' + type + '&nbsp;</span>' + t_i_u[2] + '</a>'+image_link+extra+'</div>';
 
 	return who;
 }

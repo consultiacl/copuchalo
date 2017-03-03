@@ -30,7 +30,7 @@
 #}
 			{# USERMENU #}
 			<div class="btn-group">
-				<div id="usermenu" data-toggle="dropdown" {#class="tooltip u:{{ current_user.user_id }}"#} >
+				<div id="usermenu" data-toggle="dropdown" {#class="suggestion u:{{ current_user.user_id }}"#} >
 					<img id="avatar" src="{{ globals.base_static }}img/g.gif" data-2x="s:-25.:-40." data-src="{% exec get_avatar_url current_user.user_id, current_user.user_avatar, 25 %}" class="lazy" alt="{{current_user.user_login}}"/>
 					{% if ! globals.mobile %}<div class="usertext wideonly"><span>{{current_user.user_login}}</span></div>{% endif %}
 				</div>

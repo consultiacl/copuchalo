@@ -1183,7 +1183,7 @@ box-shadow: 0 0 4px rgba(0,255,0,0.8);
 	-webkit-box-shadow: 0 0 4px rgba(0,173,255,0.8);
 }
 
-.tooltip {
+.suggestion {
 	cursor: pointer;
 }
 
@@ -1623,7 +1623,7 @@ margin-bottom: 10px;
 	margin-left: -5px;
 }
 
-.comment-body .tooltip {
+.comment-body .suggestion {
 	color: #005be2;
 	text-decoration: underline;
 }
@@ -1654,12 +1654,12 @@ background: #fff;
 color: #aaa;
 }
 
-.comment-body .avatar, #tooltip-text .avatar {
+.comment-body .avatar, #suggestion-text .avatar {
 float: left;
 margin: 2px 10px 2px 0;
 }
 
-.comment-body .thumb, #tooltip-text .thumb {
+.comment-body .thumb, #suggestion-text .thumb {
 padding: 1px;
 vertical-align: top;
 border: 1px solid #ccc;
@@ -2124,7 +2124,7 @@ background: #888888;
 color: #777777;
 }
 
-#tooltip-text {
+#suggestion-text {
 border-radius:3px;
 text-align: left;
 position:absolute;

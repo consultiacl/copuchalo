@@ -165,7 +165,7 @@ function to_html(data) {
 	else if (data.type == 'problem')
 		html += '<div class="mini-sneaker-type"><img src="'+base_url+'img/common/sneak-problem01.png" width="21" height="17" alt="{% trans _('problema') %}" title="{% trans _('problema') %}" /><\/div>';
 	else if (data.type == 'comment') {
-		html += '<div class="mini-sneaker-type"><img src="'+base_url+'img/common/sneak-comment01.png" width="21" height="17" alt="{% trans _('comentario') %}" class="tooltip c:'+data.id+'"><\/div>';
+		html += '<div class="mini-sneaker-type"><img src="'+base_url+'img/common/sneak-comment01.png" width="21" height="17" alt="{% trans _('comentario') %}" class="suggestion c:'+data.id+'"><\/div>';
 	} else
 		html += '<div class="mini-sneaker-type">'+data.type+'<\/div>';
 

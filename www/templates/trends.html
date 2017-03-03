@@ -34,9 +34,9 @@
 		};
 
         function showTooltip(x, y, contents) {
-			if ($('#tooltip').length>0) return;
+			if ($('#suggestion').length>0) return;
 
-            $('<div id="tooltip">' + contents + '</div>').css( {
+            $('<div id="suggestion">' + contents + '</div>').css( {
                 position: 'absolute',
                 display: 'none',
                 top: y,
@@ -100,11 +100,11 @@
 							} else {
 								html += '<div><b>Max karma:</b> '+json.karma+'</div>';
 							}
-							$('#tooltip').html(html);
+							$('#suggestion').html(html);
 						}
 					);
 				} else {
-					$("#tooltip").remove();
+					$("#suggestion").remove();
 					lastQuery = -1;
 				}
 			});

@@ -367,9 +367,9 @@ class Comment extends LCPBase {
 		return $this->username;
 	}
 
-	// Add calls for tooltip javascript functions
-	function put_comment_tooltips(&$str) {
-		return preg_replace('/(^|[\(,;\.\s¿¡])#([1-9][0-9]*)/', "$1<a class='tooltip c:$this->link-$2' href=\"".$this->link_permalink."/c0$2#c-$2\" rel=\"nofollow\">#$2</a>", $str);
+	// Add calls for suggestion javascript functions
+	function put_comment_suggestions (&$str) {
+		return preg_replace('/(^|[\(,;\.\s¿¡])#([1-9][0-9]*)/', "$1<a class='suggestion c:$this->link-$2' href=\"".$this->link_permalink."/c0$2#c-$2\" rel=\"nofollow\">#$2</a>", $str);
 	}
 
 	function same_text_count($min=30) {

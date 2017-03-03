@@ -90,21 +90,21 @@
                     <td rowspan="{{row.num_lines}}">
                         {% if report.type == 'link' %}
                              {% if report.author_user_login %}
-                                 <a class="tooltip l:{{ report.ref_id }}" href="/story/{{ report.uri }}" target="blank">
+                                 <a class="suggestion l:{{ report.ref_id }}" href="/story/{{ report.uri }}" target="blank">
                                      {% trans _('ir a historia') %}
                                  </a>
                              {% endif %}
                         {% endif %}
                         {% if report.type == 'comment' %}
                              {% if report.author_user_login %}
-        	                 <a class="tooltip c:{{ report.comment_link_id }}-{{ report.comment_order }}" href="/story/{{report.comment_link_uri}}/c0{{ report.comment_order }}#c-{{ report.comment_order }}" target="blank">
+        	                 <a class="suggestion c:{{ report.comment_link_id }}-{{ report.comment_order }}" href="/story/{{report.comment_link_uri}}/c0{{ report.comment_order }}#c-{{ report.comment_order }}" target="blank">
                                      {% trans _('ir a comentario') %}
                         	 </a>
                              {% endif %}
                         {% endif %}
                         {% if report.type == 'post' %}
                              {% if report.author_user_login %}
-        	                 <a class="tooltip p:{{ report.ref_id }}" href="/postits/{{ report.ref_id }}" target="blank">
+        	                 <a class="suggestion p:{{ report.ref_id }}" href="/postits/{{ report.ref_id }}" target="blank">
                                      {% trans _('ir a postit') %}
                         	 </a>
                              {% endif %}
@@ -148,7 +148,7 @@
 
                {% if i==0 %}
                     <td rowspan="{{row.num_lines}}">
-                        <a target="_blank" href="{{globals.base_url}}user/{{report.author_user_login}}/{{report.author_id}}" class="tooltip u:{{report.author_id}}" style="overflow: hidden;white-space: nowrap;">
+                        <a target="_blank" href="{{globals.base_url}}user/{{report.author_user_login}}/{{report.author_id}}" class="suggestion u:{{report.author_id}}" style="overflow: hidden;white-space: nowrap;">
                             {{ report.author_user_login }}
                         </a>
                     </td>
