@@ -16,7 +16,7 @@
 
 <h2>Información legal</h2>
 <p>
-En conformidad con las leyes de España sobre servicios de la sociedad de la información y de comercio electrónico se informa que el dominio mediatize.info es propiedad y está administrado por <strong>Consultia</strong>.
+En conformidad con las leyes de Chile sobre servicios de la sociedad de la información y de comercio electrónico se informa que el dominio mediatize.info es propiedad y está administrado por <strong>Consultia EIRL</strong>.
 </p><br/>
 
 <p id="contact">
@@ -26,8 +26,9 @@ Aviso de abusos: abuse[arroba]mediatize.info<br /><br />
 </p>
 
 <h2>Privacidad</h2>
-Los ficheros de mediatize.info no contienen datos de carácter privado ni requieren información para identificar personas físicas.<br />
-Nuestra relación con las tiendas que ofrecen promociones en nuestro sitio es en calidad de comisionistas y no tenemos acceso a los datos de los compradores.  <em>IMPORTANTE: Revise la política de privacidad de cada tienda antes de facilitarles sus datos.</em><br /><br />
+Los ficheros de mediatize.info no contienen datos de carácter privado o personal ni requieren información para identificar personas físicas.<br />
+Nuestra relación con las tiendas que ofrecen promociones en nuestro sitio es en calidad de comisionistas y no tenemos acceso a los datos de los compradores.<br />
+<em>IMPORTANTE: Revise la política de privacidad de cada tienda antes de facilitarles sus datos.</em><br /><br />
 
 <h2 id="cookies">Cookies</h2>
 Mediatize usa <em>cookies</em> sólo con objetivos técnicos, para la autenticación de usuarios, para evitar votos organizados, publicidad, estadísticas y para mejorar la distribución de carga en el balanceador de carga de accesos web. En ningún caso estas <em>cookies</em> se usan para otro fines a los anteriormente descritos, ni se transa información con terceros. <br />
@@ -43,7 +44,6 @@ Para evitar la recopilación de datos desde Google Analytics existen las siguien
 <li>Descargar un complemento al explorador de internet en el siguiente <a target="_blank" href="https://tools.google.com/dlpage/gaoptout/">enlace</a>.</li>
 </ul>
 <br />
-
 
 <h2 id="exclusion">Exclusión de garantías y responsabilidad</h2>
 <em>Los gestores de mediatize.info</em> no garantizan la licitud, fiabilidad, exactitud, exhaustividad, actualidad y utilidad de los contenidos.<br />
@@ -72,16 +72,15 @@ El establecimiento de un hiperenlace, enlace, intercambio, no implica en ningún
 
 
 <br/>
-<br/>
-<b>Sub mediatizes</b><br/><br/>
+<b>Temas</b><br/><br/>
 
-<li>Mediatize permite la creación de secciones administradas por sus creadores ("sub mediatizes"). Estas secciones pueden tener sus propias reglas que relajen las condiciones de la regla #1 de las condiciones de uso, pero deben respetar las demás.</li>
+<li>Mediatize permite la creación de secciones administradas por sus creadores ("temas"). Estas secciones pueden tener sus propias reglas que relajen las condiciones de la regla #1 de las condiciones de uso, pero deben respetar las demás.</li>
 
-<li>Se deberá marcar como <b>NSFW</b> al "sub mediatize" si se permite el envío de noticias o imágenes no aptas para menores y/o lugares de trabajo.</li>
+<li>Se deberá marcar como <b>NSFW</b> al "tema" si se permite el envío de noticias o imágenes no aptas para menores y/o lugares de trabajo.</li>
 
-<li>Se ruega a los administradores de cada sitio que hagan cumplir las normas, descartando aquellos envíos que violen las normas #2 a #8, y/o las leyes españolas en estas materias.</li>
+<li>Se ruega a los administradores de cada sitio que hagan cumplir las normas, descartando aquellos envíos que violen las normas #2 a #8, y/o las leyes chilenas en estas materias.</li>
 
-<li>Nos reservamos el derecho a eliminar o cambiar de propietarios a aquellos subs que no se usen, hayan quedado en desuso o que sus administradores lo hayan abandonado.</li>
+<li>Nos reservamos el derecho a eliminar o cambiar de propietarios a aquellos temas que no se usen, hayan quedado en desuso o que sus administradores lo hayan abandonado.</li>
 </ol>
 
 <br/><br/>
@@ -108,7 +107,7 @@ El establecimiento de un hiperenlace, enlace, intercambio, no implica en ningún
 <br/><br/>
 
 <p>
-El <strong>incumplimiento de las condiciones de uso</strong> podría significar el bloqueo de la <strong>cuenta de usuario</strong> y/o <strong>dominio web</strong>, el <strong>borrado y/o edición</strong> del texto ofensivo, y las medidas y denuncias adecuadas según las leyes españolas. El incumplimiento reiterado de las normas usando cuentas nuevas o alternativas implicará la <strong>deshabilitación automática</strong> de las mismas en cuanto sean detectadas.
+El <strong>incumplimiento de las condiciones de uso</strong> podría significar el bloqueo de la <strong>cuenta de usuario</strong> y/o <strong>dominio web</strong>, el <strong>borrado y/o edición</strong> del texto ofensivo, y las medidas y denuncias adecuadas según las leyes chilenas. El incumplimiento reiterado de las normas usando cuentas nuevas o alternativas implicará la <strong>deshabilitación automática</strong> de las mismas en cuanto sean detectadas.
 </p>
 <p>Con el objetivo de mejorar el servicio y minimizar los problemas, Mediatize se reserva el derecho a modificar y actualizar las condiciones de uso sin previo aviso.</p>
 
