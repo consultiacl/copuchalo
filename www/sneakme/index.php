@@ -6,7 +6,6 @@
 // 		http://www.affero.org/oagpl.html
 // AFFERO GENERAL PUBLIC LICENSE is also included in the file called "COPYING".
 
-
 // TODO: this page just became unreadable
 //		Must add printing the threads with CommentTree and split the
 //		page with only one post.
@@ -18,8 +17,6 @@ include('common.php');
 
 $argv = $globals['path'];
 $argv[0] = clean_input_string($argv[0]);
-
-
 
 if ($argv[0] == _priv) {
 	// Load priv.php
@@ -40,6 +37,10 @@ $offset=(get_current_page()-1)*$page_size;
 $page_title = _('postits') . ' | '. $globals['site_name'];
 $view = false;
 $short_content = false;
+
+$tab_option = 0;
+$where = $order_by = '';
+$limit = $rows = 0;
 
 switch ($argv[0]) {
 	case '_best':
@@ -69,7 +70,7 @@ switch ($argv[0]) {
 	default:
 		$tab_option = 4;
 		if ( (is_numeric($argv[0]) && ($post_id = intval($argv[0])) > 0)
-				|| (is_numeric($argv[1]) && ($post_id = intval($argv[1])) > 0)  ) {
+			|| (is_numeric($argv[1]) && ($post_id = intval($argv[1])) > 0)  ) {
 			// Individual post
 			$user->id = $db->get_var("select post_user_id from posts where post_id=$post_id");
 			if(!$user->read()) {
@@ -161,7 +162,6 @@ if (isset($globals['canonical_server_name']) && $globals['canonical_server_name'
 	$globals['noindex'] = true;
 }
 
-do_header($page_title, _('postits'), get_posts_menu($tab_option, $user->username));
 
 $conversation_extra = '';
 if ($tab_option == 4) {
@@ -181,8 +181,7 @@ if ($tab_option == 4) {
 		_('favoritos') => post_get_base_url("$user->username/_favorites"),
 		_('conversación').$conversation_extra => post_get_base_url("$user->username/_conversation"),
 		_('votos') => post_get_base_url("$user->username/_votes"),
-		sprintf(_('debates con %s'), $user->username) =>
-				$globals['base_url'] . "between?type=posts&amp;u1=$current_user->user_login&amp;u2=$user->username",
+		sprintf(_('debates con %s'), $user->username) => $globals['base_url'] . "between?type=posts&amp;u1=$current_user->user_login&amp;u2=$user->username",
 		sprintf(_('perfil de %s'), $user->username) => get_user_uri($user->username),
 
 	);
@@ -201,30 +200,16 @@ if ($tab_option == 4) {
 		_('debates').'&nbsp;&rarr;' => $globals['base_url'] . "between?type=posts&amp;u1=$current_user->user_login",
 	);
 } else $options = false;
-do_post_subheader($options, $view, $rss_option);
 
+do_header($page_title, _('postits'), get_posts_menu($tab_option, $user->username), array($options, $view, $rss_option), '', false, true);
 
-/*** SIDEBAR ****/
-echo '<div id="sidebar">';
-do_banner_right();
-//do_best_stories();
-if (! $short_content) {
-	do_best_posts();
-	do_best_comments();
-	do_banner_promotions();
-	if ($tab_option < 4) {
-		do_last_subs('published');
-		do_last_blogs();
-	}
-}
+echo '<div>';
+echo '<div id="newswrap" class="col-sm-9">';
+echo '<div>';
 
-echo '</div>' . "\n";
-/*** END SIDEBAR ***/
-
-echo '<div id="newswrap">'."\n";
 do_pages($rows, $page_size);
 
-echo '<div class="notes">';
+echo '<div class="notes" class="col-sm-9">';
 
 if ($current_user->user_id > 0) {
 	echo '<div id="addpost"></div>';
@@ -283,7 +268,30 @@ if ($view != 4) {
 }
 do_pages($rows, $page_size);
 
-echo '</div>';
+//echo '</div>';   // notes
+
+echo '</div></div>'; // newswrap
+
+
+/*** SIDEBAR ****/
+echo '<div id="sidebar" class="col-sm-3">';
+do_banner_right();
+//do_best_stories();
+if (! $short_content) {
+	do_best_posts();
+	do_best_comments();
+	do_banner_promotions();
+	if ($tab_option < 4) {
+		do_last_subs('published');
+		do_last_blogs();
+	}
+}
+
+echo '</div>' . "\n";
+/*** END SIDEBAR ***/
+
+//echo '</div>'."\n";
+
 if ($rows > 15) do_footer_menu();
 do_footer();
 
@@ -338,18 +346,19 @@ function do_voted_posts() {
 	$posts = $db->get_results("SELECT vote_link_id as id, vote_value as value FROM votes, posts WHERE vote_type='posts' and vote_user_id=$user->id  and post_id = vote_link_id and post_user_id != vote_user_id ORDER BY vote_date DESC LIMIT $offset,$page_size");
 
 	echo '<ol class="comments-list">';
-	$time_read = 0;
+	//$time_read = 0;
 	foreach ($posts as $p) {
 		$post = Post::from_db($p->id);
-		if ($p->value > 0) $color = '#00d';
-		else $color = '#f00';
+		//if ($p->value > 0) $color = '#00d';
+		//else $color = '#f00';
 		echo '<li>';
 		$post->print_summary();
-		if ($post->date > $time_read) $time_read = $post->date;
-		echo '<div class="box" style="margin:0 0 -16px 0;background:'.$color.';position:relative;top:-34px;left:30px;width:30px;height:16px;border-color:'.$color.';opacity: 0.5"></div>';
+		//if ($post->date > $time_read) $time_read = $post->date;
+		//echo '<div class="box" style="margin:0 0 -16px 0;background:'.$color.';position:relative;top:-34px;left:30px;width:30px;height:16px;border-color:'.$color.';opacity: 0.5"></div>';
 		echo '</li>';
 	}
 
 	echo "</ol>\n";
 	echo '</div>';
 }
+

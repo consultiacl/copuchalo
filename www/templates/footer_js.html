@@ -15,9 +15,9 @@
 <script src="{{ globals.jquery }}"></script>
 <![endif]-->
 <!--[if gte IE 9]><!-->
-{#<script src="{{ globals.jquery2 }}" type="text/javascript"></script>#}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js" integrity="sha256-LOnFraxKlOhESwdU/dX+K0GArwymUDups0czPWLEg4E=" crossorigin="anonymous"></script>
 <!--<![endif]-->
 <script src="{{ globals.base_url_general }}v_{{ globals.v }}/js/{{globals.js_main}}" type="text/javascript" charset="utf-8"></script>
 {% endif %}
@@ -25,8 +25,3 @@
 {# Include Google Adsense Async javascript #}
 {% try_include 'private/ad-google-async.html' %}
 
-{#
-{% if globals.mobile AND globals.ads %}
-{% try_include 'private/ad-google-async.html' %}
-{% endif %}
-#}

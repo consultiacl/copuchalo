@@ -74,10 +74,10 @@ if (! ($users = unserialize(memcache_mget($sql))) ) {
 }
 
 
-do_header(_('usuarios') . ' | ' . $globals['site_name']);
+do_header(_('usuarios') . ' | ' . $globals['site_name'], '', false, false, '', false, false);
 
-echo '<div id="singlewrap">' . "\n";
-echo '<div class="topheading"><h2>'._('estadísticas de usuarios').'</h2></div>';
+echo '<div id="singlewrap" class="col-sm-10">';
+echo '<div class="topheading th-no-margin"><h2>'._('Estadísticas de usuarios').'</h2></div>';
 
 echo '<table class="decorated"><tr>';
 

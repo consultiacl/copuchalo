@@ -30,11 +30,11 @@ if ($current_user->user_id > 0) {
 // Start html
 $globals['extra_css'][] = 'es/sneak.css';
 if (!empty($_REQUEST['friends'])) {
-	do_header(_('amigos'), _('chismosa'), sneak_menu_items($option));
+	do_header(_('amigos'), _('chismosa'), sneak_menu_items($option), false, '', false, true);
 } elseif ($current_user->user_id > 0 && !empty($_REQUEST['admin']) && $current_user->admin) {
-	do_header(_('admin'), _('chismosa'), sneak_menu_items($option));
+	do_header(_('admin'), _('chismosa'), sneak_menu_items($option), false, '', false, true);
 } else {
-	do_header(_('chismosa'), _('chismosa'), sneak_menu_items($option));
+	do_header(_('chismosa'), _('chismosa'), sneak_menu_items($option), false, '', false, true);
 }
 
 $globals['site_id'] = SitesMgr::my_id();
@@ -46,6 +46,8 @@ $globals['sneak_telnet'] = false;
 Haanga::Load('sneak/form.html', compact('max_items'));
 
 do_footer();
+
+
 
 function sneak_menu_items($id) {
 	global $globals, $current_user;
@@ -60,3 +62,4 @@ function sneak_menu_items($id) {
 
 	return $items;
 }
+

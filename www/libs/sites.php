@@ -383,14 +383,14 @@ class SitesMgr {
 		return $db->get_results("select subs.* from subs, prefs where pref_user_id = $user and pref_key = 'sub_follow' and subs.id = pref_value order by name asc");
 	}
 
-	static public function get_subs_active($all = true) {
+	static public function get_subs_active($all = true, $limit = 50) {
 		global $db, $globals;
 
 		$where = ($all) ? '' : ' and subs.meta = 0 ';
 
-		$key = 'subs_active' . $globals['v'];
+		$key = 'subs_active' . $globals['v'] . "-$limit";
 		if(!($subs = memcache_mget($key))) {
-			$subs = $db->get_results("select subs.*, user_id, user_login, user_avatar, count(*) as c from subs LEFT JOIN users ON (user_id = owner), sub_statuses where date > date_sub(now(), interval 500 day) and subs.id = sub_statuses.id and sub_statuses.id = sub_statuses.origen and sub_statuses.status = 'published' and subs.sub = 1 $where group by subs.id order by c desc limit 50");
+			$subs = $db->get_results("select subs.*, user_id, user_login, user_avatar, count(*) as c from subs LEFT JOIN users ON (user_id = owner), sub_statuses where date > date_sub(now(), interval 5 day) and subs.id = sub_statuses.id and sub_statuses.id = sub_statuses.origen and sub_statuses.status = 'published' and subs.sub = 1 $where group by subs.id order by c desc limit $limit");
 			memcache_madd($key, json_encode($subs));
 		} else {
 			$subs = json_decode($subs);

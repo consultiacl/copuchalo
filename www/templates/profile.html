@@ -1,14 +1,6 @@
-<div id="singlewrap" 
-{% if not globals.mobile %}
-	style="margin: 0 40px;"
-{% endif %}
->
+<div id="singlewrap" class="col-sm-10">
 
-<div class="genericform"
-{% if not globals.mobile %}
-	style="margin: 0 50px;"
-{% endif %}
->
+<div class="genericform">
 
 {% if messages %}
 	{% for e in messages %}
@@ -165,9 +157,9 @@ addPostCode(function(){$('textarea').autosize();});
 	<br/><fieldset><legend>{% trans _('deshabilitar cuenta') %}</legend>
 	<p><i class="fa fa-warning"></i>{% trans _('¡ATENCIÓN! La cuenta será deshabilitada definitivamente.') %}</p>
 	<br/>
-	<p class="note">{% trans _('Los postits, envíos, amigos y comentarios NO se borrarán.') %}</p></br>
-	<p><label>{% trans _('Sí, quiero deshabilitarla') %}: <input  name="disable" type="checkbox" value="1"/>
-	</label></p>
+	<p class="note">{% trans _('Se eliminarán automáticamente los datos personales.') %}<br/>
+	{% trans _('Los postits serán eliminados; los envíos y comentarios NO se borrarán.') %}</p><br/>
+	<p><label>{% trans _('Sí, quiero deshabilitarla') %}: <input  name="disable" type="checkbox" value="1"/></label></p>
 	<br/>
 	<p><input type="submit" name="disabledme" value="{% trans _('deshabilitar cuenta') %}" class="button" /></p>
 	</fieldset>

@@ -1,4 +1,4 @@
-{% inline "user/subheader.html" %}
+{# {% inline "user/subheader.html" %} #}
 
 {% if user.id == current_user.user_id %}
 	<fieldset><legend>{% trans _('preferencias básicas') %}</legend>
@@ -39,7 +39,7 @@
 		<div id="addpost"></div>
 		<ol class="comments-list" id="last_post">
 			<li>
-        	{% exec post.print_summary %}
+ 				{% exec post.print_summary %}
 			</li>
 		</ol>
 	{% endif %}

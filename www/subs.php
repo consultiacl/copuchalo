@@ -15,7 +15,7 @@ if (isset($_GET['all'])) {                  // Show all subs
 	$option = 2;
 } elseif (isset($_GET['random'])) {         // Show random sub
 	$sub = SitesMgr::get_random_sub();
-	$url = 'https://'.get_server_name().$sub->base_url.'temas/'.$sub->name;
+	$url = 'https://'.get_server_name().$sub->base_url.'tema/'.$sub->name;
 	redirect(html_entity_decode($url), 307);
 	exit(0);
 } elseif (! $current_user->user_id || isset($_GET['active']))  {    // Show active
@@ -29,18 +29,21 @@ if (isset($_GET['all'])) {                  // Show all subs
 $char_selected = $chars = false; // User for index by first letter
 
 
-do_header(_("subs mediatize"), 'temas');
+do_header(_("temas mediatize"), 'temas', false, $option, '', false);
 
-
-print_tabs($option);
 
 /*** SIDEBAR ****/
+/*
 echo '<div id="sidebar">';
 do_banner_right();
 do_banner_promotions();
 echo '</div>';
+*/
 /*** END SIDEBAR ***/
-echo '<div id="newswrap">';
+
+echo '<div>';
+echo '<div id="newswrap" class="col-sm-9">';
+echo '<div>';
 
 switch ($option) {
 	case 0:
@@ -93,11 +96,14 @@ foreach ($all_subs as $s) {
 }
 
 Haanga::Load($template, compact('title', 'subs', 'chars', 'char_selected'));
-echo '</div>';
+
+echo '</div></div>';
 
 if ($all) {
-	do_pages($rows, $page_size, false);
+	do_pages($rows, $page_size, true);
 }
+
+echo '</div>';
 
 do_footer();
 

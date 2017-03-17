@@ -30,23 +30,14 @@ if ($range_values[$from] > 0) {
 	$time_link = '';
 }
 
-do_header(_('más comentadas') . ' | ' . $globals['site_name']);
-do_tabs('main', _('más comentadas'), true);
-print_period_tabs();
+do_header(_('más comentadas') . ' | ' . $globals['site_name'], '', false, false, '', false, false);
 
-/*** SIDEBAR ****/
-echo '<div id="sidebar">';
-do_banner_right();
-do_best_stories();
-do_best_comments();
-do_vertical_tags('published');
-echo '</div>' . "\n";
-/*** END SIDEBAR ***/
+echo '<div class="topfiller col-sm-12"></div>';
 
-echo '<div id="newswrap">'."\n";
-
-
-echo '<div class="topheading"><h2>'._('noticias más comentadas').'</h2></div>';
+echo '<div>';
+echo '<div id="newswrap" class="col-sm-9">';
+echo '<div>';
+echo '<div class="topheading"><h2>'._('Noticias más comentadas').'</h2></div>';
 
 $link = new Link;
 
@@ -78,6 +69,19 @@ if ($links) {
 	}
 }
 do_pages($rows, $page_size);
+
+echo '</div></div>';
+
+
+/*** SIDEBAR ****/
+echo '<div id="sidebar" class="col-sm-3">';
+do_banner_right();
+do_best_stories();
+do_best_comments();
+do_vertical_tags('published');
+echo '</div>' . "\n";
+/*** END SIDEBAR ***/
+
 echo '</div>';
 do_footer_menu();
 do_footer();
@@ -87,7 +91,7 @@ function print_period_tabs() {
 
 	if(!($current_range = check_integer('range')) || $current_range < 1 || $current_range >= count($range_values)) $current_range = 0;
 
-	echo ($globals['mobile'] ? '<div class="subheader"><form class="tabs-combo" action=""><select name="tabs" onchange="location = this.value;">' : '<ul class="subheader">');
+	echo ($globals['mobile'] ? '<div class="subheader"><form class="tabs-combo" action=""><select name="tabs" onchange="location = this.value;">' : '<div class="subheader"><ul class="subheader-list">');
 
 	for($i=0; $i<count($range_values) /*&& $range_values[$i] < 40 */; $i++) {
 		if($i == $current_range)  {
@@ -97,6 +101,6 @@ function print_period_tabs() {
 		}
 		echo ($globals['mobile'] ? '<option value="top_commented?range='.$i.'"'.$active.'>'.$range_names[$i].'</option>' : '<li'.$active.'><a href="top_commented?range='.$i.'">' .$range_names[$i]. '</a></li>');
 	}
-	echo ($globals['mobile'] ? '</select></form></div>' : '</ul>');
+	echo ($globals['mobile'] ? '</select></form></div>' : '</ul></div>');
 }
 

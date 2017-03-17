@@ -29,7 +29,6 @@ if ($friends) {
 
 do_header(_('votadas por amigos') . ' | ' . _('mediatize'));
 $globals['tag_status'] = 'published';
-do_tabs('main', 'friends');
 
 /*** SIDEBAR ****/
 echo '<div id="sidebar">';

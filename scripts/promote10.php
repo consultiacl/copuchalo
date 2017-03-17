@@ -90,7 +90,7 @@ function promote($site_id) {
 
 	$now = time();
 	echo "BEGIN\n";
-	$output .= "<br/><br/><p><b>BEGIN</b>: ".get_date_time($now)."<br/>\n";
+	$output .= '<div id="promote-table"><p><b>BEGIN</b>: '.get_date_time($now).'<br/>\n';
 
 
 	$hours = intval($globals['time_enabled_votes']/3600);
@@ -259,7 +259,7 @@ function promote($site_id) {
 		}
 		//////////
 	}
-	$output .= "</table>\n";
+	$output .= "</table></div>\n";
 
 	echo strip_tags($output)."\n";
 

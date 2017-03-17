@@ -1,7 +1,7 @@
 <?php
 	include('config.php');
 	include(mnminclude.'html1.php');
-	do_header("Información legal para mediatize.info y condiciones de uso");
+	do_header("Información legal para mediatize.info y condiciones de uso", '', false, false, '', false, false);
 ?>
 
 <div id="singlewrap">
@@ -64,7 +64,7 @@ El establecimiento de un hiperenlace, enlace, intercambio, no implica en ningún
 
 <li>El usuario se abstendrá de acosar, amenazar y obtener o divulgar información privada de terceros. La divulgación de datos personales -en postits o comentarios, o el envío de enlaces de fuentes anónimas y no documentadas- con el objetivo de fomentar el linchamiento, persecución o acoso de una persona ocasionará la inhabilitación de la cuenta y la edición de los datos personales. </li>
 
-<li>El usuario se abstendrá de usar mediatize.info con el objetivo de: a) la promoción exclusiva de un sitio web, empresas, redes de blogs o de afiliación de enlaces (<em>spam</em>);  b) las campañas comerciales (aunque el lugar promocionado no contenga publicidad directa), políticas o ideológicos promoviendo el voto masivo a las noticias objeto de la campaña o del lugar promocionado; c) la provocación gratuita o molestia injustificada a los demás usuarios y lectores de Mediatize; d) el envío de noticias falsas, <em>fabricadas</em>, o sacadas de contexto para engañar al lector.</li>
+<li>El usuario se abstendrá de usar mediatize.info con el objetivo de: a) la promoción exclusiva de un sitio web, empresas, redes de blogs o de afiliación de enlaces (<em>spam</em>);  b) las campañas comerciales (aunque el lugar promocionado no contenga publicidad directa), políticas o ideológicos promoviendo el voto masivo a las noticias objeto de la campaña o del lugar promocionado; c) la provocación gratuita, insulto o molestia injustificada a los demás usuarios y lectores de Mediatize; d) el envío de noticias falsas, <em>fabricadas</em>, o sacadas de contexto para engañar al lector.</li>
 
 <li>El usuario se abstendrá de crear múltiples cuentas con el fin de promocionar sitios webs, participar en discusiones simulando las opiniones de personas distintas (<em>astroturfing</em>), suplantar la identidad de otras personas o intentar alterar artificialmente los contadores de votos y <em>karma</em> y crear múltiples usuarios con el único objetivo de eludir las restricciones y penalizaciones generales del sistema.</li>
 
@@ -97,7 +97,6 @@ El establecimiento de un hiperenlace, enlace, intercambio, no implica en ningún
 	<li>Si el cierre de una historia o noticia es por petición del usuario que la ha publicado, se podrá hacer sin más dilación (siempre que no sea portada del sitio, en cuyo caso tendrá que ser consultado con los demás usuarios con privilegios).</li>
 	<li>Si la intervención conlleva la edición de un envío o cambio de URL del envío, será siempre por petición del usuario.</li>
 	<li>Cualquier otra intervención o reporte de usuario se estudiará entre todos los usuarios con privilegios (o de su gran mayoría), nunca se acturará de forma personal.</li>
-	<li>Ante un conflicto entre usuarios en el que sea necesario intervenir, el usuario con privilegios hará siempre una labor de mediación para resolver el conflicto. De no llegar a un acuerdo de resolución satisfactorio para las partes en conflicto, se actuará en los términos que establece el punto anterior.</li>
      </ul>
 </li>
 <li>La potestad para asignar o revocar un privilegio a un usuario quedará supeditada al quórum de los demás usuarios con privilegios. En caso de revocación, será valorada también la opinión general que pueda desprenderse de los comentarios y postits de los usuarios del sitio.</li>
@@ -109,6 +108,7 @@ El establecimiento de un hiperenlace, enlace, intercambio, no implica en ningún
 <p>
 El <strong>incumplimiento de las condiciones de uso</strong> podría significar el bloqueo de la <strong>cuenta de usuario</strong> y/o <strong>dominio web</strong>, el <strong>borrado y/o edición</strong> del texto ofensivo, y las medidas y denuncias adecuadas según las leyes chilenas. El incumplimiento reiterado de las normas usando cuentas nuevas o alternativas implicará la <strong>deshabilitación automática</strong> de las mismas en cuanto sean detectadas.
 </p>
+<br/>
 <p>Con el objetivo de mejorar el servicio y minimizar los problemas, Mediatize se reserva el derecho a modificar y actualizar las condiciones de uso sin previo aviso.</p>
 
 <br/><br/>

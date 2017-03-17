@@ -13,9 +13,8 @@ stated otherwise in individual files.
 /* sneaker */
 
 .sneaker {
-font-size: small;
-margin-top: -1px;
-/*background: url(../../img/mnm/elmnm-sneak-reverse02.png) 97% 95% no-repeat;*/
+	font-size: small;
+	/*background: url(../../img/mnm/elmnm-sneak-reverse02.png) 97% 95% no-repeat;*/
 }
 
 .sneaker-title strong {

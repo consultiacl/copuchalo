@@ -21,19 +21,10 @@ function print_time($secs) {
 	else return $secs . ' ' . _("segundos");
 }
 
-do_header(_('Información sobre valores de karma y límites') . ' | ' . _('mediatize'));
-echo '<div id="singlewrap">'."\n";
+do_header(_('Información sobre valores de karma y límites') . ' | ' . _('mediatize'), '', false, false, '', false, false);
 
-
-echo '
-<div style="text-align:center">
-	<br/>
-	<h2>'._("Información sobre valores de karma y límites").'</h2>
-	<br/>
-</div>
-';
-
-
+echo '<div id="singlewrap" class="col-sm-10">';
+echo '<div class="topheading th-no-margin"><h2>Información sobre valores de karma, límites y otros parámetros</h2></div>';
 
 echo '<fieldset id="karma"><legend>'._('karma').'</legend>';
 echo _("El karma de un usuario puede ir de").' '.$globals['min_karma'].' '._("a").' '.$globals['max_karma'].'<br/>
@@ -75,7 +66,7 @@ if($globals['min_karma_for_posts']) {
 }
 
 if($globals['min_karma_for_sneaker']) {
-				echo _("Karma mínimo para hablar en la fisgona") . ': ' . $globals['min_karma_for_sneaker'] . '<br/>
+				echo _("Karma mínimo para hablar en la chismosa") . ': ' . $globals['min_karma_for_sneaker'] . '<br/>
 				<br/>
 				';
 }
@@ -92,7 +83,7 @@ echo				_("Karma instantáneo ganado por un usuario en el momento que se publica
 
 
 echo '
-		<fieldset id="comments">
+		<br/><fieldset id="comments">
 			<legend>'._('comentarios').'</legend>
 				'._("Tiempo para editar un comentario") . ': ' . print_time( $globals['comment_edit_time'] ) . '<br/>
 				<br/>
@@ -119,7 +110,7 @@ echo '
 
 
 echo '
-		<fieldset id="votes">
+		<br/><fieldset id="votes">
 			<legend>'._('votos abiertos').'</legend>
 				'._("Tiempo que permanecen abiertos los votos") . ': ' . print_time($globals['time_enabled_votes']) . '<br/>
 		</fieldset>';
@@ -130,7 +121,7 @@ echo '
 
 
 echo '
-		<fieldset id="links">
+		<br/><fieldset id="links">
 			<legend>'._('envíos').'</legend>
 				'._("Límite de envíos global para usuarios con karma") . ' &lt;= ' . $globals['limit_3_minutes_karma'] . ' ('. _('se han enviado demasiadas historias en los últimos 3 minutos') ."): " . $globals['limit_3_minutes'] . ' ' . _("envíos cada 3 minutos") . '<br/>
 				<br/>
@@ -152,7 +143,7 @@ echo '
 
 
 echo '
-		<fieldset  id="register">
+		<br/><fieldset  id="register">
 			<legend>'._('registros').'</legend>
 				'._("Los nombres de usuario deben ser de 3 o más caracteres y comenzar por una letra") . '<br/>
 				<br/>
@@ -169,7 +160,7 @@ echo '
 
 
 echo '
-		<fieldset id="posts">
+		<br/><fieldset id="posts">
 			<legend>'._('postits').'</legend>
 				'._("Karma a partir del cual se destacan los postits") . ': ' . $globals['post_highlight_karma'] . '<br/>
 				<br/>
@@ -183,7 +174,7 @@ echo '
 		</fieldset>';
 
 echo '
-		<fieldset id="images">
+		<br/><fieldset id="images">
 			<legend>'._('imágenes en comentarios y postits').'</legend>
 				'._("Karma mínimo") . ': ' . $globals['media_min_karma'] . '<br/>
 				<br/>
@@ -197,7 +188,7 @@ echo '
 
 
 echo '
-		<fieldset id="Otros valores">
+		<br/><fieldset id="Otros valores">
 			<legend>'._('fórmulas').'</legend>'
 				 ._("Se considera «nuevo usuario» a los usuarios que no hayan enviado ninguna historia o se hayan registrado hace menos de "). print_time($globals['new_user_time']) . '<br/>
 				<br/>';
@@ -221,7 +212,7 @@ echo '
 
 
 if(($result = $db->get_results("select user_login, user_level from users where user_level in ('god','admin','blogger') order by user_level"))) {
-	echo '<fieldset id="admins">
+	echo '<br/><fieldset id="admins">
 		<legend>'._('usuarios con privilegios').'</legend>
 			<style type="text/css">
 			table {
@@ -248,6 +239,16 @@ if(($result = $db->get_results("select user_login, user_level from users where u
 		}
 	echo '</tbody></table></fieldset>';
 }
+
+$users['enabled']  = (int) $db->get_var("SELECT count(*) FROM users WHERE user_level in ('normal', 'special')");
+$users['disabled'] = (int) $db->get_var("SELECT count(*) FROM users WHERE user_level in ('autodisabled', 'disabled')");
+$users['admin']    = (int) $db->get_var("SELECT count(*) FROM users WHERE user_level in ('blogger', 'admin', 'god')");
+$users['total']    = $users['enabled'] + $users['disabled'] + $users['admin'];
+
+	echo '<br/><fieldset id="usuarios">
+		<legend>'._('usuarios').'</legend>
+		Users ('.$users['total'].'): enabled ('.$users['enabled'].'), disabled ('.$users['disabled'].'), admin ('.$users['admin'].')<br/>
+	</fieldset>';
 
 echo '</div>';
 

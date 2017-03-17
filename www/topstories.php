@@ -62,21 +62,10 @@ if (!($memcache_key
 
 do_header(_('más votadas') . ' | ' . $globals['site_name'], _('populares'));
 $globals['tag_status'] = 'published';
-do_tabs('main', 'popular');
-print_period_tabs();
 
-/*** SIDEBAR ****/
-echo '<div id="sidebar">';
-do_banner_right();
-do_active_stories();
-do_banner_promotions();
-do_last_subs('published', 5, 'link_votes');
-do_best_comments();
-do_vertical_tags('published');
-echo '</div>' . "\n";
-/*** END SIDEBAR ***/
-
-echo '<div id="newswrap">'."\n";
+echo '<div>';
+echo '<div id="newswrap" class="col-sm-9">';
+echo '<div>';
 
 if ($links) {
 	$counter = 0;
@@ -88,32 +77,22 @@ if ($links) {
 	}
 }
 do_pages($rows, $page_size);
-echo '</div>'."\n";
+echo '</div></div>';
+
+
+/*** SIDEBAR ****/
+echo '<div id="sidebar" class="col-sm-3">';
+do_banner_right();
+do_active_stories();
+do_banner_promotions();
+do_last_subs('published', 5, 'link_votes');
+do_best_comments();
+do_vertical_tags('published');
+echo '</div>' . "\n";
+/*** END SIDEBAR ***/
+
+echo '</div>' . "\n";
 
 do_footer_menu();
 do_footer();
 
-function print_period_tabs() {
-	global $globals, $current_user, $range_values, $range_names, $month, $year;
-
-	if(!($current_range = check_integer('range')) || $current_range < 1 || $current_range >= count($range_values)) $current_range = 0;
-
-	echo ($globals['mobile'] ? '<div class="subheader"><form class="tabs-combo" action=""><select name="tabs" onchange="location = this.value;">' : '<ul class="subheader">');
-
-	if ($month> 0 && $year > 0) {
-		echo ($globals['mobile'] ? '<option value="popular?month='.$month.'&year='.$year.'" selected> '."$month-$year".'</option>' : '<li class="selected"><a href="popular?month='.$month.'&amp;year='.$year.'">' ."$month-$year". '</a></li>');
-		$current_range = -1;
-	} elseif(!($current_range = check_integer('range')) || $current_range < 1 || $current_range >= count($range_values)) {
-		$current_range = 0;
-	}
-
-	for($i=0; $i<count($range_values) /* && $range_values[$i] < 60 */; $i++) {
-		if($i == $current_range)  {
-			$active = ($globals['mobile'] ? ' selected' : ' class="selected"');
-		} else {
-			$active = "";
-		}
-		echo ($globals['mobile'] ? '<option value="popular?range='.$i.'"'.$active.'>'.$range_names[$i].'</option>' : '<li'.$active.'><a href="popular?range='.$i.'">' .$range_names[$i]. '</a></li>');
-	}
-	echo ($globals['mobile'] ? '</select></form></div>' : '</ul>');
-}

@@ -30,22 +30,14 @@ $from_time = '"'.date("Y-m-d H:00:00", time() - 86400 * $range_values[$from]).'"
 $from_where = "FROM links, sub_statuses WHERE id = ".SitesMgr::my_id()." AND link_id = link AND link_date > $from_time and link_status != 'discard'";
 
 
-do_header(_('nube de etiquetas') . ' | '._('mediatize'));
-do_tabs('main', _('etiquetas'), true);
-print_period_tabs();
+do_header(_('nube de etiquetas') . ' | '._('mediatize'), 'cloudtags', false, false, '', false, true);
 
-/*** SIDEBAR ****/
-echo '<div id="sidebar">';
-do_banner_right();
-do_best_stories();
-echo '</div>' . "\n";
-/*** END SIDEBAR ***/
-
-echo '<div id="newswrap">'."\n";
-
-
+echo '<div>';
+echo '<div id="newswrap" class="col-sm-9">';
+echo '<div>';
 echo '<div class="topheading"><h2>+ '.$words_limit.'</h2></div>';
-echo '<div style="margin: 0px 0 20px 0; line-height: '.$line_height.'pt; margin-left: 25px;">';
+
+echo '<div class="cloudtags" style="line-height: '.$line_height.'pt;">';
 $res = $db->get_col("select link_tags $from_where");
 if ($res) {
 	$max = 0;
@@ -71,27 +63,17 @@ if ($res) {
 
 }
 
+echo '</div></div></div>';
+
+/*** SIDEBAR ****/
+echo '<div id="sidebar" class="col-sm-3">';
+do_banner_right();
+do_best_stories();
+echo '</div>' . "\n";
+/*** END SIDEBAR ***/
+
 echo '</div>';
-echo '</div>';
+
 do_footer_menu();
 do_footer();
-
-
-function print_period_tabs() {
-	global $globals, $current_user, $range_values, $range_names;
-
-	if(!($current_range = check_integer('range')) || $current_range < 1 || $current_range >= count($range_values)) $current_range = 0;
-
-	echo ($globals['mobile'] ? '<div class="subheader"><form class="tabs-combo" action=""><select name="tabs" onchange="location = this.value;">' : '<ul class="subheader">');
-
-	for($i=0; $i<count($range_values) && $range_values[$i] < 40; $i++) {
-		if($i == $current_range)  {
-			$active = ($globals['mobile'] ? ' selected' : ' class="selected"');
-		} else {
-			$active = "";
-		}
-		echo ($globals['mobile'] ? '<option value="cloud?range='.$i.'"'.$active.'>'.$range_names[$i].'</option>' : '<li'.$active.'><a href="cloud?range='.$i.'">' .$range_names[$i]. '</a></li>');
-	}
-	echo ($globals['mobile'] ? '</select></form></div>' : '</ul>');
-}
 

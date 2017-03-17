@@ -137,9 +137,7 @@ function __autoload($class) {
 				'RGDB' => 'rgdb.php',
 				'LCPBase' => 'LCPBase.php',
 				'Link' => 'link.php',
-				'LinkMobile' => 'linkmobile.php',
 				'Comment' => 'comment.php',
-				'CommentMobile' => 'blog.php',
 				'Vote' => 'votes.php',
 				'Annotation' => 'annotation.php',
 				'Blog' => 'blog.php',
@@ -154,6 +152,8 @@ function __autoload($class) {
 				'Upload' => 'upload.php',
 				'Media' => 'media.php',
 				'S3' => 'S3.php',
+				'Tabs' => 'tabs.php',
+				'DbHelper' => 'db_helper.php'
 	);
 
 	if (isset($classfiles[$class]) && file_exists(mnminclude.$classfiles[$class])) {

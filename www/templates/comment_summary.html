@@ -42,10 +42,10 @@
 	</div>
 
 		<div class="comment-info">
-		<span class="ts showmytitle nomobile" data-ts="{{ self.date }}" title="{% trans _('creado') %}: "></span>
+		<span datetime="{{ self.date_utc }}" class="tsrender showmytitle" title="{% trans _('publicado') %}: {{ self.date_utc }} UTC"></span>
 		{% set modified = self.modified - self.date %}
 		{% if modified > 10 %}
-			<span data-ts="{{ self.modified }}" class="ts novisible wideonly showmytitle" title="{% trans _('editado') %}: "><strong>&nbsp;*&nbsp;</strong></span>&nbsp;
+			<span data-ts="{{ self.modified_utc }}" class="showmytitle" title="{% trans _('editado') %}: {{ self.modified_utc }}"><strong>&nbsp;*&nbsp;</strong></span>&nbsp;
 		{% endif %}
 		{% if self.type != 'admin' %}
 			<a class="username" href="{%exec get_user_uri self.username %}/commented" id="cauthor-{{ self.order }}">{{ self.username }}</a>

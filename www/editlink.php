@@ -13,9 +13,9 @@ include(mnminclude.'tags.php');
 force_authentication();
 
 array_push($globals['cache-control'], 'no-cache');
-do_header(_("editar noticia"), "post");
+do_header(_("editar noticia"), "post", false, false, '', true, false);
 
-echo '<div id="singlewrap">'."\n";
+echo '<div id="singlewrap" class="col-sm-10">';
 
 if (!empty($_REQUEST['id']) && is_numeric($_REQUEST['id'])) {
 	$link=new Link;

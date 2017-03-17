@@ -41,7 +41,7 @@ if (! $can_edit) {
 		$id = save_sub($id, $errors);
 		$sub = SitesMgr::get_info($id, true);
 		if ($id && empty($errors)) {
-			header("Location: ".$globals['base_url_general']."temas/$sub->name/subedit");
+			header("Location: ".$globals['base_url_general']."tema/$sub->name/subedit");
 			die;
 		}
 		if (! $id) {
@@ -64,8 +64,10 @@ if ($current_user->admin) {
 
 $page_modes = SitesMgr::$page_modes;
 
-do_header(_("editar sub"));
-echo '<div id="singlewrap">'."\n";
+do_header(_("editar sub"), '', false, false, '', false, false);
+
+echo '<div id="singlewrap" class="col-sm-10">';
+echo '<h2>Editar tema</h2><br/>';
 Haanga::Load('sub_edit.html', compact('sub', 'extended', 'errors', 'site', 'candidates_from', 'copy_from', 'page_modes'));
 echo "</div>"."\n";
 

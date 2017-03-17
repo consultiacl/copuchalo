@@ -36,8 +36,15 @@ $offset=(get_current_page()-1)*$page_size;
 $globals['noindex'] = true;
 
 $response = do_search(false, $offset, $page_size);
-do_header(sprintf(_('búsqueda de «%s»'), htmlspecialchars($_REQUEST['words'])));
-do_tabs('main',_('búsqueda'), __($_SERVER['REQUEST_URI']));
+
+
+do_header(sprintf(_('búsqueda de «%s»'), htmlspecialchars($_REQUEST['words'])), '', false, false, '', false, false);
+
+echo '<div class="topfiller col-sm-12"></div>';
+echo '<div>';
+echo '<div id="newswrap" class="col-sm-9">';
+echo '<div>';
+echo '<div class="topheading th-no-margin"><h2>'._('Resultados de la búsqueda').'</h2></div>';
 
 switch ($_REQUEST['w']) {
 	case 'posts':
@@ -51,13 +58,6 @@ switch ($_REQUEST['w']) {
 		$rss_program = 'rss';
 }
 
-/*** SIDEBAR ****/
-echo '<div id="sidebar">';
-do_banner_right();
-do_rss_box($rss_program);
-echo '</div>' . "\n";
-/*** END SIDEBAR ***/
-
 $options = array(
 	'w' => array('links', 'posts', 'comments'),
 	'p' => array('' => _('campos...'), 'url', 'tags', 'title', 'site'),
@@ -70,8 +70,21 @@ $selected = array('w' => $_REQUEST['w'], 'p' => $_REQUEST['p'], 's' => $_REQUEST
 
 Haanga::Load('search.html', compact('options', 'selected', 'response', 'rss_program'));
 
+echo '</div></div>';
+
+/*** SIDEBAR ****/
+echo '<div id="sidebar" class="col-sm-3">';
+do_banner_right();
+do_rss_box($rss_program);
+echo '</div>' . "\n";
+/*** END SIDEBAR ***/
+
+echo '</div>';
+
 do_footer_menu();
 do_footer();
+
+
 
 function print_result() {
 	global $response, $page_size;

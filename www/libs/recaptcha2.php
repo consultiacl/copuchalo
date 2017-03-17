@@ -14,7 +14,6 @@ function ts_is_human() {
 	if ($_POST["g-recaptcha-response"]) {
 		$resp = recaptcha2_check_answer ($globals['recaptcha_private_key'],
 								$_POST["g-recaptcha-response"]);
-		
 		if (is_object($resp) && $resp->success) {
 			return true;
 		} else {
@@ -29,7 +28,7 @@ function ts_print_form() {
 	global $globals;
 
 	$globals['extra_js'][] = '//www.google.com/recaptcha/api.js?hl='.$globals['lang'];
-	echo '<div class="g-recaptcha captcha" data-sitekey="'.$globals['recaptcha_public_key'].'"></div>';
+	return '<div class="g-recaptcha captcha" data-sitekey="'.$globals['recaptcha_public_key'].'"></div>';
 }
 
 
@@ -50,8 +49,7 @@ function recaptcha2_check_answer($secret, $response) {
 	curl_close($con);
 
 	if ($output) {
-		$o = json_decode($output);
-		return $o;
+		return json_decode($output);
 	}
 
 	return null;

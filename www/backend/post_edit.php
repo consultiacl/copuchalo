@@ -72,10 +72,10 @@ function save_post ($post_id) {
 			// Allow the author of the post
 			((intval($_POST['user_id']) == $current_user->user_id &&
 			$current_user->user_id == $post->author &&
-			time() - $post->date < 3600) ||
+			time() - $post->date < $globals['posts_edit_time']) ||
 			// Allow the admin
-			($current_user->user_level == 'god' && time() - $post->date < $globals['posts_edit_time_admin'] * 1.5)) &&
-			$_POST['key']  == $post->randkey ) {
+			($current_user->user_level == 'god' && time() - $post->date < $globals['posts_edit_time_admin'])) &&
+			$_POST['key'] == $post->randkey ) {
 			$post->content=$_POST['post'];
 			$post->admin = $post_is_admin;
 			$post->author = $current_user->user_id;
@@ -101,7 +101,7 @@ function save_post ($post_id) {
 		$post->username=$current_user->user_login;
 		$post->content=$_POST['post'];
 
-		// Verify that there are a period of 1 minute between posts.
+		// Verify the time interval parameter (posts_period) between posts.
 		if(intval($db->get_var("select count(*) from posts where post_user_id = $current_user->user_id and post_date > date_sub(now(), interval ".$globals['posts_period']." second)"))> 0) {
 			error_post('ERROR: ' . _('debe esperar entre postits') . ' (' . $globals['posts_period'] . ' segundos)');
 		}

@@ -47,7 +47,7 @@ if ($_POST["processlogin"] == 1) {
     setcookie('return_site', $globals['scheme'].'//'.get_server_name(), 0, $globals['base_url'], UserAuth::domain());
 }
 
-do_header('login');
+do_header('login', '', false, false, '', false, false);
 
 if ($_GET['op'] === 'recover' || !empty($_POST['recover'])) {
     do_recover();

@@ -1,6 +1,5 @@
-<div id="singlewrap">
 
-    <div class="genericform" style="text-align: center; max-width: 75%; margin-left: auto; margin-right: auto">
+    <div class="genericform" style="text-align: center;">
     <fieldset>
 	<form >
 		<label for="search">{% trans _("palabras o frases separadas por ','") %}</label>
@@ -15,11 +14,12 @@
 			<label for = "{{ o }}">{{ t }}</label>
 		{% endfor %}
 	    <br />
+	    <br />
 	    <input class="button" type="submit" value="{% trans _('enviar') %}" />
 
         </form>
 
-		{% if _REQUEST.words %}
+	{% if _REQUEST.words %}
 	    <script type="text/javascript">
 		var $flot;
 		var lastRequest = new Date().getTime();
@@ -33,22 +33,22 @@
 				yaxis: { min: 0 }
 		};
 
-        function showTooltip(x, y, contents) {
+	        function showTooltip(x, y, contents) {
 			if ($('#suggestion').length>0) return;
 
-            $('<div id="suggestion">' + contents + '</div>').css( {
-                position: 'absolute',
-                display: 'none',
-                top: y,
-                left: x + 10,
-                border: '1px solid #e2d3b0',
-                padding: '3px',
-                'background-color': '#FFEEC7',
-                opacity: 0.85,
-                'text-align': 'left',
-                'font-size': '85%',
-            }).appendTo("body").fadeIn(200);
-        }
+        	    $('<div id="suggestion">' + contents + '</div>').css( {
+                	position: 'absolute',
+	                display: 'none',
+            	    top: y,
+	                left: x + 10,
+        	        border: '1px solid #e2d3b0',
+                	padding: '3px',
+	                'background-color': '#FFEEC7',
+     		        opacity: 0.85,
+	                'text-align': 'left',
+	                'font-size': '85%',
+	            }).appendTo("body").fadeIn(200);
+        	}
 
 
 		function loadData() {
@@ -115,9 +115,10 @@
 			loadData();
 		});
 	    </script>
-		{% endif %}
+	{% endif %}
     </fieldset>
-	</div>
-	<div id="flot" style="width:90%;height:250px;margin-right:10%;margin-bottom:10px;"></div>
-	<div id="json-url" style="visibility:hidden"><b>json:</b> <input style="width:60%" type="text" name="json" readonly></div>
-</div>
+    </div>
+
+    <div id="flot" style="width:90%;height:250px;margin-right:10%;margin-bottom:10px;"></div>
+    <div id="json-url" style="visibility:hidden"><b>json:</b> <input style="width:60%" type="text" name="json" readonly></div>
+

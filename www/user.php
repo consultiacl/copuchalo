@@ -55,20 +55,20 @@ $uid = $_REQUEST['uid']; // Should be clean before
 $user=new User();
 
 if ($current_user->admin) {
-		// Check if it's used UID
-		if($uid) {
-			$user->id = $uid;
-		} else {
-			redirect(html_entity_decode(get_user_uri_by_uid($login, $_REQUEST['view'])));
-			die;
-		}
+	// Check if it's used UID
+	if($uid) {
+		$user->id = $uid;
+	} else {
+		redirect(html_entity_decode(get_user_uri_by_uid($login, $_REQUEST['view'])));
+		die;
+	}
 } else {
-		if($uid > 0) {
-			// Avoid anonymous and non admins users to use the id, it's a "duplicated" page
-			redirect(html_entity_decode(get_user_uri($login, $_REQUEST['view'])));
-			die;
-		}
-		$user->username = $login;
+	if($uid > 0) {
+		// Avoid anonymous and non admins users to use the id, it's a "duplicated" page
+		redirect(html_entity_decode(get_user_uri($login, $_REQUEST['view'])));
+		die;
+	}
+	$user->username = $login;
 }
 
 if(!$user->read()) {
@@ -78,9 +78,7 @@ $login = $user->username; // Just in case, we user the database username
 
 $globals['search_options'] = array('u' => $user->username);
 
-$view = clean_input_string($_REQUEST['view']);
-if(empty($view)) $view = 'profile';
-
+$view = clean_input_string($_REQUEST['view']) ?: 'profile';
 
 // The profile's use marked the current one as friend
 if ($current_user->user_id) {
@@ -100,15 +98,18 @@ if ($current_user->user_id == $user->id || $current_user->admin || $user->friend
 if($globals['external_user_ads'] && !empty($user->adcode)) {
 	$globals['user_adcode'] = $user->adcode;
 	$globals['user_adchannel'] = $user->adchannel;
-	if ($current_user->user_id == $user->id || $current_user->admin) $globals['do_user_ad']  = 100;
-	else $globals['do_user_ad'] = $user->karma * 2;
+	if ($current_user->user_id == $user->id || $current_user->admin)
+		$globals['do_user_ad']  = 100;
+	else
+		$globals['do_user_ad'] = $user->karma * 2;
 }
 
 // Load Google GEO
 if (! $user->disabled()
-		&& $view == 'profile'
-		&& $globals['google_maps_api']
-		&& (($globals['latlng']=$user->get_latlng()) || $current_user->user_id == $user->id)) {
+	&& $view == 'profile'
+	&& $globals['google_maps_api']
+	&& (($globals['latlng']=$user->get_latlng()) || $current_user->user_id == $user->id)) {
+
 	if ($current_user->user_id == $user->id) {
 		geo_init('geo_coder_editor_load', $globals['latlng'], 7, 'user');
 	} else {
@@ -128,18 +129,21 @@ switch ($view) {
 	case 'ignored':
 	case 'favorites':
 		$globals['noindex'] = true;
-		breaK;
+		break;
+
 	case 'commented':
 	case 'conversation':
 	case 'shaken_comments':
 	case 'favorite_comments':
 		$globals['search_options']['w'] = 'comments';
 		$globals['noindex'] = true;
-		breaK;
+		break;
+
 	case 'profile':
-	case 'subs':
+	case 'temas':
 		$globals['noindex'] = false;
-		breaK;
+		break;
+
 	default:
 		do_error(_('opción inexistente'), 404);
 		break;
@@ -149,9 +153,9 @@ switch ($view) {
 $globals['extra_head'] = '<link rel="canonical" href="http://'.get_server_name().get_user_uri($user->username).'" />'."\n";
 
 if (!empty($user->names)) {
-	do_header("$login ($user->names)", 'profile', User::get_menu_items($view, $login));
+	$header_title = "$login ($user->names)";
 } else {
-	do_header($login, 'profile', User::get_menu_items($view, $login));
+	$header_title = $login;
 }
 
 // Used to show user number of unread answers to comments
@@ -163,12 +167,14 @@ if ($current_user->user_id == $user->id) {
 	$globals['extra_comment_conversation'] = '';
 }
 
-echo '<div id="singlewrap">'."\n";
+do_header($header_title, 'profile', User::get_menu_items($view, $login), array('view'=> $view, 'login' => $login), '', false);
+
+echo '<div id="singlewrap" class="col-sm-10">';
 
 $url_login = urlencode($login);
 
 switch ($view) {
-	case 'subs':
+	case 'temas':
 		do_subs();
 		break;
 	case 'history':
@@ -229,14 +235,7 @@ do_footer();
 
 
 function do_profile() {
-	global $user, $current_user, $login, $db, $globals;
-
-	$options = array();
-	$options[$user->username] = get_user_uri($user->username);
-
-	if ($current_user->user_id == $user->id || $current_user->user_level == 'god') {
-		$options[_('modificar perfil').' &rarr;'] = $globals['base_url'].'profile?login='.urlencode($login);
-	}
+	global $user, $current_user, $db, $globals;
 
 	if ($current_user->user_id == $user->id || $current_user->user_level == 'god' || $current_user->user_level == 'admin') {
 		$globals['extra_js'][] = 'jquery.flot.min.js';
@@ -292,7 +291,7 @@ function do_profile() {
 		$geo_form = ob_get_clean();
 	}
 
-	$addresses	  = array();
+	$addresses = array();
 	if ($current_user->user_id == $user->id || ($current_user->user_level == 'god' &&  ! $user->admin) ) { // gods and admins know each other for sure, keep privacy
 		$dbaddresses = $db->get_results("select distinct(vote_ip_int) as ip from votes where vote_type in ('links', 'comments', 'posts') and vote_user_id = $user->id order by vote_date desc limit 30");
 
@@ -312,10 +311,10 @@ function do_profile() {
 		}
 	}
 
-	$prefs['use_bar'] = User::get_pref($user->id, 'use_bar');
-	$prefs['last_com_first'] = User::get_pref($user->id, 'last_com_first');
+	$prefs = $user->get_prefs();
+
 	$vars = compact(
-		'post', 'options', 'selected', 'rss', 'rss_title', 'geodiv',
+		'post', 'selected', 'rss', 'rss_title', 'geodiv', 'prefs',
 		'user', 'my_latlng', 'url', 'nofollow', 'nclones', 'show_email',
 		'entropy', 'percent', 'geo_form', 'addresses', 'friend_icon', 'globals'
 	);
@@ -327,8 +326,6 @@ function do_profile() {
 function do_history () {
 	global $db, $rows, $user, $offset, $page_size, $globals;
 
-	do_user_subheader(array(_('envíos propios') => get_user_uri($user->username, 'history'), _('votados') => get_user_uri($user->username, 'shaken'), _('favoritos') => get_user_uri($user->username, 'favorites'), _('votados por amigos') => get_user_uri($user->username, 'friends_shaken')), 0,
-		'rss?sent_by='.$user->id, _('envíos en rss2'));
 	$rows = $db->get_var("SELECT count(*) FROM links WHERE link_author=$user->id");
 	$links = $db->get_col("SELECT link_id FROM links WHERE link_author=$user->id ORDER BY link_date DESC LIMIT $offset,$page_size");
 	if ($links) {
@@ -345,8 +342,6 @@ function do_history () {
 function do_favorites () {
 	global $db, $rows, $user, $offset, $page_size, $globals;
 
-	do_user_subheader(array(_('envíos propios') => get_user_uri($user->username, 'history'), _('votados') => get_user_uri($user->username, 'shaken'), _('favoritos') => get_user_uri($user->username, 'favorites'), _('votados por amigos') => get_user_uri($user->username, 'friends_shaken')), 2,
-		'rss?favorites='.$user->id.'&amp;option=favorites&amp;url=source', _('favoritos en rss2'));
 	$rows = $db->get_var("SELECT count(*) FROM favorites WHERE favorite_user_id=$user->id AND favorite_type='link'");
 	$links = $db->get_col("SELECT link_id FROM links, favorites WHERE favorite_user_id=$user->id AND favorite_type='link' AND favorite_link_id=link_id ORDER BY link_date DESC LIMIT $offset,$page_size");
 	if ($links) {
@@ -362,16 +357,14 @@ function do_shaken () {
 
 	if ($globals['bot']) return;
 
-	do_user_subheader(array(_('envíos propios') => get_user_uri($user->username, 'history'), _('votados') => get_user_uri($user->username, 'shaken'), _('favoritos') => get_user_uri($user->username, 'favorites'), _('votados por amigos') => get_user_uri($user->username, 'friends_shaken')), 1,
-		'rss?voted_by='.$user->id, _('votadas en rss2'));
 	$rows = -1; //$db->get_var("SELECT count(*) FROM votes WHERE vote_type='links' and vote_user_id=$user->id");
 	$links = $db->get_results("SELECT vote_link_id as id, vote_value FROM votes WHERE vote_type='links' and vote_user_id=$user->id ORDER BY vote_date DESC LIMIT $offset,$page_size");
 	if ($links) {
 		foreach($links as $linkdb) {
 			$link = Link::from_db($linkdb->id);
 			if ($link->author == $user->id) continue;
-			echo '<div style="max-width: 60em">';
-			$link->print_summary('short', 0, false);
+			//echo '<div style="max-width: 60em">';
+			$link->print_summary('short');
 			/*
 			if ($linkdb->vote_value < 0) {
 				echo '<div class="box" style="z-index:1;margin:0 0 -5x 0;background:#FF3333;position:relative;top:-5px;left:85px;width:8em;padding: 1px 1px 1px 1px;border-color:#f00;opacity:0.9;text-align:center;font-size:0.9em;color:#fff;text-shadow: 0 1px 0 #000">';
@@ -389,8 +382,6 @@ function do_friends_shaken () {
 	global $db, $rows, $user, $offset, $page_size, $globals;
 
 	if ($globals['bot']) return;
-
-	do_user_subheader(array(_('envíos propios') => get_user_uri($user->username, 'history'), _('votados') => get_user_uri($user->username, 'shaken'), _('favoritos') => get_user_uri($user->username, 'favorites'), _('votados por amigos') => get_user_uri($user->username, 'friends_shaken')), 3);
 
 	$friends = $db->get_col("select friend_to from friends where friend_type = 'manual' and friend_from = $user->id and friend_value > 0");
 	if ($friends) {
@@ -412,10 +403,8 @@ function do_friends_shaken () {
 
 
 function do_commented () {
-	global $db, $rows, $user, $offset, $page_size, $globals, $current_user;
+	global $db, $rows, $user, $offset, $page_size;
 
-	do_user_subheader(array($user->username => get_user_uri($user->username, 'commented'), _('conversación').$globals['extra_comment_conversation'] => get_user_uri($user->username, 'conversation'), _('votados') => get_user_uri($user->username, 'shaken_comments'), _('favoritos') => get_user_uri($user->username, 'favorite_comments')), 0,
-		'comments_rss?user_id='.$user->id, _('comentarios en rss2'));
 	$rows = -1; // $db->get_var("SELECT count(*) FROM comments WHERE comment_user_id=$user->id");
 	$comments = $db->get_results("SELECT comment_id, link_id, comment_type FROM comments, links WHERE comment_user_id=$user->id and link_id=comment_link_id ORDER BY comment_date desc LIMIT $offset,$page_size");
 	if ($comments) {
@@ -424,10 +413,8 @@ function do_commented () {
 }
 
 function do_conversation () {
-	global $db, $rows, $user, $offset, $page_size, $globals, $current_user;
+	global $db, $rows, $user, $offset, $page_size, $current_user;
 
-	do_user_subheader(array($user->username => get_user_uri($user->username, 'commented'), _('conversación').$globals['extra_comment_conversation'] => get_user_uri($user->username, 'conversation'), _('votados') => get_user_uri($user->username, 'shaken_comments'), _('favoritos') => get_user_uri($user->username, 'favorite_comments')), 1,
-		'comments_rss?answers_id='.$user->id, _('conversación en rss2'));
 	$rows = -1; //$db->get_var("SELECT count(distinct(conversation_from)) FROM conversations WHERE conversation_user_to=$user->id and conversation_type='comment'");
 	$conversation = "SELECT distinct(conversation_from) FROM conversations WHERE conversation_user_to=$user->id and conversation_type='comment' ORDER BY conversation_time desc LIMIT $offset,$page_size";
 	
@@ -447,7 +434,6 @@ function do_conversation () {
 function do_favorite_comments () {
 	global $db, $rows, $user, $offset, $page_size, $globals;
 
-	do_user_subheader(array($user->username => get_user_uri($user->username, 'commented'), _('conversación').$globals['extra_comment_conversation'] => get_user_uri($user->username, 'conversation'), _('votados') => get_user_uri($user->username, 'shaken_comments'), _('favoritos') => get_user_uri($user->username, 'favorite_comments')), 3);
 	$comment = new Comment;
 	$rows = $db->get_var("SELECT count(*) FROM favorites WHERE favorite_user_id=$user->id AND favorite_type='comment'");
 	$comments = $db->get_col("SELECT comment_id FROM comments, favorites WHERE favorite_user_id=$user->id AND favorite_type='comment' AND favorite_link_id=comment_id ORDER BY comment_id DESC LIMIT $offset,$page_size");
@@ -466,8 +452,6 @@ function do_favorite_comments () {
 
 function do_shaken_comments () {
 	global $db, $rows, $user, $offset, $page_size, $globals;
-
-	do_user_subheader(array($user->username => get_user_uri($user->username, 'commented'), _('conversación').$globals['extra_comment_conversation'] => get_user_uri($user->username, 'conversation'), _('votados') => get_user_uri($user->username, 'shaken_comments'), _('favoritos') => get_user_uri($user->username, 'favorite_comments')), 2);
 
 	$rows = -1; $db->get_var("SELECT count(*) FROM votes, comments WHERE vote_type='comments' and vote_user_id=$user->id and comment_id = vote_link_id and comment_user_id != vote_user_id");
 	$comments = $db->get_results("SELECT vote_link_id as id, vote_value as value FROM votes, comments WHERE vote_type='comments' and vote_user_id=$user->id  and comment_id = vote_link_id and comment_user_id != vote_user_id ORDER BY vote_date DESC LIMIT $offset,$page_size");
@@ -503,7 +487,7 @@ function print_comment_list($comments, $user) {
 		if ($comment->type == 'admin' && ! $current_user->admin && $user->id == $comment->author) continue;
 		if ($last_link != $dbcomment->link_id) {
 			$link = Link::from_db($dbcomment->link_id, null, false); // Read basic
-			if($last_link != 0) echo '<div style="border-top: solid 1px;margin-bottom:20px;margin-top:-15px"></div>';
+			if($last_link != 0) echo '<div class="comment-separator"></div>';
 			echo '<h4>';
 			echo '<a class="link-comment-header" href="'.$link->get_permalink().'">'. $link->title. '</a>';
 			echo ' ['.$link->comments.']';
@@ -528,31 +512,19 @@ function print_comment_list($comments, $user) {
 function do_friends($option) {
 	global $db, $user, $globals, $current_user;
 
-
-	$header_options = array(_('amigos') => get_user_uri($user->username, 'friends'), _('elegido por') => get_user_uri($user->username, 'friend_of'));
-	if ($user->id == $current_user->user_id) {
-		$header_options[_('ignorados')] = get_user_uri($user->username, 'ignored');
-		$header_options[_('nuevos')] = get_user_uri($user->username, 'friends_new');
-	}
-
-
 	$prefered_id = $user->id;
 	$prefered_admin = $user->admin;
 	switch ($option) {
 		case 3:
-			do_user_subheader($header_options, $option);
 			$prefered_type = 'new';
 			break;
 		case 2:
-			do_user_subheader($header_options, $option);
 			$prefered_type = 'ignored';
 			break;
 		case 1:
 			$prefered_type = 'to';
-			do_user_subheader($header_options, $option);
 			break;
 		default:
-			do_user_subheader($header_options, $option, 'rss?friends_of='.$user->id, _('envíos de amigos en rss2'));
 			$prefered_type = 'from';
 	}
 	echo '<div style="padding: 5px 0px 10px 5px">';
@@ -562,31 +534,9 @@ function do_friends($option) {
 	echo '</div>'. "\n";
 
 	// Post processing
-	switch ($option) {
-		case 3:
-			if ($user->id == $current_user->user_id) {
-				User::update_new_friends_date();
-			}
-			break;
-		default:
+	if($option == 3 && $user->id == $current_user->user_id) {
+		User::update_new_friends_date();
 	}
-}
-
-function do_user_subheader($options, $selected = false, $rss = false, $rss_title = '') {
-	global $globals, $user, $current_user;
-
-	if ($current_user->user_id > 0 && $user->id != $current_user->user_id) { // Add link to discussion among them
-		$between = "type=comments&amp;u1=$user->username&amp;u2=$current_user->user_login";
-	} else {
-		$between = false;
-	}
-
-	// arguments: hash array with "button text" => "button URI"; Nº of the selected button
-
-	$vars = compact(
-		'options', 'selected', 'rss', 'rss_title', 'between'
-	);
-	return Haanga::Load('/user/subheader.html', $vars);
 }
 
 function do_subs() {
@@ -596,21 +546,17 @@ function do_subs() {
 	$subs = $db->get_results($sql);
 	$subs_followers_counter = $db->get_results("select subs.id, count(*) as c from subs, prefs where pref_key = 'sub_follow' and subs.id = pref_value group by subs.id order by c desc;");
 
-	if ($subs) {
-
-		foreach ($subs as $s) {
-			foreach ($subs_followers_counter as $sub_counter) {
-				if ($s->id == $sub_counter->id) {
-					$s->followers = $sub_counter->c;
-				}
+	foreach ($subs as $s) {
+		foreach ($subs_followers_counter as $sub_counter) {
+			if ($s->id == $sub_counter->id) {
+				$s->followers = $sub_counter->c;
 			}
-			if (!isset($s->followers)) $s->followers=0;
 		}
-
-		$title = _('suscripciones');
-		Haanga::Load('subs_simple.html', compact('title', 'subs'));
+		if (!isset($s->followers)) $s->followers=0;
 	}
 
+	$title = _('suscripciones');
+	Haanga::Load('subs_simple.html', compact('title', 'subs'));
 
 	if ($current_user->admin && $user->id == $current_user->user_id) {
 		$sql = "select subs.* from subs where subs.sub = 1 and (subs.owner = $user->id or subs.owner = 0)";
@@ -627,13 +573,15 @@ function do_subs() {
 					$s->followers = $sub_counter->c;
 				}
 			}
-			if (!isset($s->followers)) $s->followers=0;
+			if (empty($s->followers))
+				$s->followers=0;
 		}
 
-		$title = _('subs de') . " $user->username";
+		$title = _('temas de') . " $user->username";
 		if ($current_user->user_id > 0 && $user->id == $current_user->user_id && SitesMgr::can_edit(0)) $can_edit = true;
 		else $can_edit = false;
 
 		Haanga::Load('subs.html', compact('title', 'subs', 'can_edit'));
 	}
 }
+

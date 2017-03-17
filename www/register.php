@@ -34,7 +34,7 @@ if ($process) {
     setcookie('return_site', get_server_name(), 0, $globals['base_url'], UserAuth::domain());
 }
 
-do_header(_('registro'), 'post');
+do_header(_('registro'), 'post', false, false, '', false, false);
 
 switch ($process) {
     case 1:

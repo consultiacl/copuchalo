@@ -31,13 +31,13 @@ if ($url_args[0] == 'story') {
 }
 
 $argc = 0;
-if (!isset($_REQUEST['id']) && $url_args[0] && !ctype_digit($url_args[0])) { // Compatibility with story.php?id=x and /story/x
+if (empty($_REQUEST['id']) && $url_args[0] && !ctype_digit($url_args[0])) { // Compatibility with story.php?id=x and /story/x
 	$link = Link::from_db($url_args[0], 'uri');
 	if (! $link ) {
 		do_error(_('noticia no encontrada'), 404);
 	}
 } else {
-	if (isset($_REQUEST['id'])) $id = intval($_REQUEST['id']);
+	if (!empty($_REQUEST['id'])) $id = intval($_REQUEST['id']);
 	else $id = intval($url_args[0]);
 	if($id > 0 && ($link = Link::from_db($id)) ) {
 		// Redirect to the right URL if the link has a "semantic" uri
@@ -226,8 +226,7 @@ switch ($url_args[1]) {
 		$globals['noindex'] = true;
 		$globals['ads'] = false;
 		do_qanda_text($link);
-		exit(0);
-		break;
+		die;
 	default:
 		do_error(_('página inexistente'), 404);
 }
@@ -248,11 +247,13 @@ do_modified_headers($link->modified, $current_user->user_id.'-'.$globals['link_i
 
 // Enable user AdSense
 // do_user_ad: 0 = noad, > 0: probability n/100
+/*
 if ($globals['ads'] && $link->status == 'published' && $link->user_karma > 6 && !empty($link->user_adcode)) {
 	$globals['do_user_ad'] = $link->user_karma;
 	$globals['user_adcode'] = $link->user_adcode;
 	$globals['user_adchannel'] = $link->user_adchannel;
 }
+*/
 
 if ($link->status != 'published')
 	$globals['do_vote_queue']=true;
@@ -272,34 +273,16 @@ if ($link->has_thumb()) {
 $globals['description'] = text_to_summary($link->content, 250);
 $globals['sub_name'] = $link->sub_name;
 
-do_header($link->title, 'post');
+do_header($link->title, 'story', false, $tab_option);
 
 // Show the error if the comment couldn't be inserted
 if (!empty($new_comment_error)) {
 	add_javascript('mDialog.notify("'._('Aviso'). ": $new_comment_error".'", 5);');
 }
 
-do_tabs("main",_('noticia'), true);
-print_story_tabs($tab_option);
-
-/*** SIDEBAR ****/
-echo '<div id="sidebar">';
-do_sub_message_right();
-do_banner_right();
-// GEO
-if ($link->latlng) {
-	echo '<div id="map" style="width:300px;height:200px;margin-bottom:25px;">&nbsp;</div>';
-}
-if (! $current_user->user_id) {
-	do_most_clicked_stories();
-	do_banner_promotions();
-	do_best_stories();
-}
-do_rss_box();
-echo '</div>';
-/*** END SIDEBAR ***/
-
-echo '<div id="newswrap">';
+echo '<div>';
+echo '<div id="newswrap" class="col-sm-9">';
+echo '<div>';
 $link->print_summary();
 
 switch ($tab_option) {
@@ -349,10 +332,8 @@ case 2:
 		echo '</ol>';
 	}
 
-	if($tab_option == 1) {
-		if ($update_comments) {
-			$link->update_comments();
-		}
+	if($tab_option == 1 && $update_comments) {
+		$link->update_comments();
 	}
 
 	/* Force to show the last ad for anonymous users only */
@@ -377,7 +358,7 @@ case 3:
 	// Show voters
 	echo '<div class="voters" id="voters">';
 
-	echo '<div id="voters-container" style="padding: 10px;">';
+	echo '<div id="voters-container">';
 	if ($globals['link']->sent_date < $globals['now'] - 60*86400) { // older than 60 days
 		echo _('Noticia antigua, datos de votos archivados');
 	} else {
@@ -416,8 +397,7 @@ case 4:
 	// Show karma logs from annotations
 	$annotations = $link->read_annotation("link-karma");
 
-	$vars = compact('link', 'logs', 'annotations');
-	Haanga::Load("story/link_logs.html", $vars);
+	Haanga::Load("story/link_logs.html", compact('link', 'logs', 'annotations'));
 	break;
 
 
@@ -441,8 +421,8 @@ case 9:
 
 	$results = $db->get_results($sql);
 	if ($results) {
-		$ids = array();
 		echo '<ol class="comments-list">';
+		$ids = array();
 		$max = 0;
 		foreach($results as $res) {
 			if ($res->t > $max) $max = $res->t;
@@ -525,73 +505,36 @@ case 10:
 	break;
 }
 
+echo '</div></div>';
+
+/*** SIDEBAR ****/
+echo '<div id="sidebar" class="col-sm-3">';
+do_sub_message_right();
+do_banner_right();
+// GEO
+if ($link->latlng) {
+	echo '<div id="map" style="width:300px;height:200px;margin-bottom:25px;">&nbsp;</div>';
+}
+if (! $current_user->user_id) {
+	do_most_clicked_stories();
+	do_banner_promotions();
+	do_best_stories();
+}
+do_rss_box();
 echo '</div>';
+/*** END SIDEBAR ***/
+
+echo '</div>';
+
 
 $globals['tag_status'] = $globals['link']->status;
 do_footer();
 exit(0);
 
 
-function print_story_tabs($option) {
-	global $globals, $db, $link, $current_user;
 
-	$active = array();
-	$active[$option] = 'selected';
 
-	if( $globals['mobile'] ) {
-		echo '<div class="subheader">';
-		echo '<form class="tabs-combo" action="">';
-		echo '<select name="tabs" onchange="location = this.value;">';
-			echo '<option value="'.$globals['permalink'].'/standard" '.$active[1].'>'._('ordenados').'</option>';
-			echo '<option value="'.$globals['permalink'].'/threads" '.$active[10].'>'._('hilos').'</option>';
-			echo '<option value="'.$globals['permalink'].'/best-comments" '.$active[2].'>'._('+ valorados').'</option>';
-			if (!$globals['bot']) { // Don't show "empty" pages to bots, Google can penalize too
-				if ($globals['link']->sent_date > $globals['now'] - 86400*60) { // newer than 60 days
-					echo '<option value="'.$globals['permalink'].'/voters" '.$active[3].'>'._('votos').'</option>';
-				}
-				if ($globals['link']->sent_date > $globals['now'] - 86400*30) { // newer than 30 days
-					echo '<option value="'.$globals['permalink'].'/log" '.$active[4].'>'._('registros').'</option>';
-				}
-				if ($globals['link']->date > $globals['now'] - $globals['time_enabled_comments']) {
-					echo '<option value="'.$globals['permalink'].'/sneak" '.$active[5].'>&micro;&nbsp;'._('sapeo').'</option>';
-				}
-			}
-			if ($current_user->user_id > 0) {
-				if (($c = $db->get_var("SELECT count(*) FROM favorites WHERE favorite_type = 'link' and favorite_link_id=$link->id")) > 0) {
-					echo '<option value="'.$globals['permalink'].'/favorites" '.$active[6].'>'._('favoritos')."&nbsp;($c)</option>";
-				}
-			}
-			echo '<option value="'.$globals['permalink'].'/related" '.$active[8].'>'._('relacionadas').'</option>';
-		echo '</select>';
-		echo '</form>';
-		echo '</div>';
-	}
-	else {
-		echo '<ul class="subheader">';
-		echo '<li class="'.$active[1].'"><a href="'.$globals['permalink'].'/standard">'._('ordenados'). '</a></li>';
-		echo '<li class="'.$active[10].'"><a href="'.$globals['permalink'].'/threads">'._('hilos'). '</a></li>';
-		echo '<li class="'.$active[2].'"><a href="'.$globals['permalink'].'/best-comments">'._('+ valorados'). '</a></li>';
-		//echo '<li class="'.$active[9].'wideonly"><a href="'.$globals['permalink'].'/answered">'._('+ respondidos'). '</a></li>';
-		if (!$globals['bot']) { // Don't show "empty" pages to bots, Google can penalize too
-			if ($globals['link']->sent_date > $globals['now'] - 86400*60) { // newer than 60 days
-				echo '<li class="'.$active[3].'"><a href="'.$globals['permalink'].'/voters">'._('votos'). '</a></li>';
-			}
-			if ($globals['link']->sent_date > $globals['now'] - 86400*30) { // newer than 30 days
-				echo '<li class="'.$active[4].'"><a href="'.$globals['permalink'].'/log">'._('registros'). '</a></li>';
-			}
-			//if ($globals['link']->date > $globals['now'] - $globals['time_enabled_comments']) {
-			//	echo '<li class="'.$active[5].'wideonly"><a href="'.$globals['permalink'].'/sneak">&micro;&nbsp;'._('fisgona'). '</a></li>';
-			//}
-		}
-		if ($current_user->user_id > 0) {
-			if (($c = $db->get_var("SELECT count(*) FROM favorites WHERE favorite_type = 'link' and favorite_link_id=$link->id")) > 0) {
-				echo '<li class="'.$active[6].'wideonly"><a href="'.$globals['permalink'].'/favorites">'._('favoritos')."&nbsp;($c)</a></li>";
-			}
-		}
-		echo '<li class="'.$active[8].'wideonly"><a href="'.$globals['permalink'].'/related">'._('relacionadas'). '</a></li>';
-		echo '</ul>';
-	}
-}
+
 
 function do_comment_pages($total, $current, $reverse = true) {
 	global $db, $globals;
@@ -647,9 +590,12 @@ function do_comment_pages($total, $current, $reverse = true) {
 
 function get_comment_page_url($i, $total, $query, $reverse = false) {
 	global $globals;
-	if ($i == $total && $reverse) return $query;
-	elseif ($i == 1 && ! $reverse) return $query;
-	else return $query.'/'.$i;
+
+	if (($i == $total && $reverse) || ($i == 1 && ! $reverse)) {
+		return $query;
+	}
+
+	return $query.'/'.$i;
 }
 
 function print_external_analysis($link) {

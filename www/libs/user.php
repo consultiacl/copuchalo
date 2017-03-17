@@ -230,8 +230,8 @@ class User {
 		global $globals, $current_user;
 
 		switch ($view) {
-			case 'subs':
-				$id = _('subs');
+			case 'temas':
+				$id = _('temas');
 				break;
 			case 'history':
 			case 'shaken':
@@ -251,7 +251,6 @@ class User {
 			case 'friends_new':
 				$id = _('relaciones');
 				break;
-			case 'categories':
 			case 'profile':
 				$id = _('perfil');
 				break;
@@ -264,7 +263,7 @@ class User {
 		$items = array();
 		$items[] = new MenuOption(_('perfil'), get_user_uri($user), $id, _('información de usuario'));
 		$items[] = new MenuOption(_('relaciones'), get_user_uri($user, 'friends'), $id, _('amigos e ignorados'));
-		$items[] = new MenuOption(_('subs'), get_user_uri($user, 'subs'), $id, _('subs mediatize'));
+		$items[] = new MenuOption(_('temas'), get_user_uri($user, 'temas'), $id, _('temas mediatize'));
 		$items[] = new MenuOption(_('historias'), get_user_uri($user, 'history'), $id, _('información de envíos'));
 		$items[] = new MenuOption(_('comentarios'), get_user_uri($user, 'commented'), $id, _('información de comentarios'));
 		$items[] = new MenuOption(_('postits'), post_get_base_url($user), $id, _('página de postits'));
@@ -359,7 +358,6 @@ class User {
 		$this->store();
 		syslog(LOG_INFO, "User disabled: $this->id");
 
-		/*
 		// Delete relationships
 		$db->query("DELETE FROM friends WHERE friend_type='manual' and (friend_from = $this->id or friend_to = $this->id)");
 
@@ -377,7 +375,6 @@ class User {
 
 		// Delete posts
 		$db->query("delete from posts where post_user_id = $this->id");
-		*/
 
 		// Delete user's meta
 		$db->query("delete from annotations where annotation_key = 'user_meta-$this->id'");
@@ -567,6 +564,28 @@ class User {
 		$this->store();
 
 	}
+
+	public function get_prefs($force = false)
+	{
+		if (empty($this->id)) {
+			return array();
+		}
+
+		if ($this->prefs && ($force === false)) {
+			return $this->prefs;
+		}
+
+		global $db;
+
+		$results = $db->get_results('SELECT pref_key, pref_value FROM prefs where pref_user_id = "'.$this->id.'";');
+
+		foreach ($results as $result) {
+			$this->prefs[$result->pref_key] = $result->pref_value;
+		}
+
+		return $this->prefs;
+	}
+
 
 	static function friend_exists($from, $to) {
 		global $db;

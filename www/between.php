@@ -47,24 +47,23 @@ switch ($_REQUEST['type']) {
 		$prefix = 'post';
 }
 
+$title = sprintf(_('Debate entre %s y %s'), $u1, $u2);
 
-do_header(sprintf(_('debate entre %s y %s'), $u1, $u2));
-do_tabs('main',_('debate'), $globals['uri']);
+do_header($title, '', false, false, '', false, false);
 
-
-/*** SIDEBAR ****/
-echo '<div id="sidebar">';
-do_banner_right();
-echo '</div>' . "\n";
-/*** END SIDEBAR ***/
+echo '<div class="topfiller col-sm-12"></div>';
+echo '<div>';
+echo '<div id="newswrap" class="col-sm-9">';
+echo '<div>';
+echo '<div class="topheading"><h2>'.$title.'</h2></div>';
 
 $options = array('u1' => $u1, 'u2' => $u2, 'type' => $type, 'types' => array('posts', 'comments'));
-
-echo '<div id="newswrap">';
-
 Haanga::Load('between.html', compact('options'));
 
 if ($id1 > 0 && $id2 >0) {
+
+	echo '<div class="topfiller col-sm-12"></div>';
+
 	$all = array();
 	$to = array();
 	$sorted = array();
@@ -125,22 +124,21 @@ if ($id1 > 0 && $id2 >0) {
 		}
 		if (! $obj || ($obj->type == 'admin' && !$current_user->admin)) continue;
 
-		if ($obj->author == $id1) {
-			echo '<div style="margin-top: -10;margin-left: 10px; width:70%">';
-		} else {
-			echo '<div style="margin-top: -10;margin-left:30%">';
-		}
-		$obj->print_summary();
-		echo "</div>\n";
+		$classes = ($obj->author == $id1) ? 'col-sm-8' : 'col-sm-8 pull-right';
+		
+		echo '<div class="clearfix">';
+		$obj->print_summary(0, false, $classes);
+		echo '</div>';
+
+		//echo "</div>\n";
 		$thread[] = $id;
 
 		if ( $show_thread ) continue;
 
 		if (! isset($all[$id]) && ! in_array($id, $leaves)) {
 			$code = urlencode(base64_encode(gzcompress(implode(",", $thread))));
-			echo '<div style="margin: -5px 0 15px 0;text-align:center; color: #888">';
+			echo '<div class="post-between-separator">';
 			echo '[<a href="'.$globals['base_url'].'between?type='.$type.'&amp;u1='.$u1.'&amp;u2='.$u2.'&amp;id='.$code.'">'._('enlace permanente').'</a>]<br/>';
-			echo '<strong style="font-size: 15pt;text-shadow: 1px 1px 3px #aaa">&bull; &bull; &bull;</strong>';
 			echo '</div>';
 			$thread = array();
 			$leaves = array();
@@ -150,11 +148,35 @@ if ($id1 > 0 && $id2 >0) {
 
 }
 
-echo "</div>";
 
 if ($rows) do_pages($rows, $page_size);
+
+echo '</div></div>'; // newswrap
+
+/*** SIDEBAR ****/
+echo '<div id="sidebar" class="col-sm-3">';
+do_banner_right();
+do_banner_right();
+//do_best_stories();
+if (! $short_content) {
+	do_best_posts();
+	do_best_comments();
+	do_banner_promotions();
+	//if ($tab_option < 4) {
+	//	do_last_subs('published');
+	//	do_last_blogs();
+	//}
+}
+echo '</div>';
+/*** END SIDEBAR ***/
+
+echo '</div>';
+
 do_footer_menu();
 do_footer();
+
+
+
 
 function between($id1, $id2, $table, $prefix, $rows=25, $pos = 0) {
 	global $db;
@@ -168,5 +190,5 @@ function between($id1, $id2, $table, $prefix, $rows=25, $pos = 0) {
 		}
 	}
 	return $rels;
-
 }
+

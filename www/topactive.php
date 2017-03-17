@@ -11,19 +11,11 @@ include(mnminclude.'html1.php');
 
 do_header(_('destacadas') . ' | ' . $globals['site_name'], _('destacadas'));
 $globals['tag_status'] = 'published';
-do_tabs('main', 'active');
 
-/*** SIDEBAR ****/
-echo '<div id="sidebar">';
-do_banner_right();
-do_best_stories();
-do_last_subs('published', 5, 'link_votes');
-do_banner_promotions();
-do_best_comments();
-echo '</div>' . "\n";
-/*** END SIDEBAR ***/
 
-echo '<div id="newswrap">'."\n";
+echo '<div>';
+echo '<div id="newswrap" class="col-sm-9">';
+echo '<div>';
 
 $top = new Annotation('top-actives-'.$globals['site_shortname']);
 if ($top->read() && ($links = explode(',',$top->text))) {
@@ -35,6 +27,19 @@ if ($top->read() && ($links = explode(',',$top->text))) {
 		$counter++; Haanga::Safe_Load('private/ad-interlinks-nofront.html', compact('counter', 'page_size'));
 	}
 }
+
+echo '</div></div>';
+
+/*** SIDEBAR ****/
+echo '<div id="sidebar" class="col-sm-3">';
+do_banner_right();
+do_best_stories();
+do_last_subs('published', 5, 'link_votes');
+do_banner_promotions();
+do_best_comments();
+echo '</div>' . "\n";
+/*** END SIDEBAR ***/
+
 echo '</div>'."\n";
 
 do_footer_menu();

@@ -28,7 +28,7 @@ $thumb_url = isset($_POST["thumb_url"]) ? $_POST["thumb_url"] : '';
 if(isset($_POST["phase"])) {
 	switch ($_POST["phase"]) {
 		case 1:
-			do_header(_('enviar historia') . " 2/3", _('enviar historia'));
+			do_header(_('enviar historia') . " 2/3", _('enviar historia'), false, false, '', true, false);
 			if (! do_submit1()) {
 				// Just to display error messages
 				$link = new Link;
@@ -40,7 +40,7 @@ if(isset($_POST["phase"])) {
 			}
 			break;
 		case 2:
-			do_header(_('enviar historia') . " 3/3", _('enviar historia'));
+			do_header(_('enviar historia') . " 3/3", _('enviar historia'), false, false, '', true, false);
 			if (! do_submit2()) {
 				// Just to display error messages
 				$link = new Link;
@@ -57,11 +57,11 @@ if(isset($_POST["phase"])) {
 	}
 } elseif ($site_properties['no_link'] == 2) {
 	// The sub does not need a link
-	do_header(_('enviar historia') . " 2/3", _('enviar historia'));
+	do_header(_('enviar historia') . " 2/3", _('enviar historia'), false, false, '', true, false);
 	do_submit1();
 } else {
 	check_already_sent();
-	do_header(_('enviar historia') . " 1/3", _('enviar historia'));
+	do_header(_('enviar historia') . " 1/3", _('enviar historia'), false, false, '', true, false);
 	do_submit0();
 }
 

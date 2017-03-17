@@ -13,9 +13,9 @@
 
 <fieldset><legend>
 {% if sub.id %}
-	{% trans _('edición sub') %} <a href="{{ sub.base_url }}temas/{{ sub.name }}">{{ sub.name }}</a>
+	{% trans _('edición tema') %} <a href="{{ sub.base_url }}tema/{{ sub.name }}">{{ sub.name }}</a>
 {% else %}
-	{% trans _('nuevo sub') %}
+	{% trans _('nuevo tema') %}
 {% endif %}
 </legend>
 
@@ -70,7 +70,7 @@
 				<option value="{{ v }}" {% if v == sub.page_mode %}selected{% endif %}>{{ k }}</option>
 		{% endfor %}
 		</select>
-		<br/>
+		<br/><br/>
 
 	<fieldset><legend>{% trans _('colores y logo de la cabecera') %}</legend>
 		<label for="name">{% trans _('color título') %}:</label>
@@ -110,6 +110,7 @@
 		<input type="url" value="{{ extended.twitter_page }}" placeholder="https://twitter.com/usuario" id="twitter_page" name="twitter_page" size="60" maxlength="60"/>
 	</fieldset>
 
+	<br/>
 	<fieldset><legend>{% trans _('límites de entradilla') %}</legend>
 		{% trans _('longitud mínima') %}: <input type="number" name="intro_min_len" min="0" max="200"
 				value="{{ extended.intro_min_len }}"/>
@@ -119,6 +120,7 @@
 		{% trans _('permitir párrafos') %}: <input type="checkbox" name="allow_paragraphs" value="1" {% if extended.allow_paragraphs %}checked{% endif %}/>
 	</fieldset>
 
+	<br/>
 	<fieldset><legend>{% trans _('mensajes') %}</legend>
 		<label>{% trans _('reglas para el envío') %}<br/>
 			<textarea maxlength="300" name="rules" rows="5" id="rules" style="width:60%">{{ extended.rules }}</textarea>
@@ -148,6 +150,7 @@
 
 
 {% if current_user.admin %}
+	<br/>
 	<fieldset><legend>{% trans _('¡ALERTA admins! opciones son delicadas') %}</legend>
 
 	<label>{% trans _("habilitado") %} </label>

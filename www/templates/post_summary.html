@@ -1,4 +1,4 @@
-<div id="pcontainer-{{ self.prefix_id }}{{ self.id }}">
+<div id="pcontainer-{{ self.prefix_id }}{{ self.id }}" class="{{ classes }}">
 	<div class="{{ post_class }}" id="pid-{{ self.prefix_id }}{{ self.id }}">
 	{% if self.is_disabled %}
 		&#187;&nbsp;<a href="javascript:get_votes('get_post.php','post','pid-{{ self.prefix_id }}{{ self.id }}',0,{{ self.id }})" title="{% trans _('ver texto') %}">{% trans _('ver texto') %}</a>
@@ -37,7 +37,7 @@
 	</div>
 
 		<div class="comment-info">
-			<span class="ts nomobile showmytitle" data-ts="{{ self.date }}" title="{% trans _('creado') %}: "></span>
+			<span datetime="{{ self.date_utc }}" class="tsrender showmytitle" title="{% trans _('enviado') %}: {{ self.date_utc }} UTC"></span>
 			{% if !self.admin %}
 			<a class="username" href="{%exec post_get_base_url self.username %}">{{ self.username }}</a>
 			{% else %}
@@ -47,3 +47,4 @@
 		</div>
 	</div>
 </div>
+

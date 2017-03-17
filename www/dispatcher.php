@@ -4,6 +4,7 @@ $routes = array(
 	'story'		=> 'story.php',
 	'submit'	=> 'submit.php',
 	'subedit'	=> 'subedit.php',
+	'temas'		=> 'subs.php',
 	'subs'		=> 'subs.php',
 	'editlink'	=> 'editlink.php',
 	'comment_ajax'	=> 'backend/comment_ajax.php',
@@ -18,10 +19,10 @@ $routes = array(
 	'queue'		=> 'shakeit.php',
 	'legal'		=> 'legal.php',
 	'go'		=> 'go.php',
-	'b'		=> 'bar.php',
+//	'b'		=> 'bar.php',
 	'c'		=> 'comment.php',
 	'm'		=> 'submnm.php',
-	'temas'		=> 'submnm.php',
+	'tema'		=> 'submnm.php',
 	'user'		=> 'user.php',
 	'search'	=> 'search.php',
 	'between'	=> 'between.php',
@@ -43,14 +44,12 @@ $routes = array(
 	'opensearch'	=> 'opensearch_plugin.php',
 	'backend'	=> 'backend/dispatcher.php',
 	'postits'	=> 'sneakme/dispatcher.php',
-	'mobile'	=> 'mobile/dispatcher.php',
-	'captcha'	=> 'captcha.php',
 );
 
 $globals['path'] = $path = preg_split('/\/+/', $_SERVER['PATH_INFO'], 10, PREG_SPLIT_NO_EMPTY);
 $script = $routes[$path[0]];
 
-//syslog(LOG_INFO, "path_info: ".$_SERVER['PATH_INFO']." ||| path: ".print_r($path,true));
+syslog(LOG_INFO, "path_info: ".$_SERVER['PATH_INFO']." ||| path: ".print_r($path,true));
 
 if (!empty($script) && file_exists($script)) {
 	//syslog(LOG_INFO, "Include $script");

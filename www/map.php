@@ -14,7 +14,6 @@ geo_init('onLoad', false, 2);
 array_push($globals['extra_js'], 'markermanager.js');
 
 do_header(_('mapa de las últimas noticias') . ' | ' . _('mediatize'));
-do_tabs('main', 'map');
 
 /*** SIDEBAR ****/
 echo '<div id="sidebar">';

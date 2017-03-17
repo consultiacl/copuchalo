@@ -119,24 +119,12 @@ $pagetitle = _('noticias pendientes');
 if ($page > 1) {
     $pagetitle .= " ($page)";
 }
-do_header($pagetitle, _('nuevas'));
-print_shakeit_tabs($tab);
-
-/*** SIDEBAR ****/
-echo '<div id="sidebar">';
-do_sub_message_right();
-do_banner_right();
-if ($globals['show_popular_queued']) do_best_queued();
-do_last_subs('queued', 15, 'link_karma');
-//do_last_blogs();
-//do_best_comments();
-//do_categories_cloud('queued', 24);
-do_vertical_tags('queued');
-echo '</div>' . "\n";
-/*** END SIDEBAR ***/
+do_header($pagetitle, _('nuevas'), false, $tab);
 
 
-echo '<div id="newswrap">'."\n";
+echo '<div>';
+echo '<div id="newswrap" class="col-sm-9">';
+echo '<div>';
 
 // *** Sorting in a subselect only works with myslq:
 //     http://stackoverflow.com/questions/26372511/mysql-order-by-inside-subquery
@@ -161,58 +149,26 @@ if ($links) {
 
 
 do_pages($rows, $page_size);
-echo '</div>'."\n";
+echo '</div></div>';
+
+
+
+/*** SIDEBAR ****/
+echo '<div id="sidebar" class="col-sm-3">';
+do_sub_message_right();
+do_banner_right();
+if ($globals['show_popular_queued']) do_best_queued();
+do_last_subs('queued', 15, 'link_karma');
+//do_last_blogs();
+//do_best_comments();
+//do_categories_cloud('queued', 24);
+do_vertical_tags('queued');
+echo '</div>' . "\n";
+/*** END SIDEBAR ***/
+
+echo '</div>';
+
 
 do_footer_menu();
 do_footer();
-
-function print_shakeit_tabs($option=-1) {
-	global $globals, $current_user, $db;
-
-	$items = array();
-	$items[] = array('id' => 1, 'url' => 'queue'.$globals['meta_skip'], 'title' => _('todas'));
-	if ($current_user->has_subs) {
-		$items[] = array('id' => 7, 'url' => 'queue'.$globals['meta_subs'], 'title' => _('suscripciones'));
-	}
-
-	/*
-	if (empty($globals['submnm']) && ! $globals['mobile']) {
-		$subs = SitesMgr::get_sub_subs();
-		foreach ($subs as $sub) {
-			$items[] = array(
-				'id'  => 9999,   // fake number
-				'url' =>'temas/'.$sub->name.'/queue',
-				'selected' => false,
-				'title' => $sub->name
-			);
-		}
-	}
-	*/
-
-	$items [] = array('id' => 8, 'url' => 'queue?meta=_*', 'title' => _('temas/*'));
-
-	$items[] = array('id' => 3, 'url' => 'queue?meta=_popular', 'title' => _('candidatas'));
-
-	if ($current_user->user_id > 0) {
-		$items[] = array('id' => 2, 'url' => 'queue?meta=_friends', 'title' => _('amigos'));
-	}
-
-	if (!$globals['bot']) {
-		$items [] = array('id' => 5, 'url' => 'queue?meta=_discarded', 'title' => _('descartadas'));
-	}
-
-	// Print RSS teasers
-	if (! $globals['mobile']) {
-		switch ($option) {
-			case 7: // Personalised, queued
-				$feed = array("url" => "?status=queued&amp;subs=".$current_user->user_id, "title" => "");
-				break;
-			default:
-				$feed = array("url" => "?status=queued", "title" => "");
-				break;
-		}
-	}
-	$vars = compact('items', 'option', 'feed');
-	return Haanga::Load('print_tabs.html', $vars);
-}
 

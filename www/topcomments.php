@@ -9,23 +9,14 @@
 include('config.php');
 include(mnminclude.'html1.php');
 
-do_header(_('mejores comentarios en 24 horas') . ' | ' . $globals['site_name']);
-do_tabs('main', '+ ' . _('comentarios'), true);
+do_header(_('mejores comentarios en 24 horas') . ' | ' . $globals['site_name'], '', false, false, '', false, false);
 
-/*** SIDEBAR ****/
-echo '<div id="sidebar">';
-do_banner_right();
-do_best_stories();
-do_best_comments();
-do_vertical_tags('published');
-echo '</div>' . "\n";
-/*** END SIDEBAR ***/
+echo '<div class="topfiller col-sm-12"></div>';
 
-echo '<div id="newswrap">'."\n";
-
-
-echo '<div class="topheading"><h2>'._('comentarios más valorados 24 horas').'</h2></div>';
-
+echo '<div>';
+echo '<div id="newswrap" class="col-sm-9">';
+echo '<div>';
+echo '<div class="topheading th-no-margin"><h2>'._('Comentarios más valorados en 24 horas').'</h2></div>';
 
 $last_link = 0;
 $counter = 0;
@@ -57,7 +48,20 @@ if ($comments) {
 }
 
 echo '</div>';
+echo '</div></div>';
+
+
+/*** SIDEBAR ****/
+echo '<div id="sidebar" class="col-sm-3">';
+do_banner_right();
+do_best_stories();
+do_best_comments();
+do_vertical_tags('published');
+echo '</div>' . "\n";
+/*** END SIDEBAR ***/
+
 echo '</div>';
+
 do_footer_menu();
 do_footer();
 

@@ -22,7 +22,7 @@ class Post extends LCPBase {
 	var $read = false;
 	var $admin = false;
 
-	const SQL = " SQL_NO_CACHE post_id as id, post_user_id as author, post_is_admin as admin, user_login as username, user_karma, user_level as user_level, post_randkey as randkey, post_votes as votes, post_karma as karma, post_ip_int as ip, user_avatar as avatar, post_content as content, UNIX_TIMESTAMP(posts.post_date) as date, favorite_link_id as favorite, vote_value as voted, media.size as media_size, media.mime as media_mime, media.extension as media_extension, media.access as media_access, UNIX_TIMESTAMP(media.date) as media_date, 1 as `read` FROM posts
+	const SQL = " SQL_NO_CACHE post_id as id, post_user_id as author, post_is_admin as admin, user_login as username, user_karma, user_level as user_level, post_randkey as randkey, post_votes as votes, post_karma as karma, post_ip_int as ip, user_avatar as avatar, post_content as content, UNIX_TIMESTAMP(posts.post_date) as date, posts.post_date as date_utc, favorite_link_id as favorite, vote_value as voted, media.size as media_size, media.mime as media_mime, media.extension as media_extension, media.access as media_access, UNIX_TIMESTAMP(media.date) as media_date, 1 as `read` FROM posts
 	LEFT JOIN users on (user_id = post_user_id)
 	LEFT JOIN favorites ON (@user_id > 0 and favorite_user_id =  @user_id and favorite_type = 'post' and favorite_link_id = post_id)
 	LEFT JOIN votes ON (post_date > @enabled_votes and @user_id > 0 and vote_type='posts' and vote_link_id = post_id and vote_user_id = @user_id)
@@ -141,7 +141,7 @@ class Post extends LCPBase {
 		return false;
 	}
 
-	function print_summary($length=0, $dontecho = false) {
+	function print_summary($length=0, $dontecho = false, $classes = '') {
 		global $current_user, $globals;
 
 		if(!$this->read) $this->read();
@@ -177,7 +177,7 @@ class Post extends LCPBase {
 
 		$this->prepare_summary_text($length);
 
-		$vars = compact('post_meta_class', 'post_class', 'length');
+		$vars = compact('post_meta_class', 'post_class', 'length', 'classes');
 		/* reference $this to use in the template */
 		$vars['self'] = $this;
 		return Haanga::Load('post_summary.html', $vars, $dontecho);

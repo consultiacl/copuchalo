@@ -13,7 +13,8 @@
 		</form>
 	</div>
 {% else %}
-	<ul class="subheader">
+	<div class="subheader">
+	<ul class="subheader-list">
 		{% for item in items %}
 		<li {% if item.id == option OR item.selected %}class="selected"{% endif %}>
 			<a href="{{globals.base_url}}{{item.url}}">{{ item.title }}</a>
@@ -28,5 +29,6 @@
 		</li>
 		{% endif %}
 	</ul>
+	</div>
 {% endif %}
 

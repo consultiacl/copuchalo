@@ -35,21 +35,14 @@ $max = max($db->get_var("select count(*) as count $from_where order by count des
 $coef = ($max_pts - $min_pts)/($max-1);
 
 
-do_header(_('nube de sitios web') . ' | ' . _('mediatize'));
-do_tabs("main", _('+ webs'), true);
-print_period_tabs();
+do_header(_('nube de sitios web') . ' | ' . _('mediatize'), 'cloudsites', false, false, '', false, true);
 
-/*** SIDEBAR ****/
-echo '<div id="sidebar">';
-do_banner_right();
-do_vertical_tags('published');
-echo '</div>' . "\n";
-/*** END SIDEBAR ***/
+echo '<div>';
+echo '<div id="newswrap" class="col-sm-9">';
+echo '<div>';
+echo '<div class="topheading th-cloudsites"><h2>Los sitios más enlazados</h2></div>';
 
-echo '<div id="newswrap">'."\n";
-
-echo '<div class="topheading"><h2>Los sitios más enlazados</h2></div>';
-echo '<div style="margin: 20px 0 20px 0; line-height: '.$line_height.'pt; margin-left: 50px;">';
+echo '<div class="cloudsites" style="line-height: '.$line_height.'pt;">';
 $res = $db->get_results("select blog_url, count(*) as count $from_where order by count desc limit $limit");
 if ($res) {
 	foreach ($res as $item) {
@@ -65,26 +58,17 @@ if ($res) {
 	}
 }
 
+echo '</div></div></div>';
+
+/*** SIDEBAR ****/
+echo '<div id="sidebar" class="col-sm-3">';
+do_banner_right();
+do_vertical_tags('published');
+echo '</div>' . "\n";
+/*** END SIDEBAR ***/
+
 echo '</div>';
-echo '</div>';
+
 do_footer_menu();
 do_footer();
 
-
-function print_period_tabs() {
-	global $globals, $current_user, $range_values, $range_names;
-
-	if(!($current_range = check_integer('range')) || $current_range < 1 || $current_range >= count($range_values)) $current_range = 0;
-
-	echo ($globals['mobile'] ? '<div class="subheader"><form class="tabs-combo" action=""><select name="tabs" onchange="location = this.value;">' : '<ul class="subheader">');
-
-	for($i=0; $i<count($range_values)-1; $i++) {
-		if($i == $current_range)  {
-			$active = ($globals['mobile'] ? ' selected' : ' class="selected"');
-		} else {
-			$active = "";
-		}
-		echo ($globals['mobile'] ? '<option value="sitescloud?range='.$i.'"'.$active.'>'.$range_names[$i].'</option>' : '<li'.$active.'><a href="sitescloud?range='.$i.'">' .$range_names[$i]. '</a></li>');
-	}
-	echo ($globals['mobile'] ? '</select></form></div>' : '</ul>');
-}

@@ -1,7 +1,56 @@
 {# Share icons #}
 
-<div data-url="{{ link }}" data-title="{{ title }}" class="share-icons">
-	<span class="fa fa-facebook-square" title="{% trans _('compartir en %s') "facebook" %}" onClick="share_fb(this)"></span>
-	<span class="fa fa-twitter" title="{% trans _('compartir en %s') "twitter" %}"  onClick="share_tw(this)"></span>
+{% exec urlencode link as link_url %}
+{% exec self.get_short_permalink as short_link %}
+<div class="share-menu-content hide">
+	<ul class="share-icons" data-url="{{ link }}" data-title="{{ title }}">
+		<li>
+			<a class="share-facebook" href="#" onClick="share_fb(this)">
+				<div class="inline"><i class="fa fa-facebook-square"></i></div>
+				<div class="inline">Facebook</div>
+			</a>
+		</li>
+		<li>
+			<a class="share-twitter" href="#" onClick="share_tw(this)">
+				<div class="inline"><i class="fa fa-twitter-square"></i></div>
+				<div class="inline">Twitter</div>
+			</a>
+		</li>
+		{% if globals.mobile %}
+		<li>
+			<a class="share-telegram" href="tg://share?url={{ link_url }}&text={{ title }}" data-action="share/telegram/share" target="_blank">
+				<div class="inline"><i class="fa fa-telegram"></i></div>
+				<div class="inline">Telegram</div>
+			</a>
+		</li>
+		<li>
+			<a class="share-whatsapp" href="whatsapp://send?text={{ title }} - {{ link_url }}" data-action="share/whatsapp/share" target="_blank">
+				<div class="inline"><i class="fa fa-whatsapp color-whatsapp"></i></div>
+				<div class="inline">Whatsapp</div>
+			</a>
+		</li>
+{#
+		{% else %}
+		<li>
+			<a class="share-telegram" href="https://telegram.me/share/url?url={{ link_url }}&text={{ title }}" data-action="share/telegram/share" target="_blank">
+				<div class="inline"><i class="fa fa-telegram"></i></div>
+				<div class="inline">Telegram</div>
+			</a>
+		</li>
+#}
+		{% endif %}
+		<li>
+			<a class="share-mail" href="mailto:?subject={{title}}&body={{ link_url }}" title="{% trans _('Compartir por %s') "Correo" %}" target="_blank">
+				<div class="inline"><i class="fa fa-envelope"></i></div>
+				<div class="inline">Correo</div>
+			</a>
+		</li>
+		<li>
+			<a class="share-link" href="{{ short_link }}" title="Enlace corto" target="_blank">
+				<div class="inline"><i class="fa fa-link"></i></div>
+				<div class="inline">Enlace corto</div>
+			</a>
+		</li>
+	</ul>
 </div>
 

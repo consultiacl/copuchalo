@@ -56,7 +56,7 @@ function send_recover_mail ($user) {
 	$message .= "<p>--\n <br>el equipo de mediatize<p><br></body></html>";
 	
 	if(send_pear_mail($to, $domain, $subject, $message)) {
-		echo '<p><strong>' ._('Correo enviado, mira tu buzón, allí están las instrucciones. Mira también en la carpeta de spam.') . '</strong></p>';
+		//echo '<p><strong>' ._('Correo enviado, mira tu buzón, allí están las instrucciones. Mira también en la carpeta de spam.') . '</strong></p>';
 		return true;
 	} else {
 		echo '<p><strong>' ._('Error en el envío de correo. Prueba más tarde o avisa al administrador.') . '</strong></p>';

@@ -1,5 +1,5 @@
 {% if globals.mobile %}
-	<div class="subheader" style="margin-bottom: 20px">
+	<div class="subheader">
 		<form class="tabs-combo" action="">
 		{% if options|isarray %}
 			<select name="tabs" onchange="location = this.value;">
@@ -21,7 +21,8 @@
 		</form>
 	</div>
 {% else %}
-	<ul class="subheader" style="margin-bottom: 20px">
+	<div class="subheader">
+	<ul class="subheader-list">
 	{% if options|isarray %}
 	    {% for text,turl in options %}
 	        {% if forloop.counter0 == selected %}
@@ -48,5 +49,6 @@
 	    </li>
 	{% endif %}
 	</ul>
+	</div>
 {% endif %}
 

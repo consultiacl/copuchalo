@@ -50,12 +50,8 @@ class MenuOption{
 }
 
 
-function do_tabs($tab_name, $tab_selected = false, $extra_tab = false) {
-	/* Not used any more */
-}
 
-
-function do_header($title, $id='home', $options = false) {
+function do_header($title, $id='home', $options = false, $tab_options = false, $tab_class = '', $show_central_header = true, $show_submenu = true) {
 	global $current_user, $dblang, $globals, $db;
 
 	header('Content-Type: text/html; charset=utf-8');
@@ -84,7 +80,7 @@ function do_header($title, $id='home', $options = false) {
 	$this_site_properties = SitesMgr::get_extended_properties();
 
 	if ($this_site->sub) {
-		$this_site->url = $this_site->base_url.'temas/'.$this_site->name;
+		$this_site->url = $this_site->base_url.'tema/'.$this_site->name;
 	} else {
 		$this_site->url = $this_site->base_url;
 	}
@@ -109,44 +105,30 @@ function do_header($title, $id='home', $options = false) {
 		$globals['post_html'] = $this_site_properties['post_html'];
 	}
 
-
-
-	if (! is_array($options)) {
-		$left_options = array();
-		$show_story = false;
-		if ($this_site->enabled && empty($this_site_properties['new_disabled'])) {
-			if( $globals['mobile'] ) $left_options[] = new MenuOption(_('enviar historia'), $globals['base_url'].'submit', $id, _('enviar nueva historia'));
-			$show_story = true;
-		}
-		//if( $globals['mobile'] ) $left_options[] = new MenuOption(_('nuevas'), $globals['base_url'].'queue', $id, _('votar noticias pendientes'));
-		$left_options[] = new MenuOption(_('portada'), $globals['base_url'], $id, _('página principal'));
-		$left_options[] = new MenuOption(_('nuevas'), $globals['base_url'].'queue', $id, _('votar noticias pendientes'));
-		$left_options[] = new MenuOption(_('populares'), $globals['base_url'].'popular', $id, _('historias más votadas'));
-		$left_options[] = new MenuOption(_('más visitadas'), $globals['base_url'].'top_visited', $id, _('historias más visitadas/leídas'));
-		$left_options[] = new MenuOption(_('destacadas'), $globals['base_url'].'top_active', $id, _('historias más activas'));
-
-		$right_options = array();
-		$right_options[] = new MenuOption(_('temas'), $globals['base_url_general'].'subs', $id, _('sub mediatizes'));
-		$right_options[] = new MenuOption(_('chismosa'), $globals['base_url'].'sneak', $id, _('visualizador en tiempo real'));
-		$right_options[] = new MenuOption(_('postits'), post_get_base_url(), $id, _('leer o escribir postits y mensajes privados'));
-		if( $globals['mobile'] ) $right_options[] = new MenuOption(_('galería'), 'javascript:fancybox_gallery(\'all\');', false, _('las imágenes subidas por los usuarios'));
+	if (is_array($options)) {
+		$menu_options = $options;
 	} else {
-		$left_options = $options;
-		$right_options = array();
-		if( $globals['mobile'] ) {
-			$right_options[] = new MenuOption(_('portada'), $globals['base_url'], '', _('página principal'));
-			$right_options[] = new MenuOption(_('nuevas'), $globals['base_url'].'queue', '', _('votar noticias pendientes'));
+		$menu_options = array();
+		if ($this_site->enabled && empty($this_site_properties['new_disabled'])) {
+			if( $globals['mobile'] ) $menu_options[] = new MenuOption(_('enviar historia'), $globals['base_url'].'submit', $id, _('enviar nueva historia'));
 		}
-
-		$right_options[] = new MenuOption(_('temas'), $globals['base_url_general'].'subs', $id, _('sub mediatizes'));
-		$right_options[] = new MenuOption(_('chismosa'), $globals['base_url'].'sneak', $id, _('visualizador en tiempo real'));
-		$right_options[] = new MenuOption(_('postits'), post_get_base_url(), $id, _('leer o escribir postits y mensajes privados'));
-		//$right_options[] = new MenuOption(_('galería'), 'javascript:fancybox_gallery(\'all\');', false, _('las imágenes subidas por los usuarios'));
+		$menu_options[] = new MenuOption(_('portada'), $globals['base_url'], $id, _('página principal'));
+		$menu_options[] = new MenuOption(_('nuevas'), $globals['base_url'].'queue', $id, _('votar noticias pendientes'));
+		$menu_options[] = new MenuOption(_('temas'), $globals['base_url'].'temas', $id, _('temas variados'));
+		$menu_options[] = new MenuOption(_('populares'), $globals['base_url'].'popular', $id, _('historias más votadas'));
+		$menu_options[] = new MenuOption(_('más visitadas'), $globals['base_url'].'top_visited', $id, _('historias más visitadas/leídas'));
+		$menu_options[] = new MenuOption(_('destacadas'), $globals['base_url'].'top_active', $id, _('historias más activas'));
 	}
 
-	$vars = compact('title', 'greeting', 'id', 'left_options', 'right_options', 'sites', 'this_site', 'this_site_properties', 'show_story');
+	$tabs = Tabs::renderForSection($id, $tab_options, $tab_class);
+
+	$vars = compact('title', 'greeting', 'id', 'menu_options', 'sites', 'this_site', 'this_site_properties', 'tabs', 'show_central_header', 'show_submenu');
 	$vars['base_url'] = $globals['base_url'];
-	$vars['subs'] = SitesMgr::get_subs_active(); //false);
+	if($current_user->user_id > 0) {
+		$vars['subs'] = SitesMgr::get_subscriptions($current_user->user_id);
+	} else {
+		$vars['subs'] = SitesMgr::get_subs_active(true, 10);
+	}
 	return Haanga::Load('header.html', $vars);
 }
 
@@ -320,9 +302,9 @@ function do_pages($total, $page_size=25, $margin = true) {
 	$end=$start+$index_limit-1;
 
 	if ($margin) {
-		echo '<div class="pages margin">';
+		echo '<div class="pages margin"><div><div>';
 	} else {
-		echo '<div class="pages">';
+		echo '<div class="pages"><div><div>';
 	}
 
 	if($current==1) {
@@ -371,7 +353,7 @@ function do_pages($total, $page_size=25, $margin = true) {
 	} else {
 		echo '<span class="nextprev">&#187; '.$go_next. '</span>';
 	}
-	echo '</div>';
+	echo '</div></div></div>';
 
 }
 
@@ -902,7 +884,7 @@ function do_sub_message_right() {
 
 function do_subheader($content, $selected = false) {
 // arguments: hash array with "button text" => "button URI"; Nº of the selected button
-	echo '<ul class="subheader">'."\n";
+	echo '<div class="subheader"><ul class="subheader-list">'."\n";
 	if (is_array($content)) {
 		$n = 0;
 		foreach ($content as $text => $url) {
@@ -916,7 +898,7 @@ function do_subheader($content, $selected = false) {
 	} else {
 		echo '<h1>'.$content.'</h1>';
 	}
-	echo '</ul>'."\n";
+	echo '</ul></div>'."\n";
 }
 
 function print_follow_sub($id) {

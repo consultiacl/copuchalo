@@ -10,9 +10,10 @@ include('config.php');
 include(mnminclude.'html1.php');
 
 $globals['ads'] = false;
-promote_style();
-do_header(_('promote') . ' | ' . _('mediatize'));
-echo '<div id="singlewrap">'."\n";
+do_header(_('promote') . ' | ' . _('mediatize'), '', false, false, '', false, false);
+
+echo '<div id="singlewrap" class="col-sm-10">';
+echo '<div class="topheading th-no-margin"><h2>Estado sistema de promoción</h2></div>';
 
 $site_id = SitesMgr::my_id();
 
@@ -26,48 +27,4 @@ echo '</div>'."\n";
 
 do_footer_menu();
 do_footer();
-
-
-function promote_style() {
-	global $globals;
-	$globals['extra_head'] = '
-<style type="text/css">
-p {
-	font-family: Bitstream Vera Sans, Arial, Helvetica, sans-serif;
-	font-size: 0.9em;
-}
-table {
-	margin: 0px;
-	padding-top: 20px;
-}
-th {
-	padding: 3px 8px;
-	text-align: center;
-}
-td {
-	margin: 0px;
-	padding: 5px;
-}
-.thead {
-	text-transform: uppercase;
-	color: #FFFFFF;
-	background-color: #a7cbff;
-	padding: 6px;
-}
-.tdata0 {
-	background-color: #fff;
-}
-.tdata1 {
-	background-color: #e2eeff;
-}
-.tnumber0 {
-	text-align: center;
-}
-.tnumber1 {
-	text-align: center;
-	background-color: #e2eeff;
-}
-</style>
-';
-}
 

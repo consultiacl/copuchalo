@@ -1,7 +1,7 @@
 <?php
 	include('config.php');
 	include(mnminclude.'html1.php');
-	do_header(_('FAQ') . ' | ' . _('mediatize'));
+	do_header(_('FAQ') . ' | ' . _('mediatize'), '', false, false, '', false, false);
 ?>
 
 <div id="singlewrap">
@@ -107,7 +107,7 @@ Encontrarás los datos de <strong>contacto</strong> en <a target="_blank" href="
 
 <li>
 <h2>¿Qué software se usa?</h2>
-<p>El software está completamente desarrollado por Ricardo Galli, Benjamí Villoslada y colaboraciones de terceros, más las modificaciones hechas para mediatize.</p>
+<p>El software comenzó a desarrollarlo Ricardo Galli y Benjamí Villoslada con colaboraciones de terceros, más las modificaciones hechas para mediatize.</p>
 </li>
 
 <li>
@@ -123,7 +123,7 @@ Encontrarás los datos de <strong>contacto</strong> en <a target="_blank" href="
 
 <li>
 <h2>¿Cómo se pagan los gastos?</h2>
-<p>AdSense cubre los gastos por el momento.</p>
+<p>De forma cooperativa.</p>
 </li>
 
 </ul>
