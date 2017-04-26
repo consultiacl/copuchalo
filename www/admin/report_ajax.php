@@ -67,30 +67,31 @@ function do_contained_pages_reports($id, $total, $current, $page_size, $process,
 	$end=min($start+$index_limit-1, $total_pages);
 	$start=max($end-$index_limit+1,1);
 
-	echo '<div class="pages">';
+	$separator = '&hellip;';
+
+	echo '<div><div class="pages left"><nav aria-label="pager"><ul class="pagination">';
 	if($start>1) {
 		$i = 1;
 		do_contained_page_link_reports($process, $id, $reason, $i);
-		if($start>2) echo '<span>...</span>';
+		if($start>2) echo '<li><span>'.$separator.'</span></li>';
 	}
 	for ($i=$start;$i<=$end;$i++) {
 		if($i==$current) {
-			echo '<span class="current">'.$i.'</span>';
+			echo '<li class="active"><span class="active">'.$i.'</span></li>';
 		} else {
 			do_contained_page_link_reports($process, $id, $reason, $i);
 		}
 	}
 	if($total_pages>$end) {
 		$i = $total_pages;
-		if($total_pages>$end+1) echo '<span>...</span>';
+		if($total_pages>$end+1) echo '<li><span>'.$separator.'</span></li>';
 		do_contained_page_link_reports($process, $id, $reason, $i);
 	}
-	echo "</div>\n";
+	echo '</ul></nav></div></div>';
 }
 
 
 function do_contained_page_link_reports($process, $id, $reason, $i) {
-	echo '<a href="javascript:get_reporters(\''.$process.'\','.$id.',\''.$reason.'\','.$i.')" title="'._('ir a página')." $i".'">'.$i.'</a>';
+	echo '<li><a href="javascript:get_reporters(\''.$process.'\','.$id.',\''.$reason.'\','.$i.')" title="'._('ir a página')." $i".'">'.$i.'</a></li>';
 }
-
 
