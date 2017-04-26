@@ -10,9 +10,9 @@
 
 		{% if not globals.mobile %}
 			{% if self.thumb_url %}
-				<p class="news-content">{% exec text_to_summary self.content 600 %}</p>
+				<a href="{{ self.relative_permalink }}" class="content-link" title="más información"><p class="news-content">{% exec text_to_summary self.content 600 %}</p></a>
 			{% else %}
-				<p class="news-content">{% exec text_to_summary self.content 200 %}</p>
+				<a href="{{ self.relative_permalink }}" class="content-link" title="más información"><p class="news-content">{% exec text_to_summary self.content 200 %}</p></a>
 			{% endif %}
 		{% endif %}
 
