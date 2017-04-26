@@ -1214,9 +1214,8 @@ function show_answers(type, id) {
 
 function share_fb(e) {
 	var $e = $(e);
-
 	window.open(
-		'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent($e.parent().data('url')),
+		'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent($e.parent().parent().data('url')),
 		'facebook-share-dialog',
 		'width=626,height=436');
 	return false;
@@ -1225,7 +1224,7 @@ function share_fb(e) {
 function share_tw(e) {
 	var $e = $(e);
 	window.open(
-		'https://twitter.com/intent/tweet?url='+encodeURIComponent($e.parent().data('url'))+'&text='+encodeURIComponent($e.parent().data('title')),
+		'https://twitter.com/intent/tweet?url='+encodeURIComponent($e.parent().parent().data('url'))+'&text='+encodeURIComponent($e.parent().parent().data('title')),
 		'twitter-share-dialog',
 		'width=550,height=420');
 	return false;
