@@ -413,7 +413,7 @@ function do_commented () {
 }
 
 function do_conversation () {
-	global $db, $rows, $user, $offset, $page_size, $current_user;
+	global $db, $rows, $user, $offset, $page_size, $current_user, $globals;
 
 	$rows = -1; //$db->get_var("SELECT count(distinct(conversation_from)) FROM conversations WHERE conversation_user_to=$user->id and conversation_type='comment'");
 	$conversation = "SELECT distinct(conversation_from) FROM conversations WHERE conversation_user_to=$user->id and conversation_type='comment' ORDER BY conversation_time desc LIMIT $offset,$page_size";
@@ -424,9 +424,9 @@ function do_conversation () {
 	}
 	if ($last_read > 0) {
 		if($current_user->user_id == $user->id) {      // $current_user->user_login == $login_url
-			Comment::update_read_conversation($timestamp_read, $current_user->user_id);
+			Comment::update_read_conversation($last_read, $current_user->user_id);
 		} elseif ($current_user->user_level == 'admin' || $current_user->user_level == 'god') {
-			Comment::update_read_conversation($timestamp_read, $globals['admin_user_id']);
+			Comment::update_read_conversation($last_read, $globals['admin_user_id']);
 		}
 	}
 }
