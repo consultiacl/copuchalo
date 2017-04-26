@@ -283,7 +283,7 @@ if (!empty($new_comment_error)) {
 echo '<div>';
 echo '<div id="newswrap" class="col-sm-9">';
 echo '<div>';
-$link->print_summary();
+$link->print_summary('story');
 
 switch ($tab_option) {
 case 1:
