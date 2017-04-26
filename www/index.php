@@ -70,18 +70,20 @@ switch ($globals['meta']) {
 		break;
 	default:
 		$tab_option = 0; // All
-		Haanga::Load('site_search_box.html'); // Search box for search engines
 		$rows = Link::count('published');
 		$where = "sub_statuses.id = ". SitesMgr::my_id() ." AND status='published' ";
 }
 
 
-do_header($pagetitle, _('portada'), false, $tab_option);
+do_header($pagetitle, _('portada tema'), false, $tab_option);
 
+if ($tab_option == 0) {
+	Haanga::Load('site_search_box.html'); // Search box for search engines
+}
 
 echo '<div>';
 echo '<div id="newswrap" class="col-sm-9">';
-echo '<div>';
+echo '<div class="row">';
 
 do_banner_top_news();
 
@@ -139,8 +141,9 @@ if ($links) {
 	}
 }
 
+echo '</div>';
 do_pages($rows, $page_size);
-echo '</div></div>';
+echo '</div>';
 
 
 
@@ -168,10 +171,9 @@ do_vertical_tags('published');
 echo '</div>';
 /*** END SIDEBAR ***/
 
-echo '</div>';
+echo '</div></div>';
 
 
-do_footer_menu();
 do_footer();
 exit(0);
 

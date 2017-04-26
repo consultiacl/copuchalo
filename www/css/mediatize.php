@@ -9,15 +9,11 @@ Haanga::Load('css/colorbox.css');
 Haanga::Load('css/mediatize.css');
 
 /* Include handheld classes for mobile/tablets */
-
-if (! $globals['mobile']) { /* If not mobile, it's a @media rule */
+if ($globals['mobile']) {
+	Haanga::Load('css/mobile.css');
+} else {
 	echo "@media (max-width: 767px) {";
-}
-
-Haanga::Load('css/handheld.css');
-
-if (! $globals['mobile']) { /* Close @media bracket */
+	Haanga::Load('css/handheld.css');
 	echo "}";
 }
-
 

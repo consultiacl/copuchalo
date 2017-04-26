@@ -1,47 +1,38 @@
-{% if self.url %}
-	<a href="{{ self.url }}"><strong>#{{ self.order }}</strong></a>&nbsp;&nbsp;
-{% else %}
-	{% if self.link_permalink %}
-		<a href="javascript:void(0)" class="expand" onclick="return togglecomment(this)">[-]</a><a href="{{ self.link_permalink }}/c0{{ self.order }}#c-{{ self.order }}" rel="nofollow"><strong>#{{ self.order }}</strong></a>&nbsp;&nbsp;
-	{% else %}
-		<strong>#{{ self.order }}</strong>&nbsp;&nbsp;
-	{% endif %}
-{% endif %}
-
-{% if self.hide_comment %}
-	&#187;&nbsp;<a href="javascript:get_votes('get_comment.php','comment','cid-{{ self.prefix_id }}{{ self.id }}',0,{{ self.id }})" title="{% trans 'ver comentario' %}">{% trans 'ver comentario' %}</a>
-{% else %}
-
+<div class="comment-text">
 	{{ self.txt_content }}
 
 	{% if self.media_size > 0 %}
 		{% if self.type != 'admin' %}
-			&nbsp;<a class="fancybox" title="{% trans _('subida por') %} {{ self.username }} ({{ self.media_size }} bytes)" href="{{ self.media_url }}"><img src="{{ globals.base_static }}img/g.gif"
+			&nbsp;<a class="fancybox" title="{% trans _('subida por') %} {{ self.username }} ({{ self.media_size }} bytes)" href="{{ self.media_url }}"><img
 		{% else %}
-			&nbsp;<a class="fancybox" title="({{ self.media_size }} bytes)" href="{{ self.media_url }}"><img src="{{ globals.base_static }}img/g.gif"
-		{% endif %}																																				 ç
+			&nbsp;<a class="fancybox" title="({{ self.media_size }} bytes)" href="{{ self.media_url }}"><img
+		{% endif %}
+
 		{% if globals.cache_redirector %}
-			class="thumb ok lazy"
-			data-src="{{ self.media_thumb_dir }}/media_thumb-comment-{{ self.id }}.{{ self.media_extension }}?{{ self.media_date }}"
-			data-2x="s:thumb:thumb_2x"
+			class="thumb ok"
+			src="//{{ globals.server_name }}/{{ self.media_thumb_dir }}/media_thumb-comment-{{ self.id }}.{{ self.media_extension }}?{{ self.media_date }}"
 		{% else %}
 			class="thumb"
-			data-src="img/common/picture01.png" width="30" height="24"
+			src="img/common/picture01.png" width="30" height="24"
 		{% endif %}
 
 		alt="media" {# title="{% trans _('Mayúsculas+Clic para expandir todas') %}" #}/></a>
 	{% endif %}
 
 	{% if self.is_truncated %}
-		&nbsp;&nbsp;<a style="text-decoration:none" href="javascript:get_votes('get_comment.php','comment','cid-{{ self.prefix_id }}{{ self.id }}',0,{{ self.id }})" title="{% trans _('resto del comentario') %}">
-		<i class="fa fa-chevron-down"></i><i class="fa fa-chevron-down"></i><i class="fa fa-chevron-down"></i></a>
+	<div>
+		<a style="text-decoration:none;cursor:pointer" onclick="javascript:get_votes('get_comment_body.php','comment','cid-{{ self.prefix_id }}{{ self.id }}',0,{{ self.id }})" title="{% trans _('resto del comentario') %}">
+			<i class="fa fa-chevron-down"></i><i class="fa fa-chevron-down"></i><i class="fa fa-chevron-down"></i>
+		</a>
+	</div>
 	{% endif %}
 
 	{% if self.can_edit %}
-		&nbsp;&nbsp;
-		<div><span class="fa fa-pencil comment-pencil"></span>
-		<a class="edit-btn comment-btn" href="javascript:comment_edit({{ self.id }}, 'cid-{{ self.prefix_id }}{{ self.id }}')" title="{% trans _('editar comentario') %}">{% trans _('editar') %}</a></div>
+	<div class="btn-comment-edit">
+		<a class="edit-btn comment-btn" href="javascript:comment_edit({{ self.id }}, 'cid-{{ self.prefix_id }}{{ self.id }}')" title="{% trans _('editar comentario') %}">
+			<span class="fa fa-pencil"></span>&nbsp;{% trans _('editar') %}
+		</a>
+	</div>
 	{% endif %}
+</div>
 
-
-{% endif %}

@@ -10,7 +10,7 @@
 $globals['no_auth'] = true;
 
 // Use the alternate server for api, if it exists
-$globals['alternate_db_server'] = 'backend';
+//$globals['alternate_db_server'] = 'backend';
 
 include('../config.php');
 

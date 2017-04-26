@@ -34,7 +34,7 @@ do_header(_('nube de etiquetas') . ' | '._('mediatize'), 'cloudtags', false, fal
 
 echo '<div>';
 echo '<div id="newswrap" class="col-sm-9">';
-echo '<div>';
+echo '<div  class="row">';
 echo '<div class="topheading"><h2>+ '.$words_limit.'</h2></div>';
 
 echo '<div class="cloudtags" style="line-height: '.$line_height.'pt;">';
@@ -74,6 +74,5 @@ echo '</div>' . "\n";
 
 echo '</div>';
 
-do_footer_menu();
 do_footer();
 

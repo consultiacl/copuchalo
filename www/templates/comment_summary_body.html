@@ -1,0 +1,90 @@
+		<div class="comment-avatar-zone">
+			{% if ! self.hide_comment AND self.avatar AND self.type != 'admin' AND self.user_level != 'disabled' %}
+				<img src="{% exec get_avatar_url self.author, self.avatar, 25, 0 %}" class="suggestion u:{{ self.author }}" alt="{{ self.username }}" />
+			{% else %}
+				<img src="{% exec get_no_avatar_url 25 %}" alt="{{ self.username }}" class="suggestion u:{{ self.author }}" alt="{{ self.username }}" />
+			{% endif %}
+			<a href="javascript:void(0)" class="expand" onclick="return togglecomment(this)" title="plegar"><i class="fa fa-chevron-up"></i></a>
+		</div>
+
+		<div class="comment-content">
+			<div class="comment-header">
+				{% if self.url %}
+					<a href="{{ self.url }}"><strong>#{{ self.order }}</strong></a>&nbsp;&nbsp;
+				{% else %}
+					{% if self.link_permalink %}
+						<a href="{{ self.link_permalink }}/c0{{ self.order }}#c-{{ self.order }}" rel="nofollow"><strong>#{{ self.order }}</strong></a>
+					{% else %}
+						<strong>#{{ self.order }}</strong>
+					{% endif %}
+				{% endif %}
+				{% if self.type != 'admin' %}
+					<a class="username" href="{%exec get_user_uri self.username %}/commented" id="cauthor-{{ self.order }}">{{ self.username }}</a>
+				{% else %}
+					<strong>{% trans _('admin') %}</strong> 
+					({{ self.username }})
+				{% endif %}
+				<br />
+				<time datetime="{{ self.date_utc }}" class="tsrender showmytitle" title="{% trans _('creado') %}: {{ self.date_utc }} UTC"></time>
+				{% set modified = self.modified - self.date %}
+				{% if modified > 10 %}
+					<span data-ts="{{ self.modified_utc }}" class="showmytitle" title="{% trans _('editado') %}: {{ self.modified_utc }} UTC"><strong>&nbsp;*</strong></span>
+				{% endif %}
+			</div>
+
+			{% include 'comment_summary_text.html' %}
+			<div class="comment-meta {{ self.comment_meta_class }}">
+				<div class="comment-votes-info">
+
+				{% if self.type != 'admin' AND self.user_level != 'disabled' %}
+					{% if self.can_vote %}
+						{% if self.user_can_vote %}
+							<span id="vc-p-{{ self.id }}" class="vote fa fa-thumbs-o-up" onClick="mediatize_comment({{ current_user.user_id}},{{ self.id }},1)" title="{% trans _('me gusta') %}"></span>
+						{% else %}
+							{% if self.voted >  0 %}
+								<span id="vc-p-{{ self.id }}" class="vote fa fa-thumbs-up voted" title="{% trans _('me gusta') %}"></span>
+							{% else %}
+								<span class="vote fa fa-thumbs-up off" title="{% trans _('votos') %}">
+							{% endif %}
+						{% endif %}
+					{% else %}
+						{% if c_value !== false AND c_value > 0 %}
+							<span id="vc-p-{{ self.id }}" class="vote fa fa-thumbs-up voted" title="{% trans _('me gusta') %}"></span>
+						{% else %}
+							<span class="vote fa fa-thumbs-up off" title="{% trans _('votos') %}"></span>
+						{% endif %}
+					{% endif %}
+
+					{% if self.has_votes_info %}
+						<a class="fancybox"
+						   href="{{ globals.base_url_general }}backend/get_c_v.php?id={{ self.id }}"
+						   title="{% trans _('información de votos') %}">
+						<span id="vc-{{ self.id }}" class="votes-counter pointer">{{ self.votes }}</span>
+						</a>
+					{% else %}
+						<span id="vc-{{ self.id }}" class="votes-counter">{{ self.votes }}</span>
+					{% endif %}
+					&nbsp;&nbsp;
+					<span class="votes-info">k </span><span class="votes-info" id="vk-{{ self.id }}" title="{% trans _('karma') %}">{{ self.karma }}</span>
+				{% endif %}
+
+				<a href="{% exec self.get_relative_individual_permalink %}" title="permalink" class="fa fa-link comment-link-margin"></a>
+
+				{# {% if self.thread_level < 1 %} #}
+					{% if current_user.user_id > 0 %}
+						<span id="favc-{{ self.prefix_id }}{{ self.id }}" onclick="add_remove_fav('favc-{{ self.prefix_id }}{{ self.id }}', 'comment', {{ self.id }})" {% if self.favorite %} class="fa fa-star" {% else %} class="fa fa-star-o" {% endif %} ></span>
+					{% endif %}
+				{# {% endif %} #}
+
+				{% if self.can_reply %}
+					<span onclick="comment_reply({{self.id}}, '{{ self.prefix_id }}')" title="{% trans _('responder') %}" class="fa fa-reply"></span>
+				{% endif %}
+
+		 		{% if self.can_report AND self.type != 'admin' %}
+        				<span onclick="report({{self.id}},'comment')" title="{% trans _('reportar comentario') %}" class="fa fa-bullhorn"></span>
+				{% endif %}
+				</div>
+
+			</div>
+		</div>
+

@@ -15,7 +15,7 @@ echo '<div class="topfiller col-sm-12"></div>';
 
 echo '<div>';
 echo '<div id="newswrap" class="col-sm-9">';
-echo '<div>';
+echo '<div class="row">';
 echo '<div class="topheading th-no-margin"><h2>'._('Comentarios más valorados en 24 horas').'</h2></div>';
 
 $last_link = 0;
@@ -57,11 +57,10 @@ do_banner_right();
 do_best_stories();
 do_best_comments();
 do_vertical_tags('published');
-echo '</div>' . "\n";
+echo '</div>';
 /*** END SIDEBAR ***/
 
-echo '</div>';
+echo '</div></div>';
 
-do_footer_menu();
 do_footer();
 

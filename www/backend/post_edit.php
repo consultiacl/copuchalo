@@ -16,6 +16,9 @@ http_cache();
 
 header('Content-Type: application/json; charset=utf-8');
 
+if (empty($current_user->user_id)) {
+	error_post('ERROR: '._('Esta acción sólo es posible para usuarios registrados'));
+}
 
 $post = new Post;
 if (!empty($_REQUEST['user_id'])) {

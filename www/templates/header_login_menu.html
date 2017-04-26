@@ -1,0 +1,38 @@
+<a href="#" class="header-btn register-btn dropdown-toggle pointer" data-toggle="dropdown">entrar <span class="caret"></span></a>
+<ul id="login-dp" class="dropdown-menu loginmenu bullet pull-right">
+<li>    
+	<div class="row">
+		<div class="col-md-12">
+			<b>Entrar con</b>
+			<div class="social-buttons{% if globals.mobile %} mobile{% endif %}">
+				{% exec print_oauth_icons _REQUEST.return %}
+			</div>
+			<b>o bien</b>
+			<form class="form" method="post" action="/login" accept-charset="UTF-8" id="login-nav">
+				<div class="form-group">
+					<label class="sr-only" for="name">Usuario o dirección de correo</label>
+					<input type="text" class="form-control" id="name" name="username" placeholder="Usuario o correo" tabindex="1" required>
+				</div>
+				<div class="form-group">
+					<label class="sr-only" for="password">Contraseña</label>
+					<input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" tabindex="2" required>
+					<div class="help-block text-right"><a href="/login?op=recover">¿Olvidaste tu contraseña?</a></div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-block">Entrar</button>
+					<div class="checkbox text-left"><label for="remember"><input type="checkbox" name="persistent" id="remember" tabindex="3"> recuérdame</label></div>
+				</div>
+					<input type="hidden" name="processlogin" value="1" />
+					<input type="hidden" name="return" value="{% exec htmlspecialchars _REQUEST.return %}" />
+				</form>
+		</div>
+		<div class="bottom text-center">
+			¿Nuevo aquí? <a href="register"><b>¡Únete!</b></a>
+		</div>
+	</div>
+</li>
+</ul>
+{% if ! globals.mobile %}
+	<a href="/register" class="header-btn register-btn" href="{{ globals.base_url_general }}register" title="{% trans _('registro') %}">registro</a>
+{% endif %}
+

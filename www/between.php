@@ -54,7 +54,7 @@ do_header($title, '', false, false, '', false, false);
 echo '<div class="topfiller col-sm-12"></div>';
 echo '<div>';
 echo '<div id="newswrap" class="col-sm-9">';
-echo '<div>';
+echo '<div class="row">';
 echo '<div class="topheading"><h2>'.$title.'</h2></div>';
 
 $options = array('u1' => $u1, 'u2' => $u2, 'type' => $type, 'types' => array('posts', 'comments'));
@@ -148,10 +148,11 @@ if ($id1 > 0 && $id2 >0) {
 
 }
 
+echo '</div> ';  // row
 
 if ($rows) do_pages($rows, $page_size);
 
-echo '</div></div>'; // newswrap
+echo '</div>'; // newswrap
 
 /*** SIDEBAR ****/
 echo '<div id="sidebar" class="col-sm-3">';
@@ -170,9 +171,8 @@ if (! $short_content) {
 echo '</div>';
 /*** END SIDEBAR ***/
 
-echo '</div>';
+echo '</div>';  // externo
 
-do_footer_menu();
 do_footer();
 
 

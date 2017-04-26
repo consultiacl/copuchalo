@@ -39,7 +39,7 @@ do_header(_('nube de sitios web') . ' | ' . _('mediatize'), 'cloudsites', false,
 
 echo '<div>';
 echo '<div id="newswrap" class="col-sm-9">';
-echo '<div>';
+echo '<div class="row">';
 echo '<div class="topheading th-cloudsites"><h2>Los sitios más enlazados</h2></div>';
 
 echo '<div class="cloudsites" style="line-height: '.$line_height.'pt;">';
@@ -64,11 +64,10 @@ echo '</div></div></div>';
 echo '<div id="sidebar" class="col-sm-3">';
 do_banner_right();
 do_vertical_tags('published');
-echo '</div>' . "\n";
+echo '</div>';
 /*** END SIDEBAR ***/
 
-echo '</div>';
+echo '</div></div>';
 
-do_footer_menu();
 do_footer();
 

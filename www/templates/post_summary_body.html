@@ -1,0 +1,57 @@
+		<div class="post-avatar-zone">
+			{% if self.show_avatar %}
+				<a href="{{ self.username | useruri }}"><img class="suggestion u:{{ self.author}}" src="{% exec get_avatar_url self.author, self.avatar, 25, 0 %}" alt="{{ self.username }}"/></a>
+			{% endif %}
+		</div>
+
+		<div class="post-content">
+			<div class="post-header">
+				{% if !self.admin %}
+					<a class="username" href="{%exec post_get_base_url self.username %}">{{ self.username }}</a>
+				{% else %}
+					<strong>{% trans _('admin') %}</strong>
+					({{ self.username }})
+				{% endif %}
+				<br />
+				<time datetime="{{ self.date_utc }}" class="tsrender showmytitle" title="{% trans _('creado') %}: {{ self.date_utc }} UTC"></time>
+			</div>
+
+			{% include 'post_summary_text.html' %}
+
+			<div class="comment-meta {{ post_meta_class }}">
+				<div class="comment-votes-info">
+				{% if self.can_vote AND self.user_can_vote %}
+						<span id="vc-p-{{ self.id }}" class="vote fa fa-thumbs-o-up" onClick="mediatize_post({{ current_user.user_id}},{{ self.id }},1)" title="{% trans _('me gusta') %}"></span>
+				{% else %}
+					{% if self.voted > 0 %}
+						<span id="vc-p-{{ self.id }}" class="vote fa fa-thumbs-up voted" title="{% trans _('me gusta') %}"></span>
+					{% else %}
+						<span class="vote fa fa-thumbs-up off" title="{% trans _('votos') %}"></span>
+					{% endif %}
+				{% endif %}
+
+				{% if self.show_votes %}
+					<a class="fancybox"
+					   href="{{ globals.base_url }}backend/get_p_v.php?id={{ self.id }}"
+					   title="{% trans _('información de votos') %}">
+					<span id="vc-{{ self.id }}" class="votes-counter pointer">{{ self.votes }}</span>
+					</a>
+				{% else %}
+					<span id="vc-{{ self.id }}" class="votes-counter">{{ self.votes }}</span>
+				{% endif %}
+				&nbsp;&nbsp;
+				<span class="votes-info">k </span><span class="votes-info" id="vk-{{ self.id }}" title="{% trans _('karma') %}">{{ self.karma }}</span>
+
+				<a href="{% exec post_get_base_url self.id %}" title="permalink" class="fa fa-link comment-link-margin"></a>
+
+				{% if current_user.user_id > 0 %}
+					<span id="favp-{{ self.prefix_id }}{{ self.id }}" onclick="add_remove_fav('favp-{{ self.prefix_id }}{{ self.id }}', 'post', {{ self.id }})" {% if self.favorite %} class="fa fa-star" {% else %} class="fa fa-star-o" {% endif %} ></span>
+					<span onclick="post_reply({{self.id}},'{{ self.username}}')" title="{% trans _('responder') %}" class="fa fa-reply"></span>
+					{% if self.can_report AND ! self.post_is_admin %}
+						<span onclick="report({{self.id}},'post')" title="{% trans _('reportar postit') %}" class="fa fa-bullhorn"></span>
+					{% endif %}
+				{% endif %}
+				</div>
+			</div>
+		</div>
+

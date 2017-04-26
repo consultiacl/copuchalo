@@ -1,0 +1,17 @@
+<div class="commentform">
+	<form action="" method="post" enctype="multipart/form-data" class="comment">
+		<input type="hidden" name="process" value="newcomment" />
+		<input type="hidden" name="randkey" value="{{ comment.randkey }}" />
+
+		<fieldset>
+			<legend>{% trans _('envía un comentario') %}</legend>
+
+			{% include 'comment_edit.html' %}
+
+			<div class="note" style="margin-top:10px">
+				{% trans _('comentarios xenófobos, racistas o difamatorios causarán la anulación de la cuenta') %}
+			</div>
+		</fieldset>
+	</form>
+</div>
+

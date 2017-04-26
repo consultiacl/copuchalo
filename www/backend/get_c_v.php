@@ -34,8 +34,14 @@ $votes_offset=($votes_page-1)*$votes_page_size;
 
 $comment = $db->get_row("select user_login as login, comment_votes, comment_karma, comment_user_id as author  from users, comments where comment_id = $id and user_id = comment_user_id");
 
-echo '<div style="width:550px;padding: 5px 5px;text-align:left">';
-echo '<div style="padding-top: 20px;min-width:350px">';
+if( $globals['mobile'] ) {
+	echo '<div style="width:330px;padding: 5px 5px;text-align:left">';
+	echo '<div style="padding-top: 20px;min-width:150px">';
+} else {
+	echo '<div style="width:550px;padding: 5px 5px;text-align:left">';
+	echo '<div style="padding-top: 20px;min-width:350px">';
+}
+
 $votes = $db->get_results("SELECT vote_user_id, vote_value, user_avatar, user_login, date_format(vote_date,'%d/%m-%T') as date, UNIX_TIMESTAMP(vote_date) as ts,inet_ntoa(vote_ip_int) as ip FROM votes, users WHERE vote_type='comments' and vote_link_id=$id AND vote_user_id > 0 AND user_id = vote_user_id ORDER BY vote_date DESC LIMIT $votes_offset,$votes_page_size");
 if ($votes) {
 	echo '<div class="voters-list">';

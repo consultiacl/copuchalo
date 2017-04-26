@@ -41,6 +41,7 @@ $routes = array(
 	'sitemap'	=> 'sitemap.php',
 	'trends'	=> 'trends.php',
 	'faq-es'	=> 'faq-es.php',
+	'publicidad'	=> 'publicidad.php',
 	'opensearch'	=> 'opensearch_plugin.php',
 	'backend'	=> 'backend/dispatcher.php',
 	'postits'	=> 'sneakme/dispatcher.php',
@@ -52,7 +53,7 @@ $script = $routes[$path[0]];
 syslog(LOG_INFO, "path_info: ".$_SERVER['PATH_INFO']." ||| path: ".print_r($path,true));
 
 if (!empty($script) && file_exists($script)) {
-	//syslog(LOG_INFO, "Include $script");
+	syslog(LOG_INFO, "Include $script");
 	$globals['script'] = $script;
 	if ((include './'.$script) === FALSE) {
 		include_once 'config.php';
@@ -61,7 +62,7 @@ if (!empty($script) && file_exists($script)) {
 } else {
 	// Try to reconstruct images from cache if were erased
 	include_once 'config.php';
-	//syslog(LOG_INFO, "Reconstruct: ".$_SERVER['PATH_INFO']);
+	syslog(LOG_INFO, "Reconstruct: ".$_SERVER['PATH_INFO']);
 	reconstruct_cache_images($_SERVER['PATH_INFO']);
 	// else, error
 	do_error("not found", 404, true);

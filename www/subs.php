@@ -43,7 +43,7 @@ echo '</div>';
 
 echo '<div>';
 echo '<div id="newswrap" class="col-sm-9">';
-echo '<div>';
+echo '<div class="row">';
 
 switch ($option) {
 	case 0:
@@ -97,13 +97,13 @@ foreach ($all_subs as $s) {
 
 Haanga::Load($template, compact('title', 'subs', 'chars', 'char_selected'));
 
-echo '</div></div>';
+echo '</div>';
 
 if ($all) {
 	do_pages($rows, $page_size, true);
 }
 
-echo '</div>';
+echo '</div></div>';
 
 do_footer();
 

@@ -48,6 +48,5 @@ Haanga::Load('trends.html', compact('options'));
 
 echo '</div>';
 
-do_footer_menu();
 do_footer();
 

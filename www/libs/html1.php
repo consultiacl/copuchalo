@@ -24,11 +24,11 @@ if (PHP_SAPI != 'cli' && !empty($globals['force_ssl']) && ! $globals['https'] &&
 $globals['extra_js'] = Array();
 $globals['extra_css'] = Array();
 
-if (! $globals['bot'] && ($globals['allow_partial'] || preg_match('/meneame/i', $_SERVER['HTTP_USER_AGENT']))) {
+if (! $globals['bot'] && ($globals['allow_partial'] || preg_match('/mediatize/i', $_SERVER['HTTP_USER_AGENT']))) {
 	if (! $globals['mobile']) $globals['ads'] = false;
 	if (isset($_REQUEST['partial'])) {
 		$globals['partial'] = true;
-		$_SERVER['QUERY_STRING'] =preg_replace('/partial&|\?partial$|&partial/', '', $_SERVER['QUERY_STRING']);
+		$_SERVER['QUERY_STRING'] = preg_replace('/partial&|\?partial$|&partial/', '', $_SERVER['QUERY_STRING']);
 	} else {
 		$globals['partial'] = false;
 	}
@@ -41,7 +41,7 @@ class MenuOption{
 		$this->text = $text;
 		$this->url = $url;
 		$this->title = $title;
-		if ($active && $active == $this->text) {
+		if ($active && ($active == $this->text || ($text == 'portada tema' && $active == 'story'))) {
 			$this->selected = true;
 		} else {
 			$this->selected = false;
@@ -97,10 +97,6 @@ function do_header($title, $id='home', $options = false, $tab_options = false, $
 		$this_site->logo_url = Upload::get_cache_relative_dir($this_site->id).'/media_thumb-sub_logo-'.$this_site->id.'.'.$this_site->media_extension.'?'.$this_site->media_date;
 	}
 
-	if ($this_site->nsfw) {
-		$globals['ads'] = false;
-	}
-
 	if (!empty($this_site_properties['post_html'])) {
 		$globals['post_html'] = $this_site_properties['post_html'];
 	}
@@ -109,14 +105,15 @@ function do_header($title, $id='home', $options = false, $tab_options = false, $
 		$menu_options = $options;
 	} else {
 		$menu_options = array();
-		if ($this_site->enabled && empty($this_site_properties['new_disabled'])) {
-			if( $globals['mobile'] ) $menu_options[] = new MenuOption(_('enviar historia'), $globals['base_url'].'submit', $id, _('enviar nueva historia'));
-		}
-		$menu_options[] = new MenuOption(_('portada'), $globals['base_url'], $id, _('página principal'));
+		//if ($this_site->enabled && empty($this_site_properties['new_disabled'])) {
+		//	if( $globals['mobile'] ) $menu_options[] = new MenuOption(_('enviar historia'), $globals['base_url'].'submit', $id, _('enviar nueva historia'));
+		//}
+		$menu_options[] = new MenuOption(_('portada tema'), $globals['base_url'], $id, _('página principal'));
 		$menu_options[] = new MenuOption(_('nuevas'), $globals['base_url'].'queue', $id, _('votar noticias pendientes'));
 		$menu_options[] = new MenuOption(_('temas'), $globals['base_url'].'temas', $id, _('temas variados'));
 		$menu_options[] = new MenuOption(_('populares'), $globals['base_url'].'popular', $id, _('historias más votadas'));
 		$menu_options[] = new MenuOption(_('más visitadas'), $globals['base_url'].'top_visited', $id, _('historias más visitadas/leídas'));
+		$menu_options[] = new MenuOption(_('más comentadas'), $globals['base_url'].'top_commented', $id, _('historias más comentadas'));
 		$menu_options[] = new MenuOption(_('destacadas'), $globals['base_url'].'top_active', $id, _('historias más activas'));
 	}
 
@@ -149,10 +146,6 @@ function do_js_from_array($array) {
 
 function do_footer($credits = true) {
 	return Haanga::Load('footer.html');
-}
-
-function do_footer_menu() {
-	//return Haanga::Load('footer_menu.html');
 }
 
 function do_rss_box($search_rss = 'rss') {
@@ -280,8 +273,8 @@ function do_pages($total, $page_size=25, $margin = true) {
 
 	if (! $globals['mobile']) {
 		$index_limit = 5;
-		$go_prev = _('anterior');
-		$go_next = _('siguiente');
+		$go_prev = _(' anterior');
+		$go_next = _('siguiente ');
 	} else {
 		$index_limit = 1;
 		$go_prev = '';
@@ -301,59 +294,54 @@ function do_pages($total, $page_size=25, $margin = true) {
 	$start=max($current-intval($index_limit/2), 1);
 	$end=$start+$index_limit-1;
 
-	if ($margin) {
-		echo '<div class="pages margin"><div><div>';
-	} else {
-		echo '<div class="pages"><div><div>';
-	}
+	echo '<div class="row"><div class="pages"><nav aria-label="pager"><ul class="pagination">';
 
-	if($current==1) {
-		echo '<span class="nextprev">&#171; '.$go_prev. '</span>';
+	if($current == 1) {
+		echo '<li class="disabled"><span aria-hidden="true">&laquo;</span></li>';
 	} else {
 		$i = $current-1;
-		if ($i > 10) $nofollow = ' rel="nofollow"'; else $nofollow = '';
-		echo '<a href="?page='.$i.$query.'"'.$nofollow.' rel="prev">&#171; '.$go_prev.'</a>';
+		$nofollow = ($i > 10) ? ' rel="nofollow"' : '';
+		echo '<li><a href="?page='.$i.$query.'"'.$nofollow.' title="anterior">&#171;'.$go_prev.'</a></li>';
 	}
 
 	if ($total_pages > 0) {
 
 		if($start>1) {
 			$i = 1;
-			echo '<a href="?page='.$i.$query.'" title="'._('ir a página')." $i".'">'.$i.'</a>';
-			echo "<span>$separator</span>";
+			echo '<li><a href="?page='.$i.$query.'" title="'._('ir a página')." $i".'">'.$i.'</a></li>';
+			echo "<li><span class='separator'>$separator</span></li>";
 		}
 
 		for ($i=$start;$i<=$end && $i<= $total_pages;$i++) {
 			if($i==$current) {
-				echo '<span class="current">'.$i.'</span>';
+				echo '<li class="active"><span>'.$i.'</span></li>';
 			} else {
 				if ($i > 10) $nofollow = ' rel="nofollow"'; else $nofollow = '';
-				echo '<a href="?page='.$i.$query.'" title="'._('ir a página')." $i".'"'.$nofollow.'>'.$i.'</a>';
+				echo '<li><a href="?page='.$i.$query.'" title="'._('ir a página')." $i".'"'.$nofollow.'>'.$i.'</a></li>';
 			}
 		}
 
 		if($total_pages>$end) {
 			$i = $total_pages;
-			echo "<span>$separator</span>";
-			if ($i > 10) $nofollow = ' rel="nofollow"'; else $nofollow = '';
-			echo '<a href="?page='.$i.$query.'" title="'._('ir a página')." $i".'"'.$nofollow.'>'.$i.'</a>';
+			echo "<li><span class='separator'>$separator</span></li>";
+			$nofollow = ($i > 10) ? ' rel="nofollow"' : '';
+			echo '<li><a href="?page='.$i.$query.'" title="'._('ir a página')." $i".'"'.$nofollow.'>'.$i.'</a></li>';
 		}
 	} else {
 		if($current>2) {
-			echo '<a href="?page=1'.$query.'" title="'._('ir a página')." 1".'">1</a>';
-			echo "<span>$separator</span>";
+			echo '<li><a href="?page=1'.$query.'" title="'._('ir a página')." 1".'">1</a></li>';
+			echo "<li><span class='separator'>$separator</span></li>";
 		}
-		echo '<span class="current">'.$current.'</span>';
+		echo '<li class="active"><span>'.$current.'</span></li>';
 	}
 
 	if($total < 0 || $current<$total_pages) {
 		$i = $current+1;
-		if ($i > 10) $nofollow = ' rel="nofollow"'; else $nofollow = '';
-		echo '<a href="?page='.$i.$query.'"'.$nofollow.' rel="next">'.$go_next.' &#187;</a>';
+		echo '<li><a href="?page='.$i.$query.'"'.$nofollow.' title="siguiente">'.$go_next.'&#187;</a></li>';
 	} else {
-		echo '<span class="nextprev">&#187; '.$go_next. '</span>';
+		echo '<li class="disabled"><span aria-hidden="true">&raquo;</span></li>';
 	}
-	echo '</div></div></div>';
+	echo '</ul></nav></div></div>';
 
 }
 
@@ -365,30 +353,25 @@ function print_subs_form($selected = false) {
 		return $s->id;
 	}
 
+	$subs = SitesMgr::get_sub_subs(1);
+	$ids = array_map('id', $subs);
 
-	if (! empty($globals['submnm'])) {
-		$subs = false;
-	} else {
-		$subs = SitesMgr::get_sub_subs();
-		$ids = array_map('id', $subs);
-
-		// A link in a sub is edited from another sub, or from the main site
-		// Add its selected sub.
-		if ($selected != false && ! in_array($selected, $ids) && SitesMgr::can_send($selected)) {
-			$e = SitesMgr::get_info($selected);
-			if ($e) {
-				array_unshift($subs, $e); // Add to the form
-				array_unshift($ids, $selected); // Avoid to show it again if subscribed to
-			}
+	// A link in a sub is edited from another sub, or from the main site
+	// Add its selected sub.
+	if ($selected != false && ! in_array($selected, $ids) && SitesMgr::can_send($selected)) {
+		$e = SitesMgr::get_info($selected);
+		if ($e) {
+			array_unshift($subs, $e); // Add to the form
+			array_unshift($ids, $selected); // Avoid to show it again if subscribed to
 		}
+	}
 
-		$extras = SitesMgr::get_subscriptions($current_user->user_id);
-		// Don't repeat the same subs
-		$subscriptions = array();
-		foreach ($extras as $s) {
-			if (! in_array($s->id, $ids)  && SitesMgr::can_send($s->id)) {
-				$subscriptions[] = $s;
-			}
+	$extras = SitesMgr::get_subscriptions($current_user->user_id);
+	// Don't repeat the same subs
+	$subscriptions = array();
+	foreach ($extras as $s) {
+		if (! in_array($s->id, $ids)  && SitesMgr::can_send($s->id)) {
+			$subscriptions[] = $s;
 		}
 	}
 
@@ -438,8 +421,6 @@ function do_vertical_tags($what=false) {
 			}
 		}
 
-
-
 		$coef = ($max_pts - $min_pts)/($max-1);
 		arsort($words);
 		$words = array_slice($words, 0, 20);
@@ -448,13 +429,13 @@ function do_vertical_tags($what=false) {
 		foreach ($words as $word => $count) {
 			$size = round($min_pts + ($count-1)*$coef, 1);
 			$op = round(0.4 + 0.6*$count/$max, 2);
-			$content .= '<a style="font-size: '.$size.'pt;opacity:'.$op.'" href="';
+			$content .= '<li><a style="font-size: '.$size.'pt;opacity:'.$op.'" href="';
 			if ($globals['base_search_url']) {
 				$content .= $globals['base_url'].$globals['base_search_url'].'tag:';
 			} else {
 				$content .= $globals['base_url'].'search?p=tags&amp;q=';
 			}
-			$content .= $word.'">'.$word.'</a>  ';
+			$content .= urlencode($word).'">'.$word.'</a></li>';
 		}
 		if ($max > 2) {
 			$vars = compact('content', 'title', 'url');
@@ -529,7 +510,7 @@ function do_best_comments() {
 	// The order is not exactly the comment_karma
 	// but a time-decreasing function applied to the number of votes
 	$res = $db->get_results("select comment_id, comment_order, user_id, user_login, user_avatar, link_id, link_uri, link_title, link_comments, comment_karma*(1-($now-unix_timestamp(comment_date))*0.7/43000) as value, link_negatives/link_votes as rel from comments, links, users, sub_statuses where id = ".SitesMgr::my_id()." AND status in ('published', 'queued') AND link_id = link AND date > '$link_min_date' and comment_date > '$min_date' and LENGTH(comment_content) > 32 and link_negatives/link_votes < 0.5  and comment_karma > 50 and comment_link_id = link and comment_user_id = user_id and user_level != 'disabled' order by value desc limit 10");
-	if ($res && count($res) > 4) {
+	if ($res && count($res) > 1) {
 		$objects = array();
 		$title = _('mejores comentarios');
 		$url = $globals['base_url'].'top_comments';
@@ -899,6 +880,29 @@ function do_subheader($content, $selected = false) {
 		echo '<h1>'.$content.'</h1>';
 	}
 	echo '</ul></div>'."\n";
+}
+
+function get_sub_logo($id) {
+
+	global $globals;
+
+	$site = SitesMgr::get_info($id);
+
+	// Check if the sub has a logo and calculate the width
+	if ($site->media_id > 0 && $site->media_dim1 > 0 && $site->media_dim2 > 0) {
+		$r = $site->media_dim1/$site->media_dim2;
+		if ( $globals['mobile']) {
+			$site->logo_height = $globals['media_sublogo_height_mobile'];
+		} else {
+			$site->logo_height = $globals['media_sublogo_height'];
+		}
+		$site->logo_width = round($r * $site->logo_height);
+		$site->logo_url   = Upload::get_cache_relative_dir($id).'/media_thumb-sub_logo-'.$id.'.'.$site->media_extension.'?'.$site->media_date;
+	} else {
+		$site->logo_url = '';
+	}
+
+	return $site;
 }
 
 function print_follow_sub($id) {

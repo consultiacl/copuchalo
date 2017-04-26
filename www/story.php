@@ -356,7 +356,7 @@ case 2:
 
 case 3:
 	// Show voters
-	echo '<div class="voters" id="voters">';
+	echo '<div id="voters" class="col-sm-12">';
 
 	echo '<div id="voters-container">';
 	if ($globals['link']->sent_date < $globals['now'] - 60*86400) { // older than 60 days
@@ -388,7 +388,7 @@ case 4:
 	$globals['extra_js'][] = 'jquery.flot.min.js';
 	$globals['extra_js'][] = 'jquery.flot.time.min.js';
 
-	$logs = $db->get_results("select logs.*, UNIX_TIMESTAMP(logs.log_date) as ts, user_id, user_login, user_level, user_avatar from logs, users where log_type in ('link_new', 'link_publish', 'link_discard', 'link_edit', 'link_geo_edit', 'link_depublished') and log_ref_id=$link->id and user_id= log_user_id order by log_date desc");
+	$logs = $db->get_results("select logs.*, UNIX_TIMESTAMP(logs.log_date) as ts, logs.log_date as ts_utc, user_id, user_login, user_level, user_avatar from logs, users where log_type in ('link_new', 'link_publish', 'link_discard', 'link_edit', 'link_geo_edit', 'link_depublished') and log_ref_id=$link->id and user_id= log_user_id order by log_date desc");
 
 	foreach ($logs as $log) {
 		$log->annotation = Log::has_annotation($log->log_id);
@@ -447,6 +447,9 @@ case 10:
 	echo '<div class="comments">';
 	if($link->comments > 0) echo '<div class="comments-page-header">comentarios ('.$link->comments.')</div>';
 
+	// New comment form at the beginning
+	Comment::print_form($link);
+
 	include_once(mnminclude.'commenttree.php');
 	$tree = new CommentTree();
 
@@ -499,7 +502,6 @@ case 10:
 	}
 
 	do_comment_pages($link->comments, $current_page, false);
-	Comment::print_form($link);
 
 	echo '</div>';
 	break;

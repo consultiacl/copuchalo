@@ -687,10 +687,12 @@ function put_emojis_callback($matches) {
 	if (substr($matches[1], 0, 2) == '0x') {
 		// Twemoji
 		$image = substr($matches[1], 2).'.png';
-		return '<img data-src="'.$globals['base_static'].'img/twemojis/36/'.$image.'" alt="{'.$matches[1].'}" title="{'.$matches[1].'}" width="18" height="18" src="'.$globals['base_static'].'img/g.gif" class="emoji lazy" />';
+		/*return '<img data-src="'.$globals['base_static'].'img/twemojis/36/'.$image.'" alt="{'.$matches[1].'}" title="{'.$matches[1].'}" width="18" height="18" src="'.$globals['base_static'].'img/g.gif" class="emoji lazy" />';*/
+		return '<img src="'.$globals['base_static'].'img/twemojis/36/'.$image.'" alt="{'.$matches[1].'}" title="{'.$matches[1].'}" width="18" height="18" class="emoji" />';
 
 	} elseif (isset($translations[$matches[1]])) {
-		return '<img data-src="'.$globals['base_static'].'img/menemojis/36/'.$translations[$matches[1]].' src="'.$globals['base_static'].'img/g.gif" class="emoji lazy" />';
+		/*return '<img data-src="'.$globals['base_static'].'img/menemojis/36/'.$translations[$matches[1]].' src="'.$globals['base_static'].'img/g.gif" class="emoji lazy" />';*/
+		return '<img src="'.$globals['base_static'].'img/menemojis/36/'.$translations[$matches[1]].' class="emoji" />';
 	} else {
 		return $matches[0];
 	}
@@ -1368,12 +1370,9 @@ function redirect($url, $code = 301) {
 	global $globals;
 
 	if ($globals['partial']) {
-		if (preg_match('/\?/', $url)) {
-			$url .= '&partial';
-		} else {
-			$url .= '?partial';
-		}
+		$url .= ((strpos($url, '?') === false) ? '?' : '&').'partial';
 	}
+
 	header("HTTP/1.1 $code Moved");
 	header('Location: ' . $url);
 	header("Content-Length: 0");

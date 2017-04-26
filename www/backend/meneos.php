@@ -55,10 +55,10 @@ if ($negatives) {
 }
 echo '</div>';
 
-if ($no_show_voters) {
+/*if ($no_show_voters) {
 	// don't show voters if the user votes the link
 	echo '<br /><br />&#187;&nbsp;' . '<a href="javascript:get_votes(\'meneos.php\',\'voters\',\'voters-container\',1,'.$globals['link_id'].')" title="'._('quiénes han votado').'">'._('ver quiénes han votado').'</a>';
-} else {
+} else {*/
 	$votes = $db->get_results("SELECT vote_user_id, vote_value, user_avatar, user_login, UNIX_TIMESTAMP(vote_date) as ts,inet_ntoa(vote_ip_int) as ip FROM votes, users WHERE vote_type='links' and vote_link_id=".$globals['link_id']." AND vote_user_id > 0 AND user_id = vote_user_id ORDER BY vote_date DESC LIMIT $votes_offset,$votes_page_size");
 	if (!$votes) die;
 	echo '<div class="voters-list">';
@@ -87,5 +87,5 @@ if ($no_show_voters) {
 	}
 	echo "</div>\n";
 	do_contained_pages($globals['link_id'], $votes_users, $votes_page, $votes_page_size, 'meneos.php', 'voters', 'voters-container');
-}
+/*}*/
 

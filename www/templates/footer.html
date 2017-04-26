@@ -1,10 +1,11 @@
-</div> {# container #}
-</div> {# wrap #}
+</div> <!-- container -->
+</div> <!-- wrap -->
 
 {% include 'footer_menu.html' %}
 
 <div id="footthingy">
-	<div class="copuchin"><img src="{{ globals.base_static }}img/mdtz/logo-white.svg" alt="mediatize" height="50" width="50"></div>
+    <div class="container-foot">
+	<div class="logo-foot"><img src="{{ globals.base_static }}img/mdtz/logo-white.svg" alt="mediatize" height="50" width="50"></div>
 	<div class="col">
 		<div class="row-title">mediatize</div>
 		<div class="row-foot">
@@ -20,9 +21,14 @@
 		{% endif %}
 		</div>
 	</div>
+    </div>
 </div> {# #footthingy #}
 
 </div> {# #variable #}
+
+{% if globals.mobile %}
+</div> {# #main-wrapper #}
+{% endif %}
 
 
 

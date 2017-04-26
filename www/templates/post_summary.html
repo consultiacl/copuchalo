@@ -1,50 +1,10 @@
 <div id="pcontainer-{{ self.prefix_id }}{{ self.id }}" class="{{ classes }}">
-	<div class="{{ post_class }}" id="pid-{{ self.prefix_id }}{{ self.id }}">
-	{% if self.is_disabled %}
-		&#187;&nbsp;<a href="javascript:get_votes('get_post.php','post','pid-{{ self.prefix_id }}{{ self.id }}',0,{{ self.id }})" title="{% trans _('ver texto') %}">{% trans _('ver texto') %}</a>
-	{% else %}
-		{% include 'post_summary_text.html' %}
-	{% endif %}
-
-
-	</div>
-	<div class="{{ post_meta_class }}">
-		<div class="comment-votes-info">
-		{% if self.can_vote %}
-			{% if self.user_can_vote %}
-				<span id="vc-p-{{ self.id }}" class="vote fa fa-thumbs-o-up" onClick="mediatize_post({{ current_user.user_id}},{{ self.id }},1)" title="{% trans _('informativo, opinión razonada...') %}"></span>
-				{% include 'post_summary_votes.html' %}
-			{% else %}
-				{% if self.voted > 0 %}
-					<span id="vc-p-{{ self.id }}" class="vote fa fa-thumbs-up voted" title="{% trans _('votado positivo') %}"></span>
-				{% endif %}
-				{% include 'post_summary_votes.html' %}
-			{% endif %}
-			{% else %}
-				{% include 'post_summary_votes.html' %}
+	<div class="postit comment-body {{ post_class }}" id="pid-{{ self.prefix_id }}{{ self.id }}">
+		{% if self.is_disabled %}
+			&#187;&nbsp;<a class="pointer" onclick="show_post({{ self.id }}, 'pid-{{ self.prefix_id }}{{ self.id }}');" title="{% trans _('ver postit') %}">{% trans _('ver postit') %}</a>
+		{% else %}
+			{% include 'post_summary_body.html' %}
 		{% endif %}
-
-		<a href="{% exec post_get_base_url self.id %}" title="permalink" class="fa fa-link comment-link-margin"></a>
-
-
-		{% if current_user.user_id > 0 %}
-			<span id="favp-{{ self.prefix_id }}{{ self.id }}" onclick="add_remove_fav('favp-{{ self.prefix_id }}{{ self.id }}', 'post', {{ self.id }})" {% if self.favorite %} class="fa fa-star" {% else %} class="fa fa-star-o" {% endif %} ></span>
-			<span onclick="post_reply({{self.id}},'{{ self.username}}')" title="{% trans _('responder') %}" class="fa fa-reply"></span>
-			{% if self.can_report AND ! self.post_is_admin %}
-				<span onclick="report({{self.id}},'post')" title="{% trans _('reportar postit') %}" class="fa fa-bullhorn"></span>
-			{% endif %}
-		{% endif %}
-	</div>
-
-		<div class="comment-info">
-			<span datetime="{{ self.date_utc }}" class="tsrender showmytitle" title="{% trans _('enviado') %}: {{ self.date_utc }} UTC"></span>
-			{% if !self.admin %}
-			<a class="username" href="{%exec post_get_base_url self.username %}">{{ self.username }}</a>
-			{% else %}
-			<strong>{% trans _('admin') %}</strong>
-			({{ self.username }})
-			{% endif %}
-		</div>
 	</div>
 </div>
 

@@ -1,0 +1,14 @@
+<div id="searchbox" class="searchbox-header">
+	<form class="searchform-header" action="{{ globals.base_url }}search" method="get" name="top_search">
+		{% if globals.search_options %}
+			{% for name, value in globals.search_options %}
+				<input type="hidden" name="{{name}}" value="{{value}}"/>
+			{% endfor %}
+		{% endif %}
+		<div style="position: relative">
+			<i id="search-icon-header" class="fa fa-search" onclick="$(this).closest('form').submit();"></i>
+			<input class="input-searchbox-header" name="q" type="text" placeholder="Buscar..." {% if globals.q %}value="{{globals.q|escape}}"{% endif %}/>
+		</div>
+	</form>
+</div>
+

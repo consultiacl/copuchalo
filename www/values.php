@@ -75,8 +75,6 @@ echo				_("Karma instantáneo ganado por un usuario en el momento que se publica
 				<br/>
 				'._("Karma instantáneo perdido por un usuario en el momento que se de-publica uno de sus envíos") . ': ' . $globals['instant_karma_per_depublished'] . '<br/>
 				<br/>
-				'._("Karma instantaneo perdido por un usuario en el momento que se descarta uno de sus envíos") . ': ' . $globals['instant_karma_per_discard'] . '<br/>
-				<br/>
 				'._("Karma que se añade al cálculo diario de karma por cada envío publicado") . ': ' . $globals['karma_points_per_published'] . ' (' . _("hasta un máximo de") . ' ' . $globals['karma_points_per_published_max'] . ')<br/>
 		</fieldset>';
 
@@ -252,6 +250,5 @@ $users['total']    = $users['enabled'] + $users['disabled'] + $users['admin'];
 
 echo '</div>';
 
-do_footer_menu();
 do_footer();
 

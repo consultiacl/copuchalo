@@ -29,8 +29,8 @@ margin: 0 4px 0 0;
 
 .sneaker-legend {
 	color: #555555;
-	background: #e6f0ff;
-	border: solid #a7cbff 1px;
+	background-color: #ebeef5;
+	border: 1px solid #d8deec;
 }
 
 .sneaker-item {

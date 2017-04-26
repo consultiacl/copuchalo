@@ -22,7 +22,8 @@ En conformidad con las leyes de Chile sobre servicios de la sociedad de la infor
 <p id="contact">
 <strong>Correo electrónico:</strong><br />
 Administración, bugs, etc: admin[arroba]mediatize.info<br />
-Aviso de abusos: abuse[arroba]mediatize.info<br /><br />
+Aviso de abusos: abuse[arroba]mediatize.info<br />
+Publicidad: publicidad[arroba]mediatize.info<br /><br />
 </p>
 
 <h2>Privacidad</h2>
@@ -118,5 +119,5 @@ El <strong>incumplimiento de las condiciones de uso</strong> podría significar 
 
 <?php
 
-	do_footer_menu();
-	do_footer();
+do_footer();
+

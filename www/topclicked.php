@@ -66,7 +66,7 @@ $globals['tag_status'] = 'published';
 
 echo '<div>';
 echo '<div id="newswrap" class="col-sm-9">';
-echo '<div>';
+echo '<div class="row">';
 
 if ($links) {
 	$counter = 0;
@@ -89,11 +89,10 @@ do_best_stories();
 do_last_subs('published', 5, 'link_votes');
 do_best_comments();
 do_vertical_tags('published');
-echo '</div>' . "\n";
+echo '</div>';
 /*** END SIDEBAR ***/
 
-echo '</div>'."\n";
+echo '</div></div>';
 
-do_footer_menu();
 do_footer();
 

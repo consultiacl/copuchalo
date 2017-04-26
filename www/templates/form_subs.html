@@ -2,10 +2,27 @@
 	<br/><fieldset style="clear: both;">
 		<legend>{% trans _('selecciona el tema más apropiado') %}</legend>
 		{% for sub in subs %}
-			<input name="sub_id" type="radio"{% if selected == sub.id %} checked="true"{%endif%} value="{{ sub.id}}" />
+			<input name="sub_id" type="radio"{% if selected == sub.id %} checked="true"{%endif%} value="{{ sub.id }}" />
 			<label for "sub">{{ sub.name }}</label>&nbsp;<span class="note">({{ sub.name_long }})</span><br/>
 		{% endfor %}
 
+		{# sub search #}
+		<input name="sub_id" type="radio" id="radio-search" value="{{ sub.id }}">
+		<label for="sub">{% trans _("buscar") %}:</label>
+		<select name="t" id="t" class="ac-tema">{{ sub.name }}</select>
+{#
+		<img id="s_image" alt="tema"
+			{% if _REQUEST.u %}
+				src="{{ globals.base_url }}backend/get_sub_image.php?user={{ _REQUEST.t|escape }}"
+				style="vertical-align:text-bottom"
+			{% else %}
+				src="{% exec get_no_avatar_url 20 %}"
+				style="vertical-align:text-bottom;visibility:hidden"
+			{% endif %}
+			class="s_image"
+			width="55" height="20"/>
+#}
+		<br/>
 		{% if subscriptions %}
 			<br/><fieldset>
 			<legend>{% trans _('temas suscritos') %}</legend>
@@ -24,3 +41,39 @@
 {% endif %}
 
 <br/>
+
+<script type="text/javascript">
+	addPostCode(function () {
+		$('#t').select2({
+			placeholder: 'Buscar tema...',
+			language: 'es',
+			allowClear: true,
+			maximumInputLength: 20,
+			minimumResultsForSearch: Infinity,
+			selectOnClose: false,
+			closeOnSelect: true,
+			tags: false,
+			ajax: {
+				delay: 300,
+				url: "{{ globals.base_url }}backend/autocomplete_sub",
+				dataType: 'json',
+				processResults: function (data) {
+					return {
+						results: data
+					};
+				},
+				cache: false
+			}
+		});
+	});
+
+	var do_change = function() {
+		var sub = $("#t").val();
+		$("#radio-search").val(sub).prop("checked", true);
+        };
+
+	addPostCode(function() {
+		$("#t").change(do_change);
+	});
+</script>
+

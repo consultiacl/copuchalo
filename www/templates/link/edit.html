@@ -1,5 +1,4 @@
 {% if link.is_new %}
-
 	<div class="genericform">
 
 	<form action="submit" method="post" id="thisform" name="thisform">
@@ -80,7 +79,7 @@
 {% endif %}
 
 <br/>
-<input type="text" id="title" name="title" value="{{ link.title }}" style="width:100%" maxlength="120" />
+<input type="text" id="title" name="title" value="{{ link.title|escape }}" style="width:100%" maxlength="120" />
 </p>
 
 <label for="tags" accesskey="3">{% trans _('etiquetas') %}:</label>
@@ -171,3 +170,4 @@
 </fieldset>
 </form>
 </div>
+

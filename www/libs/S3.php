@@ -734,13 +734,20 @@ class S3
 		$rest = new S3Request('GET', $bucket, $uri, self::$endpoint);
 		if ($saveTo !== false)
 		{
-			if (is_resource($saveTo))
+
+syslog(LOG_INFO, "objectREST: ".print_r($rest, true));
+			if (is_resource($saveTo)) {
+				syslog(LOG_INFO, "d1");
 				$rest->fp =& $saveTo;
-			else
-				if (($rest->fp = @fopen($saveTo, 'wb')) !== false)
+			} else {
+				if (($rest->fp = @fopen($saveTo, 'wb')) !== false) {
+					syslog(LOG_INFO, "d2");
 					$rest->file = realpath($saveTo);
-				else
+				} else {
+					syslog(LOG_INFO, "d3");
 					$rest->response->error = array('code' => 0, 'message' => 'Unable to open save file for writing: '.$saveTo);
+				}
+			}
 		}
 		if ($rest->response->error === false) $rest->getResponse();
 

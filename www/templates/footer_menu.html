@@ -24,8 +24,9 @@
 		<li><a href="{{ globals.base_url_general }}faq-es">{% trans _('comenzando') %}</a></li>
 		<li><a href="{{ globals.base_url_general }}faq-es">{% trans _('faq') %}</a></li>
 		<li><a href="{{ globals.base_url_general }}faq-es">{% trans _('ayuda') %}</a></li>
-		<li><a href="{{globals.legal}}#contact">{% trans _('avisar errores') %}</a></li>
-		<li><a href="{{globals.legal}}#contact">{% trans _('avisar abusos') %}</a></li>
+		<li><a href="{{ globals.legal }}#contact">{% trans _('avisar errores') %}</a></li>
+		<li><a href="{{ globals.legal }}#contact">{% trans _('avisar abusos') %}</a></li>
+		<li><a href="{{ globals.base_url_general }}publicidad">{% trans _('publicidad') %}</a></li>
 		</ul>
 	</div>
 
@@ -59,7 +60,7 @@
 			<li><a href="{{ globals.base_url_general }}top_users">{% trans _('usuarios') %}</a></li>
 		{% endif %}
 		<li><a href="{{ globals.base_url }}popular">{% trans _('populares') %}</a></li>
-		<li><a href="{{ globals.base_url }}top_commented">{% trans _('más comentadas') %}</a></li>
+		{# <li><a href="{{ globals.base_url }}top_commented">{% trans _('más comentadas') %}</a></li> #}
 		<li><a href="{{ globals.base_url }}top_comments">{% trans _('mejores comentarios') %}</a></li>
 		<li><a href="{{ globals.base_url }}cloud">{% trans _('nube de etiquetas') %}</a></li>
 		<li><a href="{{ globals.base_url }}sites_cloud">{% trans _('nube de webs') %}</a></li>

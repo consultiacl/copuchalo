@@ -28,12 +28,12 @@ def main():
 
 	print "Analyzing IPs for %d minutes" % minutes
 	cursor = DBM.cursor()
-	
+
 	queries = (
 		"""select distinct vote_user_id, vote_ip_int from votes where vote_type in ('links', 'comments', 'posts') and vote_user_id != 0 and vote_date > date_sub(now(), interval %s minute)""", 
 		"""select distinct comment_user_id, comment_ip_int from comments where comment_date > date_sub(now(), interval %s minute)"""
 	)
-		
+
 	for query in queries:
 		cursor.execute(query, (minutes,))
 		for uid, ip_int in cursor:
@@ -80,7 +80,7 @@ def main():
 		else:
 			print "Rejected: ", str(ip), subnet, ips_counter[subnet]
 	DBM.commit()
-	
+
 
 
 def IPAddress(ip_int):

@@ -15,7 +15,7 @@ $globals['tag_status'] = 'published';
 
 echo '<div>';
 echo '<div id="newswrap" class="col-sm-9">';
-echo '<div>';
+echo '<div class="row">';
 
 $top = new Annotation('top-actives-'.$globals['site_shortname']);
 if ($top->read() && ($links = explode(',',$top->text))) {
@@ -37,11 +37,10 @@ do_best_stories();
 do_last_subs('published', 5, 'link_votes');
 do_banner_promotions();
 do_best_comments();
-echo '</div>' . "\n";
+echo '</div>';
 /*** END SIDEBAR ***/
 
-echo '</div>'."\n";
+echo '</div></div>';
 
-do_footer_menu();
 do_footer();
 

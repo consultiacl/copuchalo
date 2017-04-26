@@ -8,7 +8,7 @@
 				{% exec print_oauth_icons _REQUEST.return %}
 			</div>
 			<b>o bien por correo</b>
-			<form id="form-register" role="form" method="post" class="form" action="register" accept-charset="UTF-8">
+			<form id="form-register" method="post" class="form" action="/register" accept-charset="UTF-8">
 				<div class="form-group input-validate">
 					<span class="input-status fa"></span>
 					<input type="text" name="username" tabindex="1" id="name" value="{% exec htmlspecialchars _POST.username %}" class="form-control" placeholder="{% trans _('Nombre de usuario') %}" required />
@@ -21,7 +21,7 @@
 
 			<div class="form-group input-validate">
 				<span class="input-status fa"></span>
-				<a href="#" class="input-password-show"><i class="fa fa-eye"></i></a>
+				<a style="cursor:pointer" class="input-password-show"><i class="fa fa-eye"></i></a>
 				<input type="password" name="password" id="password" tabindex="3" class="form-control" placeholder="{% trans _('Contraseña') %}" required />
 				<div class="input-info">{% trans _('Al menos ocho caracteres, incluyendo mayúsculas, minúsculas y números') %}</div>
 			</div>
@@ -33,7 +33,7 @@
 			<input type="hidden" name="process" value="1" />
 			<input type="hidden" name="return" value="{% exec htmlspecialchars _REQUEST.return %}" />
 
-			<div class="bottomline">Cuando se registra aceptas las <a href="{{ globals.base_url_general }}legal" target="_blank">Condiciones de Uso, Política de Privacidad y el Uso de Cookies</a>.</div>
+			<div class="bottomline">Cuando te registras aceptas las <a href="{{ globals.base_url_general }}legal" target="_blank">Condiciones de Uso, Política de Privacidad y el Uso de Cookies</a>.</div>
 			</form>
 	</div>
 </section>

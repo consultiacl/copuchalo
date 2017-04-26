@@ -15,11 +15,13 @@
 
 	<div class="{{ post_meta_class }}">
 		<div class="comment-votes-info">
-		<span datetime="{{ self.date_utc }}" class="tsrender" title="{% trans _('enviado') %}: {{ self.date_utc }} UTC">__</span>
-		{% if self.author != current_user.user_id %}
-			<a class="username" href="{{ self.username | useruri }}">{{ self.username }}</a>
-			<span onclick="javascript:priv_new({{ self.author }})" title="{% trans _('responder') %}" class="fa fa-reply"></span>
-		{% endif %}
+			<time datetime="{{ self.date_utc }}" class="tsrender" title="{% trans _('enviado') %}: {{ self.date_utc }} UTC">__</time>
+			{% if self.author != current_user.user_id %}
+				&nbsp;
+				<a class="username" href="{{ self.username | useruri }}">{{ self.username }}</a>
+				&nbsp;
+				<span onclick="javascript:priv_new({{ self.author }})" title="{% trans _('responder') %}" class="fa fa-reply"></span>
+			{% endif %}
 		</div>
 
 		<div class="comment-info">&nbsp;</div>

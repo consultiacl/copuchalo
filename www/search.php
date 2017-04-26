@@ -43,7 +43,7 @@ do_header(sprintf(_('búsqueda de «%s»'), htmlspecialchars($_REQUEST['words'])
 echo '<div class="topfiller col-sm-12"></div>';
 echo '<div>';
 echo '<div id="newswrap" class="col-sm-9">';
-echo '<div>';
+echo '<div class="row">';
 echo '<div class="topheading th-no-margin"><h2>'._('Resultados de la búsqueda').'</h2></div>';
 
 switch ($_REQUEST['w']) {
@@ -81,7 +81,6 @@ echo '</div>' . "\n";
 
 echo '</div>';
 
-do_footer_menu();
 do_footer();
 
 

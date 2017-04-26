@@ -45,7 +45,7 @@ if ($_POST['process']=='newcomment') {
 $username = $comment->type == 'admin'?'admin':$comment->username;
 if ($comment->type != 'admin') $globals['search_options'] = array('w' => 'comments', 'u' => $comment->username);
 
-$comment->check_visibility();
+$comment->init_vars();
 if (! $comment->hide_comment) {
 	$description = text_to_summary($comment->content, 250);
 	$title = text_to_summary($description, 117);
@@ -73,20 +73,15 @@ $canonical_base .= 'c/';
 $globals['extra_head'] = '<link rel="canonical" href="'.$globals['scheme'].'//'.$canonical_server.$canonical_base.$comment->id.'"/>';
 
 
-do_header($title);
+do_header($title, '', false, false, '', false, false);
 
-/*** SIDEBAR ****/
-echo '<div id="sidebar">';
-do_banner_right();
-//do_best_stories();
-do_best_comments();
-do_banner_promotions();
-echo '</div>';
-/*** END SIDEBAR ***/
+echo '<div class="topfiller col-sm-12"></div>';
 
-echo '<div id="newswrap">';
-echo '<h3><a href="'.$link->get_permalink().'">'. $link->title. '</a></h3>';
-
+echo '<div>';
+echo '<div id="newswrap" class="col-sm-9">';
+echo '<div class="topheading th-no-margin"><h2><a href="'.$link->get_permalink().'">'. $link->title. '</a></h2></div>';
+echo '<div class="row">';
+/*echo '<div id="singlewrap" class="col-sm-10">';*/
 
 $tree = new CommentTree();
 $tree->addByIds($comment->id);
@@ -98,18 +93,30 @@ for ($i = 0; $i < 6; $i++) {
 }
 
 echo '<div class="comments">';
+/*
 echo '<div style="text-align:right">';
-$vars = array('link' => $globals['permalink'],
-			'title' => $title);
+$vars = array('link'  => $globals['permalink'],
+	      'title' => $title);
 Haanga::Load('share.html', $vars);
 echo '</div>';
-
+*/
 Comment::print_tree($tree, $link);
-echo '</div></div>';
+echo '</div></div></div>';
 
+/*** SIDEBAR ****/
+echo '<div id="sidebar" class="col-sm-3">';
+do_banner_right();
+//do_best_stories();
+do_best_comments();
+do_banner_promotions();
+echo '</div>';
+/*** END SIDEBAR ***/
+
+echo '</div>';
 
 do_footer();
 exit(0);
+
 
 function fill_tree($tree, $limit = 30) {
 	global $globals, $db;

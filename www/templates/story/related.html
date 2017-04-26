@@ -1,22 +1,20 @@
-<div style="margin-left: 80px;margin-top: 30px">
+<div class="related col-sm9">
 {% if link.old %}
-<h3>{% trans _('envíos que fueron similares') %}</h3>
+<h3>{% trans _('Envíos que fueron similares') %}</h3>
 {% else %}
-<h3>{% trans _('envíos posiblemente similares') %}</h3>
+<h3>{% trans _('Envíos posiblemente similares') %}</h3>
 {% endif %}
 
 {% for l in related %}
 	{% exec l.get_box_class %}
-	<div class="news-summary2" style="margin-bottom:15px">
-	<div class="news-body">
-		<div style="display:inline-block;border:2px solid #005be2;text-align:center;padding:2px;background:#005be2;">
-			<div class="numcop {{ l.box_class }}" title="{{ self.total_votes }} {% trans _('votos') %}">{{ l.total_votes }} {% trans _('votos') %}</div>
-			<div class="numcop {{ l.box_class }}" style="text-align:center;font-size:0.7em">{{ l.clicks }} {% trans _('visitas') %}</div>
+	<div class="news-body entry">
+		<div class="col-sm-2 sbox">
+			<div class="{{ l.box_class }} subbox" title="{{ self.total_votes }} {% trans _('votos') %}">{{ l.total_votes }} {% trans _('votos') %}</div>
+			<div class="{{ l.box_class }} subbox small" title="{{ l.clicks }} {% trans _('visitas') %}">{{ l.clicks }} {% trans _('visitas') %}</div>
 		</div>
-		<div style="display:inline-block;padding-left:20px;vertical-align:top">
-			<h2 style="font-size: 120%"><a href="{{ l.permalink }}"{% if l.status != 'published' %} rel="nofollow"{% endif %}>{{ l.title }}</a></h2>
+		<div class="col-sm-10 text">
+			<h2><a href="{{ l.permalink }}"{% if l.status != 'published' %} rel="nofollow"{% endif %}>{{ l.title }}</a></h2>
 		</div>
 	</div>
-	</div><br/>
 {% endfor %}
 </div>

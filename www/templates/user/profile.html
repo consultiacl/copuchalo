@@ -1,7 +1,8 @@
 {# {% inline "user/subheader.html" %} #}
 
 {% if user.id == current_user.user_id %}
-	<fieldset><legend>{% trans _('preferencias básicas') %}</legend>
+	<fieldset class="margin-bottom">
+	<legend>{% trans _('preferencias básicas') %}</legend>
 	<table class="keyvalue">
 
 	<tr><th>{% trans _('mostrar suscripciones por defecto en la portada') %}:</th>
@@ -46,7 +47,7 @@
 {% endif %}
 
 
-<fieldset>
+<fieldset class="margin-bottom">
     <legend>{% trans _('perfil personal') %}</legend>
 	<div style="float:right;text-align:center">
 	    <img id="avatar" class="avatar big" src="{% exec get_avatar_url user.id, user.avatar, 80 %}" width="80" height="80" alt="{{user.username}}" title="avatar" />
@@ -171,7 +172,8 @@
 {% endif %}
 
 {% if addresses %}
-    <fieldset><legend>{% trans _('últimas direcciones IP') %}</legend>
+    <fieldset class="margin-bottom">
+	<legend>{% trans _('últimas direcciones IP') %}</legend>
 	<tt>
     {% for address in addresses %}
         {{address}}&nbsp;

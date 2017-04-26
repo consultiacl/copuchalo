@@ -2,6 +2,17 @@
         {% try_include 'private/sponsored/link.html' %}
 {% else %}
 <div class="col-lg-4 col-sm-6 col-12 news-summary-height">
+<article itemscope="" itemtype="http://schema.org/Article"
+	data-content-id="{{ self.id }}"
+	data-contenturl="{{ globals.scheme }}//{{ globals.server_name }}{{ self.relative_permalink }}"
+	data-title="{{ self.title }}"
+	data-source="{{ self.url_str }}"
+	data-karma="{% if self.status == 'published' && self.sub_karma > 0 %}{{ self.sub_karma|intval }}{% else %}{{ self.karma|intval }}{% endif %}"
+	data-votes="{{ self.total_votes }}"
+	data-date-send="{{ self.sent_date_utc }} UTC"
+	data-date-publish="{{ self.sub_date_utc }} UTC"
+	data-theme="{{ self.sub_name }}"
+>
 <div class="news-summary">  {# news-summary #}
 	<div class="news-body">
 
@@ -11,7 +22,8 @@
 	<div class="img-container">
 	{% if self.thumb_uri %}
 		<a href="{{ self.media_url }}" title="{% trans _('miniatura') %}">
-			<img class="img-story lazy" data-src='//{{globals.server_name}}/{{ self.thumb_uri }}' src="{{ globals.base_static }}img/g.gif" alt=''/>
+			{# <img class="img-story lazy" data-src='//{{globals.server_name}}/{{ self.thumb_uri }}' src="{{ globals.base_static }}img/g.gif" alt=''/> #}
+			<img class="img-story" src='//{{globals.server_name}}/{{ self.thumb_uri }}' alt=''/>
 		</a>
 	{% else %}
 		<img class="img-story" src="{{ globals.base_static }}img/cpchl/no-image.png"/>
@@ -56,28 +68,21 @@
 	<div class="sbox-margin">
 		{% if self.show_shakebox %}
 		<div class="sbox">
-			{# <div class="numcop {{ self.box_class }}"> #}
-				<a class="numcop {{ self.box_class }}" title="{{ self.total_votes }} {% trans _('votos') %}" id="a-votes-{{ self.id}}" href="{{ self.relative_permalink }}">{{ self.total_votes }}</a>
-			{# </div> #}
+			<a class="btn num-button {{ self.box_class }}" title="{{ self.total_votes }} {% trans _('votos') %}" id="a-votes-{{ self.id}}" href="{{ self.relative_permalink }}/voters">{{ self.total_votes }}</a>
 
 			{% if not globals.bot %}
 			<div class="cop" id="a-va-{{ self.id }}">
 				{% if not self.votes_enabled %}
-					<span>{% trans _('cerrado') %}</span>
+					<a class="btn vote-button disabled">{% trans _('cerrado') %}</a>
 				{% else %}
 					{% if not self.voted %}
-						<a class="vote-btn" href="javascript:mediatize({{ current_user.user_id}}, {{self.id}})" id="a-shake-{{ self.id }}">{% trans _('votar') %}</a>
+						<a class="btn vote-button" onclick="javascript:mediatize({{ current_user.user_id}}, {{self.id}})" id="a-shake-{{ self.id }}">{% trans _('votar') %}</a>
 					{% else %}
-						{% if self.voted > 0 %}
-							<span id="a-shake-{{ self.id }}">{% trans _('¡genial!') %}</span>
-						{% else %}
-							<span id="a-shake-{{ self.id }}" class="negative">{{ globals.negative_votes_values[self.voted] }}</span>
-						{% endif %}
+						<a class="btn vote-button disabled" id="a-shake-{{ self.id }}">{% trans _('¡genial!') %}</a>
 					{% endif %}
 				{% endif %}
 			</div>
 			{% endif %}
-
 		</div>
 		{% endif %}
 	</div>
@@ -103,9 +108,9 @@
 			<a href="{{ url }}" class="l:{{ self.id }}" target="_blank"
 			{% if self.status != 'published' %} rel="nofollow"{% endif %}>{{ self.title }}&nbsp;
 			{% if self.content_type == 'image' %}
-				<span class="fa fa-camera" alt="{% trans _('imagen') %}" title="{% trans _('imagen') %}"></span>
+				<span class="fa fa-camera" title="{% trans _('imagen') %}"></span>
 			{% else %} {% if self.content_type == 'video' %}
-				<span class="fa fa-video-camera" alt="{% trans _('vídeo') %}" title="{% trans _('vídeo') %}"></span>
+				<span class="fa fa-video-camera" title="{% trans _('vídeo') %}"></span>
 			{% endif %}{% endif %}
 			</a>
 		{% if globals.link %}</h1>{% else %}</h2>{% endif %}
@@ -143,6 +148,13 @@
 				{% endif %}
 			</span>
 		</div>
+
+		<span>|</span>
+
+		{# Comments link #}
+		<div class="comments-link-front">
+			<a href="{{ self.relative_permalink }}" title="{% trans _('comentarios de') %}: «{{ self.title }}»"><i class="fa fa-comment-o story-color"><span class="icon-label">&nbsp;{{ self.comments }}</span></i></a>
+		</div>
 	</div>
 	{% endif %}
 
@@ -154,24 +166,9 @@
 		{% if content_full %}
 			<p class="news-content-full">{{ self.content }}</p>
 		{% else %}
-			<p class="news-content">{{ self.content }}</p>
+			<a href="{{ self.relative_permalink }}" class="content-link" title="más información"><p class="news-content">{{ self.content }}</p></a>
 		{% endif %}
 
-
-		{# EDIT NEW #}
-		{% if type != 'preview' %}
-			{% if self.is_editable %}
-				<div class="btn-news-edit">
-					<span class="fa fa-pencil"></span>
-					<a class="edit-btn" href="{% get_url 'editlink?id=' self.id '&amp;user=' current_user.user_id %}" title="{% trans _('editar historia') %} #{{ self.id }}">{% trans _('editar') %}</a>
-				</div>
-			{% endif %}
-
-			{% if self.map_editable %}
-				&nbsp;&nbsp;<a href="#" onclick="$('#geoedit').load('{% get_url  "geo/get_form.php?id=" self.id  "&amp;type=link&amp;icon=" self.status %}'); return false;">
-				<img class="mini-icon-text" src="{{ globals.base_static }}img/common/edit-geo01.png" alt="edit" title="{% trans _('editar geolocalización') %}"/></a>
-			{% endif %}
-		{% endif %}
 	{% endif %}
 
 
@@ -184,6 +181,15 @@
 			<a href="{{ vote.user_login | useruri }}" title="{{ vote.user_login }}: {% trans _('valor') %} {{vote.vote_value}}"><img class="avatar" src="{% exec get_avatar_url vote.user_id vote.user_avatar 40 %}" width="40" height="40" alt=""/></a>&nbsp;&nbsp;
 		{% endfor %}
 		</div>
+	{% endif %}
+
+
+	{# ########## EDIT BUTTON ########## #}
+
+	{% if type != 'preview' AND self.is_editable %}
+	<div class="btn-news-edit">
+		<a class="edit-btn" href="{% get_url 'editlink?id=' self.id '&amp;user=' current_user.user_id %}" title="{% trans _('editar historia') %} #{{ self.id }}"><span class="fa fa-pencil"></span>&nbsp;{% trans _('editar') %}</a>
+	</div>
 	{% endif %}
 
 
@@ -207,12 +213,15 @@
 	{% endif %}
 
 
-	{# #########################  NEWS INFO (FOOT) ################################## #}
+	{# ########################## AUTHOR ################################ #}
 
-	<div class="news-submitted">
-	{% if content_full AND ! globals.bot %}
+	{% if ! globals.bot %}
+	<div class="news-submitted margin-top">
 		{% if type != 'short' %}
-			<a href="{{ self.username | useruri }}" class="suggestion u:{{ self.author }}"><img src="{{ globals.base_static }}img/g.gif" data-src="{% exec get_avatar_url self.author, self.avatar, 25, 0 %}" data-2x="s:-25.:-40." alt="" class="lazy"/></a>
+			<a href="{{ self.username | useruri }}" class="suggestion u:{{ self.author }}">
+				{# <img src="{{ globals.base_static }}img/g.gif" data-src="{% exec get_avatar_url self.author, self.avatar, 25, 0 %}" data-2x="s:-25.:-40." alt="" class="lazy"/> #}
+				<img src="{% exec get_avatar_url self.author, self.avatar, 25, 0 %}" alt=""/>
+			</a>
 		{% endif %}
 		{% trans _('por') %} <a href="{% exec get_user_uri self.username, 'history' %}">{{ self.username }}</a>
 		{% if self.url %}
@@ -220,49 +229,46 @@
 		{% endif %}
 		<br />
 
-		{% if self.status != 'published' %}
+		{% if self.status != 'published' AND content_full %}
 			{% trans _('enviado: ') %}
 		{% endif %}
-		<span datetime="{{ self.sent_date_utc }}" class="tsrender visible" title="{% trans _('enviado') %}: {{ self.sent_date_utc }} UTC">________</span>
-	    	{% if self.status == 'published' %}
-		    {% trans _(', publicado: ') %}
-			<span datetime="{{ self.sub_date_utc }}" class="tsrender visible" title="{% trans _('publicado') %}: {{ self.sub_date_utc }} UTC">________</span>
+		<time datetime="{{ self.sent_date_utc }}" class="tsrender" title="{% trans _('enviado') %}: {{ self.sent_date_utc }} UTC">________</time>
+    		{% if self.status == 'published' %}
+			{# {% if content_full %} #}
+			{% trans _(', publicado: ') %}
+			{# {% endif %} #}
+			<time datetime="{{ self.sub_date_utc }}" class="tsrender" title="{% trans _('publicado') %}: {{ self.sub_date_utc }} UTC">________</time>
 		{% endif %}
-	{% else %}
-		<span class="news-front-pub">{% trans _('Por') %} <a href="{% exec get_user_uri self.username, 'history' %}">{{ self.username }}</a></span>
-		{% if self.status == 'published' %}
-			<span class="news-front-pub">|</span>
-			<span class="news-front-pub">{% trans _('Publicado: ') %}</span>
-			<span datetime="{{ self.sub_date_utc }}" class="news-front-pub tsrender visible" title="{% trans _('publicado') %}: {{ self.sub_date_utc }} UTC">________</span>
-		{% endif %}
-		<br>
-		<a class="comments-link" href="{{ self.relative_permalink }}" title="{% trans _('comentarios de') %}: «{{ self.title }}»">Comentarios ({{ self.comments }})</a>
-	{% endif %}
 	</div>
-
+	{% endif %}
 
 	{# ############  SHARE OPTIONS & COMMENTS  ################# #}
 
-	{% if content_full %}
+	{% if globals.mobile %} {# AND content_full %} #}
 	<div class="shareoptions">
 		{% set link = self.permalink %}
 		{% set title = self.title %}
-		<div class="share-icons" data-url="{{ link }}" data-title="{{ title }}">
+		<div class="icon-bar story-icons" data-url="{{ link }}" data-title="{{ title }}">
+		<ul class="story-icons-list">
 			{% if ! self.is_discarded %}
-				{% exec self.get_short_permalink as short_link %}
-				<span class="fa fa-facebook-square" title="{% trans _('compartir en %s') "facebook" %}" onClick="share_fb(this)"></span>
-				<span class="fa fa-twitter" title="{% trans _('compartir en %s') "twitter" %}"  onClick="share_tw(this)"></span>
-				<a href="{{ short_link }}" title="{% trans _('enlace corto') %}"><span class="fa fa-link" title="{% trans _('enlace corto') %}"></span></a>
+				<li><a class="share-menu" title="compartir"><i class="fa fa-share-alt story-color"></i></a>
+				{% include "share.html" %}
+				</li>
 			{% endif %}
 			{% if current_user.user_id > 0 %}
-				<span title="{% trans _('favorito') %}" id="favl-{{ self.id }}" onclick="add_remove_fav('favl-{{ self.id }}', 'link', {{ self.id }})" {% if self.favorite %}
-					 class="fa fa-star" {% else %} class="fa fa-star-o" {% endif %} ></span>
+				<li><a class="pointer" title="{% trans _('favorito') %}" onclick="add_remove_fav('favl-{{ self.id }}', 'link', {{ self.id }})">
+				<i id="favl-{{ self.id }}" {% if self.favorite %}class="fa fa-star story-color" {% else %} class="fa fa-star-o story-color" {% endif %} ></i>
+				</a></li>
 			{% endif %}
 			{% if self.can_report %}
-				<span onclick="report({{self.id}},'link')" title="{% trans _('reportar historia') %}" class="fa fa-bullhorn"></span>
+				<li><a class="pointer" onclick="report({{self.id}},'link')" title="{% trans _('reportar historia') %}">
+				<i class="fa fa-bullhorn story-color"></i>
+				</a></li>
 			{% endif %}
-			<a class="comment-bubble" href="{{ self.relative_permalink }}" title="{% trans _('comentarios de') %}: «{{ self.title }}»">{{ self.comments }}</a>
+			<li><a href="{{ self.relative_permalink }}" title="{% trans _('comentarios de') %}: «{{ self.title }}»"><i class="fa fa-comment story-color"><span class="icon-label">{{ self.comments }}</span></i></a></li>
+		</ul>
 		</div>
+
 	</div>
 	{% endif %}
 
@@ -278,6 +284,7 @@
 
 	</div>
 </div>
+</article>
 </div>
 
 {# ####################### ADS ################################# #}

@@ -120,8 +120,8 @@ if ($users) {
 		echo '</tr>';
 	}
 }
-echo "</table>\n\n";
-echo "</div>\n";
-do_footer_menu();
+echo '</table>';
+echo '</div>';
+
 do_footer();
 

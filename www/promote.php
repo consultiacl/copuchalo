@@ -23,8 +23,7 @@ if($annotation->read()) {
 	echo $annotation->text;
 }
 
-echo '</div>'."\n";
+echo '</div>';
 
-do_footer_menu();
 do_footer();
 

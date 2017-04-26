@@ -205,15 +205,15 @@ do_header($page_title, _('postits'), get_posts_menu($tab_option, $user->username
 
 echo '<div>';
 echo '<div id="newswrap" class="col-sm-9">';
-echo '<div>';
+echo '<div class="row">';
 
 do_pages($rows, $page_size);
 
-echo '<div class="notes" class="col-sm-9">';
+echo '<div class="notes">';
 
 if ($current_user->user_id > 0) {
 	echo '<div id="addpost"></div>';
-	echo '<ol class="comments-list"><li id="newpost"></li></ol>'."\n";
+	//echo '<ol class="comments-list"><li id="newpost"></li></ol>'."\n";
 }
 
 if ($view != 4) {
@@ -240,13 +240,14 @@ if ($view != 4) {
 		echo "</ol>\n";
 
 		if ($post_id > 0) {
-			// Print share button
+			/*
+			// Print share buttona
 			echo '<div style="text-align:right">';
 			$vars = array('link' => $globals['permalink'],
 				'title' => $page_title);
 			Haanga::Load('share.html', $vars);
 			echo '</div>';
-
+			*/
 			print_answers($post_id, 1);
 
 		} else {
@@ -261,24 +262,25 @@ if ($view != 4) {
 				Post::update_read_conversation($time_read, $globals['admin_user_id']);
 			}
 		}
-		echo '</div>';
 	}
 } else {
 	do_voted_posts();
 }
+
+echo '</div>'; // notes
+echo '</div>'; // row
+
 do_pages($rows, $page_size);
 
-//echo '</div>';   // notes
-
-echo '</div></div>'; // newswrap
+echo '</div>'; // newswrap
 
 
 /*** SIDEBAR ****/
 echo '<div id="sidebar" class="col-sm-3">';
 do_banner_right();
 //do_best_stories();
+do_best_posts();
 if (! $short_content) {
-	do_best_posts();
 	do_best_comments();
 	do_banner_promotions();
 	if ($tab_option < 4) {
@@ -286,14 +288,15 @@ if (! $short_content) {
 		do_last_blogs();
 	}
 }
-
-echo '</div>' . "\n";
+echo '</div>';
 /*** END SIDEBAR ***/
 
-//echo '</div>'."\n";
+echo '</div></div>';
 
-if ($rows > 15) do_footer_menu();
 do_footer();
+
+
+
 
 function print_answers($id, $level, $visited = false) {
 	// Print "conversation" for a given note
@@ -359,6 +362,5 @@ function do_voted_posts() {
 	}
 
 	echo "</ol>\n";
-	echo '</div>';
 }
 

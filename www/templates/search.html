@@ -40,18 +40,19 @@
         </div>
         </form>
 
-	    <script type="text/javascript">
-        var do_change = function() {
-	        var type = $("#w").val();
-	        if (type == "links") { $("#p").attr("disabled", false); $("#s").attr("disabled", false); }
-	        else { $("#p").attr("disabled", true); $("#s").attr("disabled", true); }
-        };
+	<script type="text/javascript">
+	        var do_change = function() {
+			var type = $("#w").val();
+			if (type == "links") { $("#p").attr("disabled", false); $("#s").attr("disabled", false); }
+			else { $("#p").attr("disabled", true); $("#s").attr("disabled", true); }
+        	};
 
-	    addPostCode(function() {
-	        $("#w").change(do_change);
-            do_change();
-	    });
-	    </script>
+		addPostCode(function() {
+			$("#w").change(do_change);
+			do_change();
+		});
+	</script>
+
 	{% if _REQUEST.q %}
 		<div style="font-size:85%;margin-top: 5px">
 	{% trans _('encontrados') %}: {{response.rows}}, {% trans _('tiempo total') %}: {{response.time|stringformat:"%1.3f"}} {% trans _('segundos') %}

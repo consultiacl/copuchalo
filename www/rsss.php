@@ -60,6 +60,6 @@ echo '</fieldset>';
 
 do_pages($rows, $page_size);
 echo '</div>';
-do_footer_menu();
+
 do_footer();
 

@@ -125,6 +125,26 @@ class Post extends LCPBase {
 		return false;
 	}
 
+	function init_vars(){
+		global $current_user, $globals;
+
+		$this->hidden        = $this->karma < $globals['post_hide_karma'] || $this->user_level == 'disabled';
+		$this->ignored       = $current_user->user_id > 0 && User::friend_exists($current_user->user_id, $this->author) < 0;
+		$this->is_disabled   = ($this->ignored || ($this->hidden && ($current_user->user_comment_pref & 1) == 0)) && !$this->admin;
+		$this->can_vote	     = $current_user->user_id > 0 && $this->author != $current_user->user_id &&  $this->date > $globals['now'] - $globals['time_enabled_votes'] && !$this->admin ;
+		$this->user_can_vote = $current_user->user_karma > $globals['min_karma_for_comment_votes'] && ! $this->voted && !$this->admin;
+		$this->show_votes    = ($this->votes > 0 && $this->date > $globals['now'] - $globals['time_enabled_votes']) && !$this->admin;
+		$this->show_avatar   = !$this->admin;
+		$this->can_report    = $this->can_vote && Report::check_min_karma() && ($this->author != $current_user->user_id) && !$this->admin && !$this->hidden && !$this->ignored;
+
+		if (empty($this->basic_summary) && (($this->author == $current_user->user_id && (time() - $this->date < $globals['posts_edit_time'])) ||
+			 ($current_user->user_level == 'god' && time() - $this->date < $globals['posts_edit_time_admin'] ))) {
+			$this->can_edit = true;
+		} else {
+			$this->can_edit = false;
+		}
+	}
+
 	function read_last($user=0) {
 		global $db, $current_user;
 		$id = $this->id;
@@ -144,17 +164,17 @@ class Post extends LCPBase {
 	function print_summary($length=0, $dontecho = false, $classes = '') {
 		global $current_user, $globals;
 
-		if(!$this->read) $this->read();
-		$this->hidden = $this->karma < $globals['post_hide_karma'] ||
-				$this->user_level == 'disabled';
-		$this->ignored = $current_user->user_id > 0 && User::friend_exists($current_user->user_id, $this->author) < 0;
+		if(!$this->read)
+			$this->read();
 
+		$this->init_vars();
+
+		$post_meta_class = '';
+		$post_class = '';
 		if ($this->hidden || $this->ignored)  {
-			$post_meta_class = 'comment-meta hidden';
-			$post_class = 'comment-body hidden';
+			$post_meta_class .= ' veiled';
+			$post_class .= ' veiled';
 		} else {
-			$post_meta_class = 'comment-meta';
-			$post_class = 'comment-body';
 			if ($this->admin) {
 				$post_class .= ' admin';
 			} else {
@@ -163,17 +183,10 @@ class Post extends LCPBase {
 				}
 			}
 		}
+
 		if ($this->author == $current_user->user_id) {
 			$post_class .= ' user';
 		}
-
-
-		$this->is_disabled   = ($this->ignored || ($this->hidden && ($current_user->user_comment_pref & 1) == 0)) && !$this->admin;
-		$this->can_vote	  = $current_user->user_id > 0 && $this->author != $current_user->user_id &&  $this->date > $globals['now'] - $globals['time_enabled_votes'] && !$this->admin ;
-		$this->user_can_vote =  $current_user->user_karma > $globals['min_karma_for_comment_votes'] && ! $this->voted && !$this->admin;
-		$this->show_votes	= ($this->votes > 0 && $this->date > $globals['now'] - $globals['time_enabled_votes']) && !$this->admin;
-		$this->show_avatar = !$this->admin;
-		$this->can_report = $this->can_vote && Report::check_min_karma() && ($this->author != $current_user->user_id) && !$this->admin && !$this->hidden && !$this->ignored;
 
 		$this->prepare_summary_text($length);
 
@@ -183,26 +196,13 @@ class Post extends LCPBase {
 		return Haanga::Load('post_summary.html', $vars, $dontecho);
 	}
 
-	function print_user_avatar($size=40) {
-		global $globals;
-		echo '<a href="'.get_user_uri($this->username).'" class="suggestion u:'.$this->author.'"><img class="avatar" src="'.get_avatar_url($this->author, $this->avatar, $size).'" width="'.$size.'" height="'.$size.'" alt="'.$this->username.'"/></a>';
-	}
-
 	function prepare_summary_text($length = 0) {
 		global $current_user, $globals;
 
-		if (empty($this->basic_summary) && (($this->author == $current_user->user_id &&
-			time() - $this->date < $globals['posts_edit_time'] ) ||
-			 ($current_user->user_level == 'god' && time() - $this->date < $globals['posts_edit_time_admin'] ))) { // Admins can edit up to 10 days
-			$this->can_edit = true;
-
-		} else {
-			$this->can_edit = false;
-		}
 		if ($length > 0) {
 			$this->content = text_to_summary($this->content, $length);
 		}
-		$this->content = $this->to_html($this->content) . $expand;
+		$this->content = $this->to_html($this->content);
 
 		if ($this->media_size > 0) {
 			$this->media_thumb_dir = Upload::get_cache_relative_dir($this->id);
@@ -211,11 +211,15 @@ class Post extends LCPBase {
 	}
 
 	function print_text($length = 0) {
-		global $current_user, $globals;
-
+		$this->init_vars();
 		$this->prepare_summary_text($length);
-		$vars = array('self' => $this);
-		return Haanga::Load('post_summary_text.html', $vars);
+		return Haanga::Load('post_summary_text.html', array('self' => $this));
+	}
+
+	function print_body($length = 0) {
+		$this->init_vars();
+		$this->prepare_summary_text($length);
+		return Haanga::Load('post_summary_body.html', array('self' => $this));
 	}
 
 	function clean_content() {

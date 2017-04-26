@@ -51,6 +51,5 @@ if ($links) {
 do_pages(-1, $page_size);
 echo '</div>'."\n";
 
-do_footer_menu();
 do_footer();
 

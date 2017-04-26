@@ -217,13 +217,20 @@ class Comment extends LCPBase {
 		return $this->read();
 	}
 
-	function check_visibility() {
+	function init_vars() {
 		global $globals, $current_user;
 
-		$this->ignored = ($current_user->user_id > 0 && $this->type != 'admin' && User::friend_exists($current_user->user_id, $this->author) < 0);
-		$this->hidden = ($globals['comment_hidden_karma'] < 0 && $this->karma < $globals['comment_hidden_karma'])
-						|| ($this->user_level == 'disabled' && $this->type != 'admin');
-		$this->hide_comment = ! isset($this->not_ignored) && ($this->ignored || ($this->hidden && ($current_user->user_comment_pref & 1) == 0));
+		$this->ignored        = ($current_user->user_id > 0 && $this->type != 'admin' && User::friend_exists($current_user->user_id, $this->author) < 0);
+		$this->hidden         = ($globals['comment_hidden_karma'] < 0 && $this->karma < $globals['comment_hidden_karma']) || ($this->user_level == 'disabled' && $this->type != 'admin');
+		$this->hide_comment   = ! isset($this->not_ignored) && ($this->ignored || ($this->hidden && ($current_user->user_comment_pref & 1) == 0));
+		$this->can_vote       = $current_user->user_id > 0  && $this->author != $current_user->user_id && $this->date > $globals['now'] - $globals['time_enabled_comments'] && $this->user_level != 'disabled';
+		$this->user_can_vote  = $current_user->user_karma > $globals['min_karma_for_comment_votes'] && ! $this->voted;
+		$this->modified_time  = txt_time_diff($this->date, $this->modified);
+		$this->has_votes_info = $this->votes > 0 && $this->date > $globals['now'] - $globals['time_enabled_comments'];
+		$this->can_reply      = $current_user->user_id > 0 && $this->date > $globals['now'] - $globals['time_enabled_comments'];
+		$this->can_report     = $this->can_reply && Report::check_min_karma() && ($this->author != $current_user->user_id) && $this->type != 'admin' && !$this->hidden && !$this->ignored; // && !$link->is_sponsored();
+		$this->can_edit       =  (! isset($this->basic_summary) || ! $this->basic_summary ) && ( ($this->author == $current_user->user_id && $globals['now'] - $this->date < $globals['comment_edit_time'])
+                                                                                                    || (($this->author != $current_user->user_id || $this->type == 'admin') && $current_user->user_level == 'god'));
 	}
 
 	function prepare_summary_text($length = 0) {
@@ -232,7 +239,6 @@ class Comment extends LCPBase {
 		if ($this->single_link) $this->html_id = $this->order;
 		else $this->html_id = $this->id;
 
-		$this->can_edit =  (! isset($this->basic_summary) || ! $this->basic_summary ) && ( ($this->author == $current_user->user_id && $globals['now'] - $this->date < $globals['comment_edit_time'])  || (($this->author != $current_user->user_id || $this->type == 'admin') && $current_user->user_level == 'god'));
 		if ($length > 0) $this->truncate($length);
 		$this->txt_content = $this->to_html($this->content);
 
@@ -246,7 +252,8 @@ class Comment extends LCPBase {
 	function print_summary($length = 0, $single_link=true, $return_string = false, $c_value = false) {
 		global $current_user, $globals;
 
-		if(!$this->read) return;
+		if(!$this->read)
+			return;
 
 		if ((! $this->link_object || $this->link_object->id != $this->link) && $this->link > 0) {
 			$this->link_object = Link::from_db($this->link);
@@ -266,15 +273,15 @@ class Comment extends LCPBase {
 
 		$this->single_link = $single_link;
 
-		$this->check_visibility();
+		$this->init_vars();
 
 		/* pickup the correct css for comments */
+		$this->comment_meta_class = '';
+		$this->comment_class = '';
 		if ($this->hidden || $this->ignored && !$link->is_sponsored())  {
-			$this->comment_meta_class = 'comment-meta hidden';
-			$this->comment_class = 'comment-body hidden';
+			$this->comment_meta_class .= ' veiled';
+			$this->comment_class .= ' veiled';
 		} else {
-			$this->comment_meta_class = 'comment-meta';
-			$this->comment_class = 'comment-body';
 			if ($this->type == 'admin') {
 				$this->comment_class .= ' admin';
 			} else {
@@ -292,15 +299,6 @@ class Comment extends LCPBase {
 		}
 
 		$this->prepare_summary_text($length);
-
-		$this->can_vote = $current_user->user_id > 0  && $this->author != $current_user->user_id && $this->date > $globals['now'] - $globals['time_enabled_comments'] && $this->user_level != 'disabled';
-
-		$this->user_can_vote = $current_user->user_karma > $globals['min_karma_for_comment_votes'] && ! $this->voted;
-		$this->modified_time = txt_time_diff($this->date, $this->modified);
-
-		$this->has_votes_info = $this->votes > 0 && $this->date > $globals['now'] - $globals['time_enabled_comments'];
-		$this->can_reply = $current_user->user_id > 0 && $this->date > $globals['now'] - $globals['time_enabled_comments'];
-		$this->can_report = $this->can_reply && Report::check_min_karma() && ($this->author != $current_user->user_id) && $this->type != 'admin' && !$this->hidden && !$this->ignored && !$link->is_sponsored();
 
 		$vars = array('self' => $this);
 		$vars['c_value'] = $c_value;
@@ -354,10 +352,21 @@ class Comment extends LCPBase {
 	function print_text($length = 0) {
 		global $current_user, $globals;
 
+		$this->init_vars();
 		$this->prepare_summary_text($length);
 
 		$vars = array('self' => $this);
 		return Haanga::Load('comment_summary_text.html', $vars);
+	}
+
+	function print_body($length = 0) {
+		global $current_user, $globals;
+
+		$this->init_vars();
+		$this->prepare_summary_text($length);
+
+		$vars = array('self' => $this);
+		return Haanga::Load('comment_summary_body.html', $vars);
 	}
 
 	function username() {
@@ -438,30 +447,17 @@ class Comment extends LCPBase {
 
 		if($link->date < $globals['now']-$globals['time_enabled_comments'] || $link->comments >= $globals['max_comments']) {
 			// Comments already closed
-			echo '<div class="commentform warn">'."\n";
-			echo _('comentarios cerrados')."\n";
-			echo '</div>'."\n";
+			echo '<div class="commentform warn">';
+			echo _('comentarios cerrados');
+			echo '</div>';
 		} elseif ($current_user->authenticated
-					&& (($current_user->user_karma > $globals['min_karma_for_comments']
-							&& $current_user->user_date < $globals['now'] - $globals['min_time_for_comments'])
-						|| $current_user->user_id == $link->author)) {
+				&& (($current_user->user_karma > $globals['min_karma_for_comments']
+				&& $current_user->user_date < $globals['now'] - $globals['min_time_for_comments'])
+				|| $current_user->user_id == $link->author)) {
+
 			// User can comment
-			echo '<div class="commentform">'."\n";
-			echo '<form action="" method="post" enctype="multipart/form-data" class="comment">';
+			Haanga::Load('comment_new.html', compact('link', 'comment'));
 
-			echo '<input type="hidden" name="process" value="newcomment" />';
-			echo '<input type="hidden" name="randkey" value="'.$comment->randkey.'" />';
-
-			echo '<fieldset>'."\n";
-			echo '<legend>'._('envía un comentario').'</legend>';
-			$vars = compact('link', 'comment');
-			Haanga::Load('comment_edit.html', $vars);
-
-			echo '<div class="note" style="margin-top:10px">'._('comentarios xenófobos, racistas o difamatorios causarán la anulación de la cuenta').'</div>';
-
-			echo '</fieldset>'."\n";
-			echo '</form>'."\n";
-			echo "</div>\n";
 		} else {
 			// Not enough karma or anonymous user
 			if($tab_option == 1) do_comment_pages($link->comments, $current_page);
@@ -473,13 +469,13 @@ class Comment extends LCPBase {
 				if ($current_user->user_karma <= $globals['min_karma_for_comments']) {
 					$msg = _('no tienes el mínimo karma requerido')." (" . $globals['min_karma_for_comments'] . ") ". _('para comentar'). ": ".$current_user->user_karma;
 				}
-				echo '<div class="commentform warn">'."\n";
-				echo $msg . "\n";
-				echo '</div>'."\n";
+				echo '<div class="commentform warn">';
+				echo $msg;
+				echo '</div>';
 			} elseif (!$globals['bot']){
-				echo '<div class="commentform warn">'."\n";
-				echo '<a href="'.get_auth_link().'login.php?return='.urlencode($globals['uri']).'">'._('Identifíquese si desea escribir').'</a> '._('comentarios').'. '._('O cree su cuenta'). ' <a href="'.$globals['base_url'].'register">aquí.</a>'."\n";
-				echo '</div>'."\n";
+				echo '<div class="commentform warn">';
+				echo '<a href="'.get_auth_link().'login.php?return='.urlencode($globals['uri']).'">'._('Identifíquese si desea escribir').'</a> '._('comentarios').'. '._('O cree su cuenta'). ' <a href="'.$globals['base_url'].'register">aquí.</a>';
+				echo '</div>';
 
 				print_oauth_icons();
 			}

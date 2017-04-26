@@ -1,5 +1,7 @@
 #! /usr/bin/php
+
 <?php
+
 include('../config.php');
 
 $hours = intval($argv[1]);
@@ -10,6 +12,7 @@ $uids = $db->get_col("select distinct(comment_user_id) from votes, comments wher
 echo "Total: " . count($uids) . "\n";
 
 foreach ($uids as $id) {
+	echo $id . "\n";
 	//$affinity = User::get_affinity($id);
 	$affinity = User::calculate_affinity($id, 100);
 	if ($affinity) {
@@ -17,4 +20,4 @@ foreach ($uids as $id) {
 		usleep(100);
 	}
 }
-?>
+

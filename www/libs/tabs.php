@@ -5,7 +5,7 @@ final class Tabs
 	static function renderForSection($section, $options, $tab_class = '')
 	{
 		switch ($section) {
-			case _('portada'):
+			case _('portada tema'):
 				return self::renderForIndex($options, $tab_class);
 
 			case _('story'):
@@ -18,7 +18,10 @@ final class Tabs
 				return self::renderForTopStories($options, $tab_class);
 
 			case _('más visitadas'):
-				return self::renderForTopclicked($options, $tab_class);
+				return self::renderForTopClicked($options, $tab_class);
+
+			case _('más comentadas'):
+				return self::renderForTopCommented($options, $tab_class);
 
 			case _('postits'):
 				return self::renderForSneakme($options, $tab_class);
@@ -189,7 +192,7 @@ final class Tabs
 		global $globals, $current_user;
 
 		$items = array();
-		$items[] = array('id' => 1, 'url' => 'queue' . $globals['meta_skip'], 'title' => _('todas'));
+		$items[] = array('id' => 1, 'url' => 'queue' . $globals['meta_skip'], 'title' => _('nuevas'));
 
 		if ($current_user->has_subs) {
 			$items[] = array('id' => 7, 'url' => 'queue' . $globals['meta_subs'], 'title' => _('suscripciones'));
@@ -224,7 +227,7 @@ final class Tabs
 
 	public static function renderForTopstories($options, $tab_class)
 	{
-		global $range_values, $range_names, $month, $year;
+		global $globals, $range_values, $range_names, $month, $year;
 
 		$count_range_values = count($range_values);
 
@@ -256,9 +259,9 @@ final class Tabs
 		return $html;
 	}
 
-	public static function renderForTopclicked($options, $tab_class)
+	public static function renderForTopClicked($options, $tab_class)
 	{
-		global $range_values, $range_names;
+		global $globals, $range_values, $range_names;
 
 		$count_range_values = count($range_values);
 
@@ -283,6 +286,33 @@ final class Tabs
 		return $html;
 	}
 
+	public static function renderForTopCommented($options, $tab_class)
+	{
+		global $globals, $range_values, $range_names;
+
+		$count_range_values = count($range_values);
+
+		$html = ($globals['mobile'] ? '<div class="subheader"><form class="tabs-combo" action=""><select name="tabs" onchange="location = this.value;">' : '<div class="subheader"><ul class="subheader-list">');
+
+		if (!($current_range = check_integer('range')) || $current_range < 1 || $current_range >= $count_range_values) {
+			$current_range = 0;
+		}
+
+		for ($i = 0; $i < $count_range_values; $i++) {
+			if ($i == $current_range) {
+				$active = ($globals['mobile'] ? ' selected' : ' class="selected"');
+			} else {
+				$active = "";
+			}
+
+			$html .= ($globals['mobile'] ? '<option value="top_commented?range='.$i.'"'.$active.'>'.$range_names[$i].'</option>' : '<li'.$active.'><a href="top_commented?range='.$i.'">' .$range_names[$i]. '</a></li>');
+		}
+
+		$html .= ($globals['mobile'] ? '</select></form></div>' : '</ul></div>');
+
+		return $html;
+	}
+
 	public static function renderForSneakme($options, $tab_class)
 	{
 		global $globals, $current_user;
@@ -290,10 +320,10 @@ final class Tabs
 		list($content, $selected, $rss, $rss_title) = $options;
 
 		if($globals['mobile']) {
-			$html = '<div class="subheader">';
+			$html = '<div class="subheader subheader-postits">';
 
 			if ($current_user->user_id > 0 && Post::can_add()) {
-				$html .= '<a class="note" href="javascript:post_new()">'._('nuevo postit').'</a>';
+				$html .= '<a class="new-postit" href="javascript:post_new()">'._('nuevo postit').'</a>';
 			}
 
 			if (is_array($content) && !empty($content)) {
@@ -357,8 +387,8 @@ final class Tabs
 		list($content, $selected) = $options;
 
 		if($globals['mobile']) {
-			$html  = '<div class="subheader">';
-			$html .= '<a class="note priv" href="javascript:priv_new(0)">'._('nuevo').'</a>';
+			$html  = '<div class="subheader subheader-postits priv">';
+			$html .= '<a class="new-postit priv" href="javascript:priv_new(0)">'._('nuevo').'</a>';
 			$html .= '<form class="tabs-combo left" action=""><select name="tabs" onchange="location = this.value;">';
 
 			if (is_array($content)) {
@@ -373,7 +403,7 @@ final class Tabs
 			}
 			$html .= '</select></form></div>';
 		} else {
-			$html  = '<div class="subheader"><ul class="subheader-list">'."\n";
+			$html  = '<div class="subheader"><ul class="subheader-list">';
 			$html .= '<li><span><a class="toggler" href="javascript:priv_new(0)" title="'._('nuevo').'">'._('nuevo').'<span class="fa fa-pencil note-pencil"></span></a></span></li>';
 
 			if (is_array($content)) {
@@ -387,7 +417,7 @@ final class Tabs
 				$html .= '<li>' . $content . '</li>';
 			}
 
-			$html .= '</ul>' . "\n";
+			$html .= '</ul></div>';
 		}
 		return $html;
 	}

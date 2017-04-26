@@ -10,7 +10,7 @@
 <br/>
 <ul>
 <li><h2>¿Qué es mediatize?</h2>
-<p>Es una web que te permite enviar noticias o historias que serán revisadas por todos y serán promovidas, o no, a la página principal según los votos recibidos. Cuando un usuario envía una noticia ésta queda en la <a target="_blank" href="queue"><em>cola de pendientes</em></a> hasta que reúne los votos suficientes para ser promovida a la página principal.
+<p>Es un web que te permite enviar noticias o historias que serán revisadas por sus usuarios y serán promovidas a la página principal dependiendo de los votos recibidos. Cuando un usuario envía una noticia ésta queda en la <a target="_blank" href="queue"><em>cola de pendientes</em></a> hasta que reúne los votos suficientes para ser promovida a la página principal.
 </p>
 </li>
 
@@ -123,7 +123,7 @@ Encontrarás los datos de <strong>contacto</strong> en <a target="_blank" href="
 
 <li>
 <h2>¿Cómo se pagan los gastos?</h2>
-<p>De forma cooperativa.</p>
+<p>Con las <a href="<?php echo $globals['base_url_general'].'publicidad'?>">campañas publicitarias</a> exclusivas que Mediatize ofrece.</p>
 </li>
 
 </ul>
@@ -133,5 +133,5 @@ Encontrarás los datos de <strong>contacto</strong> en <a target="_blank" href="
 
 <?php
 
-	do_footer_menu();
-	do_footer();
+do_footer();
+

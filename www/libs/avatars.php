@@ -154,15 +154,20 @@ function avatar_get_from_db($user, $size=0) {
 	$original = false;
 	$http_code = 0;
 	if ($globals['Amazon_S3_media_bucket']) {
+syslog(LOG_INFO, "1");
 		$original == false;
 		if (Media::get("$user-$time-$size.jpg", 'avatars', "$file_base-$size.jpg")) {
+syslog(LOG_INFO, "2");
 			return file_get_contents("$file_base-$size.jpg");
 		}
 
+syslog(LOG_INFO, "Pre 3: $user-$time.jpg - $file_base-orig.jpg");
 		if (Media::get("$user-$time.jpg", 'avatars', "$file_base-orig.jpg")) {
+syslog(LOG_INFO, "3");
 			$delete_it = true;
 			$original = "$file_base-orig.jpg";
 		} else {
+syslog(LOG_INFO, "4");
 			$http_code = Media::$lastHTTPCode;
 			if ((is_readable($file_base . '-80.jpg') && filesize($file_base . '-80.jpg') > 0)
 					|| Media::get("$user-$time-80.jpg", 'avatars', "$file_base-80.jpg") ) {
@@ -171,6 +176,7 @@ function avatar_get_from_db($user, $size=0) {
 		}
 
 		if ($globals['Amazon_S3_delete_allowed'] && ! $original && $http_code == 404 && Media::$lastHTTPCode == 404) { // The images were not found in S3
+syslog(LOG_INFO, "5");
 			if (is_writable(mnmpath.'/'.$globals['cache_dir'])) { // Double check
 				syslog(LOG_INFO, "removing avatars not found in S3 user $user time $time");
 				avatars_remove($user);
@@ -194,10 +200,13 @@ function avatar_get_from_db($user, $size=0) {
 	}
 
 	if ($original && $size > 0 && $size != 80 ) {
+syslog(LOG_INFO, "6");
 		avatar_resize($original, "$file_base-$size.jpg", $size);
 		if ($delete_it) @unlink($original);
 	}
 
+$HOLA = @file_get_contents("$file_base-$size.jpg");
+syslog(LOG_INFO, "7: $file_base-$size.jpg : ".print_r($HOLA, true));
 	return @file_get_contents("$file_base-$size.jpg");
 }
 

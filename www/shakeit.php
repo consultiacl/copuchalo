@@ -81,7 +81,7 @@ switch ($globals['meta']) {
 		$globals['tag_status'] = 'queued';
 		break;
 	case '_popular':
-		// Show  the hihgher karma first
+		// Show  the higher karma first
 		$globals['noindex'] = true;
 		$from_time = '"'.date("Y-m-d H:00:00", $globals['now'] - 86400*4).'"';
 		$from = ", links, link_clicks";
@@ -124,7 +124,7 @@ do_header($pagetitle, _('nuevas'), false, $tab);
 
 echo '<div>';
 echo '<div id="newswrap" class="col-sm-9">';
-echo '<div>';
+echo '<div class="row">';
 
 // *** Sorting in a subselect only works with myslq:
 //     http://stackoverflow.com/questions/26372511/mysql-order-by-inside-subquery
@@ -163,12 +163,10 @@ do_last_subs('queued', 15, 'link_karma');
 //do_best_comments();
 //do_categories_cloud('queued', 24);
 do_vertical_tags('queued');
-echo '</div>' . "\n";
+echo '</div>';
 /*** END SIDEBAR ***/
 
-echo '</div>';
+echo '</div></div>';
 
-
-do_footer_menu();
 do_footer();
 

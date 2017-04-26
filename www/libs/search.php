@@ -117,13 +117,13 @@ function sphinx_do_search($by_date = false, $start = 0, $count = 10, $proximity 
 		}
 	}
 
-/*	if ($_REQUEST['u']) {
+	if ($_REQUEST['u']) {
 		$u = new User();
 		$u->username = $_REQUEST['u'];
 		$u->read();
 		$cl->SetFilterRange('user', $u->id, $u->id);
 	}
-*/
+
 	if ($_REQUEST['w'] == 'links' && $_REQUEST['p']) {
 		$f = '@'.$_REQUEST['p'];
 	} else {
