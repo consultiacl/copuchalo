@@ -320,7 +320,7 @@ function text_to_html_callback(&$matches) {
 				$suffix = ')';
 			}
 			$url = rawurldecode($matches[4]);
-			return $matches[1].'<a href="'.$matches[3].$url.'" title="'.$url.'" rel="nofollow">'.substr($url, 0, 70).'</a>'.$suffix;
+			return $matches[1].'<a href="'.$matches[3].$url.'" title="'.$url.'" target="_blank" rel="nofollow">'.substr($url, 0, 70).'</a>'.$suffix;
 	}
 	return $matches[1].$matches[2];
 }
