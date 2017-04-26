@@ -423,9 +423,8 @@ function get_subs_coef($site_id, $days = 3) {
 
 
 	foreach ($subs as $s) {
-		$x = $totals_published[$s];
-		$y = $totals_sent[$s];
-		if ($y == 0) $y = 1;
+		$x = $totals_published[$s] ? $totals_published[$s] : 1;
+		$y = $totals_sent[$s] ? $totals_sent[$s] : 1;
 
 		$c = $x/$y;
 
