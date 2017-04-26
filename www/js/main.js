@@ -1792,8 +1792,10 @@ var fancyBox = new function () {
 	var base_update = 15000;
 	var last_connect = null;
 	var notifier = $('#notifier');
-	var counter = $('#p_c_counter');
-	var counteradmin = $('#p_c_counter_admin');
+	var pcounter = $('#p_c_counter');
+	var pcounteradmin = $('#p_c_counter_admin');
+	var ccounter = $('#c_c_counter');
+	var ccounteradmin = $('#c_c_counter_admin');
 
 	if (! user_id > 0 || $('#notifier').length == 0) return;
 	$(window).on('unload onAjax', function() { $('.dropdown').hide(); });
@@ -1876,8 +1878,10 @@ var fancyBox = new function () {
 
 		document.title = document.title.replace(/^\(\d+\) /, '');
 		notifier.html(data.total);
-		counter.html(data.posts);
-		counteradmin.html(data.adminposts);
+		pcounter.html(data.posts);
+		pcounteradmin.html(data.adminposts);
+		ccounter.html(data.comments);
+		ccounteradmin.html(data.admincomments);
 		if (data.total > 0) {
 			notifier.removeClass('zero');
 			document.title = '('+data.total+') ' + document.title;

@@ -160,9 +160,9 @@ if (!empty($user->names)) {
 
 // Used to show user number of unread answers to comments
 if ($current_user->user_id == $user->id) {
-	$globals['extra_comment_conversation'] = ' ['.Comment::get_unread_conversations($user->id).']';
+	$globals['extra_comment_conversation'] = ' [<span id="c_c_counter">'.Comment::get_unread_conversations($user->id).'</span>]';
 } elseif($current_user->user_level == 'admin' || $current_user->user_level == 'god') {
-	$globals['extra_comment_conversation'] = ' ['.Comment::get_unread_conversations($globals['admin_user_id']).']';
+	$globals['extra_comment_conversation'] = ' [<span id="c_c_counter_admin">'.Comment::get_unread_conversations($globals['admin_user_id']).'</span>]';
 } else {
 	$globals['extra_comment_conversation'] = '';
 }
