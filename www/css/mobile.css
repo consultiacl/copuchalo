@@ -540,3 +540,7 @@ a.dropdown.temas-dp:before {
 	transition: 0.5s;
 }
 
+.related {
+	margin-left: 0;
+}
+
