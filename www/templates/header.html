@@ -97,17 +97,14 @@
 <link rel="license" href="http://creativecommons.org/licenses/by/3.0/es/"/>
 
 {#
-<script src="{{ globals.base_url_general }}js/{{globals.js_basic}}" type="text/javascript" charset="utf-8"></script>
-#}
-
-{#
 {% if globals.extra_head %}
 	{{ globals.extra_head}}
 {% endif %}
 
-{% try_include 'private/stats.html' %}
 {% try_include 'private/header.html' %}
 #}
+
+{% try_include 'private/stats.html' %}
 
 </head>
 <body>
@@ -275,10 +272,7 @@
 </span>
 {% endif %} {# PARTIAL partial #}
 
-<script type="text/javascript">
-	{% include 'js/basic.js' %}
-</script>
-
+<script src="{{ globals.base_url_general }}js/{{globals.js_basic}}" type="text/javascript" charset="utf-8"></script>
 
 
 {# ################################ HEADER CENTER #################################### #}
