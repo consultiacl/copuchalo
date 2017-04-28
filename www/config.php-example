@@ -403,6 +403,16 @@ $globals['new_source_bonus'] = 1.05;
 $globals['new_source_max_hours'] = 240;
 $globals['new_source_min_hours'] = 48;
 
+// promote config
+$globals['promote_max'] = 1.15;
+$globals['promote_min'] = 1.0;
+$globals['promote_pub_min'] = 1;
+$globals['promote_pub_max'] = 75;
+$globals['promote_pub_perc'] = 0.15;
+$globals['promote_hours'] = 24;
+$globals['promote_min_karma'] = 80;
+$globals['promote_min_votes'] = 8;
+
 
 // The maximun amount of annonymous votes vs user votes in 1/2 hour
 // 3 means 3 times annonymous votes as user votes in that period

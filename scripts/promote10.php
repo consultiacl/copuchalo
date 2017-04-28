@@ -9,15 +9,11 @@ include_once(mnminclude.'ban.php');
 define('DEBUG', false);
 //define('DEBUG',true);
 
-
-//header("Content-Type: text/html");
-
-
-define ('MAX', 1.15);
-define ('MIN', 1.0);
-define ('PUB_MIN', 1);
-define ('PUB_MAX', 75);
-define ('PUB_PERC', 0.4); //0.15);
+define ('MAX', $globals['promote_max']);
+define ('MIN', $globals['promote_min']);
+define ('PUB_MIN', $globals['promote_pub_min']);
+define ('PUB_MAX', $globals['promote_pub_max']);
+define ('PUB_PERC', $globals['promote_pub_perc']);
 
 $past_karma = 0;
 
@@ -33,7 +29,7 @@ foreach ($sites as $site) {
 
 	if (! $site_info->sub) {
 		echo "**********************   SUBS  -PROMOTE-   **********************************************\n";
-		promote_from_subs($site, 24, 80, 8);
+		promote_from_subs($site, $globals['promote_hours'], $globals['promote_min_karma'], $globals['promote_min_votes']);
 		echo "*****************************************************************************************\n";
 	}
 }

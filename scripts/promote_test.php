@@ -240,7 +240,7 @@ function promote($site_id) {
 			if ($link->votes >= $min_votes && $link->karma >= $karma_threshold && $published < $max_to_publish) {
 				$published++;
 				//publish($site_id, $link);
-				echo "PUBLISH $site_id, $link";
+				echo "PUBLISH $site_id, $link->link_uri";
 				$changes = 3; // to show a "published" later
 			} else {
 				if (( $must_publish || $link->karma > $min_past_karma)
@@ -264,7 +264,7 @@ function promote($site_id) {
 				$link->message = "Last resort: selected with the best karma";
 				$output .= print_row($link, 3);
 				//publish($site_id, $link);
-				echo "PUBLISH $site_id, $link";
+				echo "PUBLISH $site_id, $link->link_uri";
 				// Recheck for images, some sites add images after the article has been published
 				if (! $link->has_thumb() && $link->thumb_status != 'deleted' && ! in_array($link->id, $thumbs_queue) ) {
 					echo "Adding $link->id to thumb queue\n";
