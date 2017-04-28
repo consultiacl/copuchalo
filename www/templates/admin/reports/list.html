@@ -120,9 +120,11 @@
                         {% if report.reason == 'insult' %}
                             Insultos directos
                         {% endif %}
+			{#
                         {% if report.reason == 'incites_hatred' %}
                             Incitación al odio
                         {% endif %}
+			#}
                         {% if report.reason == 'advertising' %}
                             Promoción comercial de productos o servicios
                         {% endif %}
@@ -132,9 +134,11 @@
                         {% if report.reason == 'private_data' %}
                             Contiene datos personales propios o de un tercero
                         {% endif %}
+			{#
                         {% if report.reason == 'legality' %}
                             Incumple la legalidad española vigente
                         {% endif %}
+			#}
                         {% if report.reason == 'violate_rules' %}
                             Incumple las condiciones de uso
                         {% endif %}
