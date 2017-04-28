@@ -1,7 +1,7 @@
 <div id="pcontainer-{{ self.prefix_id }}{{ self.id }}" class="{{ classes }}">
 	<div class="postit comment-body {{ post_class }}" id="pid-{{ self.prefix_id }}{{ self.id }}">
 		{% if self.is_disabled %}
-			&#187;&nbsp;<a class="pointer" onclick="show_post({{ self.id }}, 'pid-{{ self.prefix_id }}{{ self.id }}');" title="{% trans _('ver postit') %}">{% trans _('ver postit') %}</a>
+			&#187;&nbsp;<a href="#" class="pointer" onclick="show_veiled({{ self.id }}, 'post', 'pid-{{ self.prefix_id }}{{ self.id }}');return false;" title="{% trans _('ver postit') %}">{% trans _('ver postit') %}</a>
 		{% else %}
 			{% include 'post_summary_body.html' %}
 		{% endif %}

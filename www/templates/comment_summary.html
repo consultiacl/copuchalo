@@ -3,7 +3,7 @@
 		{% if self.hide_comment %}
 			<a href="javascript:void(0)" class="expand" onclick="return togglecomment(this)" title="plegar"><i class="fa fa-chevron-up"></i></a>
 			&nbsp;<strong>#{{ self.order }}</strong>&nbsp;
-			&#187;&nbsp;<a class="pointer" onclick="show_comment({{ self.id }}, 'cid-{{ self.prefix_id }}{{ self.id }}');" title="{% trans 'ver comentario' %}">{% trans 'ver comentario' %}</a>
+			&#187;&nbsp;<a href="#" class="pointer" onclick="show_veiled({{ self.id }}, 'comment', 'cid-{{ self.prefix_id }}{{ self.id }}');return false;" title="{% trans 'ver comentario' %}">{% trans 'ver comentario' %}</a>
 		{% else %}
 			{% include 'comment_summary_body.html' %}
 		{% endif %}

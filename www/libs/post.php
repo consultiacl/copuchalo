@@ -213,12 +213,14 @@ class Post extends LCPBase {
 	function print_text($length = 0) {
 		$this->init_vars();
 		$this->prepare_summary_text($length);
+
 		return Haanga::Load('post_summary_text.html', array('self' => $this));
 	}
 
 	function print_body($length = 0) {
 		$this->init_vars();
 		$this->prepare_summary_text($length);
+
 		return Haanga::Load('post_summary_body.html', array('self' => $this));
 	}
 

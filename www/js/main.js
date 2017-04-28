@@ -240,27 +240,24 @@ function add_remove_fav(element, type, id) {
 	reportAjaxStats('html', "get_favorite");
 }
 
-function show_comment(id, container) {
-	var $cid = $('#'+container);
-	get_votes('get_comment_body.php', 'comment', container, 0, id);
-	document.getElementById(container).classList.remove('veiled');
-	get_total_answers_by_ids('comment', id);
-	$cid.trigger("DOMChanged", $cid);
+
+/* Get veiled comments or post */
+function show_veiled(id, type, container) {
+	var $id = $('#'+container);
+	var program = 'get_'+type+'_body.php';
+
+	get_votes(program, type, container, 0, id);
+	$id.addClass('veiled-content');
+	get_total_answers_by_ids(type, id);
+	$id.trigger("DOMChanged", $id);
 }
 
-function show_post(id, container) {
-	var $pid = $('#'+container);
-	get_votes('get_post_body.php', 'post', container, 0, id);
-	document.getElementById(container).classList.remove('veiled');
-	get_total_answers_by_ids('post', id);
-	$pid.trigger("DOMChanged", $pid);
-}
 
 /* Get voters by Beldar <beldar.cat at gmail dot com>
 ** Generalized for other uses (gallir at gmail dot com)
 */
-function get_votes(program,type,container,page,id) {
-	var url = base_url + 'backend/'+program+'?id='+id+'&p='+page+'&type='+type+"&key="+base_key;
+function get_votes(program, type, container, page, id) {
+	var url = base_url + 'backend/'+program+'?id='+id+'&p='+page+'&type='+type+'&key='+base_key;
 	$e = $('#'+container);
 	$e.load(url, function () {
 		$e.trigger("DOMChanged", $e);

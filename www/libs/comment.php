@@ -360,13 +360,10 @@ class Comment extends LCPBase {
 	}
 
 	function print_body($length = 0) {
-		global $current_user, $globals;
-
 		$this->init_vars();
 		$this->prepare_summary_text($length);
 
-		$vars = array('self' => $this);
-		return Haanga::Load('comment_summary_body.html', $vars);
+		return Haanga::Load('comment_summary_body.html', array('self' => $this));
 	}
 
 	function username() {
