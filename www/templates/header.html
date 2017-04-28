@@ -272,8 +272,12 @@
 </span>
 {% endif %} {# PARTIAL partial #}
 
-<script src="{{ globals.base_url_general }}js/{{globals.js_basic}}" type="text/javascript" charset="utf-8"></script>
-
+<script type="text/javascript">
+        {% include 'js/basic.js' %}
+</script>
+{#
+<script src="{{globals.base_static}}js/basic.js" type="text/javascript" charset="utf-8"></script>
+#}
 
 {# ################################ HEADER CENTER #################################### #}
 <div id="header">
