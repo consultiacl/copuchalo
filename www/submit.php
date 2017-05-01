@@ -549,7 +549,6 @@ function do_submit3() {
 		if (Link::duplicates($link->url)) {
 			// Write headers, they were not printed yet
 			do_header(_('enviar historia'), _('enviar historia'));
-			echo '<div id="singlewrap" class="col-sm-10">' . "\n";
 			report_duplicated($link->url);
 			return;
 		}
