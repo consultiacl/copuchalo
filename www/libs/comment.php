@@ -229,8 +229,8 @@ class Comment extends LCPBase {
 		$this->has_votes_info = $this->votes > 0 && $this->date > $globals['now'] - $globals['time_enabled_comments'];
 		$this->can_reply      = $current_user->user_id > 0 && $this->date > $globals['now'] - $globals['time_enabled_comments'];
 		$this->can_report     = $this->can_reply && Report::check_min_karma() && ($this->author != $current_user->user_id) && $this->type != 'admin' && !$this->hidden && !$this->ignored; // && !$link->is_sponsored();
-		$this->can_edit       =  (! isset($this->basic_summary) || ! $this->basic_summary ) && ( ($this->author == $current_user->user_id && $globals['now'] - $this->date < $globals['comment_edit_time'])
-                                                                                                    || (($this->author != $current_user->user_id || $this->type == 'admin') && $current_user->user_level == 'god'));
+		$this->can_edit       =  (! isset($this->basic_summary) || ! $this->basic_summary ) && ( ($current_user->user_level == 'god')
+                                                                                                    ||   ($this->author == $current_user->user_id && $globals['now'] - $this->date < $globals['comment_edit_time']) );
 	}
 
 	function prepare_summary_text($length = 0) {

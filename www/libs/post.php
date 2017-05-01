@@ -137,8 +137,9 @@ class Post extends LCPBase {
 		$this->show_avatar   = !$this->admin;
 		$this->can_report    = $this->can_vote && Report::check_min_karma() && ($this->author != $current_user->user_id) && !$this->admin && !$this->hidden && !$this->ignored;
 
-		if (empty($this->basic_summary) && (($this->author == $current_user->user_id && (time() - $this->date < $globals['posts_edit_time'])) ||
-			 ($current_user->user_level == 'god' && time() - $this->date < $globals['posts_edit_time_admin'] ))) {
+		if ( empty($this->basic_summary) && ( ($current_user->user_level == 'god' && time() - $this->date < $globals['posts_edit_time_admin']) ||
+                                                      ($this->author == $current_user->user_id && (time() - $this->date < $globals['posts_edit_time'])) )
+							) {
 			$this->can_edit = true;
 		} else {
 			$this->can_edit = false;
