@@ -34,7 +34,7 @@ if(isset($_POST["phase"])) {
 				$link = new Link;
 				$link->randkey = rand(10000,10000000);
 				$link->key = md5($link->randkey.$current_user->user_id.$current_user->user_email.$site_key.get_server_name());
-				echo '<div id="singlewrap">';
+				echo '<div id="singlewrap" class="col-sm-10">';
 				Haanga::Load('link/submit_empty_form.html', compact('link', 'errors'));
 				echo '</div>';
 			}
@@ -46,7 +46,7 @@ if(isset($_POST["phase"])) {
 				$link = new Link;
 				$link->randkey = rand(10000,10000000);
 				$link->key = md5($link->randkey.$current_user->user_id.$current_user->user_email.$site_key.get_server_name());
-				echo '<div id="singlewrap">';
+				echo '<div id="singlewrap" class="col-sm-10">';
 				Haanga::Load('link/submit_empty_form.html', compact('link', 'errors'));
 				echo '</div>';
 			}
@@ -549,7 +549,7 @@ function do_submit3() {
 		if (Link::duplicates($link->url)) {
 			// Write headers, they were not printed yet
 			do_header(_('enviar historia'), _('enviar historia'));
-			echo '<div id="singlewrap">' . "\n";
+			echo '<div id="singlewrap" class="col-sm-10">' . "\n";
 			report_duplicated($link->url);
 			return;
 		}
