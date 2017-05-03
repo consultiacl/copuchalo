@@ -1,0 +1,16 @@
+<ul class="dropdown-menu {% if globals.mobile %}usermenu-mobile bullet{% else %}usermenu bullet pull-right{% endif %}" id="user-panel">
+	<li><a href="{{ current_user.user_login|useruri }}"><i class="fa fa-user"></i><span>{%trans _('mi perfil')%}</span></a></li>
+	<li><a href="/profile?login={{ current_user.user_login }}"><i class="fa fa-pencil-square-o"></i><span>{%trans _('modificar perfil')%}</span></a></li>
+	<li><a href="{% exec get_user_uri current_user.user_login 'friends' %}"><i class="fa fa-users"></i><span>{%trans _('mis amigos')%}</span></a></li>
+	<li><a href="{% exec get_user_uri current_user.user_login 'temas' %}"><i class="fa fa-clone"></i><span>{%trans _('mis temas')%}</span></a></li>
+	<li><a href="{% exec get_user_uri current_user.user_login 'history' %}"><i class="fa fa-list-alt"></i><span>{%trans _('mis historias')%}</span></a></li>
+	<li><a href="{% exec get_user_uri current_user.user_login 'commented' %}"><i class="fa fa-comments"></i><span>{%trans _('mis comentarios')%}</span></a></li>
+	<li><a href="{% exec post_get_base_url current_user.user_login %}"><i class="fa fa-sticky-note-o"></i><span>{%trans _('mis postits')%}</span></a></li>
+	{% if current_user.admin %}
+		<li><a href="{{ globals.base_url_general }}admin/bans.php"><i class="fa fa-gear"></i><span>{%trans _('admin utils')%}</span></a></li>
+	{% endif %}
+	<li><a href="#" class="pointer" onclick="location.href='{{ globals.base_url_general }}login?op=logout&amp;return=%2F'">
+		<i class="fa fa-power-off"></i><span>{%trans _('cerrar sesión')%}</span>
+	</a></li>
+</ul>
+

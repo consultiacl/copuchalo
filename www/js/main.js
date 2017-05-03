@@ -1809,7 +1809,7 @@ var fancyBox = new function () {
 		var html = "";
 		var red = ' class="red"';
 		var a = ['privates', 'posts', 'comments', 'friends'];
-		var b = ['fa-envelope', 'fa-pencil-square-o', 'fa-comments', 'fa-users'];
+		var b = ['fa-envelope', 'fa-sticky-note-o', 'fa-comments', 'fa-users'];
 		for (var i=0; i < a.length; i++) {
 			field = a[i];
 			var counter = (data && data[field]) ? data[field] : 0;
@@ -1818,7 +1818,7 @@ var fancyBox = new function () {
 		if(user_level == 'admin' || user_level == 'god') {
 			html += "<li class='divider'></li>";
 			var counter = (data && data['adminposts']) ? data['adminposts'] : 0;
-			html += "<li><a "+((counter > 0) ? red : "")+"href='"+base_url_sub+"go?id={{ globals.admin_user_id }}&what=adminposts'><i class='fa fa-pencil-square-o'></i><span>" + counter + " postits admin</span></a></li>";
+			html += "<li><a "+((counter > 0) ? red : "")+"href='"+base_url_sub+"go?id={{ globals.admin_user_id }}&what=adminposts'><i class='fa fa-sticky-note-o'></i><span>" + counter + " postits admin</span></a></li>";
 			var counter = (data && data['admincomments']) ? data['admincomments'] : 0;
 			html += "<li><a "+((counter > 0) ? red : "")+" href='"+base_url_sub+"go?id={{ globals.admin_user_id }}&what=admincomments'><i class='fa fa-comments'></i><span>" + counter + " comentarios admin</span></a></li>";
 			var counter = (data && data['adminreports']) ? data['adminreports'] : 0;
