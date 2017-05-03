@@ -4325,6 +4325,7 @@ a.comment-bubble:after {  /* triangle */
 }
 
 .sbox .vote-button:hover {
+	color: #aaa;
 	opacity: 0.6;
 	transition: all 0.4s ease;
 }
