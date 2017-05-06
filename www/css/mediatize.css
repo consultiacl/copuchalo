@@ -1564,7 +1564,7 @@ color: white;
 
 .form-error-submit {
 	padding: 10px;
-	margin: 15px 0 0 0;
+	margin: 15px 0;
 	border: solid #a7cbff 1px;
 	background: #e6f0ff;
 }
