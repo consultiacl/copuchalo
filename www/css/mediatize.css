@@ -2818,6 +2818,12 @@ body { font-size: small }
 	overflow-y: auto;
 }
 
+@media screen and (max-height: 800px) {
+	.dropdown-menu.temas-dp {
+		max-height: 500px;
+	}
+}
+
 .dropdown-menu.temas-dp.bullet {
 	margin-top: 4px;
 }
