@@ -3503,7 +3503,7 @@ font-size: 14px;
 	height: 25px;
 	margin-right: 8px;
 	opacity: 0.5;
-	//border-radius: 20px;
+	border-radius: 4px;
 }
 
 .news-submitted a:link,
