@@ -1,21 +1,20 @@
 <div id="toplink" class="col-sm-12">
-	<div class="col-lg-6 imgbox">
-		<img src='{{ self.thumb_url }}' alt="{{ self.title }}"/>
-	</div>
+	{% if self.thumb_url %}
+		<div class="col-lg-6 imgbox">
+			<img src='{{ self.thumb_url }}' alt="{{ self.title }}"/>
+		</div>
+	{% endif %}
 
 	<div class="col-lg-6 textbox">
 		<div class="title-header"><a href="{{ globals.base_url }}top_active">{% trans _('Destacada') %}</a></div>
 
 		<h1><a href="{% exec self.get_permalink %}">{{ self.title }}</a></h1>
 
-		{% if not globals.mobile %}
-			{% if self.thumb_url %}
-				<a href="{{ self.relative_permalink }}" class="content-link" title="más información"><p class="news-content">{% exec text_to_summary self.content 600 %}</p></a>
-			{% else %}
-				<a href="{{ self.relative_permalink }}" class="content-link" title="más información"><p class="news-content">{% exec text_to_summary self.content 200 %}</p></a>
-			{% endif %}
+		{% if self.thumb_url %}
+			<a href="{% exec self.get_permalink %}" class="content-link" title="más información"><p class="news-content">{% exec text_to_summary self.content 200 %}</p></a>
+		{% else %}
+			<a href="{% exec self.get_permalink %}" class="content-link" title="más información"><p class="news-content">{% exec text_to_summary self.content 600 %}</p></a>
 		{% endif %}
-
 	</div>
 
 </div>   <!-- toplink -->
