@@ -127,13 +127,16 @@
 {% else %}
 	{% if link.url %}
 		<label>{% trans _('obtener imagen (puede tardar varios segundos)') %}:</label><input type="checkbox" name="thumb_get" value="1" {{thumb_state}} /><br/>
+		<label>o</label><br>
 	{% endif %}
-	<label>{% trans _('o especificar url de la imagen') %}:</label><input type="url" name="thumb_url" value="{{thumb_url}}" style="width:50%" /><br/>
+	<label>{% trans _('especificar url de la imagen') %}:</label><input type="url" name="thumb_url" value="{{thumb_url}}" style="width:50%;margin:0" /><br/>
 {% endif %}
 </fieldset>
 
 {% if not link.is_new && (current_user.admin > 0 OR current_user.user_level == "blogger") %}
-	<label>{% trans _('actualizar url') %}:</label><input type="checkbox" name="uri_update" value="1"/><br/>
+	<fieldset>
+		<label>{% trans _('actualizar url') %}:</label><input type="checkbox" name="uri_update" value="1"/>
+	</fieldset>
 {% endif %}
 
 <br/>

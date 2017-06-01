@@ -28,10 +28,9 @@
 			<legend>{% trans _('temas suscritos') %}</legend>
 			{% for sub in subscriptions %}
 				<span style="white-space:nowrap;">
-				<input name="sub_id" type="radio"{% if selected == sub.id %} checked="true"{%endif%} value="{{ sub.id}}" />
-				<label for "sub">{{ sub.name }}</label>
+					<input name="sub_id" type="radio"{% if selected == sub.id %} checked="true"{%endif%} value="{{ sub.id}}" />
+					<label for "sub" style="margin-right:20px">{{ sub.name }}</label>
 				</span>
-				&nbsp;&nbsp;&nbsp;&nbsp;
 			{% endfor %}
 			</fieldset>
 		{% endif %}
