@@ -159,12 +159,11 @@
 	{% endif %}
 
 
+	{# ###############################  CONTENT ############################### #}
 
 	{% if type == 'full' OR type == 'preview' OR type == 'story' %}
-		{# ###############################  CONTENT ############################### #}
-
 		{% if content_full %}
-			<p class="news-content-full">{{ self.content }}</p>
+			<p class="news-content-full">{{ self.content_html }}</p>
 		{% else %}
 			<a href="{{ self.relative_permalink }}" class="content-link" title="más información"><p class="news-content">{{ self.content }}</p></a>
 		{% endif %}

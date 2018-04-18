@@ -140,9 +140,9 @@ if ($links) {
 		if ($link->votes == 0 && $link->author != $current_user->user_id) continue;
 		$link->max_len = 600;
 		if ($offset < 1000) {
-			$link->print_summary('full', 16);
+			$link->print_summary('queue', 16);
 		} else {
-			$link->print_summary('full');
+			$link->print_summary('queue');
 		}
 	}
 }
@@ -166,7 +166,7 @@ do_vertical_tags('queued');
 echo '</div>';
 /*** END SIDEBAR ***/
 
-echo '</div></div>';
+echo '</div>';
 
 do_footer();
 

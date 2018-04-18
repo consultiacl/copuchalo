@@ -371,6 +371,12 @@ a.comment-bubble {
 	line-height: 30px;
 }
 
+.mobile-bar .stream-text {
+	color: #f51;
+	font-size: 35px;
+	line-height: 30px;
+}
+
 .mobile-bar .header-buttons-mobile {
 	padding: 6px 2px;
 	line-height: 30px;
@@ -391,7 +397,9 @@ a.comment-bubble {
 }
 
 .mobile-bar .notifier-badge {
-	top: 3px;
+	/*top: 3px;*/
+	border-radius: 8px;
+	padding-top: 1px;
 }
 
 .mobile-bar .usermenu-mobile {
@@ -427,7 +435,7 @@ a.comment-bubble {
 .mobile-bar #notifications span,
 .mobile-bar .usermenu-mobile span {
 	font-size: 15px;
-	padding-left: 3px;
+	/*padding-left: 3px;*/
 }
 
 .dropdown-menu.notifications.bullet.pull-right,

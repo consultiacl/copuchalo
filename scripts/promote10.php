@@ -76,9 +76,9 @@ function promote($site_id) {
 
 	$min_karma_coef = $globals['min_karma_coef'];
 
-        // 24 hours
-	$links_queue = $db->get_var("SELECT SQL_NO_CACHE count(*) from sub_statuses WHERE id = $site_id and date > date_sub(now(), interval 24 hour) and status in ('published', 'queued')");
-	$links_queue_all = $db->get_var("SELECT SQL_NO_CACHE count(*) from sub_statuses, links WHERE id = $site_id and date > date_sub(now(), interval 24 hour) and link_id = link and link_votes > 0");
+        // Links in queue to check
+	$links_queue = $db->get_var("SELECT SQL_NO_CACHE count(*) from sub_statuses WHERE id = $site_id and date > date_sub(now(), interval ".$globals['time_queue_check']." hour) and status in ('published', 'queued')");
+	$links_queue_all = $db->get_var("SELECT SQL_NO_CACHE count(*) from sub_statuses, links WHERE id = $site_id and date > date_sub(now(), interval ".$globals['time_queue_check']." hour) and link_id = link and link_votes > 0");
 
 
 	$pub_estimation = intval(max(min($links_queue * PUB_PERC, PUB_MAX), PUB_MIN));
@@ -114,7 +114,7 @@ function promote($site_id) {
 		$output .= "Delayed! <br/>";
 	}
 	$output .= "Last published at: " . get_date_time($last_published) ."<br/>\n";
-	$output .= "24hs queue: $links_queue/$links_queue_all, Published: $links_published -> $links_published_projection Published goal: $pub_estimation, Interval: $interval secs, difference: ". intval($diff)." secs, Decay: $decay<br/>\n";
+	$output .= $globals['time_queue_check']."hs queue: $links_queue/$links_queue_all, Published: $links_published -> $links_published_projection Published goal: $pub_estimation, Interval: $interval secs, difference: ". intval($diff)." secs, Decay: $decay<br/>\n";
 
 	$continue = true;
 	$published=0;
@@ -133,7 +133,7 @@ function promote($site_id) {
 	if ($decay >= 1) $max_to_publish = 3;
 	else $max_to_publish = 1;
 
-	$min_votes = 3;
+	$min_votes = $globals['min_votes'];
 	/////////////
 
 	$limit_karma = round(min($past_karma,$min_karma) * 0.40);

@@ -27,12 +27,12 @@
 				</form>
 		</div>
 		<div class="bottom text-center">
-			¿Nuevo aquí? <a href="register"><b>¡Únete!</b></a>
+			¿Nuevo aquí? <a href="{{ globals.base_url_general }}register"><b>¡Únete!</b></a>
 		</div>
 	</div>
 </li>
 </ul>
 {% if ! globals.mobile %}
-	<a href="/register" class="header-btn register-btn" href="{{ globals.base_url_general }}register" title="{% trans _('registro') %}">registro</a>
+	<a href="{{ globals.base_url_general }}register" class="header-btn register-btn" title="{% trans _('registro') %}">registro</a>
 {% endif %}
 

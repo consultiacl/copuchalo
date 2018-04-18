@@ -166,6 +166,8 @@ $globals['media_front_wide'] = 312;   //* 2 = 624
 $globals['media_big_height'] = 262; //228
 $globals['media_big_wide'] = 480;   //420
 
+$globals['default_max_chars'] = 550;
+$globals['urlmaxchars'] = 512;
 
 // Give 4 minutes to edit a comment
 $globals['comment_edit_time'] = 240;
@@ -412,7 +414,8 @@ $globals['promote_pub_perc'] = 0.15;
 $globals['promote_hours'] = 24;
 $globals['promote_min_karma'] = 80;
 $globals['promote_min_votes'] = 8;
-
+$globals['min_votes'] = 8;
+$globals['time_queue_check'] = 24;
 
 // The maximun amount of annonymous votes vs user votes in 1/2 hour
 // 3 means 3 times annonymous votes as user votes in that period

@@ -40,7 +40,7 @@ do_best_comments();
 echo '</div>';
 /*** END SIDEBAR ***/
 
-echo '</div></div>';
+echo '</div>';
 
 do_footer();
 

@@ -91,7 +91,7 @@ if ($rows > 20) {
 echo '</div>' . "\n";
 /*** END SIDEBAR ***/
 
-echo '</div></div>';
+echo '</div>';
 
 do_footer();
 exit(0);

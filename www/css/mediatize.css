@@ -774,6 +774,45 @@ a.logo-letters:visited {
 	//margin: 30px 0 20px 0;
 }
 
+.banner-miner {
+	font-family: "Open Sans", "sans-serif";
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 35px;
+	border: 1px solid #ddd;
+	text-align: center;
+	margin-bottom: 25px;
+	border-radius: 4px;
+	background: #fafafa;
+}
+
+.banner-miner a:link,
+.banner-miner a:visited {
+	text-decoration: underline;
+}
+
+.banner-miner > .frame > .text {
+	font-size: 18px;
+	margin-bottom: 25px;
+}
+
+.banner-miner > .frame > .button {
+	margin-top: 25px;
+}
+
+.miner > .text {
+	line-height: 1.6;
+	margin-bottom: 35px;
+}
+
+.miner > .text a:link,
+.miner > .text a:visited {
+	text-decoration: underline;
+}
+
+
+
 #container {
 	display: -webkit-box;
 	display: -moz-box;
@@ -961,6 +1000,7 @@ text-align: center;
 	margin: 0 2px 0 50px;
 	font-size: 12px;
 	font-weight: normal;
+	line-height: 1.45;
 	color: #03f;
 }
 
@@ -974,8 +1014,8 @@ padding-bottom:6px;
 }
 
 .sidebox .cell {
-	margin: 5px 0;
-	min-height:35px;
+	margin: 10px 0;
+	min-height: 35px;
 	clear: both;
 }
 
@@ -1751,17 +1791,13 @@ font-size: 100%;
 }
 
 .comment-content {
-	padding: 8px 5px 0 10px;
+	padding: 8px 10px 4px 10px;
 }
 
 .comment-text {
-	padding-top: 7px;
-	padding-bottom: 7px;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	//border-top: 1px solid #e1e2e3;
-	//border-bottom: 1px solid #eee;
-	//border-bottom: 1px solid #ccc;
+	font-family: "Open Sans", "sans-serif";
+	font-size: 14px;
+	margin: 12px 0;
 }
 
 .comment-text a {
@@ -1773,7 +1809,7 @@ font-size: 100%;
 	position: relative;
 	padding: 4px 5px 4px 33px;
 	margin-bottom: 10px;
-	line-height: 120%;
+	line-height: 1.42857143;
 	text-align: left;
 	overflow: hidden;
 	min-height: 61px;
@@ -1829,6 +1865,7 @@ font-size: 100%;
 .comment-body .suggestion {
 	color: #005be2;
 	text-decoration: underline;
+	border-radius: 4px;
 }
 
 .comment-body.admin {
@@ -1994,17 +2031,14 @@ padding-left: 0;
 }
 
 .post-content {
-	padding: 8px 5px 0 10px;
+	padding: 8px 10px 4px 10px;
 }
 
 .post-text {
-	padding-top: 7px;
-	padding-bottom: 7px;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	//border-top: 1px solid #e1e2e3;
-	//border-bottom: 1px solid #eee;
-	//border-bottom: 1px solid #eda;
+	font-family: "Open Sans", "sans-serif";
+	font-size: 14px;
+	margin: 12px 0;
+	line-height: 1.42857143;
 }
 
 .post-text a {
@@ -2013,9 +2047,10 @@ padding-left: 0;
 
 .post-header .username,
 .post-header a {
+	font-family: "Open Sans", "sans-serif";
+	font-size: 15px;
 	display: inline-block;
 	color: #005be2;
-	font-size: 15px;
 	font-weight: bold;
 	text-decoration: none;
 }
@@ -2353,7 +2388,6 @@ text-align: right;
 }
 
 .voters-list {
-	padding: 4px;
 	min-height: 150px;
 	border: 1px solid;
 	color: #777;
@@ -2369,7 +2403,7 @@ text-align: right;
 	height: 20%;
 	font-size: 85%;
 	white-space: nowrap;
-	padding: 5px 0 5px 0;
+	margin: 5px 2px;
 }
 
 .friends-item {
@@ -3428,18 +3462,21 @@ font-size: 14px;
 
 /* "ellipsis effect" without ellipsis :D */
 .news-content {
-        color: #444;
+	color: #444;
 	/*width: 98%;*/
 	/*max-height: 142px;*/
 	max-height: 10em;   /* font-size * 7 lines */
 	display: block;
-	font-family: "Graphik Web","Helvetica Neue",Helvetica,Arial,sans-serif;
-        font-size: 0.875em;
-        font-weight: normal;
-        line-height: 1.428571429em;
-        margin: 0 auto 5px auto;
+	font-family: "Graphik Web", sans-serif;
+	//font-size: 0.875em;
+	//font-family: "Open Sans", sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 20px;
+	//letter-spacing: 0.333px;
+	margin: 0 auto 5px auto;
 	display: -webkit-box;
-	-webkit-line-clamp: 7;
+	-webkit-line-clamp: 6;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -3521,6 +3558,11 @@ font-size: 14px;
 	text-decoration: underline;
 }
 
+.news-submitted .media {
+	font-weight: bold;
+}
+
+
 .news-submitted-front {
 
 }
@@ -3528,12 +3570,11 @@ font-size: 14px;
 
 .news-details {
 	font-family: 'Roboto', sans-serif;
-        font-size: 12px;
+	font-size: 12px;
 	line-height: 18px;
 	color: #808080;
 	display: block;
 	padding: 5px 0 5px 0;
-	//margin-top: 5px;
 }
 
 .news-details .main {
@@ -4483,6 +4524,27 @@ a.comment-bubble:after {  /* triangle */
 	text-decoration: none;
 }
 
+/* post button */
+.post-btn {
+	background-color: transparent;
+	border-radius: 4px;
+	color: #555 !important;
+	padding: 5px 10px;
+	border: solid #555 1px;
+	font-size: 0.8em;
+	text-decoration: none;
+	text-align: center;
+}
+
+.post-btn:hover,
+.post-btn:hover span {
+	background: #555;
+	color: #eee !important;
+	text-decoration: none;
+	transition: all 0.4s ease;
+}
+
+
 /*
 a.header-btn {
 	background-color: #fff;
@@ -4517,6 +4579,12 @@ a.header-btn:hover {
 	color: #000;
 	transition: all 0.2s ease;
 	opacity: 0.8;
+}
+
+a.header-btn.red {
+	color: #fff;
+	background: #f51;
+	font-weight: bold;
 }
 
 a.register-btn {
@@ -4733,6 +4801,14 @@ a.btn-tw:hover {
 	border: 1px solid rgba(0,0,0,0.05);
 }
 
+.news-img-zone img.img-story3 {
+	max-width: 233px;
+	max-height: 128px;
+	width: auto;
+	height: auto;
+	border: 1px solid rgba(0,0,0,0.05);
+}
+
 .news-info {
 	padding-left: 10px;
 	padding-bottom: 30px;
@@ -4740,12 +4816,14 @@ a.btn-tw:hover {
 }
 
 .news-content2 {
-        color: #444;
-        display: block;
-        font-family: "Graphik Web","Helvetica Neue",Helvetica,Arial,sans-serif;
-        font-size: 0.875em;
-        font-weight: normal;
-        line-height: 1.428571429em;
+	color: #444;
+	display: block;
+	font-family: "Graphik Web", sans-serif;
+	//font-size: 0.875em;
+	//font-family: "Open Sans", sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 20px;
 }
 
 .ads-interlinks {
@@ -4771,9 +4849,10 @@ a.btn-tw:hover {
 
 .comment-header .username,
 .comment-header a {
+	font-family: "Open Sans", "sans-serif";
+	font-size: 15px;
 	display: inline-block;
 	color: #005be2;
-	font-size: 15px;
 	font-weight: bold;
 	text-decoration: none;
 }

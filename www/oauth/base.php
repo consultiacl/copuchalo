@@ -20,12 +20,15 @@
 // 		http://www.affero.org/oagpl.html
 // AFFERO GENERAL PUBLIC LICENSE is also included in the file called "COPYING".
 
+
 // for the do_errors
 require_once(mnminclude.$globals['html_main']);
 
 class OAuthBase {
 
 	function __construct() {
+		global $globals;
+
 		// syslog(LOG_INFO, "AuthBase::__construct: ". $_GET['return'] . "  COOKIE: ".$_COOKIE['return']);
 		if (!empty($_GET['return'])) {
 			setcookie('return', $_GET['return'], 0, $globals['base_url'], UserAuth::domain(), false, true);
@@ -90,8 +93,7 @@ class OAuthBase {
 		if ( $user->id == 0) {
 			$user->date = $globals['now'];
 			$user->ip = $globals['user_ip'];
-			$user->email = $this->username.'@'.$this->service;
-			$user->email_register = $this->username.'@'.$this->service;
+			$user->email = $user->email_register = $this->username.'@'.$this->service;
 			$user->username_register = $user->username;
 		}
 		syslog(LOG_NOTICE, "new user from $this->service: $user->username, $user->names");
@@ -129,11 +131,14 @@ class OAuthBase {
 		// syslog(LOG_INFO, "user_return: ". $this->return. "  COOKIE: ".$_COOKIE['return']);
 		setcookie('return', '', time() - 10000, $globals['base_url'], UserAuth::domain());
 		setcookie('return', '', time() - 10000, $globals['base_url']);
-		if(!empty($this->return)) {
-			header('Location: '.$globals['scheme'].'//'.get_server_name().$this->return);
-		} else {
-			header('Location: '.$globals['scheme'].'//'.get_server_name().$globals['base_url']);
-		}
+		header('Location: ' . $this->get_full_return_url());
 		exit;
 	}
+
+	function get_full_return_url() {
+		global $globals;
+
+		return $globals['scheme'] . '//' . get_server_name() . (empty($this->return) ? $globals['base_url'] : $this->return);
+	}
 }
+

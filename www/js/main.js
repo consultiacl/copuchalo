@@ -924,6 +924,7 @@ function post_load_form(id, container) {
 		}
 
 		$container = $('#' + container);
+		$container.empty();
 		$container.html(data.html).trigger('DOMChanged', $container);
 		$container.show('fast');
 		initFormPostEdit(id, $container);

@@ -17,7 +17,7 @@ function mnm_banner_load() {
 }
 
 document.write('<iframe width="100%" height="100%" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="mnm_banner_ifr"></iframe>');
-document.write('<script type="text/javascript">');
+document.write('<script>');
 document.write('setTimeout("mnm_banner_load()", 100);');
 document.write('</script>');
 

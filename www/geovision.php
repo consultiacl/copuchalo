@@ -28,7 +28,7 @@ echo '<div class="topheading"><h2>actividad de los usuarios geolocalizados</h2><
 echo '<div id="map" style="width: 95%; height: 500px;margin:0 0 0 20px"></div></div>'
 ?>
 
-<script type="text/javascript">
+<script>
 //<![CDATA[
 var timestamp = 0;
 var period = 10000;

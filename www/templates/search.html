@@ -40,7 +40,7 @@
         </div>
         </form>
 
-	<script type="text/javascript">
+	<script>
 	        var do_change = function() {
 			var type = $("#w").val();
 			if (type == "links") { $("#p").attr("disabled", false); $("#s").attr("disabled", false); }
@@ -63,7 +63,7 @@
 </div>
 {% exec print_result as dummy %}
 
-<script type="text/javascript">
+<script>
 	addPostCode(function () { $(".ac_user").user_autocomplete();});
 </script>
 

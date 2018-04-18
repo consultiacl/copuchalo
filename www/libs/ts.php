@@ -23,7 +23,7 @@
 
 if (empty($globals['recaptcha_public_key']) || empty($globals['recaptcha_private_key'])) {
 	session_cache_expire(15);
-	session_name('mnm_captcha');
+	session_name('mdtz_captcha');
 	session_start();
 } else {
 	require_once(mnminclude.'recaptchalib.php');

@@ -163,11 +163,11 @@
 
 
 	{# ###############################  CONTENT ############################### #}
-	{% if type == 'full' OR type == 'preview' OR type == 'story' %}
-		{% if type == 'full' %}
-			<a href="{{ self.relative_permalink }}" class="content-link" title="más información"><p class="news-content2">{{ self.content }}</p></a>
+	{% if type != 'short' %}
+		{% if content_full OR type == 'story' %}
+			<p class="news-content2">{{ self.content_html }}</p>
 		{% else %}
-			<p class="news-content2">{{ self.content }}</p>
+			<a href="{{ self.relative_permalink }}" class="content-link" title="más información"><p class="news-content2">{{ self.content }}</p></a>
 		{% endif %}
 	{% endif %}
 

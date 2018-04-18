@@ -117,15 +117,16 @@ function check_and_save($comment, $link) {
 	}
 
 	$user_id = intval($_POST['user_id']);
-	if(intval($_POST['id']) == $comment->id && $current_user->authenticated &&
-		// Allow the author of the post
-		(($user_id == $current_user->user_id
-				&& $current_user->user_id == $comment->author
-				&& time() - $comment->date < $globals['comment_edit_time'] * 1.5)
-			|| (($comment->author != $current_user->user_id || $comment->type == 'admin')
-				&& $current_user->user_level == 'god')) &&
-		$_POST['key']  == md5($comment->randkey.$site_key)  &&
-		mb_strlen(trim($_POST['comment_content'])) > 2 ) {
+	if(	intval($_POST['id']) == $comment->id
+		&& $current_user->authenticated
+		&& (
+			($user_id == $current_user->user_id && $current_user->user_id == $comment->author && ((time() - $comment->date < $globals['comment_edit_time'] * 1.5) || $current_user->user_level == 'god'))
+			||
+			(($comment->author != $current_user->user_id || $comment->type == 'admin') && $current_user->user_level == 'god')
+		   )
+		&& $_POST['key']  == md5($comment->randkey.$site_key)
+		&& mb_strlen(trim($_POST['comment_content'])) > 2
+	) {
 		$comment->content=clean_text_with_tags($_POST['comment_content'], 0, false, 10000);
 
 		if ($current_user->user_level == 'god') {

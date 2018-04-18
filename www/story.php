@@ -359,7 +359,7 @@ case 3:
 	echo '<div id="voters" class="col-sm-12">';
 
 	echo '<div id="voters-container">';
-	if ($globals['link']->sent_date < $globals['now'] - 60*86400) { // older than 60 days
+	if ($globals['link']->sent_date < $globals['now'] - 60*86400 && $current_user->user_level != 'god') { // older than 60 days and no superadmin
 		echo _('Noticia antigua, datos de votos archivados');
 	} else {
 		include(mnmpath.'/backend/meneos.php');

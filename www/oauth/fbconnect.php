@@ -25,37 +25,38 @@ $base = dirname(dirname($_SERVER["SCRIPT_FILENAME"])); // Get parent dir that wo
 include("$base/config.php");
 
 include('base.php');
-include_once(mnminclude.'facebook/facebook.php');
+include_once(mnminclude.'Facebook/autoload.php');
 
 
 class FBConnect extends OAuthBase {
 
 	function __construct() {
 		global $globals;
-		// syslog(LOG_INFO, "construct: ".$_SERVER["REQUEST_URI"]);
-		$this->service = 'facebook';
 
-		if ($globals['mobile_version']) $server = 'm.facebook.com';
-		else $server = 'www.facebook.com';
-
-		$this->facebook = new Facebook(array(
-					'appId' => $globals['facebook_key'],
-					'secret' => $globals['facebook_secret'],
-					));
-		$this->user = $this->facebook->getUser();
+		if (!session_id()) {
+			session_start();
+		}
 
 		parent::__construct();
+
+		$this->service = 'facebook';
+
+		$this->facebook = new Facebook\Facebook([
+					'app_id' => $globals['facebook_key'],
+					'app_secret' => $globals['facebook_secret'],
+					'default_graph_version' => 'v2.5',
+					]);
+
+		$this->helper = $this->facebook->getRedirectLoginHelper();
 	}
 
 	function authRequest() {
 		global $globals;
-		// syslog(LOG_INFO, "authRequest: ".$_SERVER["REQUEST_URI"]);
 
-		// Print html needed for FB Connect API
-		$loginUrl = $this->facebook->getLoginUrl();
+		$loginUrl = $this->helper->getLoginUrl($globals['scheme'] . '//' . get_server_name() . $_SERVER['REQUEST_URI']);
 
 		echo "<html><head>\n";
-		echo '<script type="text/javascript">'."\n";
+		echo "<script>\n";
 		echo 'self.location = "'.$loginUrl.'";'."\n";
 		echo '</script>'."\n";
 		echo '</head><body></body></html>'."\n";
@@ -64,37 +65,67 @@ class FBConnect extends OAuthBase {
 
 	function authorize() {
 		global $globals, $db;
-		// syslog(LOG_INFO, "authorize: ".$_SERVER["REQUEST_URI"]);
-
 
 		try {
-			$user_profile = $this->facebook->api('/me');
-		} catch (FacebookApiException $e) {
-			$this->user = null;
-			$this->user_return();
-			die;
+			$accessToken = $this->helper->getAccessToken();
+		} catch(Facebook\Exceptions\FacebookResponseException $e) {
+			// When Graph returns an error
+			echo 'Graph returned an error: ' . $e->getMessage();
+			exit;
+		} catch(Facebook\Exceptions\FacebookSDKException $e) {
+			// When validation fails or other local issues
+			echo 'Facebook SDK returned an error: ' . $e->getMessage();
+			exit;
 		}
 
+		if (! isset($accessToken)) {
+			if ($this->helper->getError()) {
+				header('HTTP/1.0 401 Unauthorized');
+				echo "Error: " . $this->helper->getError() . "\n";
+				echo "Error Code: " . $this->helper->getErrorCode() . "\n";
+				echo "Error Reason: " . $this->helper->getErrorReason() . "\n";
+				echo "Error Description: " . $this->helper->getErrorDescription() . "\n";
+			} else {
+				header('HTTP/1.0 400 Bad Request');
+				echo 'Bad request';
+			}
+			exit;
+		}
+
+		if (!$accessToken->isLongLived()) {
+			try {
+				$oAuth2Client = $this->facebook->getOAuth2Client();
+				$accessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
+			} catch (Facebook\Exceptions\FacebookSDKException $e) {
+				echo "<p>Error getting long-lived access token: " . $this->helper->getMessage() . "</p>\n\n";
+				exit;
+			}
+		}
+
+		$this->facebook->setDefaultAccessToken((string)$accessToken);
+		$_SESSION['fb_access_token'] = (string) $accessToken;
+
+		// getting basic info about user
+		try {
+			$user_profile = $this->facebook->get('/me?fields=id,name,link,picture.type(large)')->getGraphUser()->asArray();
+		} catch(FacebookApiException $e) {
+			// redirecting user back to app login page
+			$this->user = null;
+			$this->user_return();
+			exit;
+		}
 
 		$this->token = $user_profile['id'];
 		$this->secret = $user_profile['id'];
 		$this->uid = $user_profile['id'];
-		$this->username = preg_replace('/.+?\/.*?([\w\.\-_]+)$/', '$1', $user_profile['username']);
-		// Most Facebook users don't have a name, only profile number
-		if (!$this->username || preg_match('/^\d+$/', $this->username)) {
-			// Create a name like a uri used in stories
-			if (strlen($user_profile['name']) > 2) {
-				$this->username = User::get_valid_username($user_profile['name']);
-			} else {
-				$this->username = 'fb'.$this->username;
-			}
-		}
+		$this->username = User::get_valid_username($user_profile['name']);
+
 		$db->transaction();
 		if (!$this->user_exists()) {
 			$this->url = $user_profile['link'];
 			$this->names = $user_profile['name'];
-			if ($user_profile['id']) {
-				$this->avatar = "http://graph.facebook.com/".$user_profile['id']."/picture";
+			if ($user_profile['picture']['url']) {
+				$this->avatar = $user_profile['picture']['url'];
 			}
 			$this->store_user();
 		}
@@ -105,13 +136,12 @@ class FBConnect extends OAuthBase {
 }
 
 
+/* *********************** Begin ********************************* */
 $auth = new FBConnect();
 
-// syslog(LOG_INFO, "FBconnect: ".$_SERVER["REQUEST_URI"]);
-if ($auth->user) {
+if (isset($_SESSION['FBRLH_state']) && isset($_REQUEST['code']) && isset($_REQUEST['state'])) {
 	$auth->authorize();
 } else {
 	$auth->authRequest();
 }
 
-?>

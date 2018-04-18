@@ -226,7 +226,7 @@ class Comment extends LCPBase {
 		$this->can_vote       = $current_user->user_id > 0  && $this->author != $current_user->user_id && $this->date > $globals['now'] - $globals['time_enabled_comments'] && $this->user_level != 'disabled';
 		$this->user_can_vote  = $current_user->user_karma > $globals['min_karma_for_comment_votes'] && ! $this->voted;
 		$this->modified_time  = txt_time_diff($this->date, $this->modified);
-		$this->has_votes_info = $this->votes > 0 && $this->date > $globals['now'] - $globals['time_enabled_comments'];
+		$this->has_votes_info = $this->votes > 0 && ($this->date > $globals['now'] - $globals['time_enabled_comments'] || $current_user->user_level == 'god');
 		$this->can_reply      = $current_user->user_id > 0 && $this->date > $globals['now'] - $globals['time_enabled_comments'];
 		$this->can_report     = $this->can_reply && Report::check_min_karma() && ($this->author != $current_user->user_id) && $this->type != 'admin' && !$this->hidden && !$this->ignored; // && !$link->is_sponsored();
 		$this->can_edit       =  (! isset($this->basic_summary) || ! $this->basic_summary ) && ( ($current_user->user_level == 'god')

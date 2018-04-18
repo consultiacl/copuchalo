@@ -24,8 +24,8 @@ header('Content-Type: text/html; charset=utf-8');
 .sneakerwho { float: right;display: block;width: 16%;text-align: right;overflow: hidden; font-size:7pt;}
 /*neaker-who" style="float: left;display: block;width: 15%;text-align: right;overflow: hidden;font-size:7pt; */
 </style>
-<script type="text/javascript" src="http://www.netvibes.com/api/0.3/emulation.js"></script>
-<script type="text/javascript">
+<script src="http://www.netvibes.com/api/0.3/emulation.js"></script>
+<script>
 //<![CDATA[
 var initialized = false;
 var enabled = true;

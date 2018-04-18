@@ -644,9 +644,12 @@ function put_emojis_callback($matches) {
 			'cool' => 'cool.png" alt="8-D" title=":cool: 8-D" width="18" height="18"',
 			'cry' => 'cry.gif" alt=":\'(" title=":cry: :\'(" width="18" height="18"',
 			'cunao' => 'cunao.png" alt=":_)" title=":cunao: :_)" width="18" height="18"',
+			'cuernos' => 'cuernos.png" alt="\m/" title=":cuernos: \m/" width="18" height="21"',
+			'cuernos-metal' => 'cuernos-metal.png" alt="\w/" title=":cuernos-metal: \w/" width="18" height="24"',
 			'ffu' => 'ffu.png" alt=":ffu:" title=":ffu:" width="23" height="18"',
 			'goatse' => 'goatse.png" alt=":goatse:" title=":goatse:" width="18" height="18"',
 			'grin' =>'grin.png" alt=":-D" title=":-D" width="18" height="18"',
+			'hitler' => 'hitler.png" alt=":hitler:" title=":hitler:" width="18" height="18"',
 			'hug' => 'hug.png" alt=":hug:" title=":hug:" width="35" height="18"',
 			'huh' => 'huh.png" alt="?(" title="?(" width="16" height="21"',
 			'kiss' => 'kiss.gif" alt=":-*" title=":-* :*" width="18" height="18"',
@@ -654,8 +657,10 @@ function put_emojis_callback($matches) {
 			'lol' => 'lol.gif" alt="xD" title=":lol: xD" width="18" height="18"',
 			'oops' => 'oops.png" alt="&lt;&#58;(" title="&#58;oops&#58; &lt;&#58;(" width="18" height="18"',
 			'palm' => 'palm.png" alt=":palm:" title=":palm:" width="18" height="18"',
+			'peineta-metal' => 'peineta-metal.png" alt=":peineta-metal:" title=":peineta-metal:" width="18" height="24"',
 			'roll' => 'roll.gif" alt=":roll:" title=":roll:" width="18" height="18"',
 			'sad' => 'sad.png" alt=":-(" title=":-(" width="18" height="18"',
+			'siegheil' => 'siegheil.png" alt=":siegheil:" title=":siegheil:" width="26" height="18"',
 			'shame' =>'shame.png" alt="¬¬" title="¬¬ :shame:" width="18" height="18"',
 			'shit' => 'shit.png" alt=":shit:" title=":shit:" width="18" height="18"',
 			'shocked' => 'shocked.gif" alt=":-O" title=":-O" width="18" height="18"',
@@ -748,6 +753,11 @@ function normalize_smileys($str) {
 	$str=preg_replace('/(\s|^):tinfoil:/i', '$1{tinfoil}', $str);
 	$str=preg_replace('/(\s|^):clap:/i', '$1{clap}', $str);
 	$str=preg_replace('/(\s|^):_\)|:cunao:/i', '$1{cunao}', $str);
+	$str=preg_replace('/(\s|^)\\m\/|:cuernos:/i', '$1{cuernos}', $str);
+	$str=preg_replace('/(\s|^)\\w\/|:cuernos\-metal:/i', '$1{cuernos-metal}', $str);
+	$str=preg_replace('/(\s|^):hitler:/i', '$1{hitler}', $str);
+	$str=preg_replace('/(\s|^):peineta\-metal:/i', '$1{peineta-metal}', $str);
+	$str=preg_replace('/(\s|^):siegheil:/i', '$1{siegheil}', $str);
 
 	return $str;
 }
@@ -1386,7 +1396,7 @@ function close_connection(){
 }
 
 function add_javascript($code) {
-	echo '<script type="text/javascript">';
+	echo '<script>';
 	echo 'addPostCode(\''.$code.'\');';
 	echo '</script>';
 }

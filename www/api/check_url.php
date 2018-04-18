@@ -20,7 +20,7 @@ stats_increment('ajax', true);
 
 echo '<html>'."\n";
 
-echo '<script type="text/javascript" language="Javascript">'."\n";
+echo '<script>'."\n";
 echo '   mnm_yesover = new Image;'."\n";
 echo '   mnm_vote_notover = new Image;'."\n";
 echo '   mnm_add_notover = new Image;'."\n";

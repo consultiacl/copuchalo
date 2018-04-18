@@ -19,6 +19,7 @@ import syslog
 
 re_link = re.compile(r'<link ([^>]+(?:text\/xml|application\/atom\+xml|application\/rss\+xml)[^>]+[^>]+)/*>',re.I)
 re_href = re.compile(r'''href=['"]*([^"']+)["']''', re.I)
+hdr_string = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11'}
 
 def post_note(text):
 	try:
@@ -189,36 +190,45 @@ class BaseBlogs(object):
 
 		""" Get last rss read """
 		d = DBM.cursor()
-		d.execute("select unix_timestamp(max(date)) from rss where blog_id = %s", (self.id,))
+		d.execute("select unix_timestamp(max(date)) from rss where blog_id = %s limit 1", (self.id,))
 		self.last_read, = d.fetchone()
 		d.close()
 
 		c = DBM.cursor('update')
-		c.execute("update blogs set blog_feed_read = now() where blog_id = %s", (self.id))
+		c.execute("update blogs set blog_feed_read = now() where blog_id = %s", (self.id,))
 		DBM.commit()
 		now = time.time()
 
-		print "Reading ", self.url, self.feed
 		try:
 			if self.last_read:
 				modified = time.gmtime(self.last_read)
 			else:
 				modified = time.gmtime(now - dbconf.blogs['min_hours']*3600)
+			#print " --- DEBUG: ", modified, self.feed
 			doc = feedparser.parse(self.feed, modified=modified)
 		except (urllib2.URLError, urllib2.HTTPError, UnicodeEncodeError), e:
-			print "connection failed (%s) %s" % (e, self.feed)
+			print " --- ERROR: connection failed (%s) %s" % (e, self.feed)
 			DBM.commit()
 			c.close()
 			return False
 
 		if not doc.entries or doc.status == 304:
-			print "Not modified"
+			print "   * Not modified"
 			DBM.commit()
 			c.close()
 			return entries
 
-		for e in doc.entries:
-			if entries >= self.max: break
+		#print "---------------------------------------------------------------------------------------------------------------------------------------------"
+		#print "BLOG"
+		#for e in doc.entries:
+		#	print "###########################################################################"
+		#	print e
+		#	print "###########################################################################"
+		#print "---------------------------------------------------------------------------------------------------------------------------------------------"
+
+		for i, e in enumerate(doc.entries):
+			if i >= dbconf.blogs['max_feeds']:
+				break
 
 			if hasattr(e, 'published_parsed') and e.published_parsed:
 				timestamp = time.mktime(e.published_parsed)
@@ -226,27 +236,57 @@ class BaseBlogs(object):
 				timestamp = time.mktime(e.updated_parsed)
 			else:
 				continue
-				#timestamp = now
 
-			if timestamp > now: timestamp = now
+			if timestamp > now:
+				timestamp = now
+
 			try:
-				if timestamp < time.time() - dbconf.blogs['min_hours']*3600 or (self.read and timestamp <  self.read) or len(e.title.strip()) < 2:
+				if timestamp < time.time() - dbconf.blogs['min_hours']*3600 or (self.read and timestamp <  self.read):
 					#print "Old entry:", e.link, e.updated, e.updated_parsed, time.time() - timestamp
 					pass
 				else:
 					try:
-						link_clean = clean_url(e.link)
-						c.execute("insert into rss (blog_id, user_id, date, date_parsed, title, url) values (%s, %s, FROM_UNIXTIME(%s), FROM_UNIXTIME(%s), %s, %s)", (self.id, self.user_id, now, timestamp, e.title, link_clean))
+						if hasattr(e, 'meneame_url'):
+							link_clean = clean_url(e.meneame_url)
+						else:
+							link_clean = clean_url(e.link)
+						image = ""
+						if hasattr(e, 'content') and e.content:
+							tree = BeautifulSoup(e.content[0]['value'])
+							img = tree.find('img')
+							if img:
+								i = img.find('src')
+								if i: 
+									image = img.get('src')[:250]
+
+								i = img.find('data-original')
+								if i:
+									image = img.get('data-original')[:250]
+
+						if not image:
+							if hasattr(e, 'media_content') and e.media_content:
+								if hasattr(e.media_content[0], 'type'):
+									if "image" in e.media_content[0]['type']:
+										image = clean_url(e.media_content[0]['url'][:250])
+
+							if hasattr(e, 'enclosures') and e.enclosures:
+								if hasattr(e.enclosures[0], 'type'):
+									if "image" in e.enclosures[0]['type']:
+										image = clean_url(e.enclosures[0]['href'][:250])
+
+						title = e.title[:250]
+						summary = e.summary[:550]
+						c.execute("insert into rss (blog_id, user_id, date, date_parsed, title, summary, url, media_url) values (%s, %s, FROM_UNIXTIME(%s), FROM_UNIXTIME(%s), %s, %s, %s, %s)", (self.id, self.user_id, now, timestamp, title, summary, link_clean, image))
 					except _mysql_exceptions.IntegrityError, e:
 						""" Duplicated url, ignore it"""
-						print "insert failed (%s)" % (e,)
+						print "   - insert failed (%s)" % (e,)
 						pass
 					else:
-						print "Added: ", e.link
+						print " +++ Added: ", e.link
 						self.links.add(e.link)
 						entries += 1
 			except AttributeError, e:
-					print "not existing attribute (%s)" % (e,)
+					print "   - not existing attribute (%s)" % (e,)
 					pass
 
 		DBM.commit()
@@ -256,55 +296,99 @@ class BaseBlogs(object):
 
 	def get_feed_info(self):
 		""" Get feed url by analysing the HTML """
-		print "Reading blog info ", self.url
-		self.feed = None
-		self.title = None
+		print "Reading blog info: ", self.url
+		feed = None
+		title = None
 		try:
-			doc = urllib2.urlopen(url=self.url, timeout=20).read()
+			print "Getting " + self.url
+			req = urllib2.Request(url=self.url, headers=hdr_string)
+			doc = urllib2.urlopen(req, timeout=20).read()
 			soup = BeautifulSoup(doc, parseOnlyThese=SoupStrainer('head'))
 			if not soup.head:
 				""" Buggy blogs without <head> :( """
-				print "Parsing all"
+				print "   >> Parsing all"
 				soup = BeautifulSoup(doc)
 
 			if soup.title and soup.title.string:
-				self.title = soup.title.string.strip()
+				title = soup.title.string.strip()
 		except (socket.error, socket.timeout, urllib2.URLError, urllib2.HTTPError, UnicodeEncodeError, httplib.BadStatusLine, TypeError), e:
+			print "+++ ERROR: "
+			print e
 			pass
 		else:
 			""" Search for feed urls """
-			all_res = re_link.findall(unicode(soup))
-			t_url = None
-			for line in all_res:
-				g = re_href.search(line)
-				if g and g.group(1).find('comment') < 0:
-					t_url = g.group(1)
-					if t_url[0:5] != 'http:':
-						t_url = self.url + '/' + t_url
-					if not self.feed or len(t_url) < len(self.feed):
-						self.feed = t_url
+			link1 = soup.find('link', type='application/rss+xml')
+			link2 = soup.find('link', rel="alternate")
+			if link1 and link1['href']:
+				print " > Link 1: " + link1['href']
+				feed = link1['href']
+			elif link2 and link2['href']:
+				print " > Link 2: " + link2['href']
+				feed = link2['href']
+			else:
+				print " > Link 3, searching..."
+				all_res = re_link.findall(unicode(soup))
+				t_url = None
+				for line in all_res:
+					g = re_href.search(line)
+					if g and g.group(1).find('comment') < 0:
+						t_url = g.group(1)
+						feed = t_url
+						print " > Link 3: " + feed
 
-		if self.id:
-			self.save_feed_info()
+		if feed:
+			feed = self.fixFeedURL(feed)
 
-		return self.feed
+			if self.feed != feed:
+				self.title = title
+				self.feed = feed;
+				self.save_feed_info()
+
+
+	def fixFeedURL(self, feed):
+		feed = feed.replace("feed:", "")
+		if feed[0:5] != "http:" and feed[0:6] != "https:":
+			canonical_url  = self.url.replace('http://', '').replace('https://', '').strip("/")
+			canonical_feed = feed.strip("/")
+
+			if canonical_feed.startswith(canonical_url):
+				feed = self.url.strip("/") + '/' + canonical_feed.replace(canonical_url, "").strip("/")
+			elif feed.startswith("//"):
+				if self.url.startswith("http:"):
+					feed = "http:" + feed
+				else:
+					feed = "https:" + feed
+			else:
+				feed = self.url.strip("/") + '/' + feed.strip("/")
+
+			print " > Fixing feed URL: " + feed
+
+		return feed
+
 
 	def save_feed_info(self):
 		""" Save feed_url, title and last checked time in blogs table """
+
+		if self.title:
+			self.title = self.title[0:125]
+		else:
+			self.title = ""
+
 		c = DBM.cursor('update')
-		print "Updating to blog: %s -%s-" % (self.base_url, self.feed)
-		if self.title: self.title = self.title[0:125]
-		else: self.title = ""
+		print "Updating to blog:"
+		print "                  Title: %s" % self.title
+		print "                  URL: %s" % self.base_url
+		print "                  Feed: %s" % self.feed
 		c.execute("update blogs set blog_feed = %s, blog_title = %s, blog_feed_checked = now() where blog_id = %s", (self.feed, self.title, self.id))
 		DBM.commit()
 		c.close()
 
 
 	def is_banned(self):
-		local_domain = dbconf.domain.replace('http://', '').replace('www.', '')
+		local_domain = dbconf.domain.replace('http://', '').replace('https://', '').replace('www.', '')
 		hostname = re.sub('^www\.', '', re.sub(':[0-9]+$', '', urlparse(self.url)[1]))
 		if re.search(re.escape(local_domain)+r'$', hostname):
-			print "Url is the same as local domain: ", local_domain, hostname
+			print " > Url is the same as local domain: ", local_domain, hostname
 			return True
 
 
@@ -314,7 +398,8 @@ class BaseBlogs(object):
 		r = c.fetchone()
 		c.close()
 		if r[0] > 0:
-			print "Banned ", hostname
+			print " > Banned ", hostname
 			return True
 		else:
 			return False
+

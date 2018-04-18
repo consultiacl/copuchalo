@@ -1,0 +1,51 @@
+<div class="col-lg-4 col-sm-6 col-12 news-summary-height">
+<article itemscope="" itemtype="http://schema.org/Article"
+        data-contenturl="{{ url }}"
+        data-title="{{ title }}"
+        data-source="{{ blog_url }}"
+        data-date-publish="{{ date }} UTC"
+>
+<div class="news-summary">  {# news-summary #}
+	<div class="news-body">
+
+	{# ################################  IMG  ######################################### #}
+
+	<div class="img-container">
+		{% if media_url %}
+			<img class="img-story" src="{{ media_url }}" alt="img"/>
+		{% else %}
+			<img class="img-story" src="{{ globals.base_static }}img/cpchl/no-image.png" alt="img"/>
+		{% endif %}
+	</div>
+
+
+	{# #############################  URL TITLE  #################################### #}
+
+	{% exec htmlspecialchars url as url2 %}
+	<h2><a href="{{ url2 }}" target="_blank" rel="nofollow">{{ title }}</a></h2>
+
+	{# ###############################  CONTENT ############################### #}
+	<p class="news-content-full">{{ summary }}</p>
+
+	{# ########## POST BUTTON ########## #}
+	<div class="btn-news-edit">
+		<a class="post-btn" href="{{ globals.scheme }}//{{ globals.server_name }}/submit?url={{ url }}" title="{% trans _('enviar historia') %}">{% trans _('ENVIAR') %}</a>
+	</div>
+
+	{# #########################  NEWS INFO (FOOT) ################################## #}
+	<div class="news-info-footer">
+		{% if ! globals.bot %}
+		<div class="news-submitted">
+			<span class="media">{{ blog_title }}</span>&nbsp;|&nbsp;<span class="showmytitle" title="{{ blog_url }}">{{ blog_url }}</span>
+			<br />
+			{% trans _('publicado: ') %}
+			<time datetime="{{ date }}" class="tsrender" title="{% trans _('publicado') %}: {{ date }} UTC">________</time>
+		</div>
+		{% endif %}
+	</div> {# news-info-footer #}
+
+	</div>
+</div>
+</article>
+</div>
+

@@ -47,11 +47,13 @@ function do_edit($link) {
 	$link->discarded = $link->is_discarded();
 	$link->status_text = $link->get_status_text();
 	$link->key = md5($globals['now'].$link->randkey);
-	$link->chars_left = 550 - mb_strlen(html_entity_decode($link->content, ENT_COMPAT, 'UTF-8'), 'UTF-8');
+	$link->site_properties = SitesMgr::get_extended_properties($link->sub_id);
+	$chars = $link->site_properties['intro_max_len'] ?: $globals['default_max_chars'];
+	$link->chars_left = $chars - mb_strlen(html_entity_decode($link->content, ENT_COMPAT, 'UTF-8'), 'UTF-8');
 	$link->has_thumb();
 	$link->is_new = false;
 	$link->is_sub_owner = SitesMgr::is_owner();
-	$link->site_properties = SitesMgr::get_extended_properties();
+
 	Haanga::Load('link/edit.html', compact('link'));
 }
 

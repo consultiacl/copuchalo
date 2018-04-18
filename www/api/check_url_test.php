@@ -10,7 +10,7 @@
 // page for chech_url.php tests!
 
 include('../config.php');
-echo '<script type="text/javascript" src="http://'.get_server_name().'/api/check_url.js.php"></script>';
+echo '<script src="http://'.get_server_name().'/api/check_url.js.php"></script>';
 
 ?>
 

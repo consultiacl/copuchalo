@@ -144,9 +144,9 @@ function do_submit1() {
 			return false;
 		}
 
-		if (strlen($url) > 250) {
+		if (strlen($url) > $globals['urlmaxchars']) {
 			add_submit_error( _('URL demasiado larga'),
-				_('La longitud de la URL supera el tamaño máximo permitido (250 caracteres)'));
+				_('La longitud de la URL supera el tamaño máximo permitido'));
 			return false;
 		}
 

@@ -98,7 +98,7 @@
 		onKeyUp="textCounter(document.thisform.bodytext,document.thisform.bodycounter,{{ link.site_properties.intro_max_len }})"
 		>{{ link.content }}</textarea>
 	</p>
-	<script type="text/javascript">
+	<script>
 	addPostCode( function () {
 		$('textarea').autosize();
 	});
@@ -159,7 +159,7 @@
 		/></label>
 		<div class="droparea_info" style></div>
 
-	<script type="text/javascript">
+	<script>
 	addPostCode( function () {
 		$('#thisform').droparea({maxsize: {{ globals.media_max_size }} });
 		$("#fileInput").nicefileinput({ title: 'agregar imagen' });

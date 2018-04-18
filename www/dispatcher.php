@@ -30,6 +30,7 @@ $routes = array(
 	'comments_rss'	=> 'comments_rss2.php',
 	'sneakme_rss'	=> 'sneakme_rss2.php',
 	'sneak'		=> 'sneak.php',
+	'stream'        => 'stream.php',
 	'telnet'	=> 'telnet.php',
 	'popular'	=> 'topstories.php',
 	'top_visited'	=> 'topclicked.php',
@@ -45,12 +46,13 @@ $routes = array(
 	'opensearch'	=> 'opensearch_plugin.php',
 	'backend'	=> 'backend/dispatcher.php',
 	'postits'	=> 'sneakme/dispatcher.php',
+	'miner'		=> 'miner.php',
 );
 
 $globals['path'] = $path = preg_split('/\/+/', $_SERVER['PATH_INFO'], 10, PREG_SPLIT_NO_EMPTY);
 $script = $routes[$path[0]];
 
-syslog(LOG_INFO, "path_info: ".$_SERVER['PATH_INFO']." ||| path: ".print_r($path,true));
+//syslog(LOG_INFO, "path_info: ".$_SERVER['PATH_INFO']." ||| path: ".print_r($path,true));
 
 if (!empty($script) && file_exists($script)) {
 	syslog(LOG_INFO, "Include $script");

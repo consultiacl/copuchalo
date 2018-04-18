@@ -123,10 +123,8 @@ $globals['base_static'] = $globals['base_static_noversion'].'v_'.$globals['v'].'
 $globals['negative_votes_values'] = Array ( -1 => _('irrelevante'), -2 => _('antigua'), -3 => _('cansina'), -4 => _('sensacionalista'), -5 => _('spam'), -6 => _('duplicada'), -7 => _('microblogging'), -8 => _('errónea'),  -9 => _('copia/plagio'));
 
 
-// autoloaded clasess
-// Should be defined after mnminclude
-// and before the database
-function __autoload($class) {
+// autoloaded clases
+spl_autoload_register(function ($class) {
 	static $classfiles = array(
 				'SitesMgr' => 'sites.php',
 				'Annotation' => 'annotation.php',
@@ -171,7 +169,7 @@ function __autoload($class) {
 		/* "try"  to include $class.php file if exists */
 		@include_once($class.".php");
 	}
-}
+});
 
 // Allows a script to define to use the alternate server
 if (isset($globals['alternate_db_server']) && !empty($globals['alternate_db_servers'][$globals['alternate_db_server']])) {

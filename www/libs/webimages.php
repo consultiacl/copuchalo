@@ -327,7 +327,7 @@ class HtmlImages {
 		$base_host = preg_replace('/^www\./', '', $this->parsed_url['host']);
 		if ($video_servers[$base_host]) {
 			if ($this->debug) echo "<!-- Check thumb by URL: $video_servers[$base_host] -->\n";
-			if($this->$video_servers[$base_host]()) {
+			if($this->{$video_servers[$base_host]}()) {
 				if ($this->debug) echo "<!-- Selected thumb by URL: $video_servers[$base_host] -->\n";
 				$this->selected->video = true;
 				return $this->selected;

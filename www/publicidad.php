@@ -5,7 +5,7 @@
 ?>
 
 <div id="singlewrap">
-<div id="publicidad" class="faq">
+<div class="faq">
 <h1>Publicidad en Mediatize</h1>
 <br/>
 <ul>

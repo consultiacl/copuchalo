@@ -171,7 +171,7 @@ do_vertical_tags('published');
 echo '</div>';
 /*** END SIDEBAR ***/
 
-echo '</div></div>';
+echo '</div>';
 
 
 do_footer();

@@ -238,17 +238,21 @@ foreach ($res as $dbuser) {
 				($published_average < 0.45 ||
 				($total_comments < $published_given/2 && $sent_links == 0))
 			) {
-			$penalized += 1;
+			//$penalized += 1;
 			if ($total_comments == 0 && $sent_links == 0) {
 				$output .= _('Coeficiente de votos muy bajos, posible bot, penalizado');
 				$punish_coef = 2;
-			} else {
+				$punishment = -$published_average * $punish_coef;
+				$output .= sprintf(" karma2 = %4.2f -> %4.2f\n", $karma2, $punishment);
+				$karma2 = $punishment;
+				$penalized += 1;
+			} /*else {
 				$output .= _('Coeficiente de votos muy bajos, ¿«karmawhore»?, penalizado');
 				$punish_coef = 1;
 			}
 			$punishment = -$published_average * $punish_coef;
 			$output .= sprintf(" karma2 = %4.2f -> %4.2f\n", $karma2, $punishment);
-			$karma2 = $punishment;
+			$karma2 = $punishment;*/
 		} elseif ($karma2 > 0 && ($sent_links == 0 || ($published_given > $nopublished_given && $published_points > $published_links/3 && $published_given > $published_links/5))) {
 		// Limit karma to users that does not send any link
 		// or "moderated" karma whores
