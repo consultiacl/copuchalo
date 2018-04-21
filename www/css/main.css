@@ -436,7 +436,7 @@ a:focus.highlight-tema-dp {
 	display: flex;
 	width: 100%;
 	//background-color: #405ba0;
-	background-color: #333;
+	background-color: {{ globals.hdr_color_bar }};
 	color: #fff;
 	//border-bottom: 1px solid #29487d;
 }
@@ -2203,15 +2203,25 @@ font-size: 85%;
 
 .faq ol {
 	font-weight: normal;
-	//margin: 0 20px;
 	padding: 0 30px;
-	color: #000;
+}
+
+.faq a {
+	color: #005be2; 
+}
+
+.faq ul li span {
+	text-decoration: underline;
+}
+
+.faq ul li div.foto {
+	text-align: center;
+	margin: 20px 0;
 }
 
 .faq ul {
 	font-weight: normal;
 	margin: 7px 20px 0px 20px;
-	color: #000;
 	list-style-type: disc;
 }
 
@@ -2228,12 +2238,10 @@ font-size: 85%;
 .faq h4 {
 	font-weight: bold;
 	font-size: 1.1em;
-	color: #000;
 }
 
 .faq p {
 	font-weight: normal;
-	color: #333;
 }
 
 .related {
@@ -5346,23 +5354,6 @@ ul.subheader-list a.note.priv {
 
 .priv-notify .input-priv-notify {
 	vertical-align: sub;
-}
-
-.faq a {
-	color: #005be2; 
-}
-
-.faq ul {
-	list-style: none;
-}
-
-.faq ul li span {
-	text-decoration: underline;
-}
-
-.faq ul li div.foto {
-	text-align: center;
-	margin: 20px 0;
 }
 
 .ac-tema {
