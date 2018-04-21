@@ -35,7 +35,7 @@ $max = max($db->get_var("select count(*) as count $from_where order by count des
 $coef = ($max_pts - $min_pts)/($max-1);
 
 
-do_header(_('nube de sitios web') . ' | ' . _('mediatize'), 'cloudsites', false, false, '', false, true);
+do_header(_('nube de sitios web') . ' | ' . _('copúchalo'), 'cloudsites', false, false, '', false, true);
 
 echo '<div>';
 echo '<div id="newswrap" class="col-sm-9">';

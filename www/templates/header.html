@@ -6,7 +6,7 @@
 <meta charset="utf-8" />
 
 <meta name="ROBOTS" content="NOARCHIVE" />
-<meta name="generator" content="mediatize" />
+<meta name="generator" content="copúchalo" />
 <meta name="referrer" content="always" />
 <meta name="google" content="nositelinkssearchbox" />
 
@@ -76,17 +76,17 @@
 	<link rel="shortcut icon" href="{{globals.base_static}}{{globals.favicon}}" type="image/x-icon"/>
 	<link rel="icon" href="{{globals.base_static}}{{globals.favicon}}" type="image/x-icon"/>
 {% else %}
-	<link rel="shortcut icon"  href="{{globals.base_static}}img/favicons/logo_196x196.png" type="image/png" sizes="196x196"/>
-	<link rel="icon"  href="{{globals.base_static}}img/favicons/logo_196x196.png" type="image/png" sizes="196x196"/>
-	<link rel="shortcut icon"  href="{{globals.base_static}}img/favicons/logo_128x128.png" type="image/png" sizes="128x128"/>
-	<link rel="icon"  href="{{globals.base_static}}img/favicons/logo_128x128.png" type="image/png" sizes="128x128"/>
-	<link rel="shortcut icon"  href="{{globals.base_static}}img/favicons/logo_64x64.png" type="image/png" sizes="64x64"/>
-	<link rel="icon"  href="{{globals.base_static}}img/favicons/logo_64x64.png" type="image/png" sizes="64x64"/>
-	<link rel="shortcut icon" href="{{globals.base_static}}img/favicons/logo_16x16.png" type="image/png" sizes="16x16"/>
-	<link rel="icon" href="{{globals.base_static}}img/favicons/logo_16x16.png" type="image/png" sizes="16x16"/>
+	<link rel="shortcut icon"  href="{{globals.base_static}}img/cpchl/icons/logo_196x196.png" type="image/png" sizes="196x196"/>
+	<link rel="icon"  href="{{globals.base_static}}img/cpchl/icons/logo_196x196.png" type="image/png" sizes="196x196"/>
+	<link rel="shortcut icon"  href="{{globals.base_static}}img/cpchl/icons/logo_128x128.png" type="image/png" sizes="128x128"/>
+	<link rel="icon"  href="{{globals.base_static}}img/cpchl/icons/logo_128x128.png" type="image/png" sizes="128x128"/>
+	<link rel="shortcut icon"  href="{{globals.base_static}}img/cpchl/icons/logo_64x64.png" type="image/png" sizes="64x64"/>
+	<link rel="icon"  href="{{globals.base_static}}img/cpchl/icons/logo_64x64.png" type="image/png" sizes="64x64"/>
+	<link rel="shortcut icon" href="{{globals.base_static}}img/cpchl/icons/logo_16x16.png" type="image/png" sizes="16x16"/>
+	<link rel="icon" href="{{globals.base_static}}img/cpchl/icons/logo_16x16.png" type="image/png" sizes="16x16"/>
 {% endif %}
 
-<link rel="apple-touch-icon" href="{{globals.base_static}}img/favicons/apple-touch-icon.png"/>
+<link rel="apple-touch-icon" href="{{globals.base_static}}img/cpchl/icons/apple-touch-icon.png"/>
 <link rel="license" href="http://creativecommons.org/licenses/by/3.0/es/"/>
 
 {#
@@ -118,7 +118,7 @@
   {% if globals.mobile %}
 	<div class="mobile-bar">
 		<div class="mobile-bar-in">
-			<div class="mbi-item"><a href="/"><img class="logo" title="{% trans _('ediciones mediatize') %}" alt="{% trans _('ediciones mediatize') %}" src="{{ globals.base_static }}img/mdtz/logo-white.svg"></a></div>
+			<div class="mbi-item"><a href="/"><img class="logo" title="{% trans _('ediciones copuchentas') %}" alt="{% trans _('ediciones copuchentas') %}" src="{{globals.base_static}}img/cpchl/gc_black.svg"></a></div>
 			<div class="mbi-item"><a href="{{ base_url }}submit"><i class="fa fa-plus"></i></a></div>
 			<div class="mbi-item"><a href="{{ base_url }}queue"><span class="nuevas-text"><strong>N</strong></span></a></div>
 			<div class="mbi-item"><a href="{{ base_url }}stream"><span class="stream-text"><strong>S</strong></span></a></div>
@@ -126,7 +126,7 @@
 				<a href="#" class="dropdown temas-dp" data-toggle="dropdown"><span class="temas-text"><strong>T</strong></span></a>
 				{% include "temas-menu.html" %}
 			</div>
-			{# <div class="mbi-item"><a href="{{ globals.base_url }}postits"><span class="nuevas-text"><strong>P</strong></span></a></div> #}
+			{# <div class="mbi-item"><a href="{{ globals.base_url }}copuchentos"><span class="nuevas-text"><strong>P</strong></span></a></div> #}
 
 			{% if current_user.user_id > 0 %}
 			<div class="mbi-item">
@@ -167,9 +167,9 @@
   {# Header Left: logo, nav, search #}
   <div class="header-container-left">
 	<div class="header-container-in">
-		<div class="logo-margins">
+		<div class="logo-margins logo-background">
 			{% if ! globals.mobile %}
-				<img class="logo-header" title="{% trans _('ediciones mediatize') %}" alt="{% trans _('ediciones mediatize') %}" src="{{ globals.base_static }}img/mdtz/logo-white.svg">
+				<img class="logo-header" title="{% trans _('ediciones copuchentas') %}" alt="{% trans _('ediciones copuchentas') %}" src="{{globals.base_static}}img/cpchl/gc_black.svg">
 			{% else %}
 				<i class="fa fa-bars"></i>
 			{% endif %}
@@ -177,7 +177,7 @@
 	</div>
 	<div class="header-container-in">
 		<div class="logo-margins">
-			<a class="logo-letters" href="{{ globals.base_url_general }}" title="{% trans _('Portada') %} {{ globals.site_name }}">mediatize</a>
+			<a class="logo-letters" href="{{ globals.base_url_general }}" title="{% trans _('Portada') %} {{ globals.site_name }}">copúchalo</a>
 		</div>
 	</div>
 
@@ -185,8 +185,8 @@
 		<a href="{{ base_url }}submit"  title="enviar nueva historia" class="header-btn">+ enviar</a>
 		<a href="{{ base_url }}queue"   title="votar noticias pendientes" class="header-btn">nuevas</a>
 		<a href="{{ base_url }}stream"  title="stream de noticias" class="header-btn red">stream</a>
-		<a href="{{ base_url }}sneak"   title="chismosa" class="header-btn">chismosa</a>
-		<a href="{{ base_url }}postits" title="postits" class="header-btn">postits</a>
+		<a href="{{ base_url }}sneak"   title="sapear" class="header-btn">sapear</a>
+		<a href="{{ base_url }}copuchentos" title="copuchentos" class="header-btn">copuchentos</a>
 	</div>
 
 	<div class="header-buttons header-buttons-wide">

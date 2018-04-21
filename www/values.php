@@ -21,7 +21,7 @@ function print_time($secs) {
 	else return $secs . ' ' . _("segundos");
 }
 
-do_header(_('Información sobre valores de karma y límites') . ' | ' . _('mediatize'), '', false, false, '', false, false);
+do_header(_('Información sobre valores de karma y límites') . ' | ' . _('copúchalo'), '', false, false, '', false, false);
 
 echo '<div id="singlewrap" class="col-sm-10">';
 echo '<div class="topheading th-no-margin"><h2>Información sobre valores de karma, límites y otros parámetros</h2></div>';
@@ -60,13 +60,13 @@ if($globals['min_karma_for_comment_votes']) {
 }
 
 if($globals['min_karma_for_posts']) {
-				echo _("Karma mínimo para enviar postits") . ': ' . $globals['min_karma_for_posts'] . '<br/>
+				echo _("Karma mínimo para enviar posts en copuchentos") . ': ' . $globals['min_karma_for_posts'] . '<br/>
 				<br/>
 				';
 }
 
 if($globals['min_karma_for_sneaker']) {
-				echo _("Karma mínimo para hablar en la chismosa") . ': ' . $globals['min_karma_for_sneaker'] . '<br/>
+				echo _("Karma mínimo para hablar en sapear") . ': ' . $globals['min_karma_for_sneaker'] . '<br/>
 				<br/>
 				';
 }
@@ -159,21 +159,21 @@ echo '
 
 echo '
 		<br/><fieldset id="posts">
-			<legend>'._('postits').'</legend>
-				'._("Karma a partir del cual se destacan los postits") . ': ' . $globals['post_highlight_karma'] . '<br/>
+			<legend>'._('copuchentos').'</legend>
+				'._("Karma a partir del cual se destacan los posts") . ': ' . $globals['post_highlight_karma'] . '<br/>
 				<br/>
-				'._("Tiempo de espera entre postits") . ': ' . print_time($globals['posts_period']) . '<br/>
+				'._("Tiempo de espera entre posts") . ': ' . print_time($globals['posts_period']) . '<br/>
 				<br/>
-				'._("Tiempo de edición de postits") . ': ' . print_time($globals['posts_edit_time']) . '<br/>
+				'._("Tiempo de edición de posts") . ': ' . print_time($globals['posts_edit_time']) . '<br/>
 				<br/>
-				'._("Tiempo de edición de postits siendo admin") . ': ' .print_time($globals['posts_edit_time_admin']) . '<br/>
+				'._("Tiempo de edición de posts siendo admin") . ': ' .print_time($globals['posts_edit_time_admin']) . '<br/>
 				<br/>
-				'._("El karma que gana o pierde un usuario por los votos a sus postits es") . ' ' . ($globals['comment_votes_multiplier'] / $globals['post_votes_multiplier']) . ' ' . _("veces menor al karma que hubiese conseguido si esos mismos votos fuesen a sus comentarios") . '<br/>
+				'._("El karma que gana o pierde un usuario por los votos a sus posts es") . ' ' . ($globals['comment_votes_multiplier'] / $globals['post_votes_multiplier']) . ' ' . _("veces menor al karma que hubiese conseguido si esos mismos votos fuesen a sus comentarios") . '<br/>
 		</fieldset>';
 
 echo '
 		<br/><fieldset id="images">
-			<legend>'._('imágenes en comentarios y postits').'</legend>
+			<legend>'._('imágenes en comentarios y posts').'</legend>
 				'._("Karma mínimo") . ': ' . $globals['media_min_karma'] . '<br/>
 				<br/>
 				'._("Tamaño máximo en bytes") . ': ' . $globals['media_max_size'] . '<br/>

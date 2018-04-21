@@ -46,7 +46,7 @@ if ($_REQUEST['q']) {
 		$sql = "SELECT post_id FROM posts WHERE post_id in ($ids) ORDER BY post_id DESC LIMIT $rows";
 		$last_modified = $db->get_var("SELECT UNIX_TIMESTAMP(post_date) FROM posts WHERE post_id in ($ids) ORDER BY post_id DESC LIMIT 1");
 	}
-	$title = _('Nótame').': '._('búsqueda en postits') . ': ' . htmlspecialchars(strip_tags($_REQUEST['q']));
+	$title = _('Nótame').': '._('búsqueda en posts') . ': ' . htmlspecialchars(strip_tags($_REQUEST['q']));
 	$globals['redirect_feedburner'] = false;
 } elseif (!empty($_GET['user_id'])) {
 	//
@@ -56,7 +56,7 @@ if ($_REQUEST['q']) {
 	$username = $db->get_var("select user_login from users where user_id=$id");
 	$sql = "SELECT post_id FROM posts WHERE post_user_id=$id and $from_time ORDER BY post_date DESC LIMIT $rows";
 	$last_modified = $db->get_var("SELECT UNIX_TIMESTAMP(post_date) FROM posts WHERE post_user_id=$id ORDER BY post_date DESC LIMIT 1");
-	$title = _('Nótame').': '.sprintf(_('postits de %s'), $username);
+	$title = _('Nótame').': '.sprintf(_('posts de %s'), $username);
 } elseif(!empty($_REQUEST['friends_of'])) {
 	//
 	// User's friend posts
@@ -91,7 +91,7 @@ if ($_REQUEST['q']) {
 	$id = 0;
 	$sql = "SELECT post_id FROM posts WHERE $from_time ORDER BY post_date DESC LIMIT $rows";
 	$last_modified = $db->get_var("SELECT UNIX_TIMESTAMP(post_date) FROM posts ORDER BY post_date DESC LIMIT 1");
-	$title = _('Postits').': '._('postits');
+	$title = _('Postits').': '._('posts');
 }
 
 
@@ -157,7 +157,7 @@ function do_header($title) {
 	//echo "	<image><title>".$title."</title><link>https://".get_server_name().post_get_base_url()."</link><url>https://".get_static_server_name().$globals['base_url']."img/common/eli-rss.png</url></image>\n";
 	echo '	<description>'._('Agregador social colaborativo de publicación y comunicación').'</description>'."\n";
 	echo '	<pubDate>'.date("r", $last_modified).'</pubDate>'."\n";
-	echo '	<generator>https://blog.mediatize.info/</generator>'."\n";
+	echo '	<generator>https://blog.copuchalo.cl/</generator>'."\n";
 	echo '	<language>'.$dblang.'</language>'."\n";
 }
 

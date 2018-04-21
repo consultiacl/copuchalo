@@ -34,7 +34,7 @@ $user=new User();
 $min_date = date("Y-m-d H:00:00", time() - 192800); //  about 48 hours
 $page_size = 50;
 $offset=(get_current_page()-1)*$page_size;
-$page_title = _('postits') . ' | '. $globals['site_name'];
+$page_title = _('copuchentos') . ' | '. $globals['site_name'];
 $view = false;
 $short_content = false;
 
@@ -45,7 +45,7 @@ $limit = $rows = 0;
 switch ($argv[0]) {
 	case '_best':
 		$tab_option = 2;
-		$page_title = _('mejores postits') . ' | ' . _('mediatize');
+		$page_title = _('mejores posts') . ' | ' . _('copúchalo');
 		$min_date = date("Y-m-d H:00:00", time() - 86400); //  about 24 hours
 		$where = "post_date > '$min_date'";
 		$order_by = "ORDER BY post_karma desc";
@@ -147,7 +147,7 @@ switch ($argv[0]) {
 
 				default:
 					$view = 0;
-					$page_title = sprintf(_('postits de %s'), $user->username);
+					$page_title = sprintf(_('posts de %s'), $user->username);
 					$globals['search_options']['u'] = $user->username;
 					$where = "post_user_id=$user->id";
 					$order_by = "ORDER BY post_id desc";
@@ -201,7 +201,7 @@ if ($tab_option == 4) {
 	);
 } else $options = false;
 
-do_header($page_title, _('postits'), get_posts_menu($tab_option, $user->username), array($options, $view, $rss_option), '', false, true);
+do_header($page_title, _('copuchentos'), get_posts_menu($tab_option, $user->username), array($options, $view, $rss_option), '', false, true);
 
 echo '<div>';
 echo '<div id="newswrap" class="col-sm-9">';

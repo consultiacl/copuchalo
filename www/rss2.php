@@ -215,16 +215,16 @@ if ($links) {
 		echo "	<item>\n";
 
 		// Meneame own namespace
-		echo "		<mediatize:link_id>$link->id</mediatize:link_id>\n";
-		echo "		<mediatize:sub>$link->sub_name</mediatize:sub>\n";
-		echo "		<mediatize:status>$link->status</mediatize:status>\n";
-		echo "		<mediatize:user>$link->username</mediatize:user>\n";
-		echo "		<mediatize:clicks>".$link->clicks."</mediatize:clicks>\n";
-		echo "		<mediatize:votes>".intval($link->votes+$link->anonymous)."</mediatize:votes>\n";
-		echo "		<mediatize:negatives>$link->negatives</mediatize:negatives>\n";
-		echo "		<mediatize:karma>".intval($link->karma)."</mediatize:karma>\n";
-		echo "		<mediatize:comments>$link->comments</mediatize:comments>\n";
-		echo "		<mediatize:url>".htmlspecialchars($link->url)."</mediatize:url>\n";
+		echo "		<copuchalo:link_id>$link->id</copuchalo:link_id>\n";
+		echo "		<copuchalo:sub>$link->sub_name</copuchalo:sub>\n";
+		echo "		<copuchalo:status>$link->status</copuchalo:status>\n";
+		echo "		<copuchalo:user>$link->username</copuchalo:user>\n";
+		echo "		<copuchalo:clicks>".$link->clicks."</copuchalo:clicks>\n";
+		echo "		<copuchalo:votes>".intval($link->votes+$link->anonymous)."</copuchalo:votes>\n";
+		echo "		<copuchalo:negatives>$link->negatives</copuchalo:negatives>\n";
+		echo "		<copuchalo:karma>".intval($link->karma)."</copuchalo:karma>\n";
+		echo "		<copuchalo:comments>$link->comments</copuchalo:comments>\n";
+		echo "		<copuchalo:url>".htmlspecialchars($link->url)."</copuchalo:url>\n";
 
 		// Title must not carry htmlentities
 		echo "		<title>".htmlentities2unicodeentities($link->title)."</title>\n";
@@ -307,7 +307,7 @@ function do_header($title) {
 	echo '	xmlns:dc="https://purl.org/dc/elements/1.1/"'."\n";
 	echo '	xmlns:georss="https://www.georss.org/georss"'."\n";
 	echo '	xmlns:media="https://search.yahoo.com/mrss/"'."\n";
-	echo '	xmlns:mediatize="https://www.mediatize.net/faq-es.php"'."\n";
+	echo '	xmlns:copuchalo="https://www.copuchalo.cl/faq-es.php"'."\n";
 	echo ' >'. "\n";
 	echo '<channel>'."\n";
 	echo'	<title>'.$title.'</title>'."\n";
@@ -316,7 +316,7 @@ function do_header($title) {
 	echo"	<image><title>$title</title><link>https://".get_server_name().$home."</link><url>https://".get_static_server_name().$globals['base_url']."img/favicons/logo_64x64.png</url></image>\n";
 	echo'	<description>'._('Sitio colaborativo de publicación y comunicación entre blogs').'</description>'."\n";
 	echo'	<pubDate>'.date("r", $last_modified).'</pubDate>'."\n";
-	echo'	<generator>https://blog.mediatize.info/</generator>'."\n";
+	echo'	<generator>https://blog.copuchalo.cl/</generator>'."\n";
 	echo'	<language>'.$dblang.'</language>'."\n";
 	if ($globals['pubsub'] && $globals['main_published_rss']) {
 		echo '	<atom:link rel="hub" href="'.$globals['pubsub'].'"/>'."\n";
@@ -330,7 +330,7 @@ function do_footer() {
 function check_redirect_to_feedburner($status) {
 	global $globals;
 
-	$regex = '/'.$globals['rss_redirect_user_agent'].'|pubsub|mediatize|burner/i';
+	$regex = '/'.$globals['rss_redirect_user_agent'].'|pubsub|copuchalo|burner/i';
 
 	if (SitesMgr::my_id() > 1 || isset($_REQUEST['local']) || isset($_REQUEST['nohtml']) || $globals['bot'] || !$globals['rss_redirect_user_agent'] || preg_match($regex, htmlspecialchars($_SERVER['PHP_SELF'])) || preg_match($regex, $_SERVER['HTTP_USER_AGENT']) ) return;
 	/*|| preg_match('/technoratibot/i', $_SERVER['HTTP_USER_AGENT']) */

@@ -43,7 +43,7 @@ do_header($title, '', false, false, '', false, false);
 echo '<div id="singlewrap" class="col-sm-10">';
 echo '<div class="topheading th-no-margin"><h2>'._('Tendencias (palabras)').'</h2></div>';
 
-$options = array('links' => _('historias'), 'comments' => _('comentarios'), 'posts' => _('postits'));
+$options = array('links' => _('historias'), 'comments' => _('comentarios'), 'posts' => _('copuchentos'));
 Haanga::Load('trends.html', compact('options'));
 
 echo '</div>';

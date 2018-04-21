@@ -20,7 +20,7 @@ Disallow: /comments_rss2.php
 Disallow: /link_bookmark.php
 Disallow: /search.php
 
-Sitemap: https://www.mediatize.info/sitemap
+Sitemap: https://www.copuchalo.cl/sitemap
 
 User-agent: Mediapartners-Google
 Disallow:

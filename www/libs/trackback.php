@@ -81,7 +81,7 @@ class Trackback {
 			$url = preg_replace('/^ping:/', '', $this->url);
 			$client = new IXR_Client($url);
 			$client->timeout = 3;
-			$client->useragent .= ' -- Mediatize/2';
+			$client->useragent .= ' -- copuchalo/2';
 			$client->debug = false;
 			if ($client->query('pingback.ping', $link->get_canonical_permalink(), $this->link )) {
 				$this->status='ok';

@@ -458,7 +458,7 @@ function post_get_base_url($option='', $give_base=true) {
 	global $globals;
 	if ($give_base) $base = $globals['base_url_general'];
 	else $base = '';
-	return $base.'postits/'.$option;
+	return $base.'copuchentos/'.$option;
 }
 
 function get_avatar_url($user, $avatar, $size, $fullurl = true) {

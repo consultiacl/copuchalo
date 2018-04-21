@@ -30,7 +30,7 @@ $from_time = '"'.date("Y-m-d H:00:00", time() - 86400 * $range_values[$from]).'"
 $from_where = "FROM links, sub_statuses WHERE id = ".SitesMgr::my_id()." AND link_id = link AND link_date > $from_time and link_status != 'discard'";
 
 
-do_header(_('nube de etiquetas') . ' | '._('mediatize'), 'cloudtags', false, false, '', false, true);
+do_header(_('nube de etiquetas') . ' | '._('copúchalo'), 'cloudtags', false, false, '', false, true);
 
 echo '<div>';
 echo '<div id="newswrap" class="col-sm-9">';

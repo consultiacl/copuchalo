@@ -134,7 +134,7 @@ function facebook_post($auth, $link, $text = '') {
 
 	require_once __DIR__ . '/Facebook/autoload.php';
 
-	// mediatize APP
+	// copuchalo APP
 	$fb = new Facebook\Facebook([
 		'app_id' => $auth['facebook_key'],
 		'app_secret' => $auth['facebook_secret'],

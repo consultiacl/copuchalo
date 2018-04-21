@@ -76,7 +76,7 @@ if($post->same_text_count(60) > 0) {
 
 // Verify that there are a period of 1 minute between posts.
 if(intval($db->get_var("select count(*) from posts where post_user_id = $user->id and post_date > date_sub(now(), interval 20 second)"))> 0) {
-		echo 'KO: ' . _('debe esperar 20 segundos entre postits');
+		echo 'KO: ' . _('debe esperar 20 segundos entre posts');
 		die;
 };
 

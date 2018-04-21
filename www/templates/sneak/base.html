@@ -89,7 +89,7 @@ function to_html(data) {
 	}
 	switch (data.type) {
 		case 'post':
-			html += '<img src="'+base_static+'img/common/sneak-newnotame01.png" width="21" height="17" alt="{% trans _('postits') %}" class="suggestion p:'+data.id+'"/><\/div>';
+			html += '<img src="'+base_static+'img/common/sneak-newnotame01.png" width="21" height="17" alt="{% trans _('posts') %}" class="suggestion p:'+data.id+'"/><\/div>';
 			html += '<div class="sneaker-votes">&nbsp;<\/div>';
 			if (check_user_ping(data.title)) {
 				text_style = 'style="font-weight: bold;"';

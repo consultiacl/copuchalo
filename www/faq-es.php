@@ -1,7 +1,7 @@
 <?php
 	include('config.php');
 	include(mnminclude.'html1.php');
-	do_header(_('FAQ') . ' | ' . _('mediatize'), '', false, false, '', false, false);
+	do_header(_('FAQ') . ' | ' . _('copúchalo'), '', false, false, '', false, false);
 ?>
 
 <div id="singlewrap">
@@ -9,7 +9,7 @@
 <h1>Preguntas frecuentes</h1>
 <br/>
 <ul>
-<li><h2>¿Qué es mediatize?</h2>
+<li><h2>¿Qué es copúchalo?</h2>
 <p>Es un web que te permite enviar noticias o historias que serán revisadas por sus usuarios y serán promovidas a la página principal dependiendo de los votos recibidos. Cuando un usuario envía una noticia ésta queda en la <a target="_blank" href="queue"><em>cola de pendientes</em></a> hasta que reúne los votos suficientes para ser promovida a la página principal.
 </p>
 </li>
@@ -54,8 +54,8 @@
 </li>
 
 <li>
-<h2>No puedo votar a comentarios o postits</h2>
-<p>Hace falta un karma mínimo para votar comentarios y postits. Se pueden consultar los <a target="_blank" href="values">valores de los parámetros básicos</a> sobre karma y límites para más información sobre el tema.</p>
+<h2>No puedo votar a comentarios o posts</h2>
+<p>Hace falta un karma mínimo para votar comentarios y posts de copuchentos. Se pueden consultar los <a target="_blank" href="values">valores de los parámetros básicos</a> sobre karma y límites para más información sobre el tema.</p>
 </li>
 
 
@@ -73,22 +73,22 @@
 
 <li>
 <h2>¿Qué es esa pestaña "descartadas" en la página de votación de pendientes (nuevas)?</h2>
-<p>Van a esa cola las noticias que: se "autodescartan" (por el propio usuario, dentro de los primeros 30 minutos desde su envío) y las que "descartan" los usuarios con privilegios del sitio por vulneración de las <a target="_blank" href="https://www.mediatize.info/legal#tos">condiciones de uso</a>.</p>
+<p>Van a esa cola las noticias que: se "autodescartan" (por el propio usuario, dentro de los primeros 30 minutos desde su envío) y las que "descartan" los usuarios con privilegios del sitio por vulneración de las <a target="_blank" href="https://www.copuchalo.cl/legal#tos">condiciones de uso</a>.</p>
 </p>
 </li>
 
 <li>
-<h2>¿Qué es "postits"?</h2>
-<p>Una herramienta de comunicación entre los usuarios de mediatize y se organiza en pequeños apuntes, como los mini-post de un blog colectivo --de todos los usuarios de postits-- y a la vez individual. Puedes usarlo para cuestiones relacionadas con esta web o para explicar lo que quieras. Puedes escribir desde la web o el celular. Encontrarás <a target="_blank" href="http://meneame.wikispaces.com/N%C3%B3tame">más detalles en el wiki de Menéame</a>.</p>
+<h2>¿Qué es "copuchentos"?</h2>
+<p>Una herramienta de comunicación entre los usuarios de copúchalo y se organiza en pequeños apuntes, como los mini-post de un blog colectivo --de todos los usuarios de posts-- y a la vez individual. Puedes usarlo para cuestiones relacionadas con esta web o para explicar lo que quieras. Puedes escribir desde la web o el celular. Encontrarás <a target="_blank" href="http://meneame.wikispaces.com/N%C3%B3tame">más detalles en el wiki de Menéame</a>.</p>
 </li>
 
 <li>
-<h2>¿Para qué sirve la opción chismosa?</h2>
-<p>Muestra lo que sucede en mediatize en tiempo real. Si eres usuario registrado también puedes usarla para chatear.</p>
+<h2>¿Para qué sirve la opción sapear?</h2>
+<p>Muestra lo que sucede en copúchalo en tiempo real. Si eres usuario registrado también puedes usarla para chatear.</p>
 </li>
 
 <li>
-<h2><a name="we"></a>¿Quién está detrás del mediatize?</h2>
+<h2><a name="we"></a>¿Quién está detrás del copúchalo?</h2>
 <p>Es un proyecto personal para crear una web con noticias propuestas por los mismos usuarios y publicadas (pasadas a portada) también por éllos.
 Encontrarás los datos de <strong>contacto</strong> en <a target="_blank" href="legal#contact">la página de las condiciones legales</a>.
 </p>
@@ -107,7 +107,7 @@ Encontrarás los datos de <strong>contacto</strong> en <a target="_blank" href="
 
 <li>
 <h2>¿Qué software se usa?</h2>
-<p>El software comenzó a desarrollarlo Ricardo Galli y Benjamí Villoslada con colaboraciones de terceros, más las modificaciones hechas para mediatize.</p>
+<p>El software comenzó a desarrollarlo Ricardo Galli y Benjamí Villoslada con colaboraciones de terceros, más las modificaciones hechas para copúchalo.</p>
 </li>
 
 <li>
@@ -123,7 +123,7 @@ Encontrarás los datos de <strong>contacto</strong> en <a target="_blank" href="
 
 <li>
 <h2>¿Cómo se pagan los gastos?</h2>
-<p>Con las <a href="<?php echo $globals['base_url_general'].'publicidad'?>">campañas publicitarias</a> exclusivas que Mediatize ofrece.</p>
+<p>Con las <a href="<?php echo $globals['base_url_general'].'publicidad'?>">campañas publicitarias</a> exclusivas que copúchalo ofrece.</p>
 </li>
 
 </ul>

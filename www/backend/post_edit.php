@@ -42,7 +42,7 @@ if (!empty($_REQUEST['user_id'])) {
 			$post->author=$current_user->user_id;
 			return_post($post->print_edit_form(true));
 		} else {
-			error_post('Error: ' . _('debe esperar entre postits') . ' (' . $globals['posts_period'] . ' segundos)');
+			error_post('Error: ' . _('debe esperar entre posts') . ' (' . $globals['posts_period'] . ' segundos)');
 		}
 	}
 }
@@ -106,7 +106,7 @@ function save_post ($post_id) {
 
 		// Verify the time interval parameter (posts_period) between posts.
 		if(intval($db->get_var("select count(*) from posts where post_user_id = $current_user->user_id and post_date > date_sub(now(), interval ".$globals['posts_period']." second)"))> 0) {
-			error_post('ERROR: ' . _('debe esperar entre postits') . ' (' . $globals['posts_period'] . ' segundos)');
+			error_post('ERROR: ' . _('debe esperar entre posts') . ' (' . $globals['posts_period'] . ' segundos)');
 		}
 
 		$post->admin = $post_is_admin;
@@ -120,7 +120,7 @@ function save_post ($post_id) {
 			if ($same_links > 2) {
 				$reduction = $same_links * 0.2;
 				$user = new User($current_user->user_id);
-				$user->add_karma(-$reduction, _('demasiados enlaces al mismo dominio en los postits'));
+				$user->add_karma(-$reduction, _('demasiados enlaces al mismo dominio en los posts'));
 				syslog(LOG_NOTICE, "post_edit decreasing $reduction of karma to $user->username (now $user->karma)");
 			}
 			$post->store();

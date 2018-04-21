@@ -27,7 +27,7 @@ if ($friends) {
 	$links = $db->get_results("$sql LIMIT $offset,$page_size");
 }
 
-do_header(_('votadas por amigos') . ' | ' . _('mediatize'));
+do_header(_('votadas por amigos') . ' | ' . _('copúchalo'));
 $globals['tag_status'] = 'published';
 
 /*** SIDEBAR ****/

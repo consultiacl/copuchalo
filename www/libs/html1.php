@@ -24,7 +24,7 @@ if (PHP_SAPI != 'cli' && !empty($globals['force_ssl']) && ! $globals['https'] &&
 $globals['extra_js'] = Array();
 $globals['extra_css'] = Array();
 
-if (! $globals['bot'] && ($globals['allow_partial'] || preg_match('/mediatize/i', $_SERVER['HTTP_USER_AGENT']))) {
+if (! $globals['bot'] && ($globals['allow_partial'] || preg_match('/copuchalo/i', $_SERVER['HTTP_USER_AGENT']))) {
 	if (! $globals['mobile']) $globals['ads'] = false;
 	if (isset($_REQUEST['partial'])) {
 		$globals['partial'] = true;
@@ -759,7 +759,7 @@ function do_best_posts() {
 	$res = $db->get_results("select post_id from posts, users where post_date > '$min_date' and  post_user_id = user_id and post_karma > 0 order by post_karma desc limit 10");
 	if ($res && count($res) > 4) {
 		$objects = array();
-		$title = _('mejores postits');
+		$title = _('mejores posts');
 		$url = post_get_base_url('_best');
 		foreach ($res as $p) {
 			$obj = new stdClass();

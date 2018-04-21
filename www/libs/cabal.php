@@ -6,7 +6,7 @@
 // 		http://www.affero.org/oagpl.html
 // AFFERO GENERAL PUBLIC LICENSE is also included in the file called "COPYING".
 
-$cabal_messages = array ("recordad, en mediatize no hay voto negativo",
+$cabal_messages = array ("recordad, en copúchalo no hay voto negativo",
 				"no eres un friki, eres un tio demasiado raro para ser friki",
 				"los que cumplan con su misión purificadora recibirán karma y buenas galletas",
 				"el autobombo es spam sólo si es de un desconocido",

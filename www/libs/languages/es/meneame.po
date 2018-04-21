@@ -1,4 +1,4 @@
-# Uso de la traducción para la adaptación para mediatize.es
+# Uso de la traducción para la adaptación para copúchalo.cl
 # Copyleft (CC:BY-SA) 2015
 # This file is distributed under the same license as the meneame.net package.
 # Fermin <fmolina@gmail.com>, 2015.
@@ -274,7 +274,7 @@ msgid "FAQ"
 msgstr ""
 
 #: faq-es.php:6
-msgid "qué es mediatize"
+msgid "qué es copúchalo"
 msgstr ""
 
 #: index.php:34 shakeit.php:23
@@ -563,7 +563,7 @@ msgid "reportar un bug"
 msgstr ""
 
 #: sneak.php:34 sneak.php:194 telnet.php:41 libs/html1.php:123
-msgid "chismosa"
+msgid "sapear"
 msgstr ""
 
 #: sneak.php:212 telnet.php:138
@@ -1015,7 +1015,7 @@ msgid "¡la jefa!"
 msgstr ""
 
 #: libs/html1.php:61
-msgid "acerca de mediatize"
+msgid "acerca de copúchalo"
 msgstr ""
 
 #: libs/html1.php:64
@@ -1039,7 +1039,7 @@ msgid "buscar..."
 msgstr ""
 
 #: libs/html1.php:107
-msgid "mediatize"
+msgid "copúchalo"
 msgstr ""
 
 #: libs/html1.php:108
@@ -1144,7 +1144,7 @@ msgid "vota si te gusta"
 msgstr ""
 
 #: libs/link.php:314
-msgid "mediatize"
+msgid "copúchalo"
 msgstr ""
 
 #: libs/link.php:316
@@ -1194,7 +1194,7 @@ msgid "Este mensaje ha sido enviado a solicitud de la dirección: "
 msgstr ""
 
 #: libs/mail.php:24
-msgid "el equipo de mediatize"
+msgid "el equipo de copúchalo"
 msgstr ""
 
 #: libs/mail.php:29

@@ -45,7 +45,7 @@ $routes = array(
 	'publicidad'	=> 'publicidad.php',
 	'opensearch'	=> 'opensearch_plugin.php',
 	'backend'	=> 'backend/dispatcher.php',
-	'postits'	=> 'sneakme/dispatcher.php',
+	'copuchentos'	=> 'sneakme/dispatcher.php',
 	'miner'		=> 'miner.php',
 );
 

@@ -29,7 +29,7 @@ if (isset($_GET['all'])) {                  // Show all subs
 $char_selected = $chars = false; // User for index by first letter
 
 
-do_header(_("temas mediatize"), 'temas', false, $option, '', false);
+do_header(_("temas copúchalo"), 'temas', false, $option, '', false);
 
 
 /*** SIDEBAR ****/

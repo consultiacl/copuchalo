@@ -23,7 +23,7 @@ final class Tabs
 			case _('más comentadas'):
 				return self::renderForTopCommented($options, $tab_class);
 
-			case _('postits'):
+			case _('copuchentos'):
 				return self::renderForSneakme($options, $tab_class);
 
 			case _('privados'):

@@ -10,7 +10,7 @@ include('config.php');
 include(mnminclude.'html1.php');
 
 $globals['ads'] = false;
-do_header(_('promote') . ' | ' . _('mediatize'), '', false, false, '', false, false);
+do_header(_('promote') . ' | ' . _('copúchalo'), '', false, false, '', false, false);
 
 echo '<div id="singlewrap" class="col-sm-10">';
 echo '<div class="topheading th-no-margin"><h2>Estado sistema de promoción</h2></div>';

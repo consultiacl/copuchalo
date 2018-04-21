@@ -13,7 +13,7 @@ var base_url="{{ globals.base_url_general }}",
 		do_partial=false;
 	{% endif %}
 
-if (typeof window.history == "object" && (do_partial || navigator.userAgent.match(/mediatize/i)) ) {
+if (typeof window.history == "object" && (do_partial || navigator.userAgent.match(/copuchalo/i)) ) {
 	do_partial = true;
 }
 
@@ -1321,7 +1321,7 @@ function openNav() {
 		sb.show();
 		panel.append($('#header-menu .header-menu01').clone());
 		panel.append('<div class="nav-panel-separator"></div>');
-		panel.append('<ul><li><a href="/postits">postits</a></li><li><a href="/sneak">chismosa</a></li></ul>');
+		panel.append('<ul><li><a href="/copuchentos">copuchentos</a></li><li><a href="/sneak">sapear</a></li></ul>');
 	}
 	panel.css({ 'width': '250px' });
 	wpr.css({ 'opacity': '0.2' });
@@ -1819,7 +1819,7 @@ var fancyBox = new function () {
 		if(user_level == 'admin' || user_level == 'god') {
 			html += "<li class='divider'></li>";
 			var counter = (data && data['adminposts']) ? data['adminposts'] : 0;
-			html += "<li><a "+((counter > 0) ? red : "")+"href='"+base_url_sub+"go?id={{ globals.admin_user_id }}&what=adminposts'><i class='fa fa-sticky-note-o'></i><span>" + counter + " postits admin</span></a></li>";
+			html += "<li><a "+((counter > 0) ? red : "")+"href='"+base_url_sub+"go?id={{ globals.admin_user_id }}&what=adminposts'><i class='fa fa-sticky-note-o'></i><span>" + counter + " posts admin</span></a></li>";
 			var counter = (data && data['admincomments']) ? data['admincomments'] : 0;
 			html += "<li><a "+((counter > 0) ? red : "")+" href='"+base_url_sub+"go?id={{ globals.admin_user_id }}&what=admincomments'><i class='fa fa-comments'></i><span>" + counter + " comentarios admin</span></a></li>";
 			var counter = (data && data['adminreports']) ? data['adminreports'] : 0;
@@ -1936,7 +1936,7 @@ var fancyBox = new function () {
 	function field_text(field) {
 		var a = {
 			privates: "{% trans _('privados nuevos') %}",
-			posts: "{% trans _('respuestas a postits') %}",
+			posts: "{% trans _('respuestas a posts') %}",
 			comments: "{% trans _('respuestas a comentarios') %}",
 			friends: "{% trans _('nuevos amigos') %}"
 		};
