@@ -11,21 +11,22 @@
 		{% endif %}
 	</li>
 	{% endfor %}
-	<li class="divider"></li>
-	{% for s in subs %}
-	<li>
-		{% exec get_sub_logo s.id as logo %}
-		<a href="//{{ s.server_name }}{{ s.base_url }}tema/{{ s.name }}" {% if s.id == this_site.id %}class="highlight-tema-dp"{% endif %}>
-			<div style="display: flex;justify-content: space-between;align-items: center;">
-				<div>{{ s.name }}</div>
-
-				{% if logo.logo_url %}
-					<div><img style="height: 1.4em; object-fit:cover;" src="{{ globals.base_static }}{{ logo.logo_url }}" alt="{{ s.name }}"/></div>
-				{% endif %}
-			</div>
-		</a>
-	</li>
-	{% endfor %}
+	{% if subs %}
+		<li class="divider"></li>
+		{% for s in subs %}
+		<li>
+			{% exec get_sub_logo s.id as logo %}
+			<a href="//{{ s.server_name }}{{ s.base_url }}tema/{{ s.name }}" {% if s.id == this_site.id %}class="highlight-tema-dp"{% endif %}>
+				<div style="display: flex;justify-content: space-between;align-items: center;">
+					<div>{{ s.name }}</div>
+					{% if logo.logo_url %}
+						<div><img style="height: 1.4em; object-fit:cover;" src="{{ globals.base_static }}{{ logo.logo_url }}" alt="{{ s.name }}"/></div>
+					{% endif %}
+				</div>
+			</a>
+		</li>
+		{% endfor %}
+	{% endif %}
 	{% if current_user.user_id > 0 %}
 		<li class="divider"></li>
 		<li><a href="{{ globals.base_url_general }}temas">Editar temas</a></li>

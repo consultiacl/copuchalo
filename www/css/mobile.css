@@ -403,7 +403,7 @@ a.comment-bubble {
 }
 
 .mobile-bar .usermenu-mobile {
-	left: -238%;
+	left: -252%;
 	margin-top: 9px;
 }
 
@@ -422,7 +422,7 @@ a.comment-bubble {
 }
 
 .mobile-bar .notifications {
-	right: 5%;
+	right: 12px;
 }
 
 .dropdown-menu.notifications.bullet.pull-right:before {
@@ -446,6 +446,7 @@ a.comment-bubble {
 #login-dp .social-buttons.mobile .fa-facebook-official,
 #login-dp .social-buttons.mobile .fa-twitter {
 	font-size: 30px;
+	width: 30px;
 	margin-right: 3px;
 }
 
