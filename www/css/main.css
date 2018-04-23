@@ -435,7 +435,6 @@ a:focus.highlight-tema-dp {
 	display: -ms-flexbox;
 	display: flex;
 	width: 100%;
-	//background-color: #405ba0;
 	background-color: {{ globals.hdr_color_bar }};
 	color: #fff;
 	//border-bottom: 1px solid #29487d;
