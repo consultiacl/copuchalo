@@ -313,6 +313,10 @@ a.comment-bubble {
 
 /***************  Mobile bar  ***************/
 
+.logo-background {
+	padding: 2px;
+}
+
 .mobile-bar {
 	height: 44px;
 	width: 100%;
