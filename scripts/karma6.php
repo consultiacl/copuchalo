@@ -28,8 +28,8 @@ $db->query("delete from annotations where annotation_expire is not null and anno
 
 $db->barrier();
 
-// Delete email, names and url of autodisabled users in the last hours (from 48 hours)
-$dbusers = $db->get_col("select SQL_NO_CACHE user_id from users where user_email not like '%@disabled' && user_level in ('autodisabled') and user_modification > date_sub(now(), interval 48 hour)");
+// Delete email, names and url of autodisabled users
+$dbusers = $db->get_col("select SQL_NO_CACHE user_id from users where user_email not like '%@disabled' && user_level in ('autodisabled') and user_modification > date_sub(now(), interval ".$globals['delete_autodisabled']." day)");
 if ($dbusers) {
 	foreach ($dbusers as $id) {
 		$user = new User;
@@ -42,8 +42,8 @@ if ($dbusers) {
 	}
 }
 
-// Delete email, names and url of invalidated users after two months
-$dbusers = $db->get_col("select SQL_NO_CACHE user_id from users where user_email not like '%@disabled' && user_level in ('disabled', 'autodisabled') and user_modification < date_sub(now(), interval 7 day)");
+// Delete email, names and url of invalidated users
+$dbusers = $db->get_col("select SQL_NO_CACHE user_id from users where user_email not like '%@disabled' && user_level in ('disabled', 'autodisabled') and user_modification < date_sub(now(), interval ".$globals['delete_disabled']." day)");
 if ($dbusers) {
 	foreach ($dbusers as $id) {
 		$user = new User;

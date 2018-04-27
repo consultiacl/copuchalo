@@ -374,7 +374,7 @@ class User {
 		$db->commit();
 
 		// Delete posts
-		$db->query("delete from posts where post_user_id = $this->id");
+		//$db->query("delete from posts where post_user_id = $this->id");
 
 		// Delete user's meta
 		$db->query("delete from annotations where annotation_key = 'user_meta-$this->id'");
