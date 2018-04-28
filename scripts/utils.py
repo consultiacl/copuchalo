@@ -294,6 +294,105 @@ class BaseBlogs(object):
 		return entries
 
 
+	def search_feed(self):
+		entries = 0
+		now = time.time()
+		modified = time.gmtime(now - dbconf.blogs['min_hours']*3600)
+
+		try:
+			doc = feedparser.parse(self.feed, modified=modified)
+		except (urllib2.URLError, urllib2.HTTPError, UnicodeEncodeError), e:
+			print " --- ERROR: connection failed (%s) %s" % (e, url)
+			return False
+
+		#print "---- DEBUG doc ----"
+		#print doc
+		#print "-------------------"
+
+		if not doc.entries or doc.status == 304:
+			print "   * Not modified"
+			return entries
+
+		if 1:
+			print "---------------------------------------------------------------------------------------------------------------------------------------------"
+			print "BLOG"
+			for e in doc.entries:
+				print "###########################################################################"
+				print e
+				print "###########################################################################"
+				print "---------------------------------------------------------------------------------------------------------------------------------------------"
+
+		for i, e in enumerate(doc.entries):
+			print "a-------------------", i
+			print e
+			print "b-------------------"
+			if i >= dbconf.blogs['max_feeds']:
+				print "MAX FEEDS: ", i
+				break
+
+			if hasattr(e, 'published_parsed') and e.published_parsed:
+				timestamp = time.mktime(e.published_parsed)
+			elif hasattr(e, 'updated_parsed') and e.updated_parsed:
+				timestamp = time.mktime(e.updated_parsed)
+			else:
+				continue
+
+			if timestamp > now:
+				timestamp = now
+
+			try:
+				if timestamp < time.time() - dbconf.blogs['min_hours']*3600:
+					print "Old entry:", e.link, e.updated, e.updated_parsed, time.time() - timestamp
+					pass
+				else:
+					try:
+						if hasattr(e, 'meneame_url'):
+							link_clean = clean_url(e.meneame_url)
+						else:
+							link_clean = clean_url(e.link)
+						image = ""
+						if hasattr(e, 'content') and e.content:
+							tree = BeautifulSoup(e.content[0]['value'])
+							img = tree.find('img')
+							if img:
+								i = img.find('src')
+								if i: 
+									image = img.get('src')[:250]
+
+								i = img.find('data-original')
+								if i:
+									image = img.get('data-original')[:250]
+
+						if not image:
+							if hasattr(e, 'media_content') and e.media_content:
+								if hasattr(e.media_content[0], 'type'):
+									if "image" in e.media_content[0]['type']:
+										image = clean_url(e.media_content[0]['url'][:250])
+
+							if hasattr(e, 'enclosures') and e.enclosures:
+								if hasattr(e.enclosures[0], 'type'):
+									if "image" in e.enclosures[0]['type']:
+										image = clean_url(e.enclosures[0]['href'][:250])
+
+						title = e.title[:250]
+						summary = e.summary[:550]
+						print "insert into rss (date_parsed, title, summary, url, media_url) values (%s, %s, FROM_UNIXTIME(%s), FROM_UNIXTIME(%s), %s, %s, %s, %s)", (timestamp, title, summary, link_clean, image)
+					except _mysql_exceptions.IntegrityError, e:
+						""" Duplicated url, ignore it"""
+						print "   - insert failed (%s)" % (e,)
+						pass
+					else:
+						print " +++ Added: ", e.link
+						self.links.add(e.link)
+						entries += 1
+			except AttributeError, e:
+					print "   - not existing attribute (%s)" % (e,)
+					pass
+
+		return entries
+
+
+
 	def get_feed_info(self):
 		""" Get feed url by analysing the HTML """
 		print "Reading blog info: ", self.url
