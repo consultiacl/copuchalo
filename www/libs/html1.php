@@ -75,7 +75,7 @@ function do_header($title, $id='home', $options = false, $tab_options = false, $
 		$globals['extra_js'][] = 'jquery.form.min.js';
 	}
 
-	$sites = $db->get_results("select * from subs where visible order by id asc");
+	$sites = $db->get_results("select SQL_CACHE * from subs where visible order by id asc");
 	$this_site = SitesMgr::get_info();
 	$this_site_properties = SitesMgr::get_extended_properties();
 
