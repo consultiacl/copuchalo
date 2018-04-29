@@ -156,7 +156,7 @@ function do_submit1() {
 
 	// Check the user does not have too many drafts
 	$minutes = intval($globals['draft_time'] / 60) + 10;
-	$drafts = (int) $db->get_var("select count(*) from links where link_author=$current_user->user_id  and link_date > date_sub(now(), interval $minutes minute) and link_status='discard' and link_votes = 0");
+	$drafts = (int) $db->get_var("select count(*) from links where link_author=$current_user->user_id  and link_date > date_sub(now(), interval $minutes minute) and link_status='draft'");
 	if ($drafts > $globals['draft_limit']) {
 		add_submit_error( _('demasiados borradores'),
 			_('has hecho demasiados intentos, debes esperar o continuar con ellos desde la'). ' <a href="queue?meta=_discarded">'. _('cola de descartadas').'</a></p>');
@@ -166,7 +166,7 @@ function do_submit1() {
 
 	// Delete dangling drafts
 	if ($drafts > 0) {
-		$db->query("delete from links where link_author=$current_user->user_id and link_date > date_sub(now(), interval 30 minute) and link_date < date_sub(now(), interval 10 minute) and link_status='discard' and link_votes = 0");
+		$db->query("delete from links where link_author=$current_user->user_id and link_date > date_sub(now(), interval 30 minute) and link_date < date_sub(now(), interval 10 minute) and link_status='draft'");
 	}
 
 	$new_user = false;
@@ -286,7 +286,7 @@ function do_submit1() {
 	$link=new Link;
 	$link->url = $url;
 	$link->is_new = true; // Disable several options in the editing form
-	$link->status='discard';
+	$link->status='draft';
 	$link->author=$current_user->user_id;
 
 	if (! empty($site_properties['rules']) && $site_properties['no_link'] == 2) {
@@ -555,7 +555,7 @@ function do_submit3() {
 	}
 
 	// Check this one was not already queued
-	if($link->votes == 0 && $link->status != 'queued') {
+	if($link->status == 'draft') {
 		$link->enqueue();
 	}
 
@@ -583,7 +583,7 @@ function link_errors($link) {
 		$error = true;
 	}
 
-	if($link->status != 'discard') {
+	if($link->status != 'draft') {
 		add_submit_error(_("la historia ya está en cola").": $link->status");
 		$error = true;
 	}

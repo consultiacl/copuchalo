@@ -519,7 +519,7 @@ class Link extends LCPBase {
 			// Add the new link log/event
 			Log::conditional_insert('link_new', $this->id, $this->author);
 
-			$db->query("delete from links where link_author = $this->author and link_date > date_sub(now(), interval 30 minute) and link_status='discard' and link_votes=0");
+			$db->query("delete from links where link_author = $this->author and link_date > date_sub(now(), interval 30 minute) and link_status='draft'");
 			if(!empty($_POST['trackback'])) {
 				$trackres = new Trackback;
 				$trackres->url=clean_input_url($_POST['trackback']);
@@ -742,7 +742,7 @@ class Link extends LCPBase {
 		$this->show_tags = $show_tags;
 		$this->relative_permalink = $this->get_relative_permalink();
 		$this->permalink = $this->get_permalink(false, $this->relative_permalink); // To avoid double verification
-		$this->show_shakebox = $type != 'preview' && $this->votes > 0;
+		$this->show_shakebox = ($type != 'preview' && $type != 'draft');
 		$this->has_warning = !(!$this->check_warn() || $this->is_discarded());
 		$this->is_editable= $this->is_editable();
 		$this->url_str = preg_replace('/^www\./', '', parse_url($this->url, 1));

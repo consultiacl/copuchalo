@@ -143,7 +143,7 @@ function do_save($link) {
 		}
 
 		// Check this one is a draft, allows the user to save and send it to the queue
-		if($link->votes == 0 && $link->status != 'queued' && $link->author == $current_user->user_id) {
+		if($link->status == 'draft' && $link->author == $current_user->user_id) {
 			$link->enqueue();
 		}
 		$db->commit();
