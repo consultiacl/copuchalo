@@ -21,7 +21,7 @@
 			<div class="comment-meta {{ post_meta_class }}">
 				<div class="comment-votes-info">
 				{% if self.can_vote AND self.user_can_vote %}
-						<span id="vc-p-{{ self.id }}" class="vote fa fa-thumbs-o-up" onClick="mediatize_post({{ current_user.user_id}},{{ self.id }},1)" title="{% trans _('me gusta') %}"></span>
+						<span id="vc-p-{{ self.id }}" class="vote fa fa-thumbs-o-up" onClick="vote_post({{ current_user.user_id}},{{ self.id }},1)" title="{% trans _('me gusta') %}"></span>
 				{% else %}
 					{% if self.voted > 0 %}
 						<span id="vc-p-{{ self.id }}" class="vote fa fa-thumbs-up voted" title="{% trans _('me gusta') %}"></span>

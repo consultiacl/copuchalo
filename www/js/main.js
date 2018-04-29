@@ -24,8 +24,8 @@ function redirect(url) {
 	return false;
 }
 
-function mediatize(user, id) {
-	var url = base_url + "backend/menealo";
+function vote_history(user, id) {
+	var url = base_url + "backend/vote_history";
 	var content = "id=" + id + "&user=" + user + "&key=" + base_key + "&l=" + link_id + "&u=" + encodeURIComponent(document.referrer);
 	url = url + "?" + content;
 	disable_vote_link(id, -1, "...", '');
@@ -37,8 +37,8 @@ function mediatize(user, id) {
 	reportAjaxStats('vote', 'link');
 }
 
-function mediatize_comment(user, id, value) {
-	var url = base_url + "backend/menealo_comment";
+function vote_comment(user, id, value) {
+	var url = base_url + "backend/vote_comment";
 	var content = "id=" + id + "&user=" + user + "&value=" + value + "&key=" + base_key + "&l=" + link_id ;
 	url = url + "?" + content;
 	respond_comment_vote(id, value);
@@ -50,8 +50,8 @@ function mediatize_comment(user, id, value) {
 	reportAjaxStats('vote', 'comment');
 }
 
-function mediatize_post(user, id, value) {
-	var url = base_url + "backend/menealo_post";
+function vote_post(user, id, value) {
+	var url = base_url + "backend/vote_post";
 	var content = "id=" + id + "&user=" + user + "&value=" + value + "&key=" + base_key + "&l=" + link_id ;
 	url = url + "?" + content;
 	respond_comment_vote(id, value);
@@ -2427,6 +2427,7 @@ $(document).ready(function () {
 	$('#backTop').backTop();
 	$('[data-toggle="popover"]').popover();
 
+	/* Share menu things */
 	$("a.share-menu").popover({
 		placement: 'right',
 		trigger: 'click',
