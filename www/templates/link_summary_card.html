@@ -78,7 +78,7 @@
 					{% if not self.voted %}
 						<a href="#" class="btn vote-button" onclick="vote_history({{ current_user.user_id}}, {{self.id}});return false;" id="a-shake-{{ self.id }}">{% trans _('votar') %}</a>
 					{% else %}
-						<a class="btn vote-button disabled" id="a-shake-{{ self.id }}">{% trans _('¡genial!') %}</a>
+						<a class="btn vote-button disabled" id="a-shake-{{ self.id }}">{% trans _('¡bacán!') %}</a>
 					{% endif %}
 				{% endif %}
 			</div>
