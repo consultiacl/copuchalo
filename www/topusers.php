@@ -67,10 +67,11 @@ switch ($sortby) {
 */
 }
 
-$sql = "$select $from_where $order_by LIMIT $page_size".$globals['site_shortname'];
-if (! ($users = unserialize(memcache_mget($sql))) ) {
+$sql = "$select $from_where $order_by LIMIT $page_size";
+$cache_key = $sql.$globals['site_shortname'];
+if (! ($users = unserialize(memcache_mget($cache_key))) ) {
 	$users = $db->get_results($sql);
-	memcache_madd($sql, serialize($users), 3600);
+	memcache_madd($cache_key, serialize($users), 3600);
 }
 
 
