@@ -1316,7 +1316,7 @@ function check_ip_noaccess($steps = 0) {
 		}
 
 	if (! empty($globals['check_ip_noaccess_cache']) && $globals['check_ip_noaccess_cache'] > 0) {
-		$cache_key = 'noaccess_'.$globals['user_ip'];
+		$cache_key = 'noaccess_'.$globals['user_ip'].$globals['site_shortname'];
 	} else {
 		$cache_key = false;
 	}

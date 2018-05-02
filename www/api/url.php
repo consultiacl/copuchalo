@@ -32,7 +32,7 @@ if (isset($_GET['json']) || !empty($_GET['jsonp']))  {
 	header('Content-Type: text/plain; charset=UTF-8');
 }
 
-$cache_key = 'api_url'.$json.$_GET['url'];
+$cache_key = 'api_url_'.$globals['site_shortname'].$json.$_GET['url'];
 if(memcache_mprint($cache_key)) {
 	exit(0);
 }

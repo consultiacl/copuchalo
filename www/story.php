@@ -616,7 +616,7 @@ function print_relevant_comments($link) {
 	else $do_cache = false;
 
 	if($do_cache) {
-		$key = 'r_s_c_'.$globals['v'].'_'.$link->id;
+		$key = 'r_s_c_'.$globals['site_shortname'].$globals['v'].'_'.$link->id;
 		if(memcache_mprint($key)) return;
 	}
 

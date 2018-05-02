@@ -25,8 +25,9 @@ if (empty($globals['maintenance'])) {
 	// Check memcache
 	if ( memcache_menabled() ) {
 		$data = array(1, 2, 3);
-		memcache_madd('ping', $data, 10);
-		$result = memcache_mget('ping');
+		$key = 'ping-'.$globals['site_shortname'];
+		memcache_madd($key, $data, 10);
+		$result = memcache_mget($key);
 		if (! $result || $data != $result) {
 			ping_error('memcache failed');
 		}

@@ -548,7 +548,7 @@ function do_best_story_comments($link) {
 	}
 
 	if($do_cache) {
-		$key = 'best_story_comments_'.$globals['v'].'_'.$link->id;
+		$key = 'best_story_comments_'.$globals['site_shortname'].$globals['v'].'_'.$link->id;
 		if(memcache_mprint($key)) return;
 	}
 	echo '<!-- Calculating '.__FUNCTION__.' -->';
@@ -787,7 +787,7 @@ function do_last_blogs() {
 
 	if (! empty($globals['mobile']) || !empty($globals['submnm'])) return;
 
-	$key = 'last_blogs_'.$globals['v'];
+	$key = 'last_blogs_'.$globals['site_shortname'].$globals['v'];
 	if(memcache_mprint($key)) return;
 
 	$output = ' '; // Use a space to be sure it's memcached
@@ -818,7 +818,7 @@ function do_last_subs($status = 'published', $count = 10, $order = 'date') {
 
 	if ($globals['mobile'] || $globals['submnm']) return;
 
-	$key = "last_subs_$status-$count-$order_".$globals['v'];
+	$key = "last_subs_$status-$count-$order_".$globals['site_shortname'].$globals['v'];
 	if(memcache_mprint($key)) return;
 
 	$output = ' ';

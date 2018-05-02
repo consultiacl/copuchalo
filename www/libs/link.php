@@ -193,7 +193,7 @@ class Link extends LCPBase {
 			return true;
 		}
 
-		$key = 'clicks_cache';
+		$key = 'clicks_cache_'.$globals['site_shortname'];
 		$cache = memcache_mget($key);
 		if (! $cache || ! is_array($cache)) {
 			$cache = array();
