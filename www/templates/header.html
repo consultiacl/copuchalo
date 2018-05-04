@@ -120,7 +120,7 @@
 			<div class="mbi-item logo-background"><a href="/"><img class="logo" title="{% trans _('ediciones copuchentas') %}" alt="{% trans _('ediciones copuchentas') %}" src="{{globals.base_static}}img/cpchl/gc_black.svg"></a></div>
 			<div class="mbi-item"><a href="{{ base_url }}submit"><i class="fa fa-plus"></i></a></div>
 			<div class="mbi-item"><a href="{{ base_url }}queue"><span class="nuevas-text"><strong>N</strong></span></a></div>
-			<div class="mbi-item"><a href="{{ base_url }}stream"><span class="stream-text"><strong>S</strong></span></a></div>
+			<div class="mbi-item"><a href="{{ globals.base_url_general }}stream"><span class="stream-text"><strong>S</strong></span></a></div>
 			<div class="mbi-item">
 				<a href="#" class="dropdown temas-dp" data-toggle="dropdown"><span class="temas-text"><strong>T</strong></span></a>
 				{% include "temas-menu.html" %}
@@ -179,9 +179,9 @@
 		<div class="header-buttons">
 			<a href="{{ base_url }}submit"  title="enviar nueva historia" class="header-btn">+ enviar</a>
 			<a href="{{ base_url }}queue"   title="votar noticias pendientes" class="header-btn">nuevas</a>
-			<a href="{{ base_url }}stream"  title="stream de noticias" class="header-btn red">stream</a>
-			<a href="{{ base_url }}sneak"   title="sapear" class="header-btn">sapear</a>
-			<a href="{{ base_url }}copuchentos" title="copuchentos" class="header-btn">copuchentos</a>
+			<a href="{{ globals.base_url_general }}stream"  title="stream de noticias" class="header-btn red">stream</a>
+			<a href="{{ globals.base_url_general }}sneak"   title="sapear" class="header-btn">sapear</a>
+			<a href="{{ globals.base_url_general }}copuchentos" title="copuchentos" class="header-btn">copuchentos</a>
 		</div>
 
 		<div class="header-buttons header-buttons-wide">
