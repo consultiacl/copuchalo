@@ -74,8 +74,8 @@ class OAuthBase {
 
 	function store_user() {
 		global $db, $globals;
-		// syslog(LOG_INFO, "store_user: ". $this->return. "  COOKIE: ".$_COOKIE['return']);
 
+		// syslog(LOG_INFO, "store_user: ". $this->return. "  COOKIE: ".$_COOKIE['return']);
 		$user = $this->user;
 		if (!$this->secret) $this->secret = $this->service . "-" . $globals['now'];
 		if (user_exists($this->username)) {
@@ -116,6 +116,7 @@ class OAuthBase {
 
 	function user_login() {
 		global $current_user, $globals;
+
 		// syslog(LOG_INFO, "user_login: ". $this->return. "  COOKIE: ".$_COOKIE['return']);
 		if (!$current_user->user_id) {
 			$user = $this->user;
@@ -131,14 +132,12 @@ class OAuthBase {
 		// syslog(LOG_INFO, "user_return: ". $this->return. "  COOKIE: ".$_COOKIE['return']);
 		setcookie('return', '', time() - 10000, $globals['base_url'], UserAuth::domain());
 		setcookie('return', '', time() - 10000, $globals['base_url']);
-		header('Location: ' . $this->get_full_return_url());
+		if(!empty($this->return)) {
+			header('Location: ' . $globals['scheme']. '//' . $globals['server_name'] . $this->return);
+		} else {
+			header('Location: ' . $globals['scheme']. '//' . $globals['server_name'] . $globals['base_url']);
+		}
 		exit;
-	}
-
-	function get_full_return_url() {
-		global $globals;
-
-		return $globals['scheme'] . '//' . get_server_name() . (empty($this->return) ? $globals['base_url'] : $this->return);
 	}
 }
 

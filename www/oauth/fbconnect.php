@@ -44,7 +44,7 @@ class FBConnect extends OAuthBase {
 		$this->facebook = new Facebook\Facebook([
 					'app_id' => $globals['facebook_key'],
 					'app_secret' => $globals['facebook_secret'],
-					'default_graph_version' => 'v2.5',
+					'default_graph_version' => 'v2.9',
 					]);
 
 		$this->helper = $this->facebook->getRedirectLoginHelper();
@@ -53,13 +53,8 @@ class FBConnect extends OAuthBase {
 	function authRequest() {
 		global $globals;
 
-		$loginUrl = $this->helper->getLoginUrl($globals['scheme'] . '//' . get_server_name() . $_SERVER['REQUEST_URI']);
-
-		echo "<html><head>\n";
-		echo "<script>\n";
-		echo 'self.location = "'.$loginUrl.'";'."\n";
-		echo '</script>'."\n";
-		echo '</head><body></body></html>'."\n";
+		$loginUrl = $this->helper->getLoginUrl($globals['scheme']. '//' . $globals['server_name'] . $globals['base_url']. 'oauth/fbconnect.php');
+		header("Location: ".$loginUrl);
 		exit;
 	}
 
@@ -107,7 +102,7 @@ class FBConnect extends OAuthBase {
 
 		// getting basic info about user
 		try {
-			$user_profile = $this->facebook->get('/me?fields=id,name,link,picture.type(large)')->getGraphUser()->asArray();
+			$user_profile = $this->facebook->get('/me?fields=id,name,picture.type(large)')->getGraphUser()->asArray();
 		} catch(FacebookApiException $e) {
 			// redirecting user back to app login page
 			$this->user = null;
@@ -122,7 +117,6 @@ class FBConnect extends OAuthBase {
 
 		$db->transaction();
 		if (!$this->user_exists()) {
-			$this->url = $user_profile['link'];
 			$this->names = $user_profile['name'];
 			if ($user_profile['picture']['url']) {
 				$this->avatar = $user_profile['picture']['url'];
