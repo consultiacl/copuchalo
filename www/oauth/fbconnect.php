@@ -44,7 +44,7 @@ class FBConnect extends OAuthBase {
 		$this->facebook = new Facebook\Facebook([
 					'app_id' => $globals['facebook_key'],
 					'app_secret' => $globals['facebook_secret'],
-					'default_graph_version' => 'v2.9',
+					'default_graph_version' => 'v2.12',
 					]);
 
 		$this->helper = $this->facebook->getRedirectLoginHelper();
