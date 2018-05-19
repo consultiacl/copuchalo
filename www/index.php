@@ -151,6 +151,7 @@ echo '</div>';
 echo '<div id="sidebar" class="col-sm-3">';
 do_sub_message_right();
 do_banner_right();
+do_last_subs('published');
 if ($globals['show_popular_published']) {
 	do_active_stories();
 }
@@ -165,7 +166,6 @@ do_most_clicked_sites();
 if ($page < 2) {
 	do_best_comments();
 }
-do_last_subs('published');
 do_vertical_tags('published');
 // do_last_blogs();
 echo '</div>';
